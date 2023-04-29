@@ -25,10 +25,19 @@ module.exports = {
       });
       console.log(guildProfile);
     } else {
-      await interaction.reply({
-        content: `Server ID: ${guildProfile.guildId}`,
-      });
-      console.log(guildProfile);
+      if (!guildProfile.guildNameSent) {
+        await interaction.reply({
+          content: `**Server Name**: \`${guildProfile.guildName}\``,
+        });
+        guildProfile.guildNameSent = true;
+        await guildProfile.save().catch(console.error);
+        console.log(guildProfile);
+      } else {
+        await interaction.reply({
+          content: `Server ID: ${guildProfile.guildId}`,
+        });
+        console.log(guildProfile);
+      }
     }
   },
 };
