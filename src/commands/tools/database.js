@@ -7,8 +7,8 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("database")
     .setDescription("Information from database"),
-  async execute(interaction, client) {
-    let guildProfile = await guild.findOne({ guildID: interaction.guild.id });
+  async execute(interaction, _client) {
+    let guildProfile = await guild.findOne({ guildId: interaction.guild.id });
     if (!guildProfile) {
       guildProfile = new guild({
         _id: new ObjectId(),
@@ -25,11 +25,11 @@ module.exports = {
       });
       console.log(guildProfile);
     } else {
-      if (!guildProfile.guildNameSent) {
+      if (!guildProfile.guildName) {
         await interaction.reply({
           content: `**Server Name**: \`${guildProfile.guildName}\``,
         });
-        guildProfile.guildNameSent = true;
+        guildProfile.guildName = true;
         await guildProfile.save().catch(console.error);
         console.log(guildProfile);
       } else {
