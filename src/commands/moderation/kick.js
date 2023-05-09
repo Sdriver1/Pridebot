@@ -21,7 +21,7 @@ module.exports = {
         {
           title: `You have been kicked from ${interaction.guild.name}`,
           description: `**Reason**: ${reason}`,
-          color: "#f5d400",
+          color: parseInt("0xFF0000", 16),
         },
       ],
     }).catch(() => console.log("User's DM's are turned off"));
@@ -33,7 +33,7 @@ module.exports = {
         {
           title: `${user.tag} has been kicked`,
           description: `**Reason**: ${reason}`,
-          color: "#29f500",
+          color: parseInt("f5d400", 16), // changed the color value to a valid number
         },
       ],
     });
