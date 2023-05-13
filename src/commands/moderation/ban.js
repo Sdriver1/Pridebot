@@ -22,9 +22,20 @@ module.exports = {
         .setDescription("Preserve user's messages")
         .setRequired(false)
     ),
-
   async execute(interaction) {
     const user = interaction.options.getUser("user");
+
+    if (!user) {
+      return interaction.reply({
+        embeds: [
+          {
+            title: "User not found or not in this server",
+            color: parseInt("0xff0000", 16),
+          },
+        ],
+      });
+    }
+
     const reason =
       interaction.options.getString("reason") || "No reason provided";
     const durationString = interaction.options.getString("duration") || "∞";
@@ -52,6 +63,45 @@ module.exports = {
       if (duration !== undefined) {
         banOptions.days = 0;
         banOptions.reason += ` (temporarily banned for ${durationString})`;
+
+        // Schedule the unbanning of the user
+        setTimeout(async () => {
+          // Check if user is still banned
+          const ban = await interaction.guild.bans
+            .fetch(user.id)
+            .catch(console.error);
+          if (ban) {
+            await interaction.guild.members.unban(user.id).catch(console.error);
+            await interaction.channel.send({
+              embeds: [
+                {
+                  title: `${user.tag} has been unbanned`,
+                  description: `**Reason**: Time has been served\n**Time Served**: ${durationString}\n**Originally Banned**: ${timestamp}`,
+                  color: parseInt("00FF00", 16),
+                },
+              ],
+            });
+
+            // DM the user with an invite to the server
+            const invite = await interaction.channel.createInvite({
+              maxAge: 0,
+              maxUses: 0,
+              unique: true,
+              reason: "User unbanned",
+            });
+
+            const dmChannel = await user.createDM();
+            await dmChannel.send({
+              embeds: [
+                {
+                  title: `You have been unbanned from **${interaction.guild.name}** `,
+                  description: `**Reason**: Time has been served\n**Time Served**: ${durationString}\nHere is an invite to the server:\n${invite.url}`,
+                  color: parseInt("00FF00", 16),
+                },
+              ],
+            });
+          }
+        }, duration);
       }
 
       if (!preserveMessages) {
@@ -67,9 +117,13 @@ module.exports = {
       await member.ban(banOptions).catch(console.error);
       const banner = interaction.member;
       const bannerTag = `${banner.user.username}#${banner.user.discriminator}`;
-      const bannedTimestamp = `<t:${Math.floor(member.banDate / 1000)}:F>`;
 
-      await user
+      if (!user.dmChannel) {
+        console.log("User has DMs turned off");
+        return;
+      }
+
+      await user.dmChannel
         .send({
           embeds: [
             {
@@ -79,13 +133,13 @@ module.exports = {
             },
           ],
         })
-        .catch(() => console.log("User's DM's are turned off"));
+        .catch((error) => console.log("Failed to send DM:", error));
 
       await interaction.reply({
         embeds: [
           {
             title: `${user.tag} has been banned`,
-            description: `**Reason**: ${reason}\n**Duration**: ${durationString}\n**Banned At**: ${bannedTimestamp}\n**Banned By**: ${bannerTag}`,
+            description: `**Reason**: ${reason}\n**Duration**: ${durationString}\n**Banned At**: ${timestamp}\n**Banned By**: ${bannerTag}`,
             color: parseInt("0x29F500", 16),
           },
         ],
@@ -95,12 +149,11 @@ module.exports = {
         embeds: [
           {
             title: `${user.tag} is already banned`,
-            description: `**Reason**: ${reason}\n**Duration**: ${durationString}\n**Banned**: <t:${Math.floor(
-              member.banDate / 1000
-            )}:F>`,
+            description: `**Reason**: ${reason}\n**Duration**: ${durationString}\n**Banned at **: ${timestamp}`,
             color: parseInt("0xf5d400", 16),
           },
         ],
+        ephemeral: true,
       });
     }
   },
@@ -124,15 +177,15 @@ function parseDuration(durationString) {
   const year = 365 * day;
 
   switch (unit) {
-    case " mins":
+    case "m":
       return value * minute;
-    case " hours":
+    case "h":
       return value * hour;
-    case " days":
+    case "d":
       return value * day;
-    case " weeks":
+    case "w":
       return value * week;
-    case " years":
+    case "y":
       return value * year;
     default:
       return undefined;

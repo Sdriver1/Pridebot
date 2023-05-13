@@ -1,10 +1,27 @@
 require("dotenv").config();
 const { token, databaseToken } = process.env;
-const { connect } = require('mongoose');
-const { Client, Collection, GatewayIntentBits, GATEWAY_INTENTS } = require("discord.js");
+const { connect } = require("mongoose");
+const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const fs = require("fs");
 
-const client = new Client({ intents: GatewayIntentBits.Guilds, GATEWAY_INTENTS });
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildBans,
+    GatewayIntentBits.GuildEmojisAndStickers,
+    GatewayIntentBits.GuildIntegrations,
+    GatewayIntentBits.GuildWebhooks,
+    GatewayIntentBits.GuildInvites,
+    GatewayIntentBits.GuildVoiceStates,
+    GatewayIntentBits.GuildPresences,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildMessageReactions,
+    GatewayIntentBits.GuildMessageTyping,
+    GatewayIntentBits.DirectMessages,
+    GatewayIntentBits.DirectMessageReactions,
+    GatewayIntentBits.DirectMessageTyping,
+  ],
+});
 client.commands = new Collection();
 client.commandArray = [];
 

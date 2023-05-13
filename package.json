@@ -11,11 +11,13 @@
   "author": "Sdriver1#0001",
   "license": "ISC",
   "dependencies": {
+    "@discordjs/core": "^0.6.0",
     "@discordjs/rest": "^1.7.0",
     "chalk": "^4.1.2",
     "discord-api-types": "^0.37.40",
-    "discord.js": "^14.9.0",
+    "discord.js": "^14.11.0",
     "dotenv": "^16.0.3",
+    "moment": "^2.29.4",
     "mongoose": "^7.1.0"
   }
 }

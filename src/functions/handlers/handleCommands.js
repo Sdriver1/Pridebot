@@ -13,6 +13,10 @@ module.exports = (client) => {
       const { commands, commandArray } = client;
       for (const file of commandFiles) {
         const command = require(`../../commands/${folder}/${file}`);
+        if (!command.data) {
+          console.log(`Command file ${file} does not export a 'data' property`);
+          continue;
+        }
         commands.set(command.data.name, command);
         commandArray.push(command.data.toJSON());
         console.log(
