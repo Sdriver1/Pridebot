@@ -48,6 +48,27 @@ module.exports = {
           },
         ],
       });
+
+      
+      const invite = await interaction.channel.createInvite({
+        maxAge: 0,
+        maxUses: 0,
+        unique: true,
+        reason: "User unbanned",
+      });
+      
+      const dmChannel = await user.createDM();
+      const durationString = "Permanent";
+      await dmChannel.send({
+        embeds: [
+          {
+            title: `You have been unbanned from **${interaction.guild.name}** `,
+            description: `**Reason**: ${reason}\n**Time Served**: ${durationString}\nHere is an invite to the server:\n${invite.url}`,
+            color: parseInt("00FF00", 16),
+          },
+        ],
+      });
+
     } catch (error) {
       console.error(error);
       interaction.reply({
