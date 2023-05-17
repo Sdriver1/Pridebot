@@ -1,4 +1,6 @@
 const { SlashCommandBuilder } = require("discord.js");
+const axios = require("axios");
+const cheerio = require("cheerio");
 
 let botStartTime; // Variable to store the bot's start time
 
@@ -6,9 +8,8 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("stats")
     .setDescription("Get Bot and Discord Stats"),
-  async execute(interaction, client) {
+  async execute(interaction) {
     const uptime = process.uptime();
-    const discordVersion = client.application?.version || "Unknown";
     const time = formatUptime(uptime);
     const message = await interaction.deferReply({
       fetchReply: true,
@@ -18,32 +19,57 @@ module.exports = {
       botStartTime = new Date(); // Set the bot's start time if it hasn't been set before
     }
 
-    interaction.editReply({
-      embeds: [
-        {
-          title: `Bot and Discord Stats`,
-          fields: [
-            {
-              name: `<:_:1108228682184654908> Bot Stats`,
-              value: `**Bot Uptime:** \`${time}\` \n**Start Time:** \`${formatTimestamp(botStartTime)}\` \n**Bot Ping:** \`${
-                message.createdTimestamp - interaction.createdTimestamp
-              }\``,
-              inline: true,
+    const discordVersion =
+      interaction.client.application?.version || "Unknown Version";
+
+    try {
+      const response = await axios.get(
+        "https://discordstatus.com/incidents/6xgts6fdwnr7"
+      );
+      const html = response.data;
+
+      const $ = cheerio.load(html);
+      const incidentTime = $(".incident-time .timestamp").text().trim();
+      const incidentDescription = $(".incident-name").text().trim();
+      const incidentTimestamp = formatTimestamp(incidentTime);
+
+      interaction.editReply({
+        embeds: [
+          {
+            title: `Bot and Discord Stats`,
+            fields: [
+              {
+                name: `<:_:1108228682184654908> Bot Stats`,
+                value: `**Bot Uptime:** \`${time}\` \n**Start Time:** \`${formatTimestamp(
+                  botStartTime
+                )}\` \n**Bot Ping:** \`${
+                  message.createdTimestamp - interaction.createdTimestamp
+                }\``,
+                inline: true,
+              },
+              {
+                name: `📊 Discord Stats`,
+                value: `**API Latency:** \`${interaction.client.ws.ping}\`\n**Discord Version:** \`${discordVersion}\``,
+                inline: true,
+              },
+              {
+                name: `⚠️ Latest Discord Incident`,
+                value: `**When:** \`${incidentTimestamp}\` \n**Description:** \`${incidentDescription}\``,
+                inline: false,
+              },
+            ],
+            color: 0x00ff00,
+            footer: {
+              text: "🌈Pridebot Stats",
             },
-            {
-              name: `📊 Discord Stats`,
-              value: `**API Latency:** \`${client.ws.ping}\`\n**Discord Version:** \`${discordVersion}\``,
-              inline: true,
-            },
-          ],
-          color: parseInt("0x00ff00", 16),
-          footer: {
-            text: "🌈Pridebot Stats",
+            timestamp: new Date(),
           },
-          timestamp: new Date(),
-        },
-      ],
-    });
+        ],
+      });
+    } catch (error) {
+      console.error("Failed to fetch incident data:", error);
+      interaction.editReply("An error occurred while fetching incident data.");
+    }
   },
 };
 
@@ -63,5 +89,16 @@ function formatUptime(time) {
 }
 
 function formatTimestamp(timestamp) {
-  return timestamp.toLocaleString(); // Adjust the format of the timestamp as desired
-}
+    const dateObj = new Date(timestamp);
+    if (dateObj.toString() === "Invalid Date") {
+      // Handle the specific format of the incident timestamp
+      const [year, month, day, hour, minute] = timestamp.split(/[:T-]/);
+      return `${year}-${padZero(month)}-${padZero(day)} ${padZero(hour)}:${padZero(minute)}`;
+    }
+    return dateObj.toLocaleString(); // Adjust the format of the timestamp as desired
+  }
+  
+  function padZero(value) {
+    return String(value).padStart(2, "0");
+  }
+  
