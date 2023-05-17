@@ -1,75 +1,37 @@
 const { SlashCommandBuilder } = require("discord.js");
-const axios = require("axios");
-const cheerio = require("cheerio");
-
-let botStartTime; // Variable to store the bot's start time
+const { EmbedBuilder } = require('discord.js')
+const axios = require('axios');
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("stats")
-    .setDescription("Get Bot and Discord Stats"),
-  async execute(interaction) {
-    const uptime = process.uptime();
-    const time = formatUptime(uptime);
-    const message = await interaction.deferReply({
-      fetchReply: true,
-    });
+    .setDescription("Get the bot's stats"),
+  
+  async execute(interaction, client) {
+    const message = await interaction.deferReply({ fetchReply: true });
 
-    if (!botStartTime) {
-      botStartTime = new Date(); // Set the bot's start time if it hasn't been set before
-    }
-
-    const discordVersion =
-      interaction.client.application?.version || "Unknown Version";
-
-    try {
-      const response = await axios.get(
-        "https://discordstatus.com/incidents/6xgts6fdwnr7"
-      );
-      const html = response.data;
-
-      const $ = cheerio.load(html);
-      const incidentTime = $(".incident-time .timestamp").text().trim();
-      const incidentDescription = $(".incident-name").text().trim();
-      const incidentTimestamp = formatTimestamp(incidentTime);
-
-      interaction.editReply({
-        embeds: [
-          {
-            title: `Bot and Discord Stats`,
-            fields: [
-              {
-                name: `<:_:1108228682184654908> Bot Stats`,
-                value: `**Bot Uptime:** \`${time}\` \n**Start Time:** \`${formatTimestamp(
-                  botStartTime
-                )}\` \n**Bot Ping:** \`${
-                  message.createdTimestamp - interaction.createdTimestamp
-                }\``,
-                inline: true,
-              },
-              {
-                name: `📊 Discord Stats`,
-                value: `**API Latency:** \`${interaction.client.ws.ping}\`\n**Discord Version:** \`${discordVersion}\``,
-                inline: true,
-              },
-              {
-                name: `⚠️ Latest Discord Incident`,
-                value: `**When:** \`${incidentTimestamp}\` \n**Description:** \`${incidentDescription}\``,
-                inline: false,
-              },
-            ],
-            color: 0x00ff00,
-            footer: {
-              text: "🌈Pridebot Stats",
-            },
-            timestamp: new Date(),
-          },
-        ],
-      });
-    } catch (error) {
-      console.error("Failed to fetch incident data:", error);
-      interaction.editReply("An error occurred while fetching incident data.");
-    }
+    const ping = message.createdTimestamp - interaction.createdTimestamp
+    const discVer = interaction.client.application?.version || 'Unknown Version'
+    
+    const bot = `**Uptime:** \`${formatUptime(process.uptime())}\` \n**Start Time:** \`${formatTimestamp(client.botStartTime)}\` \n**Ping**: \`${ping}\``;
+    const discord = `**API Latency**: \`${client.ws.ping}\` \n**Discord Version:** \`${discVer}\``;
+    
+    const options = { hour: 'numeric', minute: 'numeric', hour12: true };
+    const response = await axios.get('https://discordstatus.com/api/v2/incidents.json')
+    var data = response.data
+    var incident = data.incidents[0]
+    const created_at = new Date(incident.created_at).toLocaleString('en-US', options);
+    var DiscordApiIncident = `${created_at} - [${incident.name}](${data.page.url}/incidents/${incident.id})`
+    
+    var embed = new EmbedBuilder()
+      .setColor(0x5865F2)
+      .addFields(
+        { name: '<:_:1108228682184654908> __Bot Stats__', value: bot, inline: true },
+        { name: '<:_:1108417509624926228> __Discord Stats__', value: discord, inline: true },
+        { name: '<:_:1108421476148859010> __Latest Discord API Incident__', value: DiscordApiIncident, inline: false },
+      )
+        
+    await interaction.editReply({ embeds: [embed] });
   },
 };
 
@@ -85,20 +47,15 @@ function formatUptime(time) {
   if (minutes) parts.push(`${minutes} minute(s)`);
   if (seconds) parts.push(`${seconds} second(s)`);
 
-  return parts.join(" ");
+  return parts.join(' ');
 }
 
 function formatTimestamp(timestamp) {
-    const dateObj = new Date(timestamp);
-    if (dateObj.toString() === "Invalid Date") {
-      // Handle the specific format of the incident timestamp
-      const [year, month, day, hour, minute] = timestamp.split(/[:T-]/);
-      return `${year}-${padZero(month)}-${padZero(day)} ${padZero(hour)}:${padZero(minute)}`;
-    }
-    return dateObj.toLocaleString(); // Adjust the format of the timestamp as desired
+  const dateObj = new Date(timestamp);
+  if (dateObj.toString() === "Invalid Date") {
+    // Handle the specific format of the incident timestamp
+    const [year, month, day, hour, minute] = timestamp.split(/[:T-]/);
+    return `${year}-${padZero(month)}-${padZero(day)} ${padZero(hour)}:${padZero(minute)}`;
   }
-  
-  function padZero(value) {
-    return String(value).padStart(2, "0");
-  }
-  
+  return dateObj.toLocaleString(); // Adjust the format of the timestamp as desired
+}

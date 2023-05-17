@@ -23,51 +23,47 @@ module.exports = {
         .setRequired(false)
     ),
   async execute(interaction) {
-    const user = interaction.options.getUser("user");
+    const user = interaction.options.getMember("user");
 
     if (!user) {
       return interaction.reply({
         embeds: [
           {
             title: "User not found or not in this server",
-            color: parseInt("0xff0000", 16),
+            color: 0xff0000,
           },
         ],
       });
     }
 
-    const reason =
-      interaction.options.getString("reason") ?? "No reason provided";
+    const reason = interaction.options.getString("reason") || "No reason provided";
     const durationString = interaction.options.getString("duration") || "∞";
     const duration = parseDuration(durationString);
-    const preserveMessages =
-      interaction.options.getBoolean("preserve-messages") || false;
+    const preserveMessages = interaction.options.getBoolean("preserve-messages") || false;
 
-    const member = await interaction.guild.members
-      .fetch(user.id)
-      .catch(console.error);
+    const member = await interaction.guild.members.fetch({ user }).catch(console.error);
     const banOptions = { reason: reason };
     const timestamp = `<t:${Math.floor(Date.now() / 1000)}:F>`;
-    const dmChannel = await user.createDM();
+    const dmChannel = await user.createDM().catch(console.error);
 
     if (!member) {
       return interaction.reply({
         embeds: [
           {
             title: "User not found or not in this server",
-            color: parseInt("0xff0000", 16),
+            color: 0xff0000,
           },
         ],
       });
     }
 
     if (!member.bannable) {
-      await interaction.reply({
+      return interaction.reply({
         embeds: [
           {
-            title: `${user.tag} is already banned`,
+            title: `${user.user.tag} is already banned`,
             description: `**Reason**: ${reason}\n**Duration**: ${durationString}\n**Banned at **: ${timestamp}`,
-            color: parseInt("0xf5d400", 16),
+            color: 0xf5d400,
           },
         ],
         ephemeral: true,
@@ -75,23 +71,20 @@ module.exports = {
     }
 
     if (duration !== undefined) {
-      banOptions.days = 0;
-      banOptions.reason += ` (temporarily banned for ${durationString})`;
+      banOptions.days = Math.ceil(duration / (24 * 60 * 60));
 
-      
+      // Schedule the unbanning of the user
       setTimeout(async () => {
         // Check if user is still banned
-        const ban = await interaction.guild.bans
-          .fetch(user.id)
-          .catch(console.error);
+        const ban = await interaction.guild.bans.fetch({ user }).catch(console.error);
         if (ban) {
-          await interaction.guild.members.unban(user.id).catch(console.error);
+          await interaction.guild.members.unban(user).catch(console.error);
           await interaction.channel.send({
             embeds: [
               {
-                title: `${user.tag} has been unbanned`,
+                title: `${user.user.tag} has been unbanned`,
                 description: `**Reason**: Time has been served\n**Time Served**: ${durationString}\n**Originally Banned**: ${timestamp}`,
-                color: parseInt("00FF00", 16),
+                color: 0x00FF00,
               },
             ],
           });
@@ -109,12 +102,12 @@ module.exports = {
               {
                 title: `You have been unbanned from **${interaction.guild.name}** `,
                 description: `**Reason**: Time has been served\n**Time Served**: ${durationString}\nHere is an invite to the server:\n${invite.url}`,
-                color: parseInt("00FF00", 16),
+                color: 0x00FF00,
               },
             ],
           });
         }
-      }, duration);
+      }, duration * 1000);
     }
 
     if (!preserveMessages) {
@@ -123,32 +116,34 @@ module.exports = {
       interaction.channel.bulkDelete(userMessages, true).catch(console.error);
     }
 
-    if (!user.dmChannel) {
+    if (!dmChannel) {
       console.log("User has DMs turned off");
       return;
     }
 
-    await user
-      .send({
+    try {
+      await dmChannel.send({
         embeds: [
           {
             title: `You have been banned from ${interaction.guild.name}`,
             description: `**Reason**: ${reason}\n**Duration**: ${durationString}\n**Banned At**: ${timestamp}`,
-            color: parseInt("0xFF0000", 16),
+            color: 0xFF0000,
           },
         ],
-      })
-      .catch((error) => console.log("Failed to send DM:", error));
+      });
+    } catch (error) {
+      console.log("Failed to send DM:", error);
+    }
 
-    await member.ban(banOptions).catch(console.error);
+    await interaction.guild.members.ban(user, banOptions).catch(console.error);
     const bannerTag = `${interaction.member.user.username}#${interaction.member.user.discriminator}`;
 
     await interaction.reply({
       embeds: [
         {
-          title: `${user.tag} has been banned`,
+          title: `${user.user.tag} has been banned`,
           description: `**Reason**: ${reason}\n**Duration**: ${durationString}\n**Banned At**: ${timestamp}\n**Banned By**: ${bannerTag}`,
-          color: parseInt("0x29F500", 16),
+          color: 0x29F500,
         },
       ],
     });
