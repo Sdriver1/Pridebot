@@ -49,14 +49,14 @@ module.exports = {
         ],
       });
 
-      
-      const invite = await interaction.channel.createInvite({
-        maxAge: 0,
-        maxUses: 0,
-        unique: true,
-        reason: "User unbanned",
+    } catch (error) {
+      console.error(error);
+      interaction.reply({
+        content: "An error occurred while trying to unban the user.",
+        ephemeral: true,
       });
-      
+    }
+    try {
       const dmChannel = await user.createDM();
       const durationString = "Permanent";
       await dmChannel.send({
@@ -68,13 +68,22 @@ module.exports = {
           },
         ],
       });
-
+      
     } catch (error) {
-      console.error(error);
-      interaction.reply({
-        content: "An error occurred while trying to unban the user.",
-        ephemeral: true,
-      });
+      if (error.code === 50007) {
+        return interaction.reply({
+          content: "I couldn't send a DM to the user because they have disabled DMs from server members.",
+          ephemeral: true,
+        });
+      } else if (error.code === 'InteractionAlreadyReplied') {
+        return;
+      } else {
+        console.error(error);
+        return interaction.reply({
+          content: "An error occurred while trying to send a DM to the user.",
+          ephemeral: true,
+        });
+      }
     }
   },
 };

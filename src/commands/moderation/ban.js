@@ -78,7 +78,7 @@ module.exports = {
       banOptions.days = 0;
       banOptions.reason += ` (temporarily banned for ${durationString})`;
 
-      // Schedule the unbanning of the user
+      
       setTimeout(async () => {
         // Check if user is still banned
         const ban = await interaction.guild.bans
@@ -156,7 +156,7 @@ module.exports = {
 };
 
 function parseDuration(durationString) {
-  const regex = /^(\d+)([mhdwy])$/i;
+  const regex = /^(\d+)([smhdwy])$/i;
   const matches = regex.exec(durationString);
 
   if (matches === null) {
@@ -166,7 +166,7 @@ function parseDuration(durationString) {
   const value = parseInt(matches[1]);
   const unit = matches[2].toLowerCase();
 
-  const second = 60;
+  const second = 1;
   const minute = 60 * second;
   const hour = 60 * minute;
   const day = 24 * hour;
