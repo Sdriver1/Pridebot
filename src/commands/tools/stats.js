@@ -13,7 +13,7 @@ module.exports = {
     const ping = message.createdTimestamp - interaction.createdTimestamp;
     const discVer = interaction.client.application?.version || 'Unknown Version';
     
-    const bot = `**Uptime:** \`${formatUptime(process.uptime())}\` \n**Start Time:** \`${formatTimestamp(client.botStartTime)}\` \n**Ping**: \`${ping}\``;
+    const bot = `**Uptime:** \`${formatUptime(process.uptime())} \` \n**Start Time:** \`${formatTimestamp(client.botStartTime)}\` \n**Ping**: \`${ping}\`\n **Version:** \`In Development\``;
     const discord = `**API Latency**: \`${client.ws.ping}\` \n**Discord Version:** \`${discVer}\``;
     
     const options = { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };

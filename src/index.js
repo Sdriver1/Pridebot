@@ -20,10 +20,13 @@ const client = new Client({
     GatewayIntentBits.DirectMessages,
     GatewayIntentBits.DirectMessageReactions,
     GatewayIntentBits.DirectMessageTyping,
+    GatewayIntentBits.GuildMembers, // Enables access to member-related events and data
+    GatewayIntentBits.MessageContent, // Allows access to the content of messages (required for some message-related features)
   ],
 });
 client.commands = new Collection();
 client.commandArray = [];
+client.botStartTime = new Date()
 
 const functionFolders = fs.readdirSync(`./src/functions`);
 for (const folder of functionFolders) {
