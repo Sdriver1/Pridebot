@@ -57,6 +57,9 @@ module.exports = {
     const commitsData = commitsResponse.data;
     const commitCount = commitsData.length;
 
+    let commitTens = '0';
+    let commitOnes = '0';
+
     let commitsText = `**Commit Count:** ${commitCount}\n`;
 
     if (commitCount > 0) {
@@ -70,10 +73,12 @@ module.exports = {
       });
       const latestCommitLink = latestCommit.html_url;
       const latestCommitTitle = latestCommit.commit.message;
+      const commitCountStr = commitCount.toString();
+      commitTens = commitCountStr.length > 1 ? commitCountStr[0] : '0';
+      commitOnes = commitCountStr.length > 0 ? commitCountStr[commitCountStr.length - 1] : '0';
 
       commitsText += `${latestCommitDate} - [${latestCommitTitle}](${latestCommitLink})`;
     }
-
     //---------------------------------------------------------------------------------------------------
     let clientType = "";
 
@@ -121,7 +126,7 @@ module.exports = {
       }
     }
 
-    const bot = `**Ping**: \`${ping}\`\n**Version:** \`InDev 1.0.${commitCount}\`\n**Uptime:** \`${formatUptime(
+    const bot = `**Ping**: \`${ping}\`\n**Version:** \`InDev 1.${commitTens}.${commitOnes}\`\n**Uptime:** \`${formatUptime(
       process.uptime()
     )} \` \n**Start Time:** \`${formatTimestamp(client.botStartTime)}\``;
     const discord = `**API Latency**: \`${client.ws.ping}\` \n**Client:** ${statusEmote} \`${clientType}\`\n**Status:** \`${interaction.member.presence.status}\``;
