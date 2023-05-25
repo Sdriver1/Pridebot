@@ -1,3 +1,5 @@
+require("dotenv").config();
+const { githubToken } = process.env;
 const { SlashCommandBuilder } = require("discord.js");
 const { EmbedBuilder } = require("discord.js");
 const axios = require("axios");
@@ -42,7 +44,6 @@ module.exports = {
     // Retrieve GitHub commit information
     const repoOwner = "Sdriver1";
     const repoName = "Pridebot";
-    const githubToken = "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"; // Make sure to replace this with your actual GitHub token
 
     const commitsResponse = await axios.get(
       `https://api.github.com/repos/${repoOwner}/${repoName}/commits`,
