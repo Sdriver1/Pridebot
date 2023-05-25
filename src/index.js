@@ -20,8 +20,8 @@ const client = new Client({
     GatewayIntentBits.DirectMessages,
     GatewayIntentBits.DirectMessageReactions,
     GatewayIntentBits.DirectMessageTyping,
-    GatewayIntentBits.GuildMembers, // Enables access to member-related events and data
-    GatewayIntentBits.MessageContent, // Allows access to the content of messages (required for some message-related features)
+    GatewayIntentBits.GuildMembers, 
+    GatewayIntentBits.MessageContent, 
   ],
 });
 client.commands = new Collection();

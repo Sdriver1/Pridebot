@@ -5,14 +5,12 @@ const axios = require("axios");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("stats")
-    .setDescription("Get the bot's stats"),
+    .setDescription("Get the bot's and discord stats"),
 
   async execute(interaction, client) {
     const message = await interaction.deferReply({ fetchReply: true });
 
     const ping = message.createdTimestamp - interaction.createdTimestamp;
-    const clientVersion =
-      interaction.client.application?.version || "Unknown Version";
 
     const options = {
       month: "long",
@@ -44,7 +42,7 @@ module.exports = {
     // Retrieve GitHub commit information
     const repoOwner = "Sdriver1";
     const repoName = "Pridebot";
-    const githubToken = "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"; // Make sure to replace this with your actual GitHub token
+    const githubToken = "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"; // Make sure to replace this with your actual GitHub token
 
     const commitsResponse = await axios.get(
       `https://api.github.com/repos/${repoOwner}/${repoName}/commits`,
@@ -64,7 +62,11 @@ module.exports = {
       const latestCommit = commitsData[0];
       const latestCommitDate = new Date(
         latestCommit.commit.author.date
-      ).toLocaleDateString("en-US", options);
+      ).toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      });
       const latestCommitLink = latestCommit.html_url;
       const latestCommitTitle = latestCommit.commit.message;
 
@@ -84,73 +86,67 @@ module.exports = {
 
     let statusEmote = "";
 
-if (interaction.member.presence.status === "online") {
-  if (clientType === "Mobile") {
-    statusEmote = "<:_:1111031153604956250>";
-  } else if (clientType === "Desktop") {
-    statusEmote = "<:_:1111029093497045063>";
-  } else if (clientType === "Website") {
-    statusEmote = "<:_:1111030162646118440>";
-  }
-} else if (interaction.member.presence.status === "offline") {
-  if (clientType === "Mobile") {
-    statusEmote = "<:_:1111031092137447454>";
-  } else if (clientType === "Desktop") {
-    statusEmote = "<:_:1111029851047084163>";
-  } else if (clientType === "Website") {
-    statusEmote = "<:_:1111030077971501066>";
-  }
-} else if (interaction.member.presence.status === "idle") {
-  if (clientType === "Mobile") {
-    statusEmote = "<:_:1111031207296241765>";
-  } else if (clientType === "Desktop") {
-    statusEmote = "<:_:1111029962045141152>";
-  } else if (clientType === "Website") {
-    statusEmote = "<:_:1111030230820323348>";
-  }
-} else if (interaction.member.presence.status === "dnd") {
-  if (clientType === "Mobile") {
-    statusEmote = "<:_:1111020888620539994>";
-  } else if (clientType === "Desktop") {
-    statusEmote = "<:_:1111021789661909052>";
-  } else if (clientType === "Website") {
-    statusEmote = "<:_:1111030292287852644>";
-  }
-}
-
-    function getClientEmote(statusEmote, clientType) {
-      return statusEmote[clientType];
+    if (interaction.member.presence.status === "dnd") {
+      if (clientType === "Mobile") {
+        statusEmote = "<:_:1111031153604956250>";
+      } else if (clientType === "Desktop") {
+        statusEmote = "<:_:1111029093497045063>";
+      } else if (clientType === "Website") {
+        statusEmote = "<:_:1111030162646118440>";
+      }
+    } else if (interaction.member.presence.status === "offline") {
+      if (clientType === "Mobile") {
+        statusEmote = "<:_:1111031092137447454>";
+      } else if (clientType === "Desktop") {
+        statusEmote = "<:_:1111029851047084163>";
+      } else if (clientType === "Website") {
+        statusEmote = "<:_:1111030077971501066>";
+      }
+    } else if (interaction.member.presence.status === "idle") {
+      if (clientType === "Mobile") {
+        statusEmote = "<:_:1111031207296241765>";
+      } else if (clientType === "Desktop") {
+        statusEmote = "<:_:1111029962045141152>";
+      } else if (clientType === "Website") {
+        statusEmote = "<:_:1111030230820323348>";
+      }
+    } else if (interaction.member.presence.status === "online") {
+      if (clientType === "Mobile") {
+        statusEmote = "<:_:1111020888620539994>";
+      } else if (clientType === "Desktop") {
+        statusEmote = "<:_:1111021789661909052>";
+      } else if (clientType === "Website") {
+        statusEmote = "<:_:1111030292287852644>";
+      }
     }
 
     const bot = `**Ping**: \`${ping}\`\n**Version:** \`InDev 1.0.${commitCount}\`\n**Uptime:** \`${formatUptime(
       process.uptime()
     )} \` \n**Start Time:** \`${formatTimestamp(client.botStartTime)}\``;
-    const discord = `**API Latency**: \`${client.ws.ping}\` \n**Discord Client:** ${getClientEmote(statusEmote,clientType)} ${clientType}\n**Discord Version:** \`${clientVersion}\``;
+    const discord = `**API Latency**: \`${client.ws.ping}\` \n**Client:** ${statusEmote} \`${clientType}\`\n**Status:** \`${interaction.member.presence.status}\``;
 
-    const embed = new EmbedBuilder()
-      .setColor(0x5865f2)
-      .addFields(
-        {
-          name: "<:_:1108228682184654908> __Bot Stats__",
-          value: bot,
-          inline: true,
-        },
-        {
-          name: "<:_:1108417509624926228> __Discord Stats__",
-          value: discord,
-          inline: true,
-        },
-        {
-          name: "<:_:1108421476148859010> __Latest Discord API Incident__",
-          value: DiscordApiIncident,
-          inline: false,
-        },
-        {
-          name: "<:_:1110925802041774151> __Latest GitHub Commit__",
-          value: commitsText,
-          inline: false,
-        }
-      );
+    const embed = new EmbedBuilder().setColor(0x5865f2).addFields(
+      {
+        name: "<:_:1108228682184654908> __Bot Stats__",
+        value: bot,
+        inline: true,
+      },
+      {
+        name: "<:_:1108417509624926228> __Discord Stats__",
+        value: discord,
+        inline: true,
+      },
+      {
+        name: "<:_:1108421476148859010> __Latest Discord API Incident__",
+        value: DiscordApiIncident,
+        inline: false,
+      },
+      {
+        name: "<:_:1110925802041774151> __Latest GitHub Commit__",
+        value: commitsText,
+        inline: false,
+      }
+    );
 
     await interaction.editReply({ embeds: [embed] });
   },
@@ -190,4 +186,3 @@ function formatTimestamp(timestamp) {
 function padZero(value) {
   return value.toString().padStart(2, "0");
 }
-
