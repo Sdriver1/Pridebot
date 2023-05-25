@@ -1,8 +1,5 @@
 const {
-  ActivityType,
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
+  ActivityType
 } = require("discord.js");
 
 module.exports = {
@@ -17,29 +14,21 @@ module.exports = {
           status: "dnd",
         }
       : {
-          type: ActivityType.Watching,
-          text: "over new commands /stats",
+          type: ActivityType.Playing,
+          text: "with new /stats command",
           status: "online",
         };
 
-    const joinButton = new ButtonBuilder()
-      .setStyle(ButtonStyle.Link)
-      .setLabel("Join the 🌈 The LGBTQ Community 🌈")
-      .setURL("https://discord.gg/pridemonth");
-
-    const row = new ActionRowBuilder()
-      .addComponents(joinButton);
 
     await client.user.setPresence({
       status: activity.status,
       activities: [{ type: activity.type, name: activity.text }],
-      buttons: [row],
     });
 
     console.log(
       isDev
         ? `${client.user.tag} is in development`
-        : `${client.user.tag} is ready to serve discord.gg/pridemonth`
+        : `${client.user.tag} is ready to serve LGBTQ`
     );
   },
 };
