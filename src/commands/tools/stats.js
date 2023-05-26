@@ -80,33 +80,26 @@ module.exports = {
       commitsText += `${latestCommitDate} - [${latestCommitTitle}](${latestCommitLink})`;
     }
     //---------------------------------------------------------------------------------------------------
-    let clientType = "";
-
-    if (interaction.member.presence.clientStatus?.mobile) {
-      clientType = "Mobile";
-    } else if (interaction.member.presence.clientStatus?.desktop) {
-      clientType = "Desktop";
-    } else if (interaction.member.presence.clientStatus?.web) {
-      clientType = "Website";
+    let clientType = "unknown";
+    let statusEmote = "<:_:1111490661259165727>"; // Default emote for offline status
+    
+    if (interaction.member?.presence?.clientStatus) {
+      if (interaction.member.presence.clientStatus.mobile) {
+        clientType = "Mobile";
+      } else if (interaction.member.presence.clientStatus.desktop) {
+        clientType = "Desktop";
+      } else if (interaction.member.presence.clientStatus.web) {
+        clientType = "Website";
+      }
     }
-
-    let statusEmote = "";
-
-    if (interaction.member.presence.status === "dnd") {
+    
+    if (interaction.member?.presence?.status === "dnd") {
       if (clientType === "Mobile") {
         statusEmote = "<:_:1111031153604956250>";
       } else if (clientType === "Desktop") {
         statusEmote = "<:_:1111029093497045063>";
       } else if (clientType === "Website") {
         statusEmote = "<:_:1111030162646118440>";
-      }
-    } else if (interaction.member.presence.status === "offline") {
-      if (clientType === "Mobile") {
-        statusEmote = "<:_:1111031092137447454>";
-      } else if (clientType === "Desktop") {
-        statusEmote = "<:_:1111029851047084163>";
-      } else if (clientType === "Website") {
-        statusEmote = "<:_:1111030077971501066>";
       }
     } else if (interaction.member.presence.status === "idle") {
       if (clientType === "Mobile") {
