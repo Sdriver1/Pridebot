@@ -15,7 +15,7 @@ module.exports = {
         }
       : {
           type: ActivityType.Playing,
-          text: "with new /stats command",
+          text: "with new /pronouns command",
           status: "online",
         };
 

@@ -10,7 +10,7 @@ const {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("sexuality")
-    .setDescription("Learn about any sexuality"),
+    .setDescription("Learn about any kinds or types of sexualities"),
 
   async execute(interaction) {
     const sex = [
