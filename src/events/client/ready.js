@@ -1,6 +1,4 @@
-const {
-  ActivityType
-} = require("discord.js");
+const { ActivityType } = require("discord.js");
 
 module.exports = {
   name: "ready",
@@ -18,7 +16,6 @@ module.exports = {
           text: "with new /pronouns command",
           status: "online",
         };
-
 
     await client.user.setPresence({
       status: activity.status,

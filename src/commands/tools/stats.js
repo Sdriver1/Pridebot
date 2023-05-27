@@ -57,8 +57,8 @@ module.exports = {
     const commitsData = commitsResponse.data;
     const commitCount = commitsData.length;
 
-    let commitTens = '0';
-    let commitOnes = '0';
+    let commitTens = "0";
+    let commitOnes = "0";
 
     let commitsText = `**Commit Count:** ${commitCount}\n`;
 
@@ -74,15 +74,18 @@ module.exports = {
       const latestCommitLink = latestCommit.html_url;
       const latestCommitTitle = latestCommit.commit.message;
       const commitCountStr = commitCount.toString();
-      commitTens = commitCountStr.length > 1 ? commitCountStr[0] : '0';
-      commitOnes = commitCountStr.length > 0 ? commitCountStr[commitCountStr.length - 1] : '0';
+      commitTens = commitCountStr.length > 1 ? commitCountStr[0] : "0";
+      commitOnes =
+        commitCountStr.length > 0
+          ? commitCountStr[commitCountStr.length - 1]
+          : "0";
 
       commitsText += `${latestCommitDate} - [${latestCommitTitle}](${latestCommitLink})`;
     }
     //---------------------------------------------------------------------------------------------------
     let clientType = "unknown";
     let statusEmote = "<:_:1111490661259165727>"; // Default emote for offline status
-    
+
     if (interaction.member?.presence?.clientStatus) {
       if (interaction.member.presence.clientStatus.mobile) {
         clientType = "Mobile";
@@ -92,7 +95,7 @@ module.exports = {
         clientType = "Website";
       }
     }
-    
+
     if (interaction.member?.presence?.status === "dnd") {
       if (clientType === "Mobile") {
         statusEmote = "<:_:1111031153604956250>";

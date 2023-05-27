@@ -1,7 +1,7 @@
 require("dotenv").config();
 const { token, databaseToken } = process.env;
 const { connect } = require("mongoose");
-const { Client, Collection, GatewayIntentBits } = require('discord.js');
+const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const fs = require("fs");
 
 const client = new Client({
@@ -20,13 +20,13 @@ const client = new Client({
     GatewayIntentBits.DirectMessages,
     GatewayIntentBits.DirectMessageReactions,
     GatewayIntentBits.DirectMessageTyping,
-    GatewayIntentBits.GuildMembers, 
-    GatewayIntentBits.MessageContent, 
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.MessageContent,
   ],
 });
 client.commands = new Collection();
 client.commandArray = [];
-client.botStartTime = new Date()
+client.botStartTime = new Date();
 
 const functionFolders = fs.readdirSync(`./src/functions`);
 for (const folder of functionFolders) {
