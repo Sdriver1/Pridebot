@@ -127,7 +127,7 @@ module.exports = {
     )} \` \n**Start Time:** \`${formatTimestamp(client.botStartTime)}\``;
     const discord = `**API Latency**: \`${client.ws.ping}\` \n**Client:** ${statusEmote} \`${clientType}\`\n**Status:** \`${interaction.member.presence.status}\``;
 
-    const embed = new EmbedBuilder().setColor(0x5865f2).addFields(
+    const embed = new EmbedBuilder().setColor(0xff00ae).addFields(
       {
         name: "<:_:1108228682184654908> __Bot Stats__",
         value: bot,
