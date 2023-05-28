@@ -23,9 +23,9 @@ module.exports = {
           title: "Asexual",
           title2: "Aromantic",
           description:
-            "Asexuality is a sexual orientation characterized by a lack of sexual attraction. Asexual individuals may still experience romantic attraction, which is referred to as aromanticism. Asexual people may form meaningful and fulfilling relationships without the need for sexual intimacy.",
+            "Asexual is an orientation where individuals do not experience sexual attraction towards others. They may still experience romantic, emotional, or aesthetic attraction. Asexual individuals may identify as asexual, ace, or any other term within the asexual spectrum.",
           description2:
-            "Asexuality is a valid and diverse sexual orientation that exists on a spectrum. Some asexual individuals may experience a low level of sexual attraction or may only experience it under specific circumstances. It's important to respect and understand asexuality as a legitimate orientation and not as a deficiency or lack.",
+            "Aromantic is an orientation where individuals do not experience romantic attraction towards others. They may still experience sexual, aesthetic, or platonic attraction. Aromantic individuals may identify as aromantic, aro, or any other term within the aromantic spectrum.",
         },
       },
       {
@@ -102,7 +102,7 @@ module.exports = {
         info: {
           title: "Lesbian",
           description:
-            "Lesbian is a sexual orientation specific to women, characterized by romantic and sexual attraction to other women. Lesbian individuals are exclusively attracted to individuals of the same gender.",
+            "Lesbian is a sexual orientation specific to women or afab non-binary, characterized by romantic and sexual attraction to other women. Lesbian individuals are exclusively attracted to individuals of the same gender.",
         },
       },
       {
@@ -161,9 +161,9 @@ module.exports = {
     const row = new ActionRowBuilder().addComponents(selectMenu);
 
     const embed = new EmbedBuilder()
-      .setTitle("Which sexuality do you want to learn about?")
+      .setTitle("What are *sexualities* and which sexuality do you want to learn about?")
       .setDescription(
-        "Choose one of the sexualities below that you want to learn about:"
+        `Sexualities are feelings, thoughts, attractions and behaviours towards other people in which you find other people physically, sexually or emotionally attractive. Sexualities normally categorized under two suffixes catergories: **-sexual** and **-romantic**. The suffix -sexual is more common one goes with usually an individuals sexual and phyical attractions. The suffix -romantic is less common and more used if an individual romantic/emotional attracted is different from there sexual/phyical attraction. If someone sexuality is same for sexual and romantic attraction, the romantic is looped into -sexual suffix. Individuals can have more then one sexuality to more narrow or specify their desired attractions. Sexualitys are also some of the more unknown aspects of an individual life as they can change or develop deeper so it is ok to be unsure; no need to rush. \n\n Choose one of the sexualities below that you want to learn about:`
       )
       .addFields({
         name: "Sexualities",

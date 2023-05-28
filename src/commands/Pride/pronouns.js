@@ -158,9 +158,9 @@ module.exports = {
     const row = new ActionRowBuilder().addComponents(selectMenu);
 
     const embed = new EmbedBuilder()
-      .setTitle("Which pronoun do you want to learn about?")
+      .setTitle("What are *pronouns* and which pronoun do you want to learn about?")
       .setDescription(
-        "Choose one of the pronouns or types below that you want to learn about:"
+        `Pronouns in a techinal/gramatical sense is "a word that is used instead of a noun or noun phrase" according [Oxford Learner's Dictionary](https://www.oxfordlearnersdictionaries.com/us/definition/english/pronoun). Though from more LGBTQ and identify sense are combination of self identifying labels to take place of ones name and/or proper noun in a sentence. With this, pronouns do not equal or construct with gender and/or sex. Pronouns are set label an individuals feels the most comfortable being refered to.\n\n Choose one of the pronouns or types below that you want to learn about:`
       )
       .addFields({
         name: "Pronouns",
