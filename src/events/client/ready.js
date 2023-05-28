@@ -12,8 +12,8 @@ module.exports = {
           status: "dnd",
         }
       : {
-          type: ActivityType.Playing,
-          text: "with new /pronouns command",
+          type: ActivityType.Watching,
+          text: "for full bot release 👀",
           status: "online",
         };
 
