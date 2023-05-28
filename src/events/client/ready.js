@@ -13,7 +13,7 @@ module.exports = {
         }
       : {
           type: ActivityType.Watching,
-          text: "for full bot release 👀",
+          text: "🌈Pridebot full public release",
           status: "online",
         };
 
