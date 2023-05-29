@@ -22,7 +22,7 @@ module.exports = {
         info: {
           title: "What is Agender",
           title2: "What do individuals feel under identification of",
-          title3: "What umbrella does the gender falls under",
+          title3: "What umbrella does the gender fall under",
           description:
             "Agender is a term used to describe individuals who do not identify with any particular gender. They may feel that they lack gender entirely or have a gender identity that is neutral or undefined.",
           description2:
@@ -38,7 +38,7 @@ module.exports = {
         info: {
           title: "What is Androgyne",
           title2: "What do individuals feel under identification of",
-          title3: "What umbrella does the gender falls under",
+          title3: "What umbrella does the gender fall under",
           description:
             "Androgyne is a term used to describe individuals who have a gender identity that is a combination of both masculine and feminine elements. They may feel that they embody characteristics and qualities typically associated with both genders.",
           description2:
@@ -54,7 +54,7 @@ module.exports = {
         info: {
           title: "What are Bigender/Trigender",
           title2: "What do individuals feel under identification of",
-          title3: "What umbrella does the gender falls under",
+          title3: "What umbrella does the gender fall under",
           description:
             "Bigender and Trigender are terms used to describe individuals who have two or three gender identities, respectively. These individuals may feel that their gender identity is not fixed and can encompass multiple genders.",
           description2:
@@ -70,13 +70,13 @@ module.exports = {
         info: {
           title: "What is Cisgender",
           title2: "What do individuals feel under identification of ",
-          title3: "What umbrella does the gender falls under",
+          title3: "What umbrella does the gender fall under",
           description:
             "Cisgender is a term used to describe individuals whose gender identity aligns with the sex they were assigned at birth. For example, a person who was assigned female at birth and identifies as a woman is considered cisgender.",
           description2:
             "Individuals who identify as cisgender often experience a sense of congruence between their gender identity and the societal expectations associated with their assigned sex. They may not question or struggle with their gender identity in the same way as transgender or non-binary individuals.",
           description3:
-            "Falls under the Cisgender umbrella and normally has terms Cis-male to represent an individual who assign male at birth (amab) with male gentials and Cis-female to represent an individual who assign female at birth (afab) with female gentials",
+            "Falls under the Cisgender umbrella and normally has terms Cis-male to represent an individual who assign male at birth (amab) with male genitals and Cis-female to represent an individual who assign female at birth (afab) with female genitals",
         },
       },
       {
@@ -87,62 +87,62 @@ module.exports = {
         info: {
           title: "What is Demigender",
           title2: "What do individuals feel under identification of",
-          title3: "What umbrella does the gender falls under",
+          title3: "What umbrella does the gender fall under",
           description:
             "Demigender is a term used to describe individuals who partially, but not fully, identify with a particular gender. They may feel a connection to a specific gender identity while also experiencing a sense of fluidity or ambiguity.",
           description2:
             "Individuals who identify as Demigender may experience their gender identity as a combination of one or more genders or as a separate and distinct gender identity that is not easily categorized.",
           description3:
-            "Falls under the Non-Binary umbrella. Demigender also has it's own term: Demiboy and Demigirl",
+            "Falls under the Non-Binary umbrella and then has it's own terms, Demiboy and Demigirl.",
         },
       },
       {
-        name: "GenderFlux",
-        description: "Click here to learn about GenderFlux.",
+        name: "Genderflux",
+        description: "Click here to learn about Genderflux.",
         value: "gfx",
         emoji: "1112196687830712380",
         info: {
-          title: "What is GenderFlux",
+          title: "What is Genderflux",
           title2: "What do individuals feel under identification of",
-          title3: "What umbrella does the gender falls under",
+          title3: "What umbrella does the gender fall under",
           description:
-            "GenderFlux is a term used to describe individuals whose gender identity fluctuates over time. They may experience shifts in their gender identity, moving between different genders or experiencing a range of gender identities.",
+            "Genderflux is a term used to describe individuals whose gender identity fluctuates over time. They may experience shifts in their gender identity, moving between different genders or experiencing a range of gender identities.",
           description2:
-            "Individuals who identify as GenderFlux may experience changes in their gender identity that can occur gradually or rapidly, and these changes can happen spontaneously or in response to different circumstances.",
+            "Individuals who identify as Genderflux may experience changes in their gender identity that can occur gradually or rapidly, and these changes can happen spontaneously or in response to different circumstances.",
           description3:
             "Falls under the Non-Binary umbrella in Genderfluid section.",
         },
       },
       {
-        name: "GenderFluid",
-        description: "Click here to learn about GenderFluid.",
+        name: "Genderfluid",
+        description: "Click here to learn about Genderfluid.",
         value: "gfd",
         emoji: "1112196520477999226",
         info: {
-          title: "What is GenderFluid",
+          title: "What is Genderfluid",
           title2: "What do individuals feel under identification of",
-          title3: "What umbrella does the gender falls under",
+          title3: "What umbrella does the gender fall under",
           description:
-            "GenderFluid is a term used to describe individuals whose gender identity is not fixed and can vary over time. They may experience shifts between different genders or a fluidity in their gender identity.",
+            "Genderfluid is a term used to describe individuals whose gender identity is not fixed and can vary over time. They may experience shifts between different genders or a fluidity in their gender identity.",
           description2:
-            "Individuals who identify as GenderFluid may feel that their gender identity is not limited to one category and can encompass a range of genders or no gender at all. Their experience of gender may change in response to internal or external factors.",
+            "Individuals who identify as Genderfluid may feel that their gender identity is not limited to one category and can encompass a range of genders or no gender at all. Their experience of gender may change in response to internal or external factors.",
           description3:
             "Falls under the Non-Binary umbrella and is main identify under Genderfluid section.",
         },
       },
       {
-        name: "GenderQueer",
-        description: "Click here to learn about GenderQueer.",
+        name: "Genderqueer",
+        description: "Click here to learn about Genderqueer.",
         value: "gq",
         emoji: "1112198854637539478",
         info: {
           title: "What is Genderqueer",
           title2: "What do individuals feel under identification of",
-          title3: "What umbrella does the gender falls under",
+          title3: "What umbrella does the gender fall under",
           description:
-            "GenderQueer is a term used to describe individuals who reject or challenge traditional notions of gender identity. They may identify outside of the binary categories of male and female, or they may embrace a non-binary or gender-expansive identity.",
+            "Genderqueer is a term used to describe individuals who reject or challenge traditional notions of gender identity. They may identify outside of the binary categories of male and female, or they may embrace a non-binary or gender-expansive identity.",
           description2:
-            "Individuals who identify as GenderQueer may experience a sense of fluidity, ambiguity, or multiplicity in their gender identity. They may reject societal expectations and norms associated with binary gender roles and express themselves in ways that align with their authentic self.",
+            "Individuals who identify as Genderqueer may experience a sense of fluidity, ambiguity, or multiplicity in their gender identity. They may reject societal expectations and norms associated with binary gender roles and express themselves in ways that align with their authentic self.",
           description3:
             "Falls under the Non-Binary umbrella in Genderfluid section.",
         },
@@ -155,7 +155,7 @@ module.exports = {
         info: {
           title: "What is Non-Binary",
           title2: "What do individuals feel under identification of",
-          title3: "What umbrella does the gender falls under",
+          title3: "What umbrella does the gender fall under",
           description:
             "Non-Binary is a term used to describe individuals whose gender identity does not exclusively align with the binary categories of male or female. They may identify as a combination of genders, as having a gender that is outside the binary, or as having no gender at all.",
           description2:
@@ -172,7 +172,7 @@ module.exports = {
         info: {
           title: "What is Transgender",
           title2: "What do individuals feel under identification of",
-          title3: "What umbrella does the gender falls under",
+          title3: "What umbrella does the gender fall under",
           description:
             "Transgender is a term used to describe individuals whose gender identity differs from the sex they were assigned at birth. For example, a person who was assigned male at birth but identifies as a woman is considered transgender.",
           description2:

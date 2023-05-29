@@ -16,7 +16,7 @@ module.exports = {
     const sex = [
       {
         name: "Asexual/Aromantic",
-        description: "Click to learn about Asexualy",
+        description: "Click to learn about Asexuality",
         value: "asexual",
         emoji: "1108870840709288111",
         info: {
@@ -192,22 +192,25 @@ module.exports = {
           }
         }
 
-        if (sexInfo.info.title) {
+        if (sexInfo.info.title2) {
           fields.push({
             name: `${sexInfo.info.title}`,
             value: `${sexInfo.info.description}`,
-          });
-        } else if (sexInfo.info.title2) {
-          fields.push({
+          },
+          {
             name: `${sexInfo.info.title2}`,
             value: `${sexInfo.info.description2}`,
+          });
+        } else if (sexInfo.info.title) {
+          fields.push({
+            name: `${sexInfo.info.title}`,
+            value: `${sexInfo.info.description}`,
           });
         }
 
         const selectedEmbed = {
           color: 0xff00ae,
           title: `Info on ${sexInfo.name}`,
-          timestamp: new Date().toISOString(),
           fields: fields,
         };
         selectInteraction.reply({ embeds: [selectedEmbed], ephemeral: true });

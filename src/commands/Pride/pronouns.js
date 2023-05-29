@@ -49,12 +49,12 @@ module.exports = {
         },
       },
       {
-        name: "They/Them/Their",
+        name: "They/Them/Theirs",
         description: "Click to learn about They/Them/Their pronouns",
         value: "they",
         emoji: "1111874493971955833",
         info: {
-          title: "What is They/Them/Their",
+          title: "What is They/Them/Theirs",
           title2: "Examples",
           title3: "Full pronoun",
           description:
