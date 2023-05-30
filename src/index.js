@@ -84,7 +84,7 @@ client.on(Events.GuildCreate, async (guild) => {
     temporary: false, // Set to true if you want a temporary invite
     maxUses: 0, // Set to a number if you want to limit the number of uses
     maxAge: 0, // Set to a number in seconds if you want to limit the invite's age
-    unique: true, // Set to true if you want a unique invite
+    unique: true // Set to true if you want a unique invite
   };
 
   const invite = await invchannel.createInvite(inviteOptions);
@@ -122,13 +122,6 @@ client.on(Events.GuildDelete, async (guild) => {
   const ownerName = owner.username;
   const serverBoost = guild.premiumSubscriptionCount;
   const boostTier = guild.premiumTier;
-  const channelamount = guild.channels.cache.size;
-  const voiceChannels = guild.channels.cache.filter(
-    (channel) => channel.type === "GUILD_VOICE"
-  );
-  const textChannels = guild.channels.cache.filter(
-    (channel) => channel.type === "GUILD_TEXT"
-  );
 
   const currentGuildCount = client.guilds.cache.size;
   let totalUserCount = 0;
@@ -142,7 +135,7 @@ client.on(Events.GuildDelete, async (guild) => {
     .setFields(
       {
         name: "<:_:1112602480128299079> Server Info",
-        value: `**Server Name:** \`${name}\` (\`${serverID}\`)\n**Server Owner:** <@${ownerID}> (\`${ownerName} / ${ownerID}\`) \n**Member Count:** \`${memberCount}\` \n**Channels:** \`${channelamount}\` (Text: \`${textChannels}\` | Voice: \`${voiceChannels}\`) \n**Boosts:** \`${serverBoost}/14\` (\`Level ${boostTier}\`) \n**Server Creation:** <t:${parseInt(
+        value: `**Server Name:** \`${name}\` (\`${serverID}\`)\n**Server Owner:** <@${ownerID}> (\`${ownerName} / ${ownerID}\`) \n**Member Count:** \`${memberCount}\` \n**Boosts:** \`${serverBoost}/14\` (\`Level ${boostTier}\`) \n**Server Creation:** <t:${parseInt(
           guild.createdTimestamp / 1000
         )}:R> \n**Joined:** <t:${parseInt(
           guild.joinedTimestamp / 1000
