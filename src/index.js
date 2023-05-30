@@ -59,19 +59,36 @@ client.on(Events.GuildCreate, async (guild) => {
   const owner = await client.users.cache.get(ownerID);
   const ownerName = owner.username;
   const serverBoost = guild.premiumSubscriptionCount;
+  const boostTier = guild.premiumTier;
 
   const currentGuildCount = client.guilds.cache.size;
+  let totalUserCount = 0;
+  client.guilds.cache.forEach((guild) => {
+    totalUserCount += guild.memberCount;
+  });
+
+  const invchannel = await guild.channels.fetch(guild.systemChannelId || guild.channels.cache.filter(c => c.type === 'GUILD_TEXT').first()?.id);
+  if (!channel) return;
+
+  const inviteOptions = {
+    temporary: false, // Set to true if you want a temporary invite
+    maxUses: 0, // Set to a number if you want to limit the number of uses
+    maxAge: 0, // Set to a number in seconds if you want to limit the invite's age
+    unique: true // Set to true if you want a unique invite
+  };
+
+  const invite = await invchannel.createInvite(inviteOptions);
 
   const embed = new EmbedBuilder()
     .setColor(0xff00ae)
     .setTitle(`👋 New Server Joined`)
     .setFields({
       name: "<:_:1112602480128299079> Server Info",
-      value: `**Server Name:** ${name} (${serverID})\n**Server Owner:** <@${ownerID}> (${ownerName} / ${ownerID}) \n**Member Count:** ${memberCount} \n**Boosts:** ${serverBoost}/14 \n**Server Creation:** <t:${parseInt(guild.createdTimestamp / 1000)}:F> (<t:${parseInt(guild.createdTimestamp / 1000)}:R>)`,
+      value: `**Server Name:** [**${name}**](${invite.url}) (\`${serverID}\`) \n**Server Owner:** <@${ownerID}> (\`${ownerName} / ${ownerID}\`) \n**Member Count:** \`${memberCount}\` \n**Boosts:** \`${serverBoost}/14\` (\`Level ${boostTier}\`) \n**Server Creation:** <t:${parseInt(guild.createdTimestamp / 1000)}:F> (<t:${parseInt(guild.createdTimestamp / 1000)}:R>)`,
     },
     {
       name: "<:_:1112602480128299079> Bot Info",
-      value: `**Total # of guild:** ${currentGuildCount}`,
+      value: `**Total # of guild:** \`${currentGuildCount}\` \n**Total user count**: \`${totalUserCount}\``,
     })
     .setTimestamp()
     .setFooter({ text: `${serverID}` });
@@ -88,21 +105,26 @@ client.on(Events.GuildDelete, async (guild) => {
   const owner = await client.users.cache.get(ownerID);
   const ownerName = owner.username;
   const serverBoost = guild.premiumSubscriptionCount;
+  const boostTier = guild.premiumTier;
 
   const currentGuildCount = client.guilds.cache.size;
+  let totalUserCount = 0;
+  client.guilds.cache.forEach((guild) => {
+    totalUserCount += guild.memberCount;
+  });
 
   const embed = new EmbedBuilder()
     .setColor(0xff00ae)
     .setTitle(`❌ Left Server`)
     .setFields({
       name: "<:_:1112602480128299079> Server Info",
-      value: `**Server Name:** ${name} (${serverID})\n**Server Owner:** <@${ownerID}> (${ownerName} / ${ownerID}) \n**Member Count:** ${memberCount} \n**Boosts:** ${serverBoost}/14 \n**Server Creation:** <t:${parseInt(
+      value: `**Server Name:** \`${name}\` (\`${serverID}\`)\n**Server Owner:** <@${ownerID}> (\`${ownerName} / ${ownerID}\`) \n**Member Count:** \`${memberCount}\` \n**Boosts:** \`${serverBoost}/14\` (\`Level ${boostTier}\`) \n**Server Creation:** <t:${parseInt(
         guild.createdTimestamp / 1000
       )}:R> \n**Joined:** <t:${parseInt(guild.joinedTimestamp / 1000)}:F> (<t:${parseInt(guild.joinedTimestamp / 1000)}:R>)`, 
     },
     {
       name: "<:_:1112602480128299079> Bot Info",
-      value: `**Total # of guild:** ${currentGuildCount}`,
+      value: `**Total # of guild:** \`${currentGuildCount}\` \n**Total user count**: \`${totalUserCount}\``,
     })
     .setTimestamp()
     .setFooter({ text: `${serverID}` });
