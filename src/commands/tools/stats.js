@@ -46,7 +46,7 @@ module.exports = {
     const repoName = "Pridebot";
 
     const commitsResponse = await axios.get(
-      `https://api.github.com/repos/${repoOwner}/${repoName}/commits`,
+      `https://api.github.com/repos/${repoOwner}/${repoName}/commits?per_page=100`,
       {
         headers: {
           Authorization: `Bearer ${githubToken}`,
@@ -56,7 +56,7 @@ module.exports = {
     );
     const commitsData = commitsResponse.data;
     const commitCount = commitsData.length;
-    const devcommitCount = commitsData.length-30;
+    const devcommitCount = commitsData.length - 30;
 
     let commitTens = "0";
     let commitOnes = "0";
@@ -123,7 +123,7 @@ module.exports = {
       }
     }
 
-    const bot = `**Ping**: \`${ping}\`\n**Version:** \` 1.${commitTens}.${commitOnes}\`\n**Uptime:** \`${formatUptime(
+    const bot = `**Ping**: \`${ping}\`\n**Version:** \`1.${commitTens}.${commitOnes}\`\n**Uptime:** \`${formatUptime(
       process.uptime()
     )} \` \n**Start Time:** \`${formatTimestamp(client.botStartTime)}\``;
     const discord = `**API Latency**: \`${client.ws.ping}\` \n**Client:** ${statusEmote} \`${clientType}\`\n**Status:** \`${interaction.member.presence.status}\``;
