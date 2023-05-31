@@ -7,6 +7,7 @@ const {
   GatewayIntentBits,
   Events,
   EmbedBuilder,
+  ChannelType
 } = require("discord.js");
 const fs = require("fs");
 
@@ -61,12 +62,22 @@ client.on(Events.GuildCreate, async (guild) => {
   const serverBoost = guild.premiumSubscriptionCount;
   const boostTier = guild.premiumTier;
   const channelamount = guild.channels.cache.size;
+  
   const voiceChannels = guild.channels.cache.filter(
-    (channel) => channel.type === "GUILD_VOICE"
-  );
+    (channel) => channel.type === ChannelType.GuildVoice
+  ).size;
   const textChannels = guild.channels.cache.filter(
-    (channel) => channel.type === "GUILD_TEXT"
-  );
+    (channel) => channel.type === ChannelType.GuildText
+  ).size;
+  const announceChannels = guild.channels.cache.filter(
+    (channel) => channel.type === ChannelType.GuildAnnouncement
+  ).size;
+  const stageChannels = guild.channels.cache.filter(
+    (channel) => channel.type === ChannelType.GuildStageVoice
+  ).size;
+  const forumChannels = guild.channels.cache.filter(
+    (channel) => channel.type === ChannelType.GuildForum
+  ).size;
 
   const currentGuildCount = client.guilds.cache.size;
   let totalUserCount = 0;
@@ -97,7 +108,7 @@ client.on(Events.GuildCreate, async (guild) => {
         name: "<:_:1112602480128299079> Server Info",
         value: `**Server Name:** [**${name}**](${
           invite.url
-        }) (\`${serverID}\`) \n**Server Owner:** <@${ownerID}> (\`${ownerName} / ${ownerID}\`) \n**Member Count:** \`${memberCount}\` \n**Channels:** \`${channelamount}\` (Text: \`${textChannels}\` | Voice: \`${voiceChannels}\`)\n**Boosts:** \`${serverBoost}/14\` (\`Level ${boostTier}\`) \n**Server Creation:** <t:${parseInt(
+        }) (\`${serverID}\`) \n**Server Owner:** <@${ownerID}> (\`${ownerName} / ${ownerID}\`) \n**Member Count:** \`${memberCount}\` \n**Channels:** \`${channelamount}\` \n • Text: \`${textChannels}\` \n • Voice: \`${voiceChannels}\` \n • Forum: \`${forumChannels}\` \n • Announcement: \`${announceChannels}\` \n • Stage: \`${stageChannels}\` \n**Boosts:** \`${serverBoost}/14\` (\`Level ${boostTier}\`) \n**Server Creation:** <t:${parseInt(
           guild.createdTimestamp / 1000
         )}:F> (<t:${parseInt(guild.createdTimestamp / 1000)}:R>)`,
       },

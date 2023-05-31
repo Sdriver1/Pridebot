@@ -56,7 +56,7 @@ module.exports = {
     );
     const commitsData = commitsResponse.data;
     const commitCount = commitsData.length;
-    const devcommitCount = commitsData.length - 30;
+    const devcommitCount = commitsData.length-30;
 
     let commitTens = "0";
     let commitOnes = "0";
@@ -123,10 +123,17 @@ module.exports = {
       }
     }
 
+ const currentGuildCount = client.guilds.cache.size;
+  let totalUserCount = 0;
+  client.guilds.cache.forEach((guild) => {
+    totalUserCount += guild.memberCount;
+  });      
+      
     const bot = `**Ping**: \`${ping}\`\n**Version:** \`1.${commitTens}.${commitOnes}\`\n**Uptime:** \`${formatUptime(
       process.uptime()
     )} \` \n**Start Time:** \`${formatTimestamp(client.botStartTime)}\``;
     const discord = `**API Latency**: \`${client.ws.ping}\` \n**Client:** ${statusEmote} \`${clientType}\`\n**Status:** \`${interaction.member.presence.status}\``;
+    const userstats = `**Total guilds:** \`${currentGuildCount}\` \n**Total users:** \`${totalUserCount}\``
 
     const embed = new EmbedBuilder().setColor(0xff00ae).addFields(
       {
@@ -138,6 +145,11 @@ module.exports = {
         name: "<:_:1108417509624926228> __Discord Stats__",
         value: discord,
         inline: true,
+      },
+      {
+        name: "<:_:1113295174701940776> __Guid/User Stats__",
+        value: userstats,
+        inline: true,  
       },
       {
         name: "<:_:1108421476148859010> __Latest Discord API Incident__",
