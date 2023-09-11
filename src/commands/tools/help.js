@@ -20,7 +20,7 @@ module.exports = {
         {
           name: "Useful links",
           value:
-            "[**Support Server**](https://discord.gg/guybqSTzdS) \n[**Bot Invite**](https://discord.com/api/oauth2/authorize?client_id=1101256478632972369&permissions=139586816000&scope=bot) \n[**Github Repo**](https://github.com/Sdriver1/Pridebot)",
+            "[**Support Server**](https://discord.gg/guybqSTzdS) \n[**Bot Invite**](https://discord.com/api/oauth2/authorize?client_id=1101256478632972369&permissions=415001594945&scope=bot%20applications.commands) \n[**Github Repo**](https://github.com/Sdriver1/Pridebot)",
         }
       );
     await interaction.reply({ embeds: [embed] });
