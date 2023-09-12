@@ -3,7 +3,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("gay")
-    .setDescription("Shows command list and helpful links"),
+    .setDescription("GAY!!!"),
 
   async execute(interaction, client) {
     const embed = new EmbedBuilder()

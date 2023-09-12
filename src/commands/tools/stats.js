@@ -160,11 +160,6 @@ module.exports = {
         value: DiscordApiIncident,
         inline: false,
       },
-      {
-        name: "<:_:1110925802041774151> __Latest GitHub Commit__",
-        value: commitsText,
-        inline: false,
-      }
     );
 
     await interaction.editReply({ embeds: [embed] });

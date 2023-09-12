@@ -15,7 +15,7 @@ module.exports = {
       .addFields(
         {
           name: "<:_:1115831076993110067> Commands",
-          value: `**Utility:** \n</help:1112238192784048208> - Shows command list and helpful links \n</stats:1111290488897683579> - Get the bot's and discord stats\n\n**LGBTQ related:** \n</gender:1112200593310756874> - Learn about any kinds or types of genders \n</pronouns:1111772157538730116> - Learn about any kinds or types of pronouns \n</sexuality:1111289006299283456> - Learn about any kinds or types of sexualities`,
+          value: `**Utility:** \n</help:1112238192784048208> - Shows command list and helpful links \n</stats:1111290488897683579> - Get the bot's and discord stats \n</latest:1150993734180278353> - Get the bot's latest updates \n\n**LGBTQ related:** \n</gender:1112200593310756874> - Learn about any kinds or types of genders \n</pronouns:1111772157538730116> - Learn about any kinds or types of pronouns \n</sexuality:1111289006299283456> - Learn about any kinds or types of sexualities \n</gay:1115861631226884107> - Learn about umbrella term "gay" and some brief history \n</lesbian:1115869305062576250> - Learn about term "lesbian" and some brief history`,
         },
         {
           name: "Useful links",
