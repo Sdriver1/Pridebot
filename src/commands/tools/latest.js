@@ -40,10 +40,16 @@ module.exports = {
 
     const embed = new EmbedBuilder().setColor(0xff00ae).addFields({
       name: "<:_:1110925802041774151> __Latest GitHub Commit__",
-      value: `${latestCommitDate} - [${latestCommitTitle}](${latestCommitLink})\n1. </latest:1150993734180278353> was added. Use it to see bot's latest updates \n2. Removed github section of </stats:1111290488897683579> \n3. Updating </help:1112238192784048208> and </gay:1115861631226884107> with content and grammar fixes `, // Placeholder value. You can edit it as needed.
+      value: `${latestCommitDate} - [${latestCommitTitle}](${latestCommitLink})\n1. Fixed grammar/spelling and updated some content in </sexuality:1111289006299283456>, </gender:1112200593310756874>, </pronouns:1111772157538730116> and </help:1112238192784048208> \n2. Updated all files in hosting services `, // Placeholder value. You can edit it as needed.
       inline: false,
     });
 
     await interaction.editReply({ embeds: [embed] });
   },
 };
+
+// </sexuality:1111289006299283456> || </gender:1112200593310756874> || </pronouns:1111772157538730116> || </lesbian:1115869305062576250> ||  ||  || </gay:1115861631226884107>
+// </stats:1111290488897683579> || </help:1112238192784048208> || </latest:1150993734180278353>
+//
+//
+//

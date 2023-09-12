@@ -164,7 +164,7 @@ module.exports = {
       .setTitle(
         "What are *pronouns* and which pronoun do you want to learn about?"
       )
-      .setDescription(`Pronouns in a techinal/gramatical sense is "a word that is used instead of a noun or noun phrase" according [Oxford Learner's Dictionary](https://www.oxfordlearnersdictionaries.com/us/definition/english/pronoun). Though from more LGBTQ and identify sense are combination of self identifying labels to take place of ones name and/or proper noun in a sentence. With this, pronouns do not equal or construct with gender and/or sex. Pronouns are set label an individuals feels the most comfortable being refered to.\n\n Choose one of the pronouns or types below that you want to learn about:`) // ... represents your earlier description for brevity
+      .setDescription(`In a technical/grammatical sense, a pronoun is "a word that is used instead of a noun or noun phrase," according to the [Oxford Learner's Dictionary](https://www.oxfordlearnersdictionaries.com/us/definition/english/pronoun). However, from an LGBTQ and identity perspective, pronouns are combinations of self-identifying labels that take the place of one's name or a proper noun in a sentence. Importantly, pronouns do not equate to or construct gender and/or sex. Pronouns are labels an individual feels most comfortable being referred to as.\n\n Choose one of the pronouns or types below that you want to learn about:`) // ... represents your earlier description for brevity
       .addFields({
         name: "Pronouns",
         value: pronoun.map((p) => `<:_:${p.emoji}> **${p.name}**`).join("\n"),

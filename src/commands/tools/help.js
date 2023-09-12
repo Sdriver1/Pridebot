@@ -9,7 +9,7 @@ module.exports = {
     const embed = new EmbedBuilder()
       .setTitle(`Pridebot Help`)
       .setDescription(
-        `Pridebot is pride themed bot developed by <@691506668781174824> with main goal of providing users with information on many sexualities, genders, pronouns, and other identities. It is used to help educate and develop users knowledge of LGBTQ identities and users of LGBTQ questioning themselves with unbiased and accurate information to help them discover themselves. `
+        `Pridebot is a pride-themed bot developed by <@691506668781174824>. Its primary goal is to provide users with information about various sexualities, genders, pronouns, and other identities. The bot aims to educate users about LGBTQ identities and assist those questioning their own identities by offering unbiased and accurate information to help them understand themselves better.`
       )
       .setColor(0xff00ae)
       .addFields(
