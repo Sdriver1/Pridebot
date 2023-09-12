@@ -56,7 +56,7 @@ module.exports = {
     );
     const commitsData = commitsResponse.data;
     const commitCount = commitsData.length;
-    const devcommitCount = commitsData.length-30;
+    const devcommitCount = commitsData.length - 30;
 
     let commitTens = "0";
     let commitOnes = "0";
@@ -105,7 +105,7 @@ module.exports = {
       } else if (clientType === "Website") {
         statusEmote = "<:_:1111030162646118440>";
       }
-    } else if (interaction.member.presence.status === "idle") {
+    } else if (interaction.member?.presence?.status === "idle") {
       if (clientType === "Mobile") {
         statusEmote = "<:_:1111031207296241765>";
       } else if (clientType === "Desktop") {
@@ -113,7 +113,7 @@ module.exports = {
       } else if (clientType === "Website") {
         statusEmote = "<:_:1111030230820323348>";
       }
-    } else if (interaction.member.presence.status === "online") {
+    } else if (interaction?.member.presence?.status === "online") {
       if (clientType === "Mobile") {
         statusEmote = "<:_:1111020888620539994>";
       } else if (clientType === "Desktop") {
@@ -123,17 +123,21 @@ module.exports = {
       }
     }
 
- const currentGuildCount = client.guilds.cache.size;
-  let totalUserCount = 0;
-  client.guilds.cache.forEach((guild) => {
-    totalUserCount += guild.memberCount;
-  });      
-      
+    const currentGuildCount = client.guilds.cache.size;
+    let totalUserCount = 0;
+    client.guilds.cache.forEach((guild) => {
+      totalUserCount += guild.memberCount;
+    });
+
     const bot = `**Ping**: \`${ping}\`\n**Version:** \`1.${commitTens}.${commitOnes}\`\n**Uptime:** \`${formatUptime(
       process.uptime()
     )} \` \n**Start Time:** \n\`${formatTimestamp(client.botStartTime)}\``;
-    const discord = `**API Latency**: \`${client.ws.ping}\` \n**Client:** ${statusEmote} \`${clientType}\`\n**Status:** \`${interaction.member.presence.status}\``;
-    const userstats = `**Total guilds:** \`${currentGuildCount}\` \n**Total users:** \`${totalUserCount}\``
+    const discord = `**API Latency**: \`${
+      client.ws.ping
+    }\` \n**Client:** ${statusEmote} \`${clientType}\`\n**Status:** \`${
+      interaction.member?.presence?.status || "unknown"
+    }\``;
+    const userstats = `**Total guilds:** \`${currentGuildCount}\` \n**Total users:** \`${totalUserCount}\``;
 
     const embed = new EmbedBuilder().setColor(0xff00ae).addFields(
       {
@@ -144,7 +148,7 @@ module.exports = {
       {
         name: "<:_:1113295174701940776> __Guid/User Stats__",
         value: userstats,
-        inline: true,  
+        inline: true,
       },
       {
         name: "<:_:1108417509624926228> __Discord Stats__",

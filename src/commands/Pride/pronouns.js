@@ -5,6 +5,8 @@ const {
   ActionRowBuilder,
   EmbedBuilder,
   ComponentType,
+  ButtonBuilder,
+  ButtonStyle,
 } = require("discord.js");
 
 module.exports = {
@@ -143,13 +145,14 @@ module.exports = {
       },
     ];
 
-    const selectOptions = pronoun.map((pronoun) =>
+    const selectOptions = pronoun.map((p) =>
       new StringSelectMenuOptionBuilder()
-        .setLabel(pronoun.name)
-        .setDescription(pronoun.description)
-        .setValue(pronoun.value)
-        .setEmoji(pronoun.emoji)
+        .setLabel(p.name)
+        .setDescription(p.description)
+        .setValue(p.value)
+        .setEmoji(p.emoji)
     );
+
     const selectMenu = new StringSelectMenuBuilder()
       .setCustomId("pronounSelect")
       .setPlaceholder("Choose pronouns here")
@@ -158,15 +161,13 @@ module.exports = {
     const row = new ActionRowBuilder().addComponents(selectMenu);
 
     const embed = new EmbedBuilder()
-      .setTitle("What are *pronouns* and which pronoun do you want to learn about?")
-      .setDescription(
-        `Pronouns in a techinal/gramatical sense is "a word that is used instead of a noun or noun phrase" according [Oxford Learner's Dictionary](https://www.oxfordlearnersdictionaries.com/us/definition/english/pronoun). Though from more LGBTQ and identify sense are combination of self identifying labels to take place of ones name and/or proper noun in a sentence. With this, pronouns do not equal or construct with gender and/or sex. Pronouns are set label an individuals feels the most comfortable being refered to.\n\n Choose one of the pronouns or types below that you want to learn about:`
+      .setTitle(
+        "What are *pronouns* and which pronoun do you want to learn about?"
       )
+      .setDescription(`Pronouns in a techinal/gramatical sense is "a word that is used instead of a noun or noun phrase" according [Oxford Learner's Dictionary](https://www.oxfordlearnersdictionaries.com/us/definition/english/pronoun). Though from more LGBTQ and identify sense are combination of self identifying labels to take place of ones name and/or proper noun in a sentence. With this, pronouns do not equal or construct with gender and/or sex. Pronouns are set label an individuals feels the most comfortable being refered to.\n\n Choose one of the pronouns or types below that you want to learn about:`) // ... represents your earlier description for brevity
       .addFields({
         name: "Pronouns",
-        value: pronoun
-          .map((pronoun) => `<:_:${pronoun.emoji}> **${pronoun.name}**`)
-          .join("\n"),
+        value: pronoun.map((p) => `<:_:${p.emoji}> **${p.name}**`).join("\n"),
         inline: true,
       })
       .setColor("#FF00AE")
@@ -174,56 +175,130 @@ module.exports = {
 
     await interaction.reply({ embeds: [embed], components: [row] });
 
+    function createPronounButtons(currentIndex) {
+      const components = [];
+
+      if (currentIndex > 0) {
+        const prevPronoun = pronoun[currentIndex - 1];
+        const prevLabel = `${prevPronoun.name}`;
+        const prevEmoji = `${prevPronoun.emoji}`;
+
+        const prevButton = new ButtonBuilder()
+          .setLabel(prevLabel)
+          .setEmoji(prevEmoji)
+          .setStyle(ButtonStyle.Secondary)
+          .setCustomId(`pronoun-${prevPronoun.value}`);
+        components.push(prevButton);
+      }
+
+      if (currentIndex < pronoun.length - 1) {
+        const nextPronoun = pronoun[currentIndex + 1];
+        const nextLabel = `${nextPronoun.name}`;
+        const nextEmoji = `${nextPronoun.emoji}`;
+
+        const nextButton = new ButtonBuilder()
+          .setLabel(nextLabel)
+          .setEmoji(nextEmoji)
+          .setStyle(ButtonStyle.Secondary)
+          .setCustomId(`pronoun-${nextPronoun.value}`);
+        components.push(nextButton);
+      }
+
+      return components;
+    }
+
     const collector = interaction.channel.createMessageComponentCollector({
       componentType: ComponentType.StringSelect,
     });
+
     collector.on("collect", (selectInteraction) => {
       if (selectInteraction.customId === "pronounSelect") {
-        const fields = [];
         const selectedValue = selectInteraction.values[0];
+        const pronounInfo = pronoun.find((p) => p.value === selectedValue);
 
-        let pronounInfo;
-        for (let i = 0; i < pronoun.length; i++) {
-          if (pronoun[i].value === selectedValue) {
-            pronounInfo = pronoun[i];
-          }
+        if (!pronounInfo) {
+          console.error(
+            `No pronoun information found for value: ${selectedValue}`
+          );
+          selectInteraction.reply({
+            content:
+              "Sorry, an error occurred while fetching pronoun information.",
+            ephemeral: true,
+          });
+          return;
         }
 
+        const currentIndex = pronoun.indexOf(pronounInfo);
+        const fieldsToAdd = [];
+
+        if (pronounInfo.info.title) {
+          fieldsToAdd.push({ name: pronounInfo.info.title, value: pronounInfo.info.description });
+        }
+        if (pronounInfo.info.title2) {
+          fieldsToAdd.push({ name: pronounInfo.info.title2, value: pronounInfo.info.description2 });
+        }
         if (pronounInfo.info.title3) {
-          fields.push(
-            {
-              name: `${pronounInfo.info.title}`,
-              value: `${pronounInfo.info.description}`,
-            },
-            {
-              name: `${pronounInfo.info.title2}`,
-              value: `${pronounInfo.info.description2}`,
-            },
-            {
-              name: `${pronounInfo.info.title3}`,
-              value: `${pronounInfo.info.description3}`,
-            }
-          );
-        } else if (pronounInfo.info.title2) {
-          fields.push(
-            {
-              name: `${pronounInfo.info.title}`,
-              value: `${pronounInfo.info.description}`,
-            },
-            {
-              name: `${pronounInfo.info.title2}`,
-              value: `${pronounInfo.info.description2}`,
-            }
-          );
+          fieldsToAdd.push({ name: pronounInfo.info.title3, value: pronounInfo.info.description3 });
+        }
+        
+        const selectedEmbed = new EmbedBuilder().setColor(0xff00ae);
+        selectedEmbed.addFields(...fieldsToAdd);
+
+        const buttons = createPronounButtons(currentIndex);
+        const updatedRow = new ActionRowBuilder().addComponents(buttons);
+
+        selectInteraction.reply({
+          embeds: [selectedEmbed],
+          components: [updatedRow],
+          ephemeral: true,
+        });
+      }
+    });
+
+    const buttonCollector = interaction.channel.createMessageComponentCollector(
+      {
+        componentType: ComponentType.BUTTON,
+        time: 60000,
+      }
+    );
+
+    buttonCollector.on("collect", (buttonInteraction) => {
+      const [, pronounValue] = buttonInteraction.customId.split("-");
+      const selectedPronounIndex = pronoun.findIndex(
+        (p) => p.value === pronounValue
+      );
+      const pronounInfo = pronoun[selectedPronounIndex];
+
+      if (!pronounInfo) {
+        console.error(
+          `No pronoun information found for index: ${selectedPronounIndex}`
+        );
+        return;
+      }
+
+      const fieldsToAdd = [];
+
+        if (pronounInfo.info.title) {
+          fieldsToAdd.push({ name: pronounInfo.info.title, value: pronounInfo.info.description });
+        }
+        if (pronounInfo.info.title2) {
+          fieldsToAdd.push({ name: pronounInfo.info.title2, value: pronounInfo.info.description2 });
+        }
+        if (pronounInfo.info.title3) {
+          fieldsToAdd.push({ name: pronounInfo.info.title3, value: pronounInfo.info.description3 });
         }
 
-        const selectedEmbed = {
-          color: 0xff00ae,
-          title: `Info on ${pronounInfo.name}`,
-          fields: fields,
-        };
-        selectInteraction.reply({ embeds: [selectedEmbed], ephemeral: true });
-      }
+      const updatedEmbed = new EmbedBuilder()
+        .setColor(0xff00ae)
+        updatedEmbed.addFields(...fieldsToAdd);
+
+      const updatedButtons = createPronounButtons(selectedPronounIndex);
+      const updatedRow = new ActionRowBuilder().addComponents(updatedButtons);
+
+      buttonInteraction.update({
+        embeds: [updatedEmbed],
+        components: [updatedRow],
+      });
     });
   },
 };

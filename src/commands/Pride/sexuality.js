@@ -5,6 +5,8 @@ const {
   ActionRowBuilder,
   EmbedBuilder,
   ComponentType,
+  ButtonBuilder,
+  ButtonStyle,
 } = require("discord.js");
 
 module.exports = {
@@ -146,16 +148,17 @@ module.exports = {
       },
     ];
 
-    const selectOptions = sex.map((sexuality) =>
+    const selectOptions = sex.map((s) =>
       new StringSelectMenuOptionBuilder()
-        .setLabel(sexuality.name)
-        .setDescription(sexuality.description)
-        .setValue(sexuality.value)
-        .setEmoji(sexuality.emoji)
+        .setLabel(s.name)
+        .setDescription(s.description)
+        .setValue(s.value)
+        .setEmoji(s.emoji)
     );
+
     const selectMenu = new StringSelectMenuBuilder()
-      .setCustomId("sexualitySelect")
-      .setPlaceholder("Choose Sexuality here")
+      .setCustomId("sexSelect")
+      .setPlaceholder("Choose sex here")
       .addOptions(selectOptions);
 
     const row = new ActionRowBuilder().addComponents(selectMenu);
@@ -167,54 +170,133 @@ module.exports = {
       )
       .addFields({
         name: "Sexualities",
-        value: sex
-          .map((sexuality) => `<:_:${sexuality.emoji}> **${sexuality.name}**`)
-          .join("\n"),
+        value: sex.map((s) => `<:_:${s.emoji}> **${s.name}**`).join("\n"),
         inline: true,
       })
       .setColor("#FF00AE")
       .setTimestamp();
+
+      function createSexualityButtons(currentIndex) {
+        const components = [];
+      
+        if (currentIndex > 0) {
+          const prevSexuality = sex[currentIndex - 1];
+          const prevLabel = `${prevSexuality.name}`;
+          const prevEmoji = `${prevSexuality.emoji}`;
+      
+          const prevButton = new ButtonBuilder()
+            .setLabel(prevLabel)
+            .setEmoji(prevEmoji)
+            .setStyle(ButtonStyle.Secondary)
+            .setCustomId(`sex-${prevSexuality.value}`);
+          components.push(prevButton);
+        }
+      
+        if (currentIndex < sex.length - 1) {
+          const nextSexuality = sex[currentIndex + 1];
+          const nextLabel = `${nextSexuality.name}`;
+          const nextEmoji = `${nextSexuality.emoji}`
+      
+          const nextButton = new ButtonBuilder()
+            .setLabel(nextLabel)
+            .setEmoji(nextEmoji)
+            .setStyle(ButtonStyle.Secondary)
+            .setCustomId(`sex-${nextSexuality.value}`);
+          components.push(nextButton);
+        }
+      
+        return components;
+      }
 
     await interaction.reply({ embeds: [embed], components: [row] });
 
     const collector = interaction.channel.createMessageComponentCollector({
       componentType: ComponentType.StringSelect,
     });
+
     collector.on("collect", (selectInteraction) => {
-      if (selectInteraction.customId === "sexualitySelect") {
-        const fields = [];
+      if (selectInteraction.customId === "sexSelect") {
         const selectedValue = selectInteraction.values[0];
+        const sexInfo = sex.find((s) => s.value === selectedValue);
 
-        let sexInfo;
-        for (let i = 0; i < sex.length; i++) {
-          if (sex[i].value === selectedValue) {
-            sexInfo = sex[i];
-          }
+        // Check if sexInfo exists
+        if (!sexInfo) {
+          console.error(
+            `No sexuality information found for value: ${selectedValue}`
+          );
+          // Optionally, you can inform the user about the error or provide further instructions.
+          selectInteraction.reply({
+            content:
+              "Sorry, an error occurred while fetching sexuality information.",
+            ephemeral: true,
+          });
+          return; // This stops the rest of the code from executing
         }
 
+        const currentIndex = sex.indexOf(sexInfo);
+        const fieldsToAdd = [];
+
+        if (sexInfo.info.title) {
+          fieldsToAdd.push({ name: sexInfo.info.title, value: sexInfo.info.description });
+        }
         if (sexInfo.info.title2) {
-          fields.push({
-            name: `${sexInfo.info.title}`,
-            value: `${sexInfo.info.description}`,
-          },
-          {
-            name: `${sexInfo.info.title2}`,
-            value: `${sexInfo.info.description2}`,
-          });
-        } else if (sexInfo.info.title) {
-          fields.push({
-            name: `${sexInfo.info.title}`,
-            value: `${sexInfo.info.description}`,
-          });
+          fieldsToAdd.push({ name: sexInfo.info.title2, value: sexInfo.info.description2 });
         }
+        
+        const selectedEmbed = new EmbedBuilder().setColor(0xff00ae);
+        selectedEmbed.addFields(...fieldsToAdd);
 
-        const selectedEmbed = {
-          color: 0xff00ae,
-          title: `Info on ${sexInfo.name}`,
-          fields: fields,
-        };
-        selectInteraction.reply({ embeds: [selectedEmbed], ephemeral: true });
+        const buttons = createSexualityButtons(currentIndex);
+        const updatedRow = new ActionRowBuilder().addComponents(buttons);
+
+        selectInteraction.reply({
+          embeds: [selectedEmbed],
+          components: [updatedRow],
+          ephemeral: true,
+        });
       }
+    });
+
+    const buttonCollector = interaction.channel.createMessageComponentCollector(
+      {
+        componentType: ComponentType.BUTTON, // Updated to BUTTON type
+        time: 60000, // 1 minute
+      }
+    );
+
+    buttonCollector.on("collect", (buttonInteraction) => {
+      const [, sexValue] = buttonInteraction.customId.split("-");
+      const selectedSexualityIndex = sex.findIndex(
+        (s) => s.value === sexValue
+      );
+      const sexInfo = sex[selectedSexualityIndex];
+      if (!sexInfo) {
+        console.error(
+          `No sexuality information found for index: ${selectedSexualityIndex}`
+        );
+        // Handle error here, such as sending a message to the user.
+        return;
+      }
+
+      const fieldsToAdd = [];
+
+      if (sexInfo.info.title) {
+        fieldsToAdd.push({ name: sexInfo.info.title, value: sexInfo.info.description });
+      }
+      if (sexInfo.info.title2) {
+        fieldsToAdd.push({ name: sexInfo.info.title2, value: sexInfo.info.description2 });
+      }
+      
+      const updatedEmbed = new EmbedBuilder().setColor(0xff00ae);
+      updatedEmbed.addFields(...fieldsToAdd);
+
+      const updatedButtons = createSexualityButtons(selectedSexualityIndex);
+      const updatedRow = new ActionRowBuilder().addComponents(updatedButtons);
+
+      buttonInteraction.update({
+        embeds: [updatedEmbed],
+        components: [updatedRow],
+      });
     });
   },
 };

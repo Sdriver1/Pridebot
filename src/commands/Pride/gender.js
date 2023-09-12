@@ -5,6 +5,8 @@ const {
   ActionRowBuilder,
   EmbedBuilder,
   ComponentType,
+  ButtonBuilder,
+  ButtonStyle,
 } = require("discord.js");
 
 module.exports = {
@@ -183,13 +185,14 @@ module.exports = {
       },
     ];
 
-    const selectOptions = gender.map((gender) =>
+    const selectOptions = gender.map((g) =>
       new StringSelectMenuOptionBuilder()
-        .setLabel(gender.name)
-        .setDescription(gender.description)
-        .setValue(gender.value)
-        .setEmoji(gender.emoji)
+        .setLabel(g.name)
+        .setDescription(g.description)
+        .setValue(g.value)
+        .setEmoji(g.emoji)
     );
+
     const selectMenu = new StringSelectMenuBuilder()
       .setCustomId("genderSelect")
       .setPlaceholder("Choose gender here")
@@ -204,48 +207,130 @@ module.exports = {
       )
       .addFields({
         name: "Genders",
-        value: gender
-          .map((gender) => `<:_:${gender.emoji}> **${gender.name}**`)
-          .join("\n"),
+        value: gender.map((g) => `<:_:${g.emoji}> **${g.name}**`).join("\n"),
         inline: true,
       })
       .setColor("#FF00AE")
       .setTimestamp();
+
+      function createGenderButtons(currentIndex) {
+        const components = [];
+      
+        if (currentIndex > 0) {
+          const prevGender = gender[currentIndex - 1];
+          const prevLabel = `${prevGender.name}`;
+          const prevEmoji = `${prevGender.emoji}`;
+      
+          const prevButton = new ButtonBuilder()
+            .setLabel(prevLabel)
+            .setEmoji(prevEmoji)
+            .setStyle(ButtonStyle.Secondary)
+            .setCustomId(`gender-${prevGender.value}`);
+          components.push(prevButton);
+        }
+      
+        if (currentIndex < gender.length - 1) {
+          const nextGender = gender[currentIndex + 1];
+          const nextLabel = `${nextGender.name}`;
+          const nextEmoji = `${nextGender.emoji}`
+      
+          const nextButton = new ButtonBuilder()
+            .setLabel(nextLabel)
+            .setEmoji(nextEmoji)
+            .setStyle(ButtonStyle.Secondary)
+            .setCustomId(`gender-${nextGender.value}`);
+          components.push(nextButton);
+        }
+      
+        return components;
+      }
 
     await interaction.reply({ embeds: [embed], components: [row] });
 
     const collector = interaction.channel.createMessageComponentCollector({
       componentType: ComponentType.StringSelect,
     });
+
     collector.on("collect", (selectInteraction) => {
       if (selectInteraction.customId === "genderSelect") {
-        const fields = [];
         const selectedValue = selectInteraction.values[0];
+        const genderInfo = gender.find((g) => g.value === selectedValue);
 
-        let genderInfo;
-        for (let i = 0; i < gender.length; i++) {
-          if (gender[i].value === selectedValue) {
-            genderInfo = gender[i];
-          }
+        // Check if genderInfo exists
+        if (!genderInfo) {
+          console.error(
+            `No gender information found for value: ${selectedValue}`
+          );
+          // Optionally, you can inform the user about the error or provide further instructions.
+          selectInteraction.reply({
+            content:
+              "Sorry, an error occurred while fetching gender information.",
+            ephemeral: true,
+          });
+          return; // This stops the rest of the code from executing
         }
 
+        const currentIndex = gender.indexOf(genderInfo);
+
         const selectedEmbed = new EmbedBuilder().setColor(0xff00ae).addFields(
+          { name: genderInfo.info.title, value: genderInfo.info.description },
           {
-            name: `${genderInfo.info.title}`,
-            value: `${genderInfo.info.description}`,
+            name: genderInfo.info.title2,
+            value: genderInfo.info.description2,
           },
           {
-            name: `${genderInfo.info.title2}`,
-            value: `${genderInfo.info.description2}`,
-          },
-          {
-            name: `${genderInfo.info.title3}`,
-            value: `${genderInfo.info.description3}`,
+            name: genderInfo.info.title3,
+            value: genderInfo.info.description3,
           }
         );
 
-        selectInteraction.reply({ embeds: [selectedEmbed], ephemeral: true });
+        const buttons = createGenderButtons(currentIndex);
+        const updatedRow = new ActionRowBuilder().addComponents(buttons);
+
+        selectInteraction.reply({
+          embeds: [selectedEmbed],
+          components: [updatedRow],
+          ephemeral: true,
+        });
       }
+    });
+
+    const buttonCollector = interaction.channel.createMessageComponentCollector(
+      {
+        componentType: ComponentType.BUTTON, // Updated to BUTTON type
+        time: 60000, // 1 minute
+      }
+    );
+
+    buttonCollector.on("collect", (buttonInteraction) => {
+      const [, genderValue] = buttonInteraction.customId.split("-");
+      const selectedGenderIndex = gender.findIndex(
+        (g) => g.value === genderValue
+      );
+      const genderInfo = gender[selectedGenderIndex];
+      if (!genderInfo) {
+        console.error(
+          `No gender information found for index: ${selectedGenderIndex}`
+        );
+        // Handle error here, such as sending a message to the user.
+        return;
+      }
+
+      const updatedEmbed = new EmbedBuilder()
+        .setColor(0xff00ae)
+        .addFields(
+          { name: genderInfo.info.title, value: genderInfo.info.description },
+          { name: genderInfo.info.title2, value: genderInfo.info.description2 },
+          { name: genderInfo.info.title3, value: genderInfo.info.description3 }
+        );
+
+      const updatedButtons = createGenderButtons(selectedGenderIndex);
+      const updatedRow = new ActionRowBuilder().addComponents(updatedButtons);
+
+      buttonInteraction.update({
+        embeds: [updatedEmbed],
+        components: [updatedRow],
+      });
     });
   },
 };
