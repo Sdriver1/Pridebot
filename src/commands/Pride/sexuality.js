@@ -158,7 +158,7 @@ module.exports = {
 
     const selectMenu = new StringSelectMenuBuilder()
       .setCustomId("sexSelect")
-      .setPlaceholder("Choose sex here")
+      .setPlaceholder("Choose sexuality here")
       .addOptions(selectOptions);
 
     const row = new ActionRowBuilder().addComponents(selectMenu);

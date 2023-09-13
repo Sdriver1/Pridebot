@@ -17,7 +17,7 @@ module.exports = {
         },
         {
           name: `<:_:1109676932251000923> The flag`,
-          value: `When most people think of gay, they think of a rainbow flag (<:_:1108822823721521242>) but in reality, the rainbow flag was actually founded in 1978 when the artist Gilbert Baker, an openly gay man, designed the first rainbow flag. He was urged by Harvey Milk, one of the first openly gay elected officials in the U.S., to create a symbol of pride for the gay community. ([Source](https://www.britannica.com/story/how-did-the-rainbow-flag-become-a-symbol-of-lgbt-pride)) \n\nThe new modern gay flag name is actually called "[Trans-Inclusive Gay Men's Pride Flag](https://www.hrc.org/resources/lgbtq-pride-flags)" <:_:1109676932251000923> and is version of the rainbow flag with more greenish/blue colors to represent didn't identidies of males.`,
+          value: `When most people think of gay, they think of a rainbow flag (<:_:1108822823721521242>) but in reality, the rainbow flag was actually founded in 1978 when the artist Gilbert Baker, an openly gay man, designed the first rainbow flag. He was urged by Harvey Milk, one of the first openly gay elected officials in the U.S., to create a symbol of pride for the gay community. ([Source](https://www.britannica.com/story/how-did-the-rainbow-flag-become-a-symbol-of-lgbt-pride)) \n\nThe new modern gay flag name is actually called "[Trans-Inclusive Gay Men's Pride Flag](https://www.hrc.org/resources/lgbtq-pride-flags)" <:_:1109676932251000923> and is version of the rainbow flag with more greenish/blue colors to represent different identities of males.`,
         }
       );
     await interaction.reply({ embeds: [embed] });
