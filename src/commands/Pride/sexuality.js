@@ -66,7 +66,7 @@ module.exports = {
         info: {
           title: "Gay",
           description:
-            "Gay is a sexual orientation characterized by attraction to individuals of the same gender. Gay individuals experience romantic and sexual attraction towards people of the same gender identity.",
+            "Gay is a sexual orientation characterized by an attraction to individuals of the same gender. Gay individuals experience romantic and sexual attraction towards people of the same gender identity.",
         },
       },
       {

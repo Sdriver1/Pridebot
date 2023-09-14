@@ -60,7 +60,7 @@ module.exports = {
           title2: "Examples",
           title3: "Full pronoun",
           description:
-            "These pronouns are gender-neutral and can be used by individuals who identify as non-binary, genderqueer, or prefer not to specify their gender. They are also used as singular pronouns in certain contexts or commonly used if personing using the pronouns are unsure of someone else pronouns.",
+            "These pronouns are gender-neutral and can be used by individuals who identify as non-binary, genderqueer, or prefer not to specify their gender. They are also used as singular pronouns in certain contexts or commonly used if the person using the pronouns is unsure of someone else pronouns.",
           description2:
             "**They** are going to the party.\nI met **them** yesterday.\n**Their** phone is ringing.",
           description3:
@@ -110,7 +110,7 @@ module.exports = {
           title: "What is any/all pronouns",
           title2: "Examples",
           description:
-            "Some individuals prefer to be referred to using any or all pronouns, regardless of their gender identity. The individual though may prefer some pronouns over other, so make sure to check what the individual is comfortable with or prefers more",
+            "Some individuals prefer to be referred to using any or all pronouns, regardless of their gender identity. The individual though may prefer some pronouns over others, so make sure to check what the individual is comfortable with or prefers more",
           description2:
             "I heard **they** are going to the party so I met up with **him**. We took **her** car.",
         },
@@ -138,7 +138,7 @@ module.exports = {
           title: "What classifies as others pronouns",
           title2: "Examples",
           description:
-            "Others pronouns refer to pronoun sets that are not commonly listed or fall outside of traditional pronouns. These can include specific neopronouns or pronouns that individuals create for themselves.",
+            "Other pronouns refer to pronoun sets that are not commonly listed or fall outside of traditional pronouns. These can include specific neopronouns or pronouns that individuals create for themselves.",
           description2:
             "Examples can be anything the individual decides to be identified as",
         },
