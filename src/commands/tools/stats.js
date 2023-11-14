@@ -1,7 +1,6 @@
 require("dotenv").config();
 const { githubToken } = process.env;
-const { SlashCommandBuilder } = require("discord.js");
-const { EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const axios = require("axios");
 
 module.exports = {
@@ -22,25 +21,68 @@ module.exports = {
       minute: "numeric",
       hour12: true,
     };
-    const response = await axios.get(
-      "https://discordstatus.com/api/v2/incidents.json"
-    );
-    const data = response.data;
-    const incident = data.incidents[0];
 
-    let DiscordApiIncident = "No incidents found";
-    if (incident && incident.created_at) {
-      const created_at = new Date(incident.created_at).toLocaleString(
-        "en-US",
-        options
+    const response = await axios
+      .get("https://discordstatus.com/api/v2/incidents.json")
+      .catch(function (error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Error", error.message);
+        }
+        console.log(error.config);
+      });
+    const data = response.data;
+
+    function isSameDay(d1, d2) {
+      return (
+        d1.getUTCFullYear() === d2.getUTCFullYear() &&
+        d1.getUTCMonth() === d2.getUTCMonth() &&
+        d1.getUTCDate() === d2.getUTCDate()
       );
-      const formattedDate = new Date(incident.created_at).toLocaleDateString(
-        "en-US",
-        { month: "long", day: "numeric", year: "numeric" }
-      );
-      DiscordApiIncident = `${formattedDate} - [${incident.name}](${data.page.url}/incidents/${incident.id})`;
     }
 
+    const today = new Date();
+    const todaysIncidents = data.incidents.filter((incident) =>
+      isSameDay(new Date(incident.created_at), today)
+    );
+
+    let DiscordApiIncident = "No incidents found";
+
+    if (todaysIncidents.length) {
+      DiscordApiIncident = todaysIncidents
+        .map((incident) => {
+          const formattedDate = new Date(
+            incident.created_at
+          ).toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+          });
+          return `${formattedDate} - [${incident.name}](${data.page.url}/incidents/${incident.id})`;
+        })
+        .join("\n");
+    } else if (data.incidents.length) {
+      const latestIncident = data.incidents[0];
+      const formattedDate = new Date(
+        latestIncident.created_at
+      ).toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      });
+      DiscordApiIncident = `${formattedDate} - [${latestIncident.name}](${data.page.url}/incidents/${latestIncident.id})`;
+    }
     // Retrieve GitHub commit information
     const repoOwner = "Sdriver1";
     const repoName = "Pridebot";
@@ -146,7 +188,7 @@ module.exports = {
         inline: true,
       },
       {
-        name: "<:_:1113295174701940776> __Guid/User Stats__",
+        name: "<:_:1113295174701940776> __Guild/User Stats__",
         value: userstats,
         inline: true,
       },
@@ -159,7 +201,7 @@ module.exports = {
         name: "<:_:1108421476148859010> __Latest Discord API Incident__",
         value: DiscordApiIncident,
         inline: false,
-      },
+      }
     );
 
     await interaction.editReply({ embeds: [embed] });

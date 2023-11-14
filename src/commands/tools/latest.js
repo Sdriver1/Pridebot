@@ -40,7 +40,7 @@ module.exports = {
 
     const embed = new EmbedBuilder().setColor(0xff00ae).addFields({
       name: "<:_:1110925802041774151> __Latest GitHub Commit__",
-      value: `${latestCommitDate} - [${latestCommitTitle}](${latestCommitLink})\n1. Fixed grammar/spelling in </sexuality:1111289006299283456>, </gender:1112200593310756874>, </pronouns:1111772157538730116>, </lesbian:1115869305062576250>, and </gay:1115861631226884107>\n2. Updated all files in hosting services and increased memory from 0.5GB to 1GB`, // Placeholder value. You can edit it as needed.
+      value: `${latestCommitDate} - [${latestCommitTitle}](${latestCommitLink})\n1. Changed discord incident tracker in </stats:1111290488897683579> to allow mulitple if to occur\n2. Added bot stats tracker for [support server](https://discord.gg/guybqSTzdS)\n3. Moved to more reliable and better hosting service`, // Placeholder value. You can edit it as needed.
       inline: false,
     });
 

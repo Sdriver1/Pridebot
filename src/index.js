@@ -7,7 +7,7 @@ const {
   GatewayIntentBits,
   Events,
   EmbedBuilder,
-  ChannelType
+  ChannelType,
 } = require("discord.js");
 const fs = require("fs");
 
@@ -44,13 +44,6 @@ for (const folder of functionFolders) {
     require(`./functions/${folder}/${file}`)(client);
 }
 
-client.handleEvents();
-client.handleCommands();
-client.login(token);
-(async () => {
-  await connect(databaseToken).catch(console.error);
-})();
-
 client.on(Events.GuildCreate, async (guild) => {
   const channel = await client.channels.cache.get("1112590962867310602");
   const name = guild.name;
@@ -62,7 +55,7 @@ client.on(Events.GuildCreate, async (guild) => {
   const serverBoost = guild.premiumSubscriptionCount;
   const boostTier = guild.premiumTier;
   const channelamount = guild.channels.cache.size;
-  
+
   const voiceChannels = guild.channels.cache.filter(
     (channel) => channel.type === ChannelType.GuildVoice
   ).size;
@@ -95,7 +88,7 @@ client.on(Events.GuildCreate, async (guild) => {
     temporary: false, // Set to true if you want a temporary invite
     maxUses: 0, // Set to a number if you want to limit the number of uses
     maxAge: 0, // Set to a number in seconds if you want to limit the invite's age
-    unique: true // Set to true if you want a unique invite
+    unique: true, // Set to true if you want a unique invite
   };
 
   const invite = await invchannel.createInvite(inviteOptions);
@@ -162,3 +155,50 @@ client.on(Events.GuildDelete, async (guild) => {
 
   await channel.send({ embeds: [embed] });
 });
+
+async function getRegisteredCommandsCount() {
+  const commands = await client.application.commands.fetch();
+  return commands.size;
+}
+
+const updateChannelName = async () => {
+  const guildsCount = client.guilds.cache.size;
+  const usersCount = client.guilds.cache.reduce(
+    (acc, guild) => acc + guild.memberCount,
+    0
+  );
+  const registeredCommandsCount = await getRegisteredCommandsCount();
+
+  const newChannelName1 = `Guilds: ${guildsCount}`;
+  const newChannelName2 = `Users: ${usersCount}`;
+  const newChannelName3 = `# of Commands: ${registeredCommandsCount}`;
+  const channelId1 = "1152452882663227423";
+  const channelId2 = "1152452919719903313";
+  const channelId3 = "1152452950132805722";
+  const channel1 = client.channels.cache.get(channelId1);
+  const channel2 = client.channels.cache.get(channelId2);
+  const channel3 = client.channels.cache.get(channelId3);
+
+  if (channel1 && channel1.type === 2) {
+    channel1.setName(newChannelName1).catch(console.error);
+  }
+  if (channel2 && channel2.type === 2) {
+    channel2.setName(newChannelName2).catch(console.error);
+  }
+  if (channel3 && channel3.type === 2) {
+    channel3.setName(newChannelName3).catch(console.error);
+  }
+};
+
+// Update the channel name every 15 minutes
+setInterval(updateChannelName, 5 * 60 * 1000);
+client.once("ready", () => {
+  updateChannelName(); // Update once immediately on bot start
+});
+
+client.handleEvents();
+client.handleCommands();
+client.login(token);
+(async () => {
+  await connect(databaseToken).catch(console.error);
+})();
