@@ -40,7 +40,7 @@ module.exports = {
 
     const embed = new EmbedBuilder().setColor(0xff00ae).addFields({
       name: "<:_:1110925802041774151> __Latest GitHub Commit__",
-      value: `${latestCommitDate} - [${latestCommitTitle}](${latestCommitLink})\n1. Changed discord incident tracker in </stats:1111290488897683579> to allow mulitple if to occur\n2. Added bot stats tracker for [support server](https://discord.gg/guybqSTzdS)\n3. Moved to more reliable and better hosting service`, // Placeholder value. You can edit it as needed.
+      value: `${latestCommitDate} - [${latestCommitTitle}](${latestCommitLink})1. Updated all dependencies to latest versions \n2. Cleared up \`index.js\` file and moved items to separate handlers \n3. Added [**Top.gg**](https://top.gg/bot/1101256478632972369?s=0bed0f7e006a2) to </help:1112238192784048208>`, // Placeholder value. You can edit it as needed.
       inline: false,
     });
 
