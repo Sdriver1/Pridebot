@@ -42,9 +42,13 @@ for (const folder of functionFolders) {
 const updateChannelName = require("./events/client/statsTracker");
 const handleGuildCreate = require("./events/client/guildCreate");
 const handleGuildDelete = require("./events/client/guildDelete");
+const handleReportFeedback = require("./events/client/reportFeedback");
 
 client.on(Events.GuildCreate, (guild) => handleGuildCreate(client, guild));
 client.on(Events.GuildDelete, (guild) => handleGuildDelete(client, guild));
+client.on("interactionCreate", (interaction) => {
+  handleReportFeedback(client, interaction);
+});
 
 // Update channel name periodically
 setInterval(() => updateChannelName(client), 5 * 60 * 1000);

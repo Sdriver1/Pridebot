@@ -22,7 +22,7 @@ module.exports = {
         emoji: "1112234548999245834",
         info: {
           title: "Tool Commands",
-          description: `</help:1112238192784048208> - Shows command list and helpful links \n</stats:1111290488897683579> - Get the bot's and discord stats \n</latest:1150993734180278353> - Get the bot's latest updates`
+          description: `</help:1112238192784048208> - Shows command list and helpful links \n</stats:1111290488897683579> - Get the bot's and discord stats \n</latest:1150993734180278353> - Get the bot's latest updates \n</bugreport:1176639348423266457> - Submit any bugs you find with Pridebot \n</feedback:1176639348423266456> - Submit any feedback you have on Pridebot`
         },
       },
       {

@@ -45,7 +45,7 @@ module.exports = {
       },
       {
         name: "<:_:1110925802041774151> Updates",
-        value: `1. Reworked </help:1112238192784048208> so now has select menu for command info \n2. Moved commands from 2 categories to 4 categories and add 2 new commands \n3. New commands: </mentalhealth:1176244149184385054> and </comingout:1176020092581060678> (Info in </help:1112238192784048208> under support) \n4. Changed start time in </stats:1111290488897683579> to timestamp \n5. Added a [README.](https://github.com/Sdriver1/Pridebot/blob/main/README.md) to Github]`, // Placeholder value. You can edit it as needed.
+        value: `1. Added 2 new commands: </bugreport:1176639348423266457> and </feedback:1176639348423266456> \n2. Updated </help:1112238192784048208> with new commands`, // Placeholder value. You can edit it as needed.
         inline: false,
       }
     );
@@ -57,5 +57,5 @@ module.exports = {
 // Pride: </lesbian:1115869305062576250> || </gay:1115861631226884107>
 // Support: </mentalhealth:1176244149184385054> || </comingout:1176020092581060678>
 // Terms: </sexuality:1111289006299283456> || </gender:1112200593310756874> || </pronouns:1111772157538730116>
-// Tools: </stats:1111290488897683579> || </help:1112238192784048208> || </latest:1150993734180278353>
+// Tools: </stats:1111290488897683579> || </help:1112238192784048208> || </latest:1150993734180278353> || </bugreport:1176639348423266457> || </feedback:1176639348423266456>
 //
