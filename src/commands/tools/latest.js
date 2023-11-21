@@ -45,7 +45,7 @@ module.exports = {
       },
       {
         name: "<:_:1110925802041774151> Updates",
-        value: `1. Reworked </help:1112238192784048208> so now has select menu for command info \n2. Moved commands from 2 categories to 4 categories and add 2 new commands \n3. New commands: </mentalhealth:1176244149184385054> and </comingout:1176020092581060678> (Info in </help:1112238192784048208> under support) \n4. Changed start time in </stats:1111290488897683579> to timestamp \n5. Did some cleaning up of commands for easier reading \n6. Added a [README.](https://github.com/Sdriver1/Pridebot/blob/main/README.md) to Github]`, // Placeholder value. You can edit it as needed.
+        value: `1. Reworked </help:1112238192784048208> so now has select menu for command info \n2. Moved commands from 2 categories to 4 categories and add 2 new commands \n3. New commands: </mentalhealth:1176244149184385054> and </comingout:1176020092581060678> (Info in </help:1112238192784048208> under support) \n4. Changed start time in </stats:1111290488897683579> to timestamp \n5. Added a [README.](https://github.com/Sdriver1/Pridebot/blob/main/README.md) to Github]`, // Placeholder value. You can edit it as needed.
         inline: false,
       }
     );
