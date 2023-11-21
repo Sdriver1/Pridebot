@@ -219,18 +219,16 @@ module.exports = {
         const selectedValue = selectInteraction.values[0];
         const sexInfo = sex.find((s) => s.value === selectedValue);
 
-        // Check if sexInfo exists
         if (!sexInfo) {
           console.error(
             `No sexuality information found for value: ${selectedValue}`
           );
-          // Optionally, you can inform the user about the error or provide further instructions.
           selectInteraction.reply({
             content:
               "Sorry, an error occurred while fetching sexuality information.",
             ephemeral: true,
           });
-          return; // This stops the rest of the code from executing
+          return;
         }
 
         const currentIndex = sex.indexOf(sexInfo);
@@ -259,8 +257,8 @@ module.exports = {
 
     const buttonCollector = interaction.channel.createMessageComponentCollector(
       {
-        componentType: ComponentType.BUTTON, // Updated to BUTTON type
-        time: 60000, // 1 minute
+        componentType: ComponentType.BUTTON, 
+        time: 60000, 
       }
     );
 
@@ -274,7 +272,6 @@ module.exports = {
         console.error(
           `No sexuality information found for index: ${selectedSexualityIndex}`
         );
-        // Handle error here, such as sending a message to the user.
         return;
       }
 

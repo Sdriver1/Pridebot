@@ -4,6 +4,8 @@ const { connect } = require("mongoose");
 const { Client, Collection, GatewayIntentBits, Events } = require("discord.js");
 const fs = require("fs");
 
+const botStartTime = Math.floor(Date.now() / 1000);
+
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -26,7 +28,7 @@ const client = new Client({
 });
 client.commands = new Collection();
 client.commandArray = [];
-client.botStartTime = new Date();
+client.botStartTime = botStartTime;
 
 const functionFolders = fs.readdirSync(`./src/functions`);
 for (const folder of functionFolders) {

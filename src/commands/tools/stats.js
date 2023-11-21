@@ -26,18 +26,12 @@ module.exports = {
       .get("https://discordstatus.com/api/v2/incidents.json")
       .catch(function (error) {
         if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
           console.log(error.response.data);
           console.log(error.response.status);
           console.log(error.response.headers);
         } else if (error.request) {
-          // The request was made but no response was received
-          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-          // http.ClientRequest in node.js
           console.log(error.request);
         } else {
-          // Something happened in setting up the request that triggered an Error
           console.log("Error", error.message);
         }
         console.log(error.config);
@@ -83,7 +77,7 @@ module.exports = {
       });
       DiscordApiIncident = `${formattedDate} - [${latestIncident.name}](${data.page.url}/incidents/${latestIncident.id})`;
     }
-    // Retrieve GitHub commit information
+    //-----------------------------------------------------------------------------
     const repoOwner = "Sdriver1";
     const repoName = "Pridebot";
 
@@ -127,7 +121,7 @@ module.exports = {
     }
     //---------------------------------------------------------------------------------------------------
     let clientType = "unknown";
-    let statusEmote = "<:_:1111490661259165727>"; // Default emote for offline status
+    let statusEmote = "<:_:1111490661259165727>";
 
     if (interaction.member?.presence?.clientStatus) {
       if (interaction.member.presence.clientStatus.mobile) {
@@ -170,10 +164,13 @@ module.exports = {
     client.guilds.cache.forEach((guild) => {
       totalUserCount += guild.memberCount;
     });
+    //--------------------------------------------------------------------------------
+
+    const startTimeTimestamp = `<t:${client.botStartTime}:f>`;
 
     const bot = `**Ping**: \`${ping}\`\n**Version:** \`1.${commitTens}.${commitOnes}\`\n**Uptime:** \`${formatUptime(
       process.uptime()
-    )} \` \n**Start Time:** \n\`${formatTimestamp(client.botStartTime)}\``;
+    )} \` \n**Start Time:** ${startTimeTimestamp}`;
     const discord = `**API Latency**: \`${
       client.ws.ping
     }\` \n**Client:** ${statusEmote} \`${clientType}\`\n**Status:** \`${
@@ -226,7 +223,6 @@ function formatUptime(time) {
 function formatTimestamp(timestamp) {
   const dateObj = new Date(timestamp);
   if (isNaN(dateObj)) {
-    // Handle the specific format of the incident timestamp
     const dateMatch = /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(timestamp);
     if (dateMatch) {
       const [_, year, month, day, hour, minute] = dateMatch;
@@ -236,7 +232,7 @@ function formatTimestamp(timestamp) {
     }
     return "Invalid Date";
   }
-  return dateObj.toLocaleString(); // Adjust the format of the timestamp as desired
+  return dateObj.toLocaleString();
 }
 
 function padZero(value) {
