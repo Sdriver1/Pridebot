@@ -1,7 +1,9 @@
 # Pridebot
 
 ## Introduction
-Pridebot is a pride-themed Discord bot developed by [Sdriver1](https://github.com/Sdriver1). It is designed to serve as an educational and supportive tool within the Discord community, focusing on LGBTQ+ topics. The bot's primary goal is to provide users with detailed and accurate information about various sexualities, genders, pronouns, and other identities. It aims to educate users about LGBTQ+ identities and support those questioning their identities.
+Pridebot, developed by [Sdriver1](https://github.com/Sdriver1), is an educational tool focusing on the broad spectrum of LGBTQ identities. Its primary purpose is to deliver enlightening information about various sexualities, genders, pronouns, and other identities under the LGBTQ umbrella. The bot is meticulously designed to educate users about these topics and to aid them in exploring and understanding their feelings and identities. 
+
+In addition to its educational role, Pridebot is equipped to offer essential resources geared toward mental health support. The bot provides gentle guidance, sharing strategies, and advice for those contemplating coming out to ease this significant step. This makes Pridebot a source of information and a supportive guide in its users' personal journeys of self-discovery and expression. Its approach is nurturing and informative, ensuring a safe and supportive experience for those seeking knowledge and understanding of LGBTQ issues and introspection of their identities.
 
 ## Features
 Pridebot offers a range of features to assist users in learning and discussing LGBTQ+ topics, including:
