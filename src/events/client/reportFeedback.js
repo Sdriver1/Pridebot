@@ -32,7 +32,6 @@ module.exports = async (client, interaction) => {
         { name: "Description", value: description },
       ];
     } else {
-      // If the modal doesn't match known IDs, ignore it
       return;
     }
 
@@ -43,7 +42,6 @@ module.exports = async (client, interaction) => {
 
     const webhook = new WebhookClient({ url: webhookUrl });
 
-    // Send the embed using the webhook
     await webhook.send({
       embeds: [responseEmbed],
     });

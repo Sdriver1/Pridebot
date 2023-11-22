@@ -17,7 +17,7 @@ module.exports = (client) => {
         if (!command.data) {
           console.log(
             chalk.red.bold(
-              `Command file ${file} does not export a 'data' property`
+              `Command: ${file} does not export a 'data' property`
             )
           );
           continue;

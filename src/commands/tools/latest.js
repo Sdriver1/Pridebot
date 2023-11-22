@@ -40,12 +40,12 @@ module.exports = {
     .addFields(
       {
       name: "<:_:1110925802041774151> __Latest GitHub Commit__",
-      value: `${latestCommitDate} - [${latestCommitTitle}](${latestCommitLink})`, // Placeholder value. You can edit it as needed.
+      value: `${latestCommitDate} - [${latestCommitTitle}](${latestCommitLink})`, 
       inline: false,
       },
       {
         name: "<:_:1110925802041774151> Updates",
-        value: `1. Added 2 new commands: </bugreport:1176639348423266457> and </feedback:1176639348423266456> \n2. Updated </help:1112238192784048208> with new commands`, // Placeholder value. You can edit it as needed.
+        value: `1. Added 2 new commands: </bugreport:1176639348423266457> and </feedback:1176639348423266456> \n2. Updated </help:1112238192784048208> with new commands`, 
         inline: false,
       }
     );

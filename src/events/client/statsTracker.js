@@ -15,7 +15,7 @@ const updateChannelName = async (client) => {
     (acc, guild) => acc + guild.memberCount,
     0
   );
-  const registeredCommandsCount = await getRegisteredCommandsCount(client); // Corrected: Pass client
+  const registeredCommandsCount = await getRegisteredCommandsCount(client); 
 
   const newChannelName1 = `Guilds: ${guildsCount}`;
   const newChannelName2 = `Users: ${usersCount}`;
@@ -27,13 +27,13 @@ const updateChannelName = async (client) => {
   const channel2 = client.channels.cache.get(channelId2);
   const channel3 = client.channels.cache.get(channelId3);
 
-  if (channel1 && channel1.type === ChannelType.GuildVoice) { // Corrected: Use ChannelType enum
+  if (channel1 && channel1.type === ChannelType.GuildVoice) { 
     channel1.setName(newChannelName1).catch(console.error);
   }
-  if (channel2 && channel2.type === ChannelType.GuildVoice) { // Corrected: Use ChannelType enum
+  if (channel2 && channel2.type === ChannelType.GuildVoice) { 
     channel2.setName(newChannelName2).catch(console.error);
   }
-  if (channel3 && channel3.type === ChannelType.GuildVoice) { // Corrected: Use ChannelType enum
+  if (channel3 && channel3.type === ChannelType.GuildVoice) { 
     channel3.setName(newChannelName3).catch(console.error);
   }
 };

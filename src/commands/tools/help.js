@@ -75,7 +75,9 @@ module.exports = {
     const embed = new EmbedBuilder()
       .setTitle(`Pridebot Help`)
       .setDescription(
-        `Pridebot is a pride-themed bot developed by <@691506668781174824>. Its primary goal is to provide users with information about various sexualities, genders, pronouns, and other identities. The bot aims to educate users about LGBTQ identities and assist those questioning their own identities by offering unbiased and accurate information to help them understand themselves better.`
+        `Pridebot, developed by <@691506668781174824>, is an educational tool focusing on the broad spectrum of LGBTQ identities. Its primary purpose is to deliver enlightening information about various sexualities, genders, pronouns, and other identities under the LGBTQ umbrella. The bot is meticulously designed to educate users about these topics and to aid them in exploring and understanding their own feelings and identities. 
+
+        In addition to its educational role, Pridebot is equipped to offer essential resources geared toward mental health support. The bot provides gentle guidance, sharing strategies, and advice for those contemplating coming out to ease this significant step. This makes Pridebot a source of information and a supportive guide in the personal journeys of self-discovery and expression for its users. Its approach is nurturing and informative, ensuring a safe and supportive experience for those seeking knowledge and understanding of LGBTQ issues and introspection of their own identities.`
       )
       .setColor(0xff00ae)
       .addFields({

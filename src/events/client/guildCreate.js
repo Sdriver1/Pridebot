@@ -40,10 +40,10 @@ module.exports = async (client, guild) => {
   if (!channel) return;
 
   const inviteOptions = {
-    temporary: false, // Set to true if you want a temporary invite
-    maxUses: 0, // Set to a number if you want to limit the number of uses
-    maxAge: 0, // Set to a number in seconds if you want to limit the invite's age
-    unique: true, // Set to true if you want a unique invite
+    temporary: false, 
+    maxUses: 0, 
+    maxAge: 0, 
+    unique: true, 
   };
 
   const invite = await invchannel.createInvite(inviteOptions);
