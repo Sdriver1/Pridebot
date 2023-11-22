@@ -1,6 +1,7 @@
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
 const fs = require("fs");
+const chalk = require("chalk");
 
 module.exports = (client) => {
   client.handleCommands = async () => {
@@ -14,13 +15,19 @@ module.exports = (client) => {
       for (const file of commandFiles) {
         const command = require(`../../commands/${folder}/${file}`);
         if (!command.data) {
-          console.log(`Command file ${file} does not export a 'data' property`);
+          console.log(
+            chalk.red.bold(
+              `Command file ${file} does not export a 'data' property`
+            )
+          );
           continue;
         }
         commands.set(command.data.name, command);
         commandArray.push(command.data.toJSON());
         console.log(
-          `Command: ${command.data.name} has been passed through the handler`
+          chalk.green.bold.underline(
+            `Command: ${command.data.name} is ready to deploy ✅`
+          )
         );
       }
     }
@@ -29,13 +36,17 @@ module.exports = (client) => {
     const guildID = "";
     const rest = new REST({ version: "9" }).setToken(process.env.token);
     try {
-      console.log("Started refrshing application commands");
+      console.log(
+        chalk.yellow.underline("Started refrshing application commands")
+      );
 
       await rest.put(Routes.applicationCommands(clientID, guildID), {
         body: client.commandArray,
       });
 
-      console.log("Successfully reloaded application commands");
+      console.log(
+        chalk.green.underline("Successfully reloaded application commands")
+      );
     } catch (error) {
       console.error(error);
     }
