@@ -99,20 +99,20 @@ module.exports = {
         },
       },
       {
-        name: "Genderflux",
-        description: "Click here to learn about Genderflux.",
-        value: "gfx",
-        emoji: "1112196687830712380",
+        name: "Genderfaun",
+        description: "Click here to learn about Genderfaun.",
+        value: "gf",
+        emoji: "1177453360476074074",
         info: {
-          title: "What is Genderflux",
+          title: "What is Genderfaun",
           title2: "What do individuals feel under identification of",
           title3: "What umbrella does the gender fall under",
           description:
-            "Genderflux is a term used to describe individuals whose gender identity fluctuates over time. They may experience shifts in their gender identity, moving between different genders or experiencing a range of gender identities.",
+            "Genderfaun is a form of genderfluidity that never encompasses feeling feminine. Those who identify as Genderfaun may experience shifting gender identities, excluding feminine genders.",
           description2:
-            "Individuals who identify as Genderflux may experience changes in their gender identity that can occur gradually or rapidly, and these changes can happen spontaneously or in response to different circumstances.",
+            "Individuals who identify as Genderfaun may feel their gender identity shift and change over time, including a range of masculine, neutral, or other non-feminine gender experiences.",
           description3:
-            "Falls under the Non-Binary umbrella in Genderfluid section.",
+            "Falls under the Non-Binary and Genderfluid umbrellas.",
         },
       },
       {
@@ -130,6 +130,23 @@ module.exports = {
             "Individuals who identify as Genderfluid may feel that their gender identity is not limited to one category and can encompass a range of genders or no gender at all. Their experience of gender may change in response to internal or external factors.",
           description3:
             "Falls under the Non-Binary umbrella and is main identify under Genderfluid section.",
+        },
+      },
+      {
+        name: "Genderflux",
+        description: "Click here to learn about Genderflux.",
+        value: "gfx",
+        emoji: "1112196687830712380",
+        info: {
+          title: "What is Genderflux",
+          title2: "What do individuals feel under identification of",
+          title3: "What umbrella does the gender fall under",
+          description:
+            "Genderflux is a term used to describe individuals whose gender identity fluctuates over time. They may experience shifts in their gender identity, moving between different genders or experiencing a range of gender identities.",
+          description2:
+            "Individuals who identify as Genderflux may experience changes in their gender identity that can occur gradually or rapidly, and these changes can happen spontaneously or in response to different circumstances.",
+          description3:
+            "Falls under the Non-Binary umbrella in Genderfluid section.",
         },
       },
       {
@@ -167,6 +184,23 @@ module.exports = {
         },
       },
       {
+        name: "Pangender",
+        description: "Click here to learn about Pangender.",
+        value: "pg",
+        emoji: "1177453248702054480",
+        info: {
+          title: "What is Pangender",
+          title2: "What do individuals feel under identification of",
+          title3: "What umbrella does the gender fall under",
+          description:
+            "Pangender is a term used to describe individuals who identify with all genders. The concept of pangender encompasses a wide and diverse range of gender identities existing across different cultures and traditions.",
+          description2:
+            "Individuals who identify as Pangender often feel that they embody multiple genders simultaneously or that their gender identity encompasses the full spectrum of gender possibilities.",
+          description3:
+            "Falls under the Non-Binary umbrella.",
+        },
+      },
+      {
         name: "Transgender",
         description: "Click here to learn about Transgender.",
         value: "trans",
@@ -181,6 +215,23 @@ module.exports = {
             "Individuals who identify as transgender often experience a disconnect between their gender identity and the societal expectations associated with their assigned sex. They may undergo a process of self-discovery and may pursue social, medical, or legal transitions to align their external appearance with their internal gender identity.",
           description3:
             "Falls under the Transgender umbrella and normally has terms trans man/male (or trans-masc) to represent an individual who assign female at birth but is transiting to male (Known as FTM) and trans woman/female to represent an individual who assign male at birth (amab) but is transiting to female (Known as MTF)",
+        },
+      },
+      {
+        name: "Xenogender",
+        description: "Click here to learn about Xenogender.",
+        value: "xg",
+        emoji: "1177453160558755850",
+        info: {
+          title: "What is Xenogender",
+          title2: "What do individuals feel under identification of",
+          title3: "What umbrella does the gender fall under",
+          description:
+            "Xenogender is a term used to describe non-binary gender identities that cannot be fully understood in terms of traditional male or female gender norms. It encompasses identities that may be derived from animals, plants, elements, or other non-human experiences.",
+          description2:
+            "Individuals who identify as Xenogender may experience their gender as something that cannot be confined to human gender constructs. They often use this term to express a deep connection to a certain aspect or concept that is central to their identity.",
+          description3:
+            "Falls under the broader Non-Binary umbrella.",
         },
       },
     ];

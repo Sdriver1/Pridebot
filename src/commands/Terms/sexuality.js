@@ -146,6 +146,28 @@ module.exports = {
             "Polyamory is a relationship orientation characterized by the practice of having multiple romantic or sexual partners simultaneously, with the knowledge and consent of all involved. Polyamorous individuals may form deep and meaningful connections with multiple partners.",
         },
       },
+      {
+        name: "Queer",
+        description: "Click to learn about Queer orientation",
+        value: "queer",
+        emoji: "1177459443231895563",
+        info: {
+          title: "Queer",
+          description:
+            "Queer is a term used by some individuals to describe a sexual orientation that is not exclusively heterosexual. Historically a pejorative term, 'queer' has been reclaimed by some as a self-affirming umbrella term, especially by those who challenge binary concepts of sexual orientation and gender identity.",
+        },
+      },
+      {
+        name: "Unlabeled",
+        description: "Click to learn about Unlabeled orientation",
+        value: "unlabeled",
+        emoji: "1177458579456925718",
+        info: {
+          title: "Unlabeled",
+          description:
+            "Unlabeled refers to individuals who choose not to label their sexual orientation. This may be due to a variety of reasons, including the feeling that no existing labels accurately represent their experiences, or a preference for not defining their sexuality in conventional terms.",
+        },
+      },
     ];
 
     const selectOptions = sex.map((s) =>
