@@ -1,7 +1,9 @@
 # Pridebot
 
 ## Introduction
-Pridebot is a pride-themed Discord bot developed by [Sdriver1](https://github.com/Sdriver1). It is designed to serve as an educational and supportive tool within the Discord community, focusing on LGBTQ+ topics. The bot's primary goal is to provide users with detailed and accurate information about various sexualities, genders, pronouns, and other identities. It aims to educate users about LGBTQ+ identities and support those who are questioning their own identities.
+Pridebot, developed by [Sdriver1](https://github.com/Sdriver1), is an educational tool focusing on the broad spectrum of LGBTQ identities. Its primary purpose is to deliver enlightening information about various sexualities, genders, pronouns, and other identities under the LGBTQ umbrella. The bot is meticulously designed to educate users about these topics and to aid them in exploring and understanding their feelings and identities. 
+
+In addition to its educational role, Pridebot is equipped to offer essential resources geared toward mental health support. The bot provides gentle guidance, sharing strategies, and advice for those contemplating coming out to ease this significant step. This makes Pridebot a source of information and a supportive guide in its users' personal journeys of self-discovery and expression. Its approach is nurturing and informative, ensuring a safe and supportive experience for those seeking knowledge and understanding of LGBTQ issues and introspection of their identities.
 
 ## Features
 Pridebot offers a range of features to assist users in learning and discussing LGBTQ+ topics, including:
@@ -17,13 +19,13 @@ To add Pridebot to your Discord server, follow these two simple steps:
 ## Commands
 Here is a list of some of the core commands you can use with Pridebot:
 - **Terms** - `/sexuality`, `/gender`, and `/pronouns`
-- **Tools** - `/stats`, `/help`, and `/latest`
+- **Tools** - `/stats`, `/help`, `/latest`, `/bugreport`, and `/feedback`
 - **Support** - `/mentalhealth` and `/comingout`
 
 ## Contribution
 Contributions to Pridebot are welcome! If you're interested in contributing, please:
-- **Report Bugs**: Submit bug reports to help improve Pridebot.
-- **Suggest Features**: Have an idea? Please share it with us!
+- **Report Bugs**: Submit bug reports with `/bugreport` to help improve Pridebot.
+- **Suggest Features**: Have an idea? Please share it with us using `/feedback`!
 - **Develop**: Fork the repository and submit pull requests.
 - **Voting**: Vote for Pridebot on [Top.gg](https://top.gg/bot/1101256478632972369?s=0bed0f7e006a2)
 
