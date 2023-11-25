@@ -120,7 +120,7 @@ module.exports = {
       commitsText += `${latestCommitDate} - [${latestCommitTitle}](${latestCommitLink})`;
     }
     //---------------------------------------------------------------------------------------------------
-    let clientType = "unknown";
+    let clientType = "offline";
     let statusEmote = "<:_:1111490661259165727>";
 
     if (interaction.member?.presence?.clientStatus) {
@@ -174,7 +174,7 @@ module.exports = {
     const discord = `**API Latency**: \`${
       client.ws.ping
     }\` \n**Client:** ${statusEmote} \`${clientType}\`\n**Status:** \`${
-      interaction.member?.presence?.status || "unknown"
+      interaction.member?.presence?.status || "offline"
     }\``;
     const userstats = `**Total guilds:** \`${currentGuildCount}\` \n**Total users:** \`${totalUserCount}\``;
 

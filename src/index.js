@@ -39,26 +39,31 @@ for (const folder of functionFolders) {
     require(`./functions/${folder}/${file}`)(client);
 }
 
-const updateChannelName = require("./events/client/statsTracker");
-const handleGuildCreate = require("./events/client/guildCreate");
-const handleGuildDelete = require("./events/client/guildDelete");
-const handleReportFeedback = require("./events/client/reportFeedback");
+const eventHandlers = {
+  updateChannelName: require("./events/client/statsTracker"),
+  handleGuildCreate: require("./events/client/guildCreate"),
+  handleGuildDelete: require("./events/client/guildDelete"),
+  handleReportFeedback: require("./events/client/reportFeedback"),
+  handleSuggestions: require("./events/client/suggestionsPM"),
+};
 
-client.on(Events.GuildCreate, (guild) => handleGuildCreate(client, guild));
-client.on(Events.GuildDelete, (guild) => handleGuildDelete(client, guild));
+client.on(Events.GuildCreate, (guild) => eventHandlers.handleGuildCreate(client, guild));
+client.on(Events.GuildDelete, (guild) => eventHandlers.handleGuildDelete(client, guild));
 client.on("interactionCreate", (interaction) => {
-  handleReportFeedback(client, interaction);
+  eventHandlers.handleReportFeedback(client, interaction);
+  eventHandlers.handleSuggestions(client, interaction);
 });
 
 // Update channel name periodically
-setInterval(() => updateChannelName(client), 5 * 60 * 1000);
+setInterval(() => eventHandlers.updateChannelName(client), 5 * 60 * 1000);
 client.once("ready", () => {
-  updateChannelName(client); // This ensures the client is ready before calling
+  eventHandlers.updateChannelName(client);
 });
 
 client.handleEvents();
 client.handleCommands();
 client.login(token);
-(async () => {
-  await connect(databaseToken).catch(console.error);
-})();
+
+connect(databaseToken)
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(console.error);

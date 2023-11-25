@@ -45,7 +45,7 @@ module.exports = {
       },
       {
         name: "<:_:1110925802041774151> Updates",
-        value: `1. Added 2 new sexualities to </sexuality:1111289006299283456> (unlabeled and Queer)\n2. Added 3 new genders to </gender:1112200593310756874> (Genderfaun, pangender, and xenogender) \n3. Redid and added more resources to </mentalhealth:1176244149184385054> \n4. Made </bugreport:1176639348423266457> and </feedback:1176639348423266456> responses webhooks on [support server](https://discord.gg/guybqSTzdS) side \n5. Updated the bot summary in </help:1112238192784048208> and [README.](https://github.com/Sdriver1/Pridebot#readme)`, 
+        value: `1. Added 2 new sexualities to </sexuality:1111289006299283456> (unlabeled and Queer)\n2. Added 3 new genders to </gender:1112200593310756874> (Genderfaun, pangender, and xenogender) \n3. Redid and added more resources to </mentalhealth:1176262554071334994> \n4. Made </bugreport:1176639348423266457> and </feedback:1176639348423266456> responses webhooks on [support server](https://discord.gg/guybqSTzdS) side \n5. Updated the bot summary in </help:1112238192784048208> and [README.](https://github.com/Sdriver1/Pridebot#readme)`, 
         inline: false,
       }
     );
@@ -55,7 +55,7 @@ module.exports = {
 };
 
 // Pride: </lesbian:1115869305062576250> || </gay:1115861631226884107>
-// Support: </mentalhealth:1176244149184385054> || </comingout:1176020092581060678>
+// Support: </mentalhealth:1176262554071334994> || </comingout:1176020092581060678>
 // Terms: </sexuality:1111289006299283456> || </gender:1112200593310756874> || </pronouns:1111772157538730116>
 // Tools: </stats:1111290488897683579> || </help:1112238192784048208> || </latest:1150993734180278353> || </bugreport:1176639348423266457> || </feedback:1176639348423266456>
 //
