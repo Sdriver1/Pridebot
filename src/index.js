@@ -45,14 +45,23 @@ const eventHandlers = {
   handleGuildDelete: require("./events/client/guildDelete"),
   handleReportFeedback: require("./events/client/reportFeedback"),
   handleSuggestions: require("./events/client/suggestionsPM"),
+  handleTopic: require("./events/client/topic"),
 };
 
-client.on(Events.GuildCreate, (guild) => eventHandlers.handleGuildCreate(client, guild));
-client.on(Events.GuildDelete, (guild) => eventHandlers.handleGuildDelete(client, guild));
+client.on(Events.GuildCreate, (guild) =>
+  eventHandlers.handleGuildCreate(client, guild)
+);
+client.on(Events.GuildDelete, (guild) =>
+  eventHandlers.handleGuildDelete(client, guild)
+);
 client.on("interactionCreate", (interaction) => {
   eventHandlers.handleReportFeedback(client, interaction);
   eventHandlers.handleSuggestions(client, interaction);
 });
+
+client.on("messageCreate", (message) =>
+  eventHandlers.handleTopic(client, message)
+);
 
 // Update channel name periodically
 setInterval(() => eventHandlers.updateChannelName(client), 5 * 60 * 1000);
@@ -65,5 +74,5 @@ client.handleCommands();
 client.login(token);
 
 connect(databaseToken)
-  .then(() => console.log('Connected to MongoDB'))
+  .then(() => console.log("Connected to MongoDB"))
   .catch(console.error);

@@ -164,6 +164,8 @@ module.exports = {
     client.guilds.cache.forEach((guild) => {
       totalUserCount += guild.memberCount;
     });
+
+    const formattedTotalUserCount = totalUserCount.toLocaleString();
     //--------------------------------------------------------------------------------
 
     const startTimeTimestamp = `<t:${client.botStartTime}:f>`;
@@ -176,7 +178,7 @@ module.exports = {
     }\` \n**Client:** ${statusEmote} \`${clientType}\`\n**Status:** \`${
       interaction.member?.presence?.status || "offline"
     }\``;
-    const userstats = `**Total guilds:** \`${currentGuildCount}\` \n**Total users:** \`${totalUserCount}\``;
+    const userstats = `**Total guilds:** \`${currentGuildCount}\` \n**Total users:** \`${formattedTotalUserCount}\``;
 
     const embed = new EmbedBuilder().setColor(0xff00ae).addFields(
       {

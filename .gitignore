@@ -1,0 +1,12 @@
+// Bot
+.env
+node_modules
+
+// Folders
+pridemonth
+Devs
+
+// Files
+suggestionsPM.js
+topic.js
+database.js
