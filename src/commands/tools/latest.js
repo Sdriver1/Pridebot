@@ -45,7 +45,7 @@ module.exports = {
       },
       {
         name: "<:_:1110925802041774151> Updates",
-        value: `1. Added proper bot database \n2. Added new command </pronountester:1179982757313642609> \n3. Updated Bot dependicies \n4. Cleaned up </help:1112238192784048208> and a couple bot files \n5. Updated [README.](https://github.com/Sdriver1/Pridebot#readme).`, 
+        value: `1. Added proper bot database \n2. Added new command </pronountester:1179982757313642609> \n3. Updated Bot dependencies \n4. Cleaned up </help:1112238192784048208> and a couple bot files \n5. Updated [README.](https://github.com/Sdriver1/Pridebot#readme).`, 
         inline: false,
       }
     );
