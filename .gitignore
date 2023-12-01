@@ -1,5 +1,6 @@
 // Bot
 .env
+.gitignore
 node_modules
 
 // Folders
@@ -7,6 +8,6 @@ pridemonth
 Devs
 
 // Files
-suggestionsPM.js
+modals.js
 topic.js
 database.js

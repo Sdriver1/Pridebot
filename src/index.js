@@ -43,8 +43,7 @@ const eventHandlers = {
   updateChannelName: require("./events/client/statsTracker"),
   handleGuildCreate: require("./events/client/guildCreate"),
   handleGuildDelete: require("./events/client/guildDelete"),
-  handleReportFeedback: require("./events/client/reportFeedback"),
-  handleSuggestions: require("./events/client/suggestionsPM"),
+  handleReportFeedback: require("./events/client/modals.js"),
   handleTopic: require("./events/client/topic"),
 };
 
@@ -56,7 +55,6 @@ client.on(Events.GuildDelete, (guild) =>
 );
 client.on("interactionCreate", (interaction) => {
   eventHandlers.handleReportFeedback(client, interaction);
-  eventHandlers.handleSuggestions(client, interaction);
 });
 
 client.on("messageCreate", (message) =>

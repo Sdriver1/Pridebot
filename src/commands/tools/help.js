@@ -16,14 +16,24 @@ module.exports = {
 
     const helpOptions = [
       {
-        name: "Tool",
-        description: "Click to learn about Tool commands",
-        value: "tool",
-        emoji: "1112234548999245834",
+        name: "Pride",
+        description: "Click to learn about Pride commands",
+        value: "pride",
+        emoji: "1108822823721521242",
         info: {
-          title: "Tool Commands",
-          description: `</help:1112238192784048208> - Shows command list and helpful links \n</stats:1111290488897683579> - Get the bot's and discord stats \n</latest:1150993734180278353> - Get the bot's latest updates \n</bugreport:1176639348423266457> - Submit any bugs you find with Pridebot \n</feedback:1176639348423266456> - Submit any feedback you have on Pridebot`
-        },
+          title: "Pride Commands",
+          description:  `</gay:1115861631226884107> - Learn about umbrella term "gay" and some brief history \n</lesbian:1115869305062576250> - Learn about term "lesbian" and some brief history \n</pronountester:1179982757313642609> - Use this to try out new pronouns for yourself`,
+        }
+      },
+      {
+        name: "Support",
+        description: "Click to learn about Support commands",
+        value: "support",
+        emoji: "1176397678033240125",
+        info: {
+          title: "Support Commands",
+          description: `</comingout:1176020092581060678> - Access tips and guides on how to come out to anyone \n</mentalhealth:1176262554071334994> - Access helplines and any mental health resources provided`,
+        }
       },
       {
         name: "Terms",
@@ -36,24 +46,14 @@ module.exports = {
         },
       },
       {
-        name: "Pride",
-        description: "Click to learn about Pride commands",
-        value: "pride",
-        emoji: "1108822823721521242",
+        name: "Tool",
+        description: "Click to learn about Tool commands",
+        value: "tool",
+        emoji: "1112234548999245834",
         info: {
-          title: "Pride Commands",
-          description:  `</gay:1115861631226884107> - Learn about umbrella term "gay" and some brief history \n</lesbian:1115869305062576250> - Learn about term "lesbian" and some brief history`,
-        }
-      },
-      {
-        name: "Support",
-        description: "Click to learn about Support commands",
-        value: "support",
-        emoji: "1176397678033240125",
-        info: {
-          title: "Support Commands",
-          description: `</mentalhealth:1176262554071334994> - Access helplines and any mental health resources provided \n</comingout:1176020092581060678> - Access tips and guides on how to come out to anyone`,
-        }
+          title: "Tool Commands",
+          description: `</bugreport:1176639348423266457> - Submit any bugs you find with Pridebot \n</feedback:1176639348423266456> - Submit any feedback you have on Pridebot \n</help:1112238192784048208> - Shows command list and helpful links \n</latest:1150993734180278353> - Get the bot's latest updates \n</stats:1111290488897683579> - Get the bot's and discord stats`
+        },
       },
     ];
     
@@ -83,7 +83,7 @@ module.exports = {
       .addFields({
         name: "Useful links",
         value:
-          "[**Support Server**](https://discord.gg/guybqSTzdS) \n[**Bot Invite**](https://discord.com/api/oauth2/authorize?client_id=1101256478632972369&permissions=415001594945&scope=bot%20applications.commands) \n[**Github Repo**](https://github.com/Sdriver1/Pridebot) \n[**Top.gg**](https://top.gg/bot/1101256478632972369?s=0bed0f7e006a2)",
+          "[**Bot Invite**](https://discord.com/api/oauth2/authorize?client_id=1101256478632972369&permissions=415001594945&scope=bot%20applications.commands) \n[**Github Repo**](https://github.com/Sdriver1/Pridebot) \n[**Support Server**](https://discord.gg/guybqSTzdS) \n[**Top.gg**](https://top.gg/bot/1101256478632972369?s=0bed0f7e006a2)",
       });
 
     await interaction.reply({ embeds: [embed], components: [row] });
