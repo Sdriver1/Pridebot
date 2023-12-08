@@ -3,6 +3,7 @@ const { token, databaseToken } = process.env;
 const { connect } = require("mongoose");
 const { Client, Collection, GatewayIntentBits, Events } = require("discord.js");
 const fs = require("fs");
+const server = require("../web/server.js");
 
 const botStartTime = Math.floor(Date.now() / 1000);
 
