@@ -17,11 +17,13 @@ To add Pridebot to your Discord server, follow these two simple steps:
 2. **Explore Commands**: Use `/help` to explore the various commands and features offered by Pridebot.
 
 ## Commands
-Here is a list of the  commands you can use with Pridebot:
-- **Pride** - `/gay`,`/lesbian`, and `/pronountester`
+Here is a list of the commands you can use with Pridebot:
+- **Pride** 
+    - **Sexualities** - `/bisexual`, `/gay`,`/lesbian`, and `/pansexual`, 
+    - **Genders** -  `/nonbinary` and `/transgender`
 - **Support** - `/comingout` and `/mentalhealth`
 - **Terms** - `/gender`, `/pronouns`, and `/sexuality`
-- **Tools** - `/bugreport`, `/feedback`, `/help,`, `/latest`, and `/stats`
+- **Tools** - `/bugreport`, `/feedback`, `/help,`, `/latest`, `/pronountester`, and `/stats`
 
 
 ## Contribution

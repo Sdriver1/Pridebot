@@ -4,6 +4,8 @@ const { connect } = require("mongoose");
 const { Client, Collection, GatewayIntentBits, Events } = require("discord.js");
 const fs = require("fs");
 const server = require("../web/server.js");
+const express = require("express");
+const app = express();
 
 const botStartTime = Math.floor(Date.now() / 1000);
 

@@ -45,7 +45,7 @@ module.exports = {
       },
       {
         name: "<:_:1110925802041774151> Updates",
-        value: `1. Added proper bot database \n2. Added new command </pronountester:1179982757313642609> \n3. Updated Bot dependencies \n4. Cleaned up </help:1112238192784048208> and a couple bot files \n5. Updated [README.](https://github.com/Sdriver1/Pridebot#readme).`, 
+        value: `1. Added 4 new commands: </bisexual:1183503172036206632>, </nonbinary:1183503172036206633>, </pansexual:1183503172036206634>, and </transgender:1183503172036206636> \n2. Redid </lesbian:1183468824478089247> and </gay:1183468824478089246> \n3. Moved </pronountester:1179995184059121766> to Tools \n4. Updated </help:1112238192784048208> and [README.](https://github.com/Sdriver1/Pridebot#readme) with new commands`,
         inline: false,
       }
     );
@@ -54,9 +54,9 @@ module.exports = {
   },
 };
 
-// Pride: </lesbian:1115869305062576250> || </gay:1115861631226884107> || </pronountester:1179982757313642609>
+// Pride: </bisexual:1183503172036206632>, </lesbian:1183468824478089247> || </gay:1183468824478089246> || </nonbinary:1183503172036206633> || </pansexual:1183503172036206634> || </transgender:1183503172036206636>
 // Support: </mentalhealth:1176262554071334994> || </comingout:1176020092581060678>
 // Terms: </sexuality:1111289006299283456> || </gender:1112200593310756874> || </pronouns:1111772157538730116>
-// Tools: </stats:1111290488897683579> || </help:1112238192784048208> || </latest:1150993734180278353> || </bugreport:1176639348423266457> || </feedback:1176639348423266456>
+// Tools: </stats:1111290488897683579> || </help:1112238192784048208> || </latest:1150993734180278353> || </bugreport:1176639348423266457> || </feedback:1176639348423266456> || </pronountester:1179995184059121766>
 // ReadME - https://github.com/Sdriver1/Pridebot#readme
 

@@ -3,7 +3,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("pansexual")
-    .setDescription("Pans or pots?"),
+    .setDescription("You like pots or pans more?"),
 
   async execute(interaction, client) {
     const embed = new EmbedBuilder()
@@ -25,7 +25,7 @@ module.exports = {
         },
         {
           name: `Days/Honoring Times`,
-          value: `- Pansexual and Panromantic Awareness Day is celebrated on **May 24th.** \n- Pan Week is observed from **December 6th to 12th**. \n- Pansexual Pride Day is celebrated on **December 8th**.`,
+          value: `- Pan Week - **December 6th to 12th** \n- Pansexual and Panromantic Awareness Day - **May 24th** \n- Pansexual Pride Day - **December 8th**`,
         }
       );
     await interaction.reply({ embeds: [embed] });
