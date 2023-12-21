@@ -1,8 +1,10 @@
 require("dotenv").config();
-const { token, databaseToken } = process.env;
+const { token, databaseToken, topggToken } = process.env;
 const { connect } = require("mongoose");
 const { Client, Collection, GatewayIntentBits, Events } = require("discord.js");
 const fs = require("fs");
+const { AutoPoster } = require("topgg-autoposter");
+
 const server = require("../web/server.js");
 const express = require("express");
 const app = express();
@@ -43,11 +45,14 @@ for (const folder of functionFolders) {
 }
 
 const eventHandlers = {
-  updateChannelName: require("./events/client/statsTracker"),
-  handleGuildCreate: require("./events/client/guildCreate"),
-  handleGuildDelete: require("./events/client/guildDelete"),
+  updateChannelName: require("./events/client/statsTracker.js"),
+  handleGuildCreate: require("./events/client/guildCreate.js"),
+  handleGuildDelete: require("./events/client/guildDelete.js"),
   handleReportFeedback: require("./events/client/modals.js"),
-  handleTopic: require("./events/client/topic"),
+  handleTopic: require("./commands/pridemonth/topic.js"),
+  handleVC: require("./commands/pridemonth/vc.js"),
+  handleEmote: require("./commands/pridemonth/emote.js"),
+  handleMedia: require("./commands/pridemonth/images.js"),
 };
 
 client.on(Events.GuildCreate, (guild) =>
@@ -60,14 +65,22 @@ client.on("interactionCreate", (interaction) => {
   eventHandlers.handleReportFeedback(client, interaction);
 });
 
-client.on("messageCreate", (message) =>
-  eventHandlers.handleTopic(client, message)
-);
+client.on("messageCreate", (message) => {
+  eventHandlers.handleEmote(client, message),
+    eventHandlers.handleMedia(client, message),
+    eventHandlers.handleTopic(client, message),
+    eventHandlers.handleVC(client, message);
+});
 
 // Update channel name periodically
 setInterval(() => eventHandlers.updateChannelName(client), 5 * 60 * 1000);
 client.once("ready", () => {
   eventHandlers.updateChannelName(client);
+});
+
+const ap = AutoPoster(topggToken, client);
+ap.on("posted", () => {
+  console.log("Posted stats to Top.gg!");
 });
 
 client.handleEvents();

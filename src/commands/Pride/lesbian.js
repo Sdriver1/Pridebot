@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const chalk = require("chalk");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -6,8 +7,9 @@ module.exports = {
     .setDescription("woman or 𝘸𝘰𝘮𝘢𝘯"),
 
   async execute(interaction, client) {
+    console.log(chalk.white.bold(`-------------------------- \n/lesbian \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.id} \nTime: ${new Date()} \n--------------------------`));
     const embed = new EmbedBuilder()
-      .setTitle(`Congrats, you are now lesbian`)
+      .setTitle(`Lesbian!`)
       .setDescription(`Here are some facts on "lesbians"`)
       .setColor(0xff00ae)
       .setFields(

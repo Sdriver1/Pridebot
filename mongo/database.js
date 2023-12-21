@@ -76,47 +76,55 @@ async function getRandomTopic() {
       throw new Error("Failed to fetch random topic");
     }
 
-    return topicArray[0].topic;
+    // Return both topic and recommendedBy
+    return {
+      topic: topicArray[0].topic,
+      recommendedBy: topicArray[0].recommendedBy,
+    };
   } catch (error) {
     console.error("Error in getRandomTopic:", error);
     throw error;
   }
 }
 
-//async function addTopics() {
-//try {
-//  const db = await connectDb();
-//  const topicsCollection = db.collection("topics");
-
-//  const topics = [];
-
-// Insert topics if they do not already exist to avoid duplicates
-//   for (const topic of topics) {
-//   const topicExists = await topicsCollection.countDocuments({
-//      topic: topic,
-//    });
-//    if (topicExists === 0) {
-//      await topicsCollection.insertOne({ topic: topic });
-//console.log(`Topic added: ${topic}`);
-//    } else {
-//      console.log(`Topic already exists, skipping: ${topic}`);
-//}
+// async function addTopics(topicsWithCredits) {
+ //  try {
+ //    const db = await connectDb();
+ //    const topicsCollection = db.collection("topics");
+// 
+ //    for (const { topic, recommendedBy } of topicsWithCredits) {
+ //      const topicExists = await topicsCollection.countDocuments({
+ //        topic: topic,
+ //      });
+ //      if (topicExists === 0) {
+ //        await topicsCollection.insertOne({
+//           topic: topic,
+ //          recommendedBy: recommendedBy,
+ //        });
+ //        console.log(`Topic added: ${topic} by ${recommendedBy}`);
+//       } else {
+ //        console.log(`Topic already exists, skipping: ${topic}`);
+ //      }
+ //    }
+ //  } catch (error) {
+//     console.error("Error in addTopics:", error);
+ //    throw error;
 //   }
-//  } catch (error) {
-//console.error("Error in addTopics:", error);
-//    throw error; // Re-throw the error to be caught by the calling function
-//  }
-//}
-
-//(async () => {
-// try {
-//   console.log("Adding topics to the database...");
-//   await addTopics();
-//   console.log("Finished adding topics.");
-// } catch (error) {
-//   console.error("Error during adding topics:", error);
-//} finally {
-//   await client.close();
 // }
+
+// (async () => {
+ //  try {
+ //    console.log("Adding topics to the database...");
+  //   const topicsWithCredits = [];
+// 
+ //    await addTopics(topicsWithCredits);
+// 
+ //    console.log("Finished adding topics.");
+ //  } catch (error) {
+ //    console.error("Error during adding topics:", error);
+ //  } finally {
+//     await client.close();
+//   }
 // })();
+
 module.exports = { connectDb, getSuggestionCount, getRandomTopic };

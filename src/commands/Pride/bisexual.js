@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const chalk = require("chalk");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -6,8 +7,9 @@ module.exports = {
     .setDescription("Why am I bi myself again ;-;"),
 
   async execute(interaction, client) {
+    console.log(chalk.white.bold(`-------------------------- \n/bisexual \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.id} \nTime: ${new Date()} \n--------------------------`));
     const embed = new EmbedBuilder()
-      .setTitle(`Congrats, you are now bisexual`)
+      .setTitle(`Bisexual!`)
       .setDescription(`Here is some facts on "bisexual/biromatic"`)
       .setColor(0xff00ae)  
       .setFields(

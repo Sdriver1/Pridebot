@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const chalk = require("chalk");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -45,6 +46,7 @@ module.exports = {
     
 
   async execute(interaction) {
+    console.log(chalk.white.bold(`-------------------------- \n/pronountester \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.id} \nTime: ${new Date()} \n--------------------------`));
     const subject = interaction.options.getString("subject");
     const object = interaction.options.getString("object");
     const possessiveDeterminer = interaction.options.getString("possessive");

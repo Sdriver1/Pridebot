@@ -6,6 +6,7 @@ const {
   StringSelectMenuOptionBuilder,
   ComponentType,
 } = require("discord.js");
+const chalk = require("chalk");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -13,6 +14,8 @@ module.exports = {
     .setDescription("Shows command list and helpful links"),
 
   async execute(interaction, client) {
+
+    console.log(chalk.white.bold(`-------------------------- \n/help \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.id} \nTime: ${new Date()} \n--------------------------`));
 
     const helpOptions = [
       {

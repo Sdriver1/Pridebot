@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const chalk = require("chalk");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -6,8 +7,9 @@ module.exports = {
     .setDescription("You like pots or pans more?"),
 
   async execute(interaction, client) {
+    console.log(chalk.white.bold(`-------------------------- \n/pansexual \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.id} \nTime: ${new Date()} \n--------------------------`));
     const embed = new EmbedBuilder()
-      .setTitle(`Congrats, you are now pan`)
+      .setTitle(`Pansexuality!`)
       .setDescription(`Here are some facts on "pansexual/panromantic"`)
       .setColor(0xff00ae)
       .setFields(

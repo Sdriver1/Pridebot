@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const chalk = require("chalk");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -6,8 +7,9 @@ module.exports = {
     .setDescription("01001110 01101111 01101110 00101101 01000010 01101001 01101110 01100001 01110010 01111001"),
 
   async execute(interaction, client) {
+    console.log(chalk.white.bold(`-------------------------- \n/lesbian \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.id} \nTime: ${new Date()} \n--------------------------`));
     const embed = new EmbedBuilder()
-      .setTitle(`Congrats, you are now Non-Binary`)
+      .setTitle(`Non-binary`)
       .setDescription(`Here are some facts on "non-binary"`)
       .setColor(0xff00ae)  
       .setFields(

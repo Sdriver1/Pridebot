@@ -1,4 +1,5 @@
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
+const chalk = require("chalk");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -12,15 +13,24 @@ module.exports = {
     ),
 
   async execute(interaction) {
-    const embedData = {
-      title: "Crisis Help Channel Resources & Hotlines",
-      color: 16711914,
-      fields: [
+    console.log(
+      chalk.white.bold(
+        `-------------------------- \n/mentalhealth \nServer: ${
+          interaction.guild.name
+        } (${interaction.guild.id}) \nUser: ${
+          interaction.user.id
+        } \nTime: ${new Date()} \n--------------------------`
+      )
+    );
+    const embed = new EmbedBuilder()
+      .setTitle("Crisis Help Channel Resources & Hotlines")
+      .setColor(0xff00ae)
+      .addFields(
         {
           name: "Crisis Hotlines (U.S.-Based)",
           value:
             "**<:_:1177433538572861481> Suicide & Crisis Lifeline**\n- Call OR Text **988**\n- https://988lifeline.org/\n\n" +
-            "**<:_:1177434479405584446> Trevor Project Lifeline**\n- +1 (866) 488-7386\n- https://www.thetrevorproject.org/\n\n" +
+            "**<:_:1177434479405584446> Trevor Project Lifeline**\n- +1 (866) 488-7386\n- https://www.thetrevorproject.org/resources/guide/preventing-suicide/\n\n" +
             "**<:_:1177434386946330734> Trans Lifeline**\n- +1 (877) 565-8860\n- https://translifeline.org/\n\n" +
             "**<:_:1177435139802939463> Substance Abuse and Mental Health Services Hotline (SAMHSA)**\n- +1 (800) 622-4357\n- https://samhsa.gov/\n\n" +
             "**<:_:1177434042094854145> National Domestic Violence Hotline**\n- +1 (800) 799-7233\n- TTY: +1 (800) 787-3224\n- https://thehotline.org/\n\n" +
@@ -31,7 +41,7 @@ module.exports = {
         {
           name: "Crisis Textlines (U.S.-Based)",
           value:
-            "**<:_:1177434479405584446> The Trevor Project**\n- Text **START** to **678-678**\n- https://thetrevorproject.org/\n\n" +
+            "**<:_:1177434479405584446> The Trevor Project**\n- Text **START** to **678-678**\n- https://www.thetrevorproject.org/resources/guide/preventing-suicide/\n\n" +
             "**<:_:1177433679291752469> Crisis Text Line**\n- Text **DISCORD** to **741-741**\n- https://crisistextline.org/",
         },
         {
@@ -39,14 +49,8 @@ module.exports = {
           value:
             "**SwitchBoard (Europe)** \n- Available from **<t:1672567200:t>** to **<t:1672610400:t>** everyday\n- SwitchBoard LgbtLine - **0800 0119 100** \n- SwitchBoard Email - **hello@switchboard.lgbt**\n- [SwitchBoard](https://switchboard.lgbt/)\n- [How we can help](https://switchboard.lgbt/how-we-can-help/)\n\n" +
             "**<:_:1177433679291752469> International Crisis Lines** \n- https://en.wikipedia.org/wiki/List_of_suicide_crisis_lines\n- http://worldhelplines.org/",
-        },
-      ],
-    };
-
-    const embed = new EmbedBuilder()
-      .setTitle(embedData.title)
-      .setColor(embedData.color)
-      .addFields(embedData.fields)
+        }
+      )
       .setFooter({
         text: "Remember, you are not alone and loved ❤️",
       });

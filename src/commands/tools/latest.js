@@ -2,6 +2,7 @@ require("dotenv").config();
 const { githubToken } = process.env;
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const axios = require("axios");
+const chalk = require("chalk");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -9,6 +10,7 @@ module.exports = {
     .setDescription("Get the bot's latest update"),
 
   async execute(interaction, client) {
+    console.log(chalk.white.bold(`-------------------------- \n/latest \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.id} \nTime: ${new Date()} \n--------------------------`));
     await interaction.deferReply({ fetchReply: true });
 
     const repoOwner = "Sdriver1";

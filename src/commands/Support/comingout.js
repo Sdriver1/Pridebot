@@ -1,4 +1,5 @@
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
+const chalk = require("chalk");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -12,8 +13,9 @@ module.exports = {
     ),
     
   async execute(interaction) {
+    console.log(chalk.white.bold(`-------------------------- \n/comingout \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.id} \nTime: ${new Date()} \n--------------------------`));
     const embed = new EmbedBuilder()
-      .setColor("#ff00ae")
+      .setColor(0xff00ae)
       .setTitle("Coming Out Resources")
       .setDescription(
         "Coming out is a unique and personal experience. Here are some resources you might find helpful:"
