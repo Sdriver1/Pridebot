@@ -13,8 +13,8 @@ module.exports = {
     ),
     
   async execute(interaction) {
-    console.log(chalk.white.bold(`-------------------------- \n/comingout \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.id} \nTime: ${new Date()} \n--------------------------`));
-    const embed = new EmbedBuilder()
+    const estDate = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+    console.log(chalk.white.bold(`-------------------------- \n/coming-out \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} \nTime: Time: ${estDate} (EST) \n--------------------------`));    const embed = new EmbedBuilder()
       .setColor(0xff00ae)
       .setTitle("Coming Out Resources")
       .setDescription(

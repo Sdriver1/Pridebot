@@ -16,8 +16,8 @@ module.exports = {
     .setDescription("Learn about any kinds or types of pronouns"),
 
   async execute(interaction) {
-    console.log(chalk.white.bold(`-------------------------- \n/pronouns \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.id} \nTime: ${new Date()} \n--------------------------`));
-    const pronoun = [
+    const estDate = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+    console.log(chalk.white.bold(`-------------------------- \n/pronouns \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} \nTime: Time: ${estDate} (EST) \n--------------------------`));    const pronoun = [
       {
         name: "He/Him/His",
         description: "Click to learn about He/Him/His pronouns",

@@ -10,8 +10,8 @@ module.exports = {
     .setDescription("Get the bot's and discord stats"),
 
   async execute(interaction, client) {
-    console.log(chalk.white.bold(`-------------------------- \n/Stats \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.id} \nTime: ${new Date()} \n--------------------------`));
-
+    const estDate = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+    console.log(chalk.white.bold(`-------------------------- \n/stats \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} \nTime: Time: ${estDate} (EST) \n--------------------------`));
     try {
       const initialReply = await interaction.deferReply({ fetchReply: true });
       const initialTime = initialReply.createdTimestamp;
@@ -96,7 +96,7 @@ module.exports = {
       );
       const commitsData = commitsResponse.data;
       const commitCount = commitsData.length;
-      const devcommitCount = commitsData.length - 53;
+      const devcommitCount = commitsData.length - 54;
 
       let commitTens = "0";
       let commitOnes = "0";

@@ -13,15 +13,8 @@ module.exports = {
     ),
 
   async execute(interaction) {
-    console.log(
-      chalk.white.bold(
-        `-------------------------- \n/mentalhealth \nServer: ${
-          interaction.guild.name
-        } (${interaction.guild.id}) \nUser: ${
-          interaction.user.id
-        } \nTime: ${new Date()} \n--------------------------`
-      )
-    );
+    const estDate = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+    console.log(chalk.white.bold(`-------------------------- \n/mental-health \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} \nTime: Time: ${estDate} (EST) \n--------------------------`));
     const embed = new EmbedBuilder()
       .setTitle("Crisis Help Channel Resources & Hotlines")
       .setColor(0xff00ae)

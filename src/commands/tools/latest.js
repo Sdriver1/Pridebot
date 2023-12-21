@@ -10,8 +10,8 @@ module.exports = {
     .setDescription("Get the bot's latest update"),
 
   async execute(interaction, client) {
-    console.log(chalk.white.bold(`-------------------------- \n/latest \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.id} \nTime: ${new Date()} \n--------------------------`));
-    await interaction.deferReply({ fetchReply: true });
+    const estDate = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+    console.log(chalk.white.bold(`-------------------------- \n/latest \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} \nTime: Time: ${estDate} (EST) \n--------------------------`));    await interaction.deferReply({ fetchReply: true });
 
     const repoOwner = "Sdriver1";
     const repoName = "Pridebot";

@@ -16,8 +16,8 @@ module.exports = {
     .setDescription("Learn about any kinds or types of sexualities"),
 
   async execute(interaction) {
-    console.log(chalk.white.bold(`-------------------------- \n/sexuality \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.id} \nTime: ${new Date()} \n--------------------------`));
-    const sex = [
+    const estDate = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+    console.log(chalk.white.bold(`-------------------------- \n/sexuality \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} \nTime: Time: ${estDate} (EST) \n--------------------------`));    const sex = [
       {
         name: "Asexual/Aromantic",
         description: "Click to learn about Asexuality",

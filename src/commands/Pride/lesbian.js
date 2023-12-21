@@ -7,8 +7,8 @@ module.exports = {
     .setDescription("woman or 𝘸𝘰𝘮𝘢𝘯"),
 
   async execute(interaction, client) {
-    console.log(chalk.white.bold(`-------------------------- \n/lesbian \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.id} \nTime: ${new Date()} \n--------------------------`));
-    const embed = new EmbedBuilder()
+    const estDate = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+    console.log(chalk.white.bold(`-------------------------- \n/lesbian \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} \nTime: Time: ${estDate} (EST) \n--------------------------`));    const embed = new EmbedBuilder()
       .setTitle(`Lesbian!`)
       .setDescription(`Here are some facts on "lesbians"`)
       .setColor(0xff00ae)

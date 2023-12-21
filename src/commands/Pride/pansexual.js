@@ -7,8 +7,8 @@ module.exports = {
     .setDescription("You like pots or pans more?"),
 
   async execute(interaction, client) {
-    console.log(chalk.white.bold(`-------------------------- \n/pansexual \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.id} \nTime: ${new Date()} \n--------------------------`));
-    const embed = new EmbedBuilder()
+    const estDate = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+    console.log(chalk.white.bold(`-------------------------- \n/pansexual \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} \nTime: Time: ${estDate} (EST) \n--------------------------`));    const embed = new EmbedBuilder()
       .setTitle(`Pansexuality!`)
       .setDescription(`Here are some facts on "pansexual/panromantic"`)
       .setColor(0xff00ae)
