@@ -10,8 +10,14 @@ module.exports = {
     .setDescription("Get the bot's latest update"),
 
   async execute(interaction, client) {
-    const estDate = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
-    console.log(chalk.white.bold(`-------------------------- \n/latest \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} \nTime: Time: ${estDate} (EST) \n--------------------------`));    await interaction.deferReply({ fetchReply: true });
+    const estDate = new Date().toLocaleString("en-US", {
+      timeZone: "America/New_York",
+    });
+    console.log(
+      chalk.white.bold(
+        `-------------------------- \n/latest \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
+      )
+    );
 
     const repoOwner = "Sdriver1";
     const repoName = "Pridebot";
@@ -38,12 +44,11 @@ module.exports = {
     const latestCommitLink = latestCommit.html_url;
     const latestCommitTitle = latestCommit.commit.message.split("\n")[0];
 
-    const embed = new EmbedBuilder().setColor(0xff00ae)
-    .addFields(
+    const embed = new EmbedBuilder().setColor(0xff00ae).addFields(
       {
-      name: "<:_:1110925802041774151> __Latest GitHub Commit__",
-      value: `${latestCommitDate} - [${latestCommitTitle}](${latestCommitLink})`, 
-      inline: false,
+        name: "<:_:1110925802041774151> __Latest GitHub Commit__",
+        value: `${latestCommitDate} - [${latestCommitTitle}](${latestCommitLink})`,
+        inline: false,
       },
       {
         name: "<:_:1110925802041774151> Updates",
@@ -52,7 +57,7 @@ module.exports = {
       }
     );
 
-    await interaction.editReply({ embeds: [embed] });
+    await interaction.reply({ embeds: [embed] });
   },
 };
 
@@ -61,4 +66,3 @@ module.exports = {
 // Terms: </sexuality:1111289006299283456> || </gender:1112200593310756874> || </pronouns:1111772157538730116>
 // Tools: </stats:1111290488897683579> || </help:1112238192784048208> || </latest:1150993734180278353> || </bugreport:1176639348423266457> || </feedback:1176639348423266456> || </pronountester:1179995184059121766>
 // ReadME - https://github.com/Sdriver1/Pridebot#readme
-

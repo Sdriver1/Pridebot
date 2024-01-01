@@ -11,10 +11,18 @@ module.exports = {
         .setDescription("Set to true to make the response visible to everyone")
         .setRequired(false)
     ),
-    
+
   async execute(interaction) {
-    const estDate = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
-    console.log(chalk.white.bold(`-------------------------- \n/coming-out \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} \nTime: Time: ${estDate} (EST) \n--------------------------`));    const embed = new EmbedBuilder()
+    const estDate = new Date().toLocaleString("en-US", {
+      timeZone: "America/New_York",
+    });
+    console.log(
+      chalk.white.bold(
+        `-------------------------- \n/coming \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
+      )
+    );
+
+    const embed = new EmbedBuilder()
       .setColor(0xff00ae)
       .setTitle("Coming Out Resources")
       .setDescription(
@@ -38,10 +46,11 @@ module.exports = {
           inline: true,
         },
         {
-            name: "Coming out tips for teens",
-            value: "**LGBTQ+ Student Center** - [Coming Out Tips](https://lgbtqplus.usc.edu/resources/comingout/tips/)\n **SafeTeens** - [SafeTeens LGBTQ+ Coming Out](https://safeteens.org/lgbtq/coming-out/)\n **Planned Parenthood** - [Coming Out for Teens](https://www.plannedparenthood.org/learn/teens/lgbtq/coming-out)",
-            inline: true,
-          },
+          name: "Coming out tips for teens",
+          value:
+            "**LGBTQ+ Student Center** - [Coming Out Tips](https://lgbtqplus.usc.edu/resources/comingout/tips/)\n **SafeTeens** - [SafeTeens LGBTQ+ Coming Out](https://safeteens.org/lgbtq/coming-out/)\n **Planned Parenthood** - [Coming Out for Teens](https://www.plannedparenthood.org/learn/teens/lgbtq/coming-out)",
+          inline: true,
+        },
         {
           name: "Coming out tips for everyone",
           value:
@@ -50,16 +59,17 @@ module.exports = {
         },
         {
           name: "YouTube Videos on coming",
-          value: "**Advice for LGBTQ+ Teens** - [Watch Video](https://www.youtube.com/watch?v=RxK_gMk1qTk) \n**8 Coming Out Tips** - [Watch Video](https://www.youtube.com/watch?v=DbiXhMUwlJA) \n**Teen Coming Out Stories** - [Watch Video](https://www.youtube.com/watch?v=lhkuYGZyp_o)",
+          value:
+            "**Advice for LGBTQ+ Teens** - [Watch Video](https://www.youtube.com/watch?v=RxK_gMk1qTk) \n**8 Coming Out Tips** - [Watch Video](https://www.youtube.com/watch?v=DbiXhMUwlJA) \n**Teen Coming Out Stories** - [Watch Video](https://www.youtube.com/watch?v=lhkuYGZyp_o)",
           inline: false,
-        },
+        }
       )
       .setFooter({
         text: "Remember, your journey is yours and you are not alone.",
       });
 
-      const isPublic = interaction.options.getBoolean("public", false);
+    const isPublic = interaction.options.getBoolean("public", false);
 
-      await interaction.reply({ embeds: [embed], ephemeral: !isPublic });
+    await interaction.reply({ embeds: [embed], ephemeral: !isPublic });
   },
 };

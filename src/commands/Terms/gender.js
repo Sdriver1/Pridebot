@@ -16,8 +16,16 @@ module.exports = {
     .setDescription("Learn about any kinds or types of genders"),
 
   async execute(interaction) {
-    const estDate = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
-    console.log(chalk.white.bold(`-------------------------- \n/gender \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} \nTime: Time: ${estDate} (EST) \n--------------------------`));    const gender = [
+    const estDate = new Date().toLocaleString("en-US", {
+      timeZone: "America/New_York",
+    });
+    console.log(
+      chalk.white.bold(
+        `-------------------------- \n/gender \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
+      )
+    );
+
+    const gender = [
       {
         name: "Agender",
         description: "Click here to learn about Agender.",
@@ -113,8 +121,7 @@ module.exports = {
             "Genderfaun is a form of genderfluidity that never encompasses feeling feminine. Those who identify as Genderfaun may experience shifting gender identities, excluding feminine genders.",
           description2:
             "Individuals who identify as Genderfaun may feel their gender identity shift and change over time, including a range of masculine, neutral, or other non-feminine gender experiences.",
-          description3:
-            "Falls under the Non-Binary and Genderfluid umbrellas.",
+          description3: "Falls under the Non-Binary and Genderfluid umbrellas.",
         },
       },
       {
@@ -198,8 +205,7 @@ module.exports = {
             "Pangender is a term used to describe individuals who identify with all genders. The concept of pangender encompasses a wide and diverse range of gender identities existing across different cultures and traditions.",
           description2:
             "Individuals who identify as Pangender often feel that they embody multiple genders simultaneously or that their gender identity encompasses the full spectrum of gender possibilities.",
-          description3:
-            "Falls under the Non-Binary umbrella.",
+          description3: "Falls under the Non-Binary umbrella.",
         },
       },
       {
@@ -232,8 +238,7 @@ module.exports = {
             "Xenogender is a term used to describe non-binary gender identities that cannot be fully understood in terms of traditional male or female gender norms. It encompasses identities that may be derived from animals, plants, elements, or other non-human experiences.",
           description2:
             "Individuals who identify as Xenogender may experience their gender as something that cannot be confined to human gender constructs. They often use this term to express a deep connection to a certain aspect or concept that is central to their identity.",
-          description3:
-            "Falls under the broader Non-Binary umbrella.",
+          description3: "Falls under the broader Non-Binary umbrella.",
         },
       },
     ];
@@ -256,7 +261,8 @@ module.exports = {
     const embed = new EmbedBuilder()
       .setTitle("What is *gender* and which gender do you want to learn about?")
       .setDescription(
-        `Gender according to the [World Health Organization](https://www.who.int/health-topics/gender#tab=tab_1) (WHO) says "Gender refers to the characteristics of women, men, girls, and boys that are socially constructed ... As a social construct, gender varies from society to society and can change over time." They also state: \n> "Gender interacts with but is different from sex, which refers to the different biological and physiological characteristics of females, males, and intersex persons, such as chromosomes, hormones, and reproductive organs. Gender and sex are related to but different from gender identity. Gender identity refers to a person’s deeply felt, internal, and individual experience of gender, which may or may not correspond to the person’s physiology or designated sex at birth."\n\nOnes gender identity is not limited to social norms and can be expressed in any way that an individual feels comfortable doing. One's gender identity doesn't affect the pronouns or sexuality that an individual identifies with. Sexuality pertains to one's preference for romantic/sexual attraction, while pronouns relate to one's self-labels. \n\nChoose one of the genders or identities below that you want to learn about:`)
+        `Gender according to the [World Health Organization](https://www.who.int/health-topics/gender#tab=tab_1) (WHO) says "Gender refers to the characteristics of women, men, girls, and boys that are socially constructed ... As a social construct, gender varies from society to society and can change over time." They also state: \n> "Gender interacts with but is different from sex, which refers to the different biological and physiological characteristics of females, males, and intersex persons, such as chromosomes, hormones, and reproductive organs. Gender and sex are related to but different from gender identity. Gender identity refers to a person’s deeply felt, internal, and individual experience of gender, which may or may not correspond to the person’s physiology or designated sex at birth."\n\nOnes gender identity is not limited to social norms and can be expressed in any way that an individual feels comfortable doing. One's gender identity doesn't affect the pronouns or sexuality that an individual identifies with. Sexuality pertains to one's preference for romantic/sexual attraction, while pronouns relate to one's self-labels. \n\nChoose one of the genders or identities below that you want to learn about:`
+      )
       .addFields({
         name: "Genders",
         value: gender.map((g) => `<:_:${g.emoji}> **${g.name}**`).join("\n"),
@@ -265,37 +271,37 @@ module.exports = {
       .setColor("#FF00AE")
       .setTimestamp();
 
-      function createGenderButtons(currentIndex) {
-        const components = [];
-      
-        if (currentIndex > 0) {
-          const prevGender = gender[currentIndex - 1];
-          const prevLabel = `${prevGender.name}`;
-          const prevEmoji = `${prevGender.emoji}`;
-      
-          const prevButton = new ButtonBuilder()
-            .setLabel(prevLabel)
-            .setEmoji(prevEmoji)
-            .setStyle(ButtonStyle.Secondary)
-            .setCustomId(`gender-${prevGender.value}`);
-          components.push(prevButton);
-        }
-      
-        if (currentIndex < gender.length - 1) {
-          const nextGender = gender[currentIndex + 1];
-          const nextLabel = `${nextGender.name}`;
-          const nextEmoji = `${nextGender.emoji}`
-      
-          const nextButton = new ButtonBuilder()
-            .setLabel(nextLabel)
-            .setEmoji(nextEmoji)
-            .setStyle(ButtonStyle.Secondary)
-            .setCustomId(`gender-${nextGender.value}`);
-          components.push(nextButton);
-        }
-      
-        return components;
+    function createGenderButtons(currentIndex) {
+      const components = [];
+
+      if (currentIndex > 0) {
+        const prevGender = gender[currentIndex - 1];
+        const prevLabel = `${prevGender.name}`;
+        const prevEmoji = `${prevGender.emoji}`;
+
+        const prevButton = new ButtonBuilder()
+          .setLabel(prevLabel)
+          .setEmoji(prevEmoji)
+          .setStyle(ButtonStyle.Secondary)
+          .setCustomId(`gender-${prevGender.value}`);
+        components.push(prevButton);
       }
+
+      if (currentIndex < gender.length - 1) {
+        const nextGender = gender[currentIndex + 1];
+        const nextLabel = `${nextGender.name}`;
+        const nextEmoji = `${nextGender.emoji}`;
+
+        const nextButton = new ButtonBuilder()
+          .setLabel(nextLabel)
+          .setEmoji(nextEmoji)
+          .setStyle(ButtonStyle.Secondary)
+          .setCustomId(`gender-${nextGender.value}`);
+        components.push(nextButton);
+      }
+
+      return components;
+    }
 
     await interaction.reply({ embeds: [embed], components: [row] });
 
@@ -317,7 +323,7 @@ module.exports = {
               "Sorry, an error occurred while fetching gender information.",
             ephemeral: true,
           });
-          return; 
+          return;
         }
 
         const currentIndex = gender.indexOf(genderInfo);
@@ -347,8 +353,8 @@ module.exports = {
 
     const buttonCollector = interaction.channel.createMessageComponentCollector(
       {
-        componentType: ComponentType.BUTTON, 
-        time: 60000, 
+        componentType: ComponentType.BUTTON,
+        time: 60000,
       }
     );
 

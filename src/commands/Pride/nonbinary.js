@@ -4,14 +4,23 @@ const chalk = require("chalk");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("nonbinary")
-    .setDescription("01001110 01101111 01101110 00101101 01000010 01101001 01101110 01100001 01110010 01111001"),
+    .setDescription(
+      "01001110 01101111 01101110 00101101 01000010 01101001 01101110 01100001 01110010 01111001"
+    ),
 
   async execute(interaction, client) {
-    const estDate = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
-    console.log(chalk.white.bold(`-------------------------- \n/non-binary \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} \nTime: Time: ${estDate} (EST) \n--------------------------`));    const embed = new EmbedBuilder()
+    const estDate = new Date().toLocaleString("en-US", {
+      timeZone: "America/New_York",
+    });
+    console.log(
+      chalk.white.bold(
+        `-------------------------- \n/non-binary \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
+      )
+    );
+    const embed = new EmbedBuilder()
       .setTitle(`Non-binary`)
       .setDescription(`Here are some facts on "non-binary"`)
-      .setColor(0xff00ae)  
+      .setColor(0xff00ae)
       .setFields(
         {
           name: `What is Non-Binary`,

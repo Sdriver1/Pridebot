@@ -43,11 +43,17 @@ module.exports = {
         .setDescription("Set to true to make the response visible to everyone")
         .setRequired(false)
     ),
-    
 
   async execute(interaction) {
-    const estDate = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
-    console.log(chalk.white.bold(`-------------------------- \n/tester \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} \nTime: Time: ${estDate} (EST) \n--------------------------`));    const subject = interaction.options.getString("subject");
+    const estDate = new Date().toLocaleString("en-US", {
+      timeZone: "America/New_York",
+    });
+    console.log(
+      chalk.white.bold(
+        `-------------------------- \n/tester \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
+      )
+    );
+    const subject = interaction.options.getString("subject");
     const object = interaction.options.getString("object");
     const possessiveDeterminer = interaction.options.getString("possessive");
     const possessivePronoun = interaction.options.getString(
@@ -90,7 +96,7 @@ module.exports = {
       )
       .setTimestamp();
 
-      const isPublic = interaction.options.getBoolean("public", false);
+    const isPublic = interaction.options.getBoolean("public", false);
 
     // Send the embed in the reply
     await interaction.reply({ embeds: [embed], ephemeral: !isPublic });

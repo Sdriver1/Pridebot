@@ -16,8 +16,16 @@ module.exports = {
     .setDescription("Learn about any kinds or types of sexualities"),
 
   async execute(interaction) {
-    const estDate = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
-    console.log(chalk.white.bold(`-------------------------- \n/sexuality \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} \nTime: Time: ${estDate} (EST) \n--------------------------`));    const sex = [
+    const estDate = new Date().toLocaleString("en-US", {
+      timeZone: "America/New_York",
+    });
+    console.log(
+      chalk.white.bold(
+        `-------------------------- \n/sexuality \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
+      )
+    );
+
+    const sex = [
       {
         name: "Asexual/Aromantic",
         description: "Click to learn about Asexuality",
@@ -188,7 +196,9 @@ module.exports = {
     const row = new ActionRowBuilder().addComponents(selectMenu);
 
     const embed = new EmbedBuilder()
-      .setTitle("What are *sexualities* and which sexuality do you want to learn about?")
+      .setTitle(
+        "What are *sexualities* and which sexuality do you want to learn about?"
+      )
       .setDescription(
         `Sexualities are feelings, thoughts, attractions, and behaviors towards other people in which you find them physically, sexually, or emotionally attractive. Sexualities are typically categorized under two suffix categories: **-sexual** and **-romantic**. The suffix -sexual is the more common one and usually refers to an individual's sexual and physical attractions. The suffix -romantic is less common and is more often used if an individual's romantic/emotional attraction is different from their sexual/physical attraction. If someone's sexuality is the same for both sexual and romantic attraction, the romantic aspect is integrated into the -sexual suffix. Individuals can identify with more than one sexuality to more narrowly or specifically define their attractions. Sexualities are also some of the more fluid aspects of an individual's life as they can change or develop over time, so it's okay to be unsure; there's no need to rush: \n\nChoose one of the sexualities below that you want to learn about:`
       )
@@ -200,37 +210,37 @@ module.exports = {
       .setColor("#FF00AE")
       .setTimestamp();
 
-      function createSexualityButtons(currentIndex) {
-        const components = [];
-      
-        if (currentIndex > 0) {
-          const prevSexuality = sex[currentIndex - 1];
-          const prevLabel = `${prevSexuality.name}`;
-          const prevEmoji = `${prevSexuality.emoji}`;
-      
-          const prevButton = new ButtonBuilder()
-            .setLabel(prevLabel)
-            .setEmoji(prevEmoji)
-            .setStyle(ButtonStyle.Secondary)
-            .setCustomId(`sex-${prevSexuality.value}`);
-          components.push(prevButton);
-        }
-      
-        if (currentIndex < sex.length - 1) {
-          const nextSexuality = sex[currentIndex + 1];
-          const nextLabel = `${nextSexuality.name}`;
-          const nextEmoji = `${nextSexuality.emoji}`
-      
-          const nextButton = new ButtonBuilder()
-            .setLabel(nextLabel)
-            .setEmoji(nextEmoji)
-            .setStyle(ButtonStyle.Secondary)
-            .setCustomId(`sex-${nextSexuality.value}`);
-          components.push(nextButton);
-        }
-      
-        return components;
+    function createSexualityButtons(currentIndex) {
+      const components = [];
+
+      if (currentIndex > 0) {
+        const prevSexuality = sex[currentIndex - 1];
+        const prevLabel = `${prevSexuality.name}`;
+        const prevEmoji = `${prevSexuality.emoji}`;
+
+        const prevButton = new ButtonBuilder()
+          .setLabel(prevLabel)
+          .setEmoji(prevEmoji)
+          .setStyle(ButtonStyle.Secondary)
+          .setCustomId(`sex-${prevSexuality.value}`);
+        components.push(prevButton);
       }
+
+      if (currentIndex < sex.length - 1) {
+        const nextSexuality = sex[currentIndex + 1];
+        const nextLabel = `${nextSexuality.name}`;
+        const nextEmoji = `${nextSexuality.emoji}`;
+
+        const nextButton = new ButtonBuilder()
+          .setLabel(nextLabel)
+          .setEmoji(nextEmoji)
+          .setStyle(ButtonStyle.Secondary)
+          .setCustomId(`sex-${nextSexuality.value}`);
+        components.push(nextButton);
+      }
+
+      return components;
+    }
 
     await interaction.reply({ embeds: [embed], components: [row] });
 
@@ -259,12 +269,18 @@ module.exports = {
         const fieldsToAdd = [];
 
         if (sexInfo.info.title) {
-          fieldsToAdd.push({ name: sexInfo.info.title, value: sexInfo.info.description });
+          fieldsToAdd.push({
+            name: sexInfo.info.title,
+            value: sexInfo.info.description,
+          });
         }
         if (sexInfo.info.title2) {
-          fieldsToAdd.push({ name: sexInfo.info.title2, value: sexInfo.info.description2 });
+          fieldsToAdd.push({
+            name: sexInfo.info.title2,
+            value: sexInfo.info.description2,
+          });
         }
-        
+
         const selectedEmbed = new EmbedBuilder().setColor(0xff00ae);
         selectedEmbed.addFields(...fieldsToAdd);
 
@@ -281,16 +297,14 @@ module.exports = {
 
     const buttonCollector = interaction.channel.createMessageComponentCollector(
       {
-        componentType: ComponentType.BUTTON, 
-        time: 60000, 
+        componentType: ComponentType.BUTTON,
+        time: 60000,
       }
     );
 
     buttonCollector.on("collect", (buttonInteraction) => {
       const [, sexValue] = buttonInteraction.customId.split("-");
-      const selectedSexualityIndex = sex.findIndex(
-        (s) => s.value === sexValue
-      );
+      const selectedSexualityIndex = sex.findIndex((s) => s.value === sexValue);
       const sexInfo = sex[selectedSexualityIndex];
       if (!sexInfo) {
         console.error(
@@ -302,12 +316,18 @@ module.exports = {
       const fieldsToAdd = [];
 
       if (sexInfo.info.title) {
-        fieldsToAdd.push({ name: sexInfo.info.title, value: sexInfo.info.description });
+        fieldsToAdd.push({
+          name: sexInfo.info.title,
+          value: sexInfo.info.description,
+        });
       }
       if (sexInfo.info.title2) {
-        fieldsToAdd.push({ name: sexInfo.info.title2, value: sexInfo.info.description2 });
+        fieldsToAdd.push({
+          name: sexInfo.info.title2,
+          value: sexInfo.info.description2,
+        });
       }
-      
+
       const updatedEmbed = new EmbedBuilder().setColor(0xff00ae);
       updatedEmbed.addFields(...fieldsToAdd);
 

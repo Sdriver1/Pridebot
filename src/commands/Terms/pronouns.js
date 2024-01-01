@@ -16,8 +16,16 @@ module.exports = {
     .setDescription("Learn about any kinds or types of pronouns"),
 
   async execute(interaction) {
-    const estDate = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
-    console.log(chalk.white.bold(`-------------------------- \n/pronouns \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} \nTime: Time: ${estDate} (EST) \n--------------------------`));    const pronoun = [
+    const estDate = new Date().toLocaleString("en-US", {
+      timeZone: "America/New_York",
+    });
+    console.log(
+      chalk.white.bold(
+        `-------------------------- \n/pronoun \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
+      )
+    );
+
+    const pronoun = [
       {
         name: "He/Him/His",
         description: "Click to learn about He/Him/His pronouns",
@@ -166,7 +174,9 @@ module.exports = {
       .setTitle(
         "What are *pronouns* and which pronoun do you want to learn about?"
       )
-      .setDescription(`In a technical/grammatical sense, a pronoun is "a word that is used instead of a noun or noun phrase," according to the [Oxford Learner's Dictionary](https://www.oxfordlearnersdictionaries.com/us/definition/english/pronoun). However, from an LGBTQ and identity perspective, pronouns are combinations of self-identifying labels that take the place of one's name or a proper noun in a sentence. Importantly, pronouns do not equate to or construct gender and/or sex. Pronouns are labels an individual feels most comfortable being referred to as.\n\n Choose one of the pronouns or types below that you want to learn about:`) // ... represents your earlier description for brevity
+      .setDescription(
+        `In a technical/grammatical sense, a pronoun is "a word that is used instead of a noun or noun phrase," according to the [Oxford Learner's Dictionary](https://www.oxfordlearnersdictionaries.com/us/definition/english/pronoun). However, from an LGBTQ and identity perspective, pronouns are combinations of self-identifying labels that take the place of one's name or a proper noun in a sentence. Importantly, pronouns do not equate to or construct gender and/or sex. Pronouns are labels an individual feels most comfortable being referred to as.\n\n Choose one of the pronouns or types below that you want to learn about:`
+      ) // ... represents your earlier description for brevity
       .addFields({
         name: "Pronouns",
         value: pronoun.map((p) => `<:_:${p.emoji}> **${p.name}**`).join("\n"),
@@ -234,15 +244,24 @@ module.exports = {
         const fieldsToAdd = [];
 
         if (pronounInfo.info.title) {
-          fieldsToAdd.push({ name: pronounInfo.info.title, value: pronounInfo.info.description });
+          fieldsToAdd.push({
+            name: pronounInfo.info.title,
+            value: pronounInfo.info.description,
+          });
         }
         if (pronounInfo.info.title2) {
-          fieldsToAdd.push({ name: pronounInfo.info.title2, value: pronounInfo.info.description2 });
+          fieldsToAdd.push({
+            name: pronounInfo.info.title2,
+            value: pronounInfo.info.description2,
+          });
         }
         if (pronounInfo.info.title3) {
-          fieldsToAdd.push({ name: pronounInfo.info.title3, value: pronounInfo.info.description3 });
+          fieldsToAdd.push({
+            name: pronounInfo.info.title3,
+            value: pronounInfo.info.description3,
+          });
         }
-        
+
         const selectedEmbed = new EmbedBuilder().setColor(0xff00ae);
         selectedEmbed.addFields(...fieldsToAdd);
 
@@ -280,19 +299,27 @@ module.exports = {
 
       const fieldsToAdd = [];
 
-        if (pronounInfo.info.title) {
-          fieldsToAdd.push({ name: pronounInfo.info.title, value: pronounInfo.info.description });
-        }
-        if (pronounInfo.info.title2) {
-          fieldsToAdd.push({ name: pronounInfo.info.title2, value: pronounInfo.info.description2 });
-        }
-        if (pronounInfo.info.title3) {
-          fieldsToAdd.push({ name: pronounInfo.info.title3, value: pronounInfo.info.description3 });
-        }
+      if (pronounInfo.info.title) {
+        fieldsToAdd.push({
+          name: pronounInfo.info.title,
+          value: pronounInfo.info.description,
+        });
+      }
+      if (pronounInfo.info.title2) {
+        fieldsToAdd.push({
+          name: pronounInfo.info.title2,
+          value: pronounInfo.info.description2,
+        });
+      }
+      if (pronounInfo.info.title3) {
+        fieldsToAdd.push({
+          name: pronounInfo.info.title3,
+          value: pronounInfo.info.description3,
+        });
+      }
 
-      const updatedEmbed = new EmbedBuilder()
-        .setColor(0xff00ae)
-        updatedEmbed.addFields(...fieldsToAdd);
+      const updatedEmbed = new EmbedBuilder().setColor(0xff00ae);
+      updatedEmbed.addFields(...fieldsToAdd);
 
       const updatedButtons = createPronounButtons(selectedPronounIndex);
       const updatedRow = new ActionRowBuilder().addComponents(updatedButtons);

@@ -20,15 +20,12 @@ const client = new Client({
     GatewayIntentBits.GuildWebhooks,
     GatewayIntentBits.GuildInvites,
     GatewayIntentBits.GuildVoiceStates,
-    GatewayIntentBits.GuildPresences,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.GuildMessageReactions,
     GatewayIntentBits.GuildMessageTyping,
     GatewayIntentBits.DirectMessages,
     GatewayIntentBits.DirectMessageReactions,
     GatewayIntentBits.DirectMessageTyping,
-    GatewayIntentBits.GuildMembers,
-    GatewayIntentBits.MessageContent,
   ],
 });
 client.commands = new Collection();
@@ -82,6 +79,24 @@ const ap = AutoPoster(topggToken, client);
 ap.on("posted", () => {
   console.log("Posted stats to Top.gg!");
 });
+
+process.on("unhandledRejection", (reason, promise) => {
+    console.log(`[ANTI-CRASH]:    :: Unhandled Rejection  ::  `)
+    console.log(promise)
+})
+
+process.on("uncaughtException", (reason, promise) => {
+    console.log(`[ANTI-CRASH]:    :: Uncaught Exeption  ::  `)
+    console.log(reason, promise)
+})
+
+client.on("error", (err) => {
+   console.error(err)
+});
+
+process.on("uncaughtExceptionMonitor", (reason, p) => {
+    return;
+})
 
 client.handleEvents();
 client.handleCommands();

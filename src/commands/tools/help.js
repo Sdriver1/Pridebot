@@ -14,9 +14,14 @@ module.exports = {
     .setDescription("Shows command list and helpful links"),
 
   async execute(interaction, client) {
-
-    const estDate = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
-    console.log(chalk.white.bold(`-------------------------- \n/help \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} \nTime: Time: ${estDate} (EST) \n--------------------------`));
+    const estDate = new Date().toLocaleString("en-US", {
+      timeZone: "America/New_York",
+    });
+    console.log(
+      chalk.white.bold(
+        `-------------------------- \n/help \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
+      )
+    );
     const helpOptions = [
       {
         name: "Pride",
@@ -25,8 +30,8 @@ module.exports = {
         emoji: "1108822823721521242",
         info: {
           title: "Pride Commands",
-          description:  `</bisexual:1183503172036206632> - Learn about term "bisexual" and some brief history \n</gay:1115861631226884107> - Learn about term "gay" and some brief history \n</lesbian:1115869305062576250> - Learn about term "lesbian" and some brief history \n</nonbinary:1183503172036206633> Learn about term "non-binary" and some brief history \n</pansexual:1183503172036206634> - Learn about term "pansexual" and some brief history \n</transgender:1183503172036206636> - Learn about term "transgender" and some brief history `,
-        }
+          description: `</bisexual:1183503172036206632> - Learn about term "bisexual" and some brief history \n</gay:1115861631226884107> - Learn about term "gay" and some brief history \n</lesbian:1115869305062576250> - Learn about term "lesbian" and some brief history \n</nonbinary:1183503172036206633> Learn about term "non-binary" and some brief history \n</pansexual:1183503172036206634> - Learn about term "pansexual" and some brief history \n</transgender:1183503172036206636> - Learn about term "transgender" and some brief history `,
+        },
       },
       {
         name: "Support",
@@ -36,7 +41,7 @@ module.exports = {
         info: {
           title: "Support Commands",
           description: `</comingout:1176020092581060678> - Access tips and guides on how to come out to anyone \n</mentalhealth:1176262554071334994> - Access helplines and any mental health resources provided`,
-        }
+        },
       },
       {
         name: "Terms",
@@ -55,19 +60,19 @@ module.exports = {
         emoji: "1112234548999245834",
         info: {
           title: "Tool Commands",
-          description: `</bugreport:1176639348423266457> - Submit any bugs you find with Pridebot \n</feedback:1176639348423266456> - Submit any feedback you have on Pridebot \n</help:1112238192784048208> - Shows command list and helpful links \n</latest:1150993734180278353> - Get the bot's latest updates \n</pronountester:1179995184059121766> - Use this to try out new pronouns for yourself \n</stats:1111290488897683579> - Get the bot's and discord stats`
+          description: `</bugreport:1176639348423266457> - Submit any bugs you find with Pridebot \n</feedback:1176639348423266456> - Submit any feedback you have on Pridebot \n</help:1112238192784048208> - Shows command list and helpful links \n</latest:1150993734180278353> - Get the bot's latest updates \n</pronountester:1179995184059121766> - Use this to try out new pronouns for yourself \n</stats:1111290488897683579> - Get the bot's and discord stats`,
         },
       },
     ];
-    
-      const selectOptions = helpOptions.map((option) =>
+
+    const selectOptions = helpOptions.map((option) =>
       new StringSelectMenuOptionBuilder()
         .setLabel(option.name)
         .setDescription(option.description)
         .setValue(option.value)
         .setEmoji(option.emoji)
     );
-    
+
     const selectMenu = new StringSelectMenuBuilder()
       .setCustomId("helpSelect")
       .setPlaceholder("What commands you want to learn about?")
@@ -109,12 +114,15 @@ module.exports = {
               "Sorry, an error occurred while fetching help information.",
             ephemeral: true,
           });
-          return; 
+          return;
         }
 
-        const selectedEmbed = new EmbedBuilder().setColor(0xff00ae).addFields(
-          { name: helpInfo.info.title, value: helpInfo.info.description },
-        );
+        const selectedEmbed = new EmbedBuilder()
+          .setColor(0xff00ae)
+          .addFields({
+            name: helpInfo.info.title,
+            value: helpInfo.info.description,
+          });
 
         selectInteraction.reply({
           embeds: [selectedEmbed],
