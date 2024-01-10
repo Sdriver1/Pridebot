@@ -1,7 +1,9 @@
 require("dotenv").config();
-const { githubToken } = process.env;
+const { githubToken, apikey } = process.env;
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { calculatePing } = require("../../events/client/ping");
 const axios = require("axios");
+const Nodeactyl = require("nodeactyl");
 const chalk = require("chalk");
 
 module.exports = {
@@ -10,6 +12,9 @@ module.exports = {
     .setDescription("Get the bot's and discord stats"),
 
   async execute(interaction, client) {
+      await interaction.deferReply();
+  const botping = await calculatePing(interaction);
+
     const estDate = new Date().toLocaleString("en-US", {
       timeZone: "America/New_York",
     });
@@ -19,9 +24,6 @@ module.exports = {
       )
     );
     try {
-      const initialReply = await interaction.deferReply({ fetchReply: true });
-      const initialTime = initialReply.createdTimestamp;
-
       const options = {
         month: "long",
         day: "numeric",
@@ -129,45 +131,6 @@ module.exports = {
         commitsText += `${latestCommitDate} - [${latestCommitTitle}](${latestCommitLink})`;
       }
       //---------------------------------------------------------------------------------------------------
-      let clientType = "offline";
-      let statusEmote = "<:_:1111490661259165727>";
-
-      if (interaction.member?.presence?.clientStatus) {
-        if (interaction.member.presence.clientStatus.mobile) {
-          clientType = "Mobile";
-        } else if (interaction.member.presence.clientStatus.desktop) {
-          clientType = "Desktop";
-        } else if (interaction.member.presence.clientStatus.web) {
-          clientType = "Website";
-        }
-      }
-
-      if (interaction.member?.presence?.status === "dnd") {
-        if (clientType === "Mobile") {
-          statusEmote = "<:_:1111031153604956250>";
-        } else if (clientType === "Desktop") {
-          statusEmote = "<:_:1111029093497045063>";
-        } else if (clientType === "Website") {
-          statusEmote = "<:_:1111030162646118440>";
-        }
-      } else if (interaction.member?.presence?.status === "idle") {
-        if (clientType === "Mobile") {
-          statusEmote = "<:_:1111031207296241765>";
-        } else if (clientType === "Desktop") {
-          statusEmote = "<:_:1111029962045141152>";
-        } else if (clientType === "Website") {
-          statusEmote = "<:_:1111030230820323348>";
-        }
-      } else if (interaction?.member.presence?.status === "online") {
-        if (clientType === "Mobile") {
-          statusEmote = "<:_:1111020888620539994>";
-        } else if (clientType === "Desktop") {
-          statusEmote = "<:_:1111021789661909052>";
-        } else if (clientType === "Website") {
-          statusEmote = "<:_:1111030292287852644>";
-        }
-      }
-
       const currentGuildCount = client.guilds.cache.size;
       let totalUserCount = 0;
       client.guilds.cache.forEach((guild) => {
@@ -175,42 +138,84 @@ module.exports = {
       });
 
       const formattedTotalUserCount = totalUserCount.toLocaleString();
-      const perceivedPing = Date.now() - initialTime;
+      //--------------------------------------------------------------------------------
+
+      async function getRegisteredCommandsCount(client) {
+        if (!client.application) {
+          console.error("Client application is not ready.");
+          return 0;
+        }
+        const commands = await client.application.commands.fetch();
+        return commands.size;
+      }
+
+      const CommandsCount = await getRegisteredCommandsCount(client);
+
+      //--------------------------------------------------------------------------------
+
+      const Client = new Nodeactyl.NodeactylClient(
+        "https://panel.sneakyhost.xyz/",
+        apikey
+      );
+
+      let serviceMem = "Unavailable";
+      let serviceCPU = "Unavailable";
+      let serviceDk = "Unavailable";
+
+      try {
+        const serverStats = await Client.getServerUsages("2e12ab3b");
+
+        const memoryMB = serverStats.resources.memory_bytes / 1024 / 1024;
+        const cpuPercentage = serverStats.resources.cpu_absolute;
+        const diskMB = serverStats.resources.disk_bytes / 1024 / 1024;
+
+        serviceMem = `**RAM Usage:** \`${memoryMB.toFixed(2)} MB / 700 MB\``;
+        serviceCPU = `**CPU Usage:** \`${cpuPercentage.toFixed(2)}%\``;
+        serviceDk = `**Disk Usage:** \`${diskMB.toFixed(2)} MB / 1.22 GB\``;
+      } catch (error) {
+        console.error("Error fetching server stats:", error);
+      }
+
       //--------------------------------------------------------------------------------
 
       const startTimeTimestamp = `<t:${client.botStartTime}:f>`;
 
-      const bot = `**Ping**: \`${perceivedPing}\`\n**Version:** \`1.${commitTens}.${commitOnes}\`\n**Uptime:** \`${formatUptime(
+      const ping = `**Ping**: \`${botping}ms\` \n**API Latency**: \`${client.ws.ping}\``;
+
+      const up = `\n**Uptime:** \`${formatUptime(
         process.uptime()
       )} \` \n**Start Time:** ${startTimeTimestamp}`;
-      const discord = `**API Latency**: \`${
-        client.ws.ping
-      }\` \n**Client:** ${statusEmote} \`${clientType}\`\n**Status:** \`${
-        interaction.member?.presence?.status || "offline"
-      }\``;
-      const userstats = `**Total guilds:** \`${currentGuildCount}\` \n**Total users:** \`${formattedTotalUserCount}\``;
+
+      const botstats = `**Version:** \`1.${commitTens}.${commitOnes}\` \n**Guilds:** \`${currentGuildCount}\` \n**Users:** \`${formattedTotalUserCount}\` \n**Commands:** \`${CommandsCount}\``;
+
+      const servicestats = `${serviceMem} \n${serviceCPU} \n${serviceDk}`;
 
       try {
         const embed = new EmbedBuilder().setColor(0xff00ae).addFields(
           {
             name: "<:_:1108228682184654908> __Bot Stats__",
-            value: bot,
+            value: botstats,
             inline: true,
           },
           {
-            name: "<:_:1113295174701940776> __Guild/User Stats__",
-            value: userstats,
+            name: "<:_:1108417509624926228> __Bot Uptime__",
+            value: up,
             inline: true,
           },
           {
-            name: "<:_:1108417509624926228> __Discord Stats__",
-            value: discord,
+            name: "<:_:1191202343505645690> __Bot Ping__",
+            value: ping,
+            inline: true,
+          },
+          {
+            name: "<:_:1193823319246524486> __Bot Usage__",
+            value: servicestats,
             inline: true,
           },
           {
             name: "<:_:1108421476148859010> __Latest Discord API Incident__",
             value: DiscordApiIncident,
-            inline: false,
+            inline: true,
           }
         );
 
@@ -232,18 +237,19 @@ module.exports = {
 };
 
 function formatUptime(time) {
-  const days = Math.floor(time / (3600 * 24));
-  const hours = Math.floor((time % (3600 * 24)) / 3600);
-  const minutes = Math.floor((time % 3600) / 60);
-  const seconds = Math.floor(time % 60);
-
-  const parts = [];
-  if (days) parts.push(`${days} day(s)`);
-  if (hours) parts.push(`${hours} hour(s)`);
-  if (minutes) parts.push(`${minutes} minute(s)`);
-  if (seconds) parts.push(`${seconds} second(s)`);
-
-  return parts.join(" ");
+  const timeUnits = {
+    day: 3600 * 24,
+    hour: 3600,
+    minute: 60,
+    second: 1,
+  };
+  return Object.entries(timeUnits)
+    .reduce((acc, [unit, unitSeconds]) => {
+      const amount = Math.floor(time / unitSeconds);
+      time -= amount * unitSeconds;
+      return amount ? [...acc, `${amount} ${unit}(s)`] : acc;
+    }, [])
+    .join(" ");
 }
 
 function formatTimestamp(timestamp) {

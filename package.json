@@ -4,8 +4,7 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "test": "node .",
-    "dev": "node src/index.js dev"
+    "test": "node ."
   },
   "keywords": [],
   "author": "Sdriver1#0001",
@@ -15,19 +14,20 @@
     "@discordjs/rest": "^1.7.1",
     "@top-gg/sdk": "^3.1.6",
     "archiver": "^5.3.2",
-    "axios": "^1.6.2",
+    "axios": "^1.6.5",
     "body-parser": "^1.20.2",
     "bootstrap": "^5.3.2",
     "chalk": "^4.1.2",
     "cheerio": "^1.0.0-rc.12",
-    "discord-api-types": "^0.37.66",
+    "discord-api-types": "^0.37.67",
     "discord.js": "^14.14.1",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "jquery": "^3.7.1",
-    "moment": "^2.29.4",
+    "moment": "^2.30.1",
     "mongodb": "^6.3.0",
-    "mongoose": "^7.6.7",
+    "mongoose": "^7.6.8",
+    "nodeactyl": "^3.3.0",
     "puppeteer": "^20.9.0",
     "topgg-autoposter": "^2.0.1"
   }

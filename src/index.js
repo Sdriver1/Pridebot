@@ -46,10 +46,6 @@ const eventHandlers = {
   handleGuildCreate: require("./events/client/guildCreate.js"),
   handleGuildDelete: require("./events/client/guildDelete.js"),
   handleReportFeedback: require("./events/client/modals.js"),
-  handleTopic: require("./commands/pridemonth/topic.js"),
-  handleVC: require("./commands/pridemonth/vc.js"),
-  handleEmote: require("./commands/pridemonth/emote.js"),
-  handleMedia: require("./commands/pridemonth/images.js"),
 };
 
 client.on(Events.GuildCreate, (guild) =>
@@ -60,13 +56,6 @@ client.on(Events.GuildDelete, (guild) =>
 );
 client.on("interactionCreate", (interaction) => {
   eventHandlers.handleReportFeedback(client, interaction);
-});
-
-client.on("messageCreate", (message) => {
-  eventHandlers.handleEmote(client, message),
-    eventHandlers.handleMedia(client, message),
-    eventHandlers.handleTopic(client, message),
-    eventHandlers.handleVC(client, message);
 });
 
 // Update channel name periodically
