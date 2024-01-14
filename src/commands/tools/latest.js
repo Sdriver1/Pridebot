@@ -52,7 +52,7 @@ module.exports = {
       },
       {
         name: "<:_:1110925802041774151> Updates",
-        value: `1. Added 4 new commands: </bisexual:1183503172036206632>, </nonbinary:1183503172036206633>, </pansexual:1183503172036206634>, and </transgender:1183503172036206636> \n2. Redid </lesbian:1183468824478089247> and </gay:1183468824478089246> \n3. Moved </pronountester:1179995184059121766> to Tools \n4. Updated </help:1112238192784048208> and [README.](https://github.com/Sdriver1/Pridebot#readme) with new commands`,
+        value: `1. Remade </stats:1111290488897683579> to now have more accurate ping, show bot host stats, and new emotes \n2. Pridebot now got a website, check it out [**here**](https://pridebot.xyz/) \n3. 2 new commands: </lgbtq:1196151440343838849> and </queer:1196149039431962644>`,
         inline: false,
       }
     );

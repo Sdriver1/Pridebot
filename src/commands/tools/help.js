@@ -30,7 +30,7 @@ module.exports = {
         emoji: "1108822823721521242",
         info: {
           title: "Pride Commands",
-          description: `</bisexual:1183503172036206632> - Learn about term "bisexual" and some brief history \n</gay:1115861631226884107> - Learn about term "gay" and some brief history \n</lesbian:1115869305062576250> - Learn about term "lesbian" and some brief history \n</nonbinary:1183503172036206633> Learn about term "non-binary" and some brief history \n</pansexual:1183503172036206634> - Learn about term "pansexual" and some brief history \n</transgender:1183503172036206636> - Learn about term "transgender" and some brief history `,
+          description: `</bisexual:1183503172036206632> - Learn about term "bisexual" and some brief history \n</gay:1183468824478089246> - Learn about term "gay" and some brief history \n</lesbian:1183468824478089247> - Learn about term "lesbian" and some brief history \n</nonbinary:1183503172036206633> Learn about term "non-binary" and some brief history \n</pansexual:1183503172036206634> - Learn about term "pansexual" and some brief history \n</queer:1196149039431962644> - Learn about term "queer" and some brief history \n</transgender:1183503172036206636> - Learn about term "transgender" and some brief history `,
         },
       },
       {
@@ -50,7 +50,7 @@ module.exports = {
         emoji: "1112602480128299079",
         info: {
           title: "Term Commands",
-          description: `</gender:1112200593310756874> - Learn about any kinds or types of genders \n</pronouns:1111772157538730116> - Learn about any kinds or types of pronouns \n</sexuality:1111289006299283456> - Learn about any kinds or types of sexualities`,
+          description: `</gender:1112200593310756874> - Learn about any kinds or types of genders \n</lgbtq:1196151440343838849> - Fun little command to show off the LGBTQ commands \n</pronouns:1111772157538730116> - Learn about any kinds or types of pronouns \n</sexuality:1111289006299283456> - Learn about any kinds or types of sexualities`,
         },
       },
       {
@@ -91,7 +91,7 @@ module.exports = {
       .addFields({
         name: "Useful links",
         value:
-          "[**Bot Invite**](https://discord.com/api/oauth2/authorize?client_id=1101256478632972369&permissions=415001594945&scope=bot%20applications.commands) \n[**Github Repo**](https://github.com/Sdriver1/Pridebot) \n[**Support Server**](https://discord.gg/guybqSTzdS) \n[**Top.gg**](https://top.gg/bot/1101256478632972369?s=0bed0f7e006a2)",
+          "[**Website**](https://pridebot.xyz/) \n[**Bot Invite**](https://discord.com/api/oauth2/authorize?client_id=1101256478632972369&permissions=415001594945&scope=bot%20applications.commands) \n[**Github Repo**](https://github.com/Sdriver1/Pridebot) \n[**Support Server**](https://discord.gg/guybqSTzdS) \n[**Top.gg**](https://top.gg/bot/1101256478632972369?s=0bed0f7e006a2)",
       });
 
     await interaction.reply({ embeds: [embed], components: [row] });
