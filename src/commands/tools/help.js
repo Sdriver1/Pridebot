@@ -24,6 +24,16 @@ module.exports = {
     );
     const helpOptions = [
       {
+        name: "Fun",
+        description: "Click to learn about fun commands",
+        value: "fun",
+        emoji: "1196254858689380474",
+        info: {
+          title: "Fun Commands",
+          description: `</gaydar:1196256451270811688> - How gay are you or your friend? \n</lgbtq:1196151440343838849> - Fun little command to show off the LGBTQ commands \n</pronountester:1179995184059121766> - Use this to try out new pronouns for yourself `,
+        },
+      },
+      {
         name: "Pride",
         description: "Click to learn about Pride commands",
         value: "pride",
@@ -50,7 +60,7 @@ module.exports = {
         emoji: "1112602480128299079",
         info: {
           title: "Term Commands",
-          description: `</gender:1112200593310756874> - Learn about any kinds or types of genders \n</lgbtq:1196151440343838849> - Fun little command to show off the LGBTQ commands \n</pronouns:1111772157538730116> - Learn about any kinds or types of pronouns \n</sexuality:1111289006299283456> - Learn about any kinds or types of sexualities`,
+          description: `</gender:1112200593310756874> - Learn about any kinds or types of genders \n</pronouns:1111772157538730116> - Learn about any kinds or types of pronouns \n</sexuality:1111289006299283456> - Learn about any kinds or types of sexualities`,
         },
       },
       {
@@ -60,7 +70,7 @@ module.exports = {
         emoji: "1112234548999245834",
         info: {
           title: "Tool Commands",
-          description: `</bugreport:1176639348423266457> - Submit any bugs you find with Pridebot \n</feedback:1176639348423266456> - Submit any feedback you have on Pridebot \n</help:1112238192784048208> - Shows command list and helpful links \n</latest:1150993734180278353> - Get the bot's latest updates \n</pronountester:1179995184059121766> - Use this to try out new pronouns for yourself \n</stats:1111290488897683579> - Get the bot's and discord stats`,
+          description: `</bugreport:1176639348423266457> - Submit any bugs you find with Pridebot \n</feedback:1176639348423266456> - Submit any feedback you have on Pridebot \n</help:1112238192784048208> - Shows command list and helpful links \n</latest:1150993734180278353> - Get the bot's latest updates \n</stats:1111290488897683579> - Get the bot's and discord stats`,
         },
       },
     ];
@@ -117,12 +127,10 @@ module.exports = {
           return;
         }
 
-        const selectedEmbed = new EmbedBuilder()
-          .setColor(0xff00ae)
-          .addFields({
-            name: helpInfo.info.title,
-            value: helpInfo.info.description,
-          });
+        const selectedEmbed = new EmbedBuilder().setColor(0xff00ae).addFields({
+          name: helpInfo.info.title,
+          value: helpInfo.info.description,
+        });
 
         selectInteraction.reply({
           embeds: [selectedEmbed],

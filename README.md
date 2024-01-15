@@ -10,6 +10,7 @@ Pridebot offers a range of features to assist users in learning and discussing L
 - **Informative Commands**: Access detailed explanations and resources about sexualities, genders, and pronouns.
 - **Identity Exploration**: Tools and guidance for users questioning or exploring their identity. 
 - **Tips and Help**: Tools on how to come out to others and helplines and resources for people going through mental health emergencies are available, too.
+- **Fun and More**: Check out the Fun commands for gay fun or check out the Pride commands for all the little jokes
 
 ## Getting Started
 To add Pridebot to your Discord server, follow these two simple steps:
@@ -18,21 +19,20 @@ To add Pridebot to your Discord server, follow these two simple steps:
 
 ## Commands
 Here is a list of the commands you can use with Pridebot:
-- **Fun** - `/gaydar`
+- **Fun** - `/gaydar`, `/lgbtq`, and `/pronountester`
 - **Pride** 
     - **Sexualities** - `/bisexual`, `/gay`,`/lesbian`, `/pansexual`, and `/queer` 
     - **Genders** -  `/nonbinary`, and `/transgender`
 - **Support** - `/comingout` and `/mentalhealth`
-- **Terms** - `/gender`, `/lgbtq`, `/pronouns`, and `/sexuality`
-- **Tools** - `/bugreport`, `/feedback`, `/help,`, `/latest`, `/pronountester`, and `/stats`
+- **Terms** - `/gender`, `/pronouns`, and `/sexuality`
+- **Tools** - `/bugreport`, `/feedback`, `/help,`, `/latest`, and `/stats`
 
 
 ## Contribution
 Contributions to Pridebot are welcome! If you're interested in contributing, please:
 - **Report Bugs**: Submit bug reports with `/bugreport` to help improve Pridebot.
 - **Suggest Features**: Have an idea? Please share it with us using `/feedback`!
-- **Develop**: Fork the repository and submit pull requests.
-- **Voting**: Vote for Pridebot on [Top.gg](https://top.gg/bot/1101256478632972369?s=0bed0f7e006a2)
+- **Voting**: Vote for Pridebot on [Top.gg](https://top.gg/bot/1101256478632972369?s=0bed0f7e006a2) and [Wumpus Store](https://wumpus.store/bot/1101256478632972369)
 
 ## Support
 For support, questions, or feedback about Pridebot, please join our Discord community [here](https://discord.gg/guybqSTzdS).
@@ -42,5 +42,5 @@ For support, questions, or feedback about Pridebot, please join our Discord comm
 
 ---
 
-Pridebot is an ongoing project and seeks to continually evolve with the feedback and support of the community. Let's build a more inclusive and understanding world together!
+Pridebot © 2023-2024
 
