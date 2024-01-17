@@ -4,12 +4,12 @@ const chalk = require("chalk");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("gaydar")
-    .setDescription("Why am I bi myself again ;-;")
-    .addBooleanOption((option) =>
+    .setDescription("How gay are you?")
+    .addUserOption(option =>
       option
-        .setName("user")
-        .setDescription("Try to see how gay another user is")
-        .setRequired(false)
+        .setName("target")
+        .setDescription("See how gay a user is")
+        .setRequired(false) // Option is not required
     ),
 
   async execute(interaction, client) {
@@ -22,17 +22,33 @@ module.exports = {
       )
     );
 
-    // Check if the user option is provided
-    let userOption = interaction.options.getBoolean("user");
-    let user = userOption ? userOption : interaction.user.tag;
+    const targetUser = interaction.options.getUser("target") || interaction.user;
+    const userName = targetUser.username; 
+    const userid = targetUser.id; 
 
-    // Generate a random number between 0 and 100
-    let meter = Math.floor(Math.random() * 101);
+    const austinID = "288897433805651968";
+    const paulID = "218507234144026625";
+	const driverID = "691506668781174824"
+	const botID = "1101256478632972369";
+
+    let meter;
+    if (userid === austinID) {
+      meter = 300;
+    } else if (userid === paulID) {
+      meter = 0.1;
+    } else if (userid === driverID) {
+      meter = 69;
+    } else if (userid === botID) {
+      meter = 101;
+    } else {
+      meter = Math.floor(Math.random() * 101);
+    }
 
     const embed = new EmbedBuilder()
-      .setTitle(`How gay is ${user}`)
-      .setDescription(`${user} is **${meter}% gay!**`)
-      .setColor(0xff00ae);
+      .setTitle(`How gay is ${userName}?`)
+      .setDescription(`<@${userid}> is **${meter}% gay!**`)
+      .setColor(0xff00ae)
+      .setFooter({ text: "The bot has 99.99% accuracy rate on checking users gayness" });
     await interaction.reply({ embeds: [embed] });
   },
 };
