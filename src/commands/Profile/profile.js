@@ -53,7 +53,7 @@ module.exports = {
             .setDescription("Your romantic orientation")
             .setRequired(false)
             .addChoices(
-              { name: "Aromantic", value: "Asexual" },
+              { name: "Aromantic", value: "Aromantic" },
               { name: "Biromantic", value: "Biromantic" },
               { name: "Demiromantic", value: "Demiromantic" },
               { name: "Heteroromantic", value: "Heteroromantic" },
@@ -96,20 +96,20 @@ module.exports = {
             .setRequired(false)
             .addChoices(
               { name: "He/Him/His", value: "He/Him/His" },
-              { name: "She/Her/Hers", value: "shh" },
-              { name: "They/Them/Their", value: "ttt" },
-              { name: "It/Its", value: "ii" },
-              { name: "He/They", value: "ht" },
-              { name: "She/They", value: "st" },
-              { name: "It/They", value: "it" },
-              { name: "Any Pronouns", value: "any" },
-              { name: "ey/em/eir", value: "eee" },
-              { name: "fae/faer/faer", value: "fff" },
-              { name: "xe/xem/xyr", value: "xxx" },
-              { name: "ze/zir/zir", value: "zzz" },
-              { name: "other neopronouns", value: "on" },
-              { name: "Unlabeled", value: "upro" },
-              { name: "Other", value: "opro" }
+              { name: "She/Her/Hers", value: "She/Her/Hers" },
+              { name: "They/Them/Their", value: "They/Them/Their" },
+              { name: "It/Its", value: "It/Its" },
+              { name: "He/They", value: "He/They" },
+              { name: "She/They", value: "She/They" },
+              { name: "It/They", value: "It/They" },
+              { name: "Any Pronouns", value: "Any Pronouns" },
+              { name: "ey/em/eir", value: "ey/em/eir" },
+              { name: "fae/faer/faer", value: "fae/faer/faer" },
+              { name: "xe/xem/xyr", value: "xe/xem/xyr" },
+              { name: "ze/zir/zir", value: "ze/zir/zir" },
+              { name: "other neopronouns", value: "other neopronouns" },
+              { name: "None", value: "None" },
+              { name: "Other", value: "Other" }
             )
         )
     )
@@ -149,7 +149,7 @@ module.exports = {
             .setDescription("Your romantic orientation")
             .setRequired(true)
             .addChoices(
-              { name: "Aromantic", value: "Asexual" },
+              { name: "Aromantic", value: "Aromantic" },
               { name: "Biromantic", value: "Biromantic" },
               { name: "Demiromantic", value: "Demiromantic" },
               { name: "Heteroromantic", value: "Heteroromantic" },
@@ -192,20 +192,20 @@ module.exports = {
             .setRequired(true)
             .addChoices(
               { name: "He/Him/His", value: "He/Him/His" },
-              { name: "She/Her/Hers", value: "shh" },
-              { name: "They/Them/Their", value: "ttt" },
-              { name: "It/Its", value: "ii" },
-              { name: "He/They", value: "ht" },
-              { name: "She/They", value: "st" },
-              { name: "It/They", value: "it" },
-              { name: "Any Pronouns", value: "any" },
-              { name: "ey/em/eir", value: "eee" },
-              { name: "fae/faer/faer", value: "fff" },
-              { name: "xe/xem/xyr", value: "xxx" },
-              { name: "ze/zir/zir", value: "zzz" },
-              { name: "other neopronouns", value: "on" },
-              { name: "Unlabeled", value: "upro" },
-              { name: "Other", value: "opro" }
+              { name: "She/Her/Hers", value: "She/Her/Hers" },
+              { name: "They/Them/Their", value: "They/Them/Their" },
+              { name: "It/Its", value: "It/Its" },
+              { name: "He/They", value: "He/They" },
+              { name: "She/They", value: "She/They" },
+              { name: "It/They", value: "It/They" },
+              { name: "Any Pronouns", value: "Any Pronouns" },
+              { name: "ey/em/eir", value: "ey/em/eir" },
+              { name: "fae/faer/faer", value: "fae/faer/faer" },
+              { name: "xe/xem/xyr", value: "xe/xem/xyr" },
+              { name: "ze/zir/zir", value: "ze/zir/zir" },
+              { name: "other neopronouns", value: "other neopronouns" },
+              { name: "None", value: "None" },
+              { name: "Other", value: "Other" }
             )
         )
     ),
@@ -220,12 +220,16 @@ module.exports = {
       )
     );
 
-    const specialUsers = new Set(["691506668781174824"]); // IDs of special users
+    const devUsers = new Set(["691506668781174824", "897235561092378625"]);
+    const supportUsers = new Set(["691506668781174824", "897235561092378625"]);
     const vipUsers = new Set([
       "691506668781174824",
-      "897235561092378625",
       "1161438276968775681",
-    ]); // IDs of VIP users
+      "218507234144026625",
+      "470472839766736897",
+      "897235561092378625",
+    ]);
+    const partnerUsers = new Set(["897235561092378625"]);
 
     if (subcommand === "view") {
       const targetUser =
@@ -244,14 +248,24 @@ module.exports = {
         });
       }
 
-      // Check if the user is a special user and add an emote to the title
-      const isDev = specialUsers.has(targetUser.id);
-      const isVip = vipUsers.has(targetUser.id);
-      const devEmote = isDev ? "<:Ic_Pridebot_dev:1195877037034983515>" : ""; // Emote for developers
-      const vipEmote = isVip
-        ? "<:Ic_Pridebot_verified:1197328938788204586>"
-        : ""; // Checkmark for VIP users
-      const title = `${targetUser.username}'s Profile ${devEmote} ${vipEmote}`;
+      // Collect the badges in an array
+      const badges = [];
+      if (devUsers.has(targetUser.id)) {
+        badges.push("<:Ic_Pridebot_dev:1195877037034983515> ");
+      }
+      if (supportUsers.has(targetUser.id)) {
+        badges.push("<:Ic_Pridebot_support:1197399653109473301> ");
+      }
+      if (vipUsers.has(targetUser.id)) {
+        badges.push("<:Ic_Pridebot_verified:1197328938788204586> ");
+      }
+      if (partnerUsers.has(targetUser.id)) {
+        badges.push("<:Ic_Pridebot_partner:1197394034310791272> ");
+      }
+
+      // Join the badges array into a string with no spaces between them
+      const badgeStr = badges.join("");
+      const title = `${targetUser.username}'s Profile ${badgeStr}`;
 
       const profileEmbed = new EmbedBuilder()
         .setColor("#FF00EA")
