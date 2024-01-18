@@ -44,6 +44,16 @@ module.exports = {
         },
       },
       {
+        name: "Profile",
+        description: "Click to learn about Profile commands",
+        value: "profile",
+        emoji: "1197388214843998299",
+        info: {
+          title: "Profile Commands",
+          description: `</profile setup:1197313708846743642> - Setup your profile \n</profile view:1197313708846743642> - View your or another users profile \n</profile update:1197313708846743642> - Update the information in your profile`,
+        },
+      },
+      {
         name: "Support",
         description: "Click to learn about Support commands",
         value: "support",

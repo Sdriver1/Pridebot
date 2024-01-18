@@ -103,7 +103,7 @@ module.exports = {
       );
       const commitsData = commitsResponse.data;
       const commitCount = commitsData.length;
-      const devcommitCount = commitsData.length - 59;
+      const devcommitCount = commitsData.length - 61;
 
       let commitTens = "0";
       let commitOnes = "0";
@@ -149,7 +149,7 @@ module.exports = {
         return commands.size;
       }
 
-      const CommandsCount = await getRegisteredCommandsCount(client);
+      const CommandsCount = await getRegisteredCommandsCount(client) + 2;
 
       //--------------------------------------------------------------------------------
 

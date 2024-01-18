@@ -52,7 +52,7 @@ module.exports = {
       },
       {
         name: "<:_:1196239825213341768> Updates",
-        value: `1. Remade </stats:1111290488897683579> to now have more accurate ping, show bot host stats, and new emotes \n2. Pridebot now got a website, check it out [**here**](https://pridebot.xyz/) \n3. 2 new commands: </lgbtq:1196151440343838849> and </queer:1196149039431962644> \n4. Updated [README.](https://github.com/Sdriver1/Pridebot#readme)`,
+        value: `1. Added Profiles to Pridebot \n2. 3 new commands: </profile setup:1197313708846743642>, </profile view:1197313708846743642>, and </profile update:1197313708846743642> \n3. Updated [website](https://pridebot.xyz) with new commands \n4. Updated [README.](https://github.com/Sdriver1/Pridebot#readme)`,
         inline: false,
       },
       {
