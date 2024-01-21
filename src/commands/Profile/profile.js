@@ -228,8 +228,11 @@ module.exports = {
       "218507234144026625",
       "470472839766736897",
       "897235561092378625",
+      "1101256478632972369",
+      "288897433805651968",
     ]);
     const partnerUsers = new Set(["897235561092378625"]);
+    const botUser = new Set(["897235561092378625", "1101256478632972369"]);
 
     if (subcommand === "view") {
       const targetUser =
@@ -248,8 +251,10 @@ module.exports = {
         });
       }
 
-      // Collect the badges in an array
       const badges = [];
+      if (botUser.has(targetUser.id)) {
+        badges.push("<:Ic_Pridebot_logo:1108228682184654908> ");
+      }
       if (devUsers.has(targetUser.id)) {
         badges.push("<:Ic_Pridebot_dev:1195877037034983515> ");
       }
@@ -263,7 +268,6 @@ module.exports = {
         badges.push("<:Ic_Pridebot_partner:1197394034310791272> ");
       }
 
-      // Join the badges array into a string with no spaces between them
       const badgeStr = badges.join("");
       const title = `${targetUser.username}'s Profile ${badgeStr}`;
 

@@ -80,7 +80,7 @@ module.exports = {
         emoji: "1112234548999245834",
         info: {
           title: "Tool Commands",
-          description: `</bugreport:1176639348423266457> - Submit any bugs you find with Pridebot \n</feedback:1176639348423266456> - Submit any feedback you have on Pridebot \n</help:1112238192784048208> - Shows command list and helpful links \n</latest:1150993734180278353> - Get the bot's latest updates \n</stats:1111290488897683579> - Get the bot's and discord stats`,
+          description: `</bugreport:1176639348423266457> - Submit any bugs you find with Pridebot \n</feedback:1176639348423266456> - Submit any feedback you have on Pridebot \n</help:1112238192784048208> - Shows command list and helpful links \n</latest:1150993734180278353> - Get the bot's latest updates \n</partner:1198658480148586560> - Check out Pridebot partners \n</stats:1111290488897683579> - Get the bot's and discord stats \n</vote:1198664099752587375> - Support Pridebot by voting for us here`,
         },
       },
     ];
