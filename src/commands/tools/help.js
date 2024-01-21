@@ -57,7 +57,7 @@ module.exports = {
         name: "Support",
         description: "Click to learn about Support commands",
         value: "support",
-        emoji: "1176397678033240125",
+        emoji: "1197399653109473301",
         info: {
           title: "Support Commands",
           description: `</comingout:1176020092581060678> - Access tips and guides on how to come out to anyone \n</mentalhealth:1176262554071334994> - Access helplines and any mental health resources provided`,
