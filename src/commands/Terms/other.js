@@ -53,7 +53,7 @@ module.exports = {
             "[ISSTD – International Society for the Study of Trauma and Dissociation](https://www.isst-d.org/)",
             "[DID-Research](https://did-research.org/) – Comprehensive resource on DID and OSDD.",
             "[The Healing Collective](https://www.healingcollectiveny.com/dissociative-identity-disorder) – Therapy and resources for trauma and dissociative disorders.",
-            "[Pluralkit](https://pluralkit.me/) - A discord bot designed for plural communities on Discord. It allows you to register systems, maintain system information, set up message proxying, log switches, and more. (ℹ️ We are not associated with this bot in any way)",
+            "[Pluralkit](https://pluralkit.me/) - A discord bot designed for plural communities on Discord. (ℹ️ We are not associated with this bot in any way)",
             "[SimplyPlural](https://app.apparyllis.com/) - An app designed for plurals/systems who want to keep track of their members and optionally share those details with their friends",
             "[Beauty After Bruises](http://www.beautyafterbruises.org/) – A resource that provides support for complex trauma survivors, including those with DID.",
           ].join("\n"),
