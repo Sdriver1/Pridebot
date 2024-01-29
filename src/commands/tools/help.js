@@ -70,7 +70,7 @@ module.exports = {
         emoji: "1112602480128299079",
         info: {
           title: "Term Commands",
-          description: `</gender:1112200593310756874> - Learn about any kinds or types of genders \n</pronouns:1111772157538730116> - Learn about any kinds or types of pronouns \n</sexuality:1111289006299283456> - Learn about any kinds or types of sexualities`,
+          description: `</gender:1112200593310756874> - Learn about any kinds or types of genders \n </other:1201381458607099954> - Learn about other common terms associated with or normally found in LGBTQIA+ environments\n</pronouns:1111772157538730116> - Learn about any kinds or types of pronouns \n</sexuality:1111289006299283456> - Learn about any kinds or types of sexualities`,
         },
       },
       {
