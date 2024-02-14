@@ -52,12 +52,12 @@ module.exports = {
       },
       {
         name: "<:_:1196239825213341768> Updates",
-        value: `1. Added Profiles to Pridebot \n2. 3 new commands: </profile setup:1197313708846743642>, </profile view:1197313708846743642>, and </profile update:1197313708846743642> \n3. Updated [website](https://pridebot.xyz) with new commands \n4. Updated [README.](https://github.com/Sdriver1/Pridebot#readme)`,
+        value: `1. Add support for \`other_pronoun\`, \`other_sexuality\`, and \`other_gender\` options for profiles (under </profile update:1197313708846743642>) \n2. Updated [website](https://pridebot.xyz) with new commands \n3. Updated [README.](https://github.com/Sdriver1/Pridebot#readme)`,
         inline: false,
       },
       {
         name: "🎉 Recent Milstones",
-        value: `<t:1705265971:f> - <@1101256478632972369> hits **100** servers! \n<t:1703877905:f> - <@1101256478632972369> is verified!`,
+        value: `<t:1707884580:f> - <@1101256478632972369> hit **100** commits on [github](https://github.com/Sdriver1/Pridebot/commits/main/) <t:1705265971:f> - <@1101256478632972369> hits **100** servers! \n<t:1703877905:f> - <@1101256478632972369> is verified!`,
       }
     );
 
