@@ -448,7 +448,7 @@ module.exports = {
 
       return interaction.reply({
         content:
-          "Your profile has been updated successfully! \nSee your new profile with </profile view:1197313708846743642> \nIf you like to add extra gender, pronoun, or sexuality options, please use </profile update:1197313708846743642>",
+          "Your profile has been updated successfully! \nSee your new profile with </profile view:1197313708846743642>",
         ephemeral: true,
       });
     } else if (subcommand === "setup") {
@@ -459,7 +459,7 @@ module.exports = {
       if (existingProfile) {
         return interaction.reply({
           content:
-            "Account already made, use </profile view:1197313708846743642> to see your profile", // Replace COMMAND_ID with your actual command ID
+            "Account already made, use </profile view:1197313708846743642> to see your profile",
           ephemeral: true,
         });
       }
