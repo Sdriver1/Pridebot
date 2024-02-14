@@ -32,7 +32,7 @@ module.exports = {
         name: "Dissociative Systems",
         description: "Comprehensive understanding of dissociative systems",
         value: "dissociative_systems",
-        emoji: "1201384909823016980", // Use actual emoji or emoji ID
+        emoji: "1201384909823016980", 
         info: {
           title: "Overview of Dissociative Systems",
           description:
@@ -63,7 +63,7 @@ module.exports = {
         name: "Tone Tags",
         description: "Understanding and using tone tags",
         value: "tone_tags",
-        emoji: "1201385635357917324", // Placeholder emoji, replace with actual emoji ID if needed
+        emoji: "1201385635357917324", 
         info: {
           title: "What are Tone Tags?",
           description:
@@ -91,7 +91,7 @@ module.exports = {
         name: "Triggers",
         description: "Understanding triggers and respectful discussion",
         value: "triggers",
-        emoji: "1201388588949061642", // Placeholder emoji, replace with actual emoji ID if needed
+        emoji: "1201388588949061642", 
         info: {
           title: "What are Triggers?",
           description:
@@ -119,7 +119,7 @@ module.exports = {
         name: "ADHD",
         description: "Learn about ADHD",
         value: "adhd",
-        emoji: "1201386697309573201", // Placeholder emoji, replace with actual emoji ID if needed
+        emoji: "1201386697309573201", 
         info: {
           title: "What is ADHD?",
           description:
@@ -146,7 +146,7 @@ module.exports = {
         name: "Autism",
         description: "Understanding Autism",
         value: "autism",
-        emoji: "1201387909165613138", // Placeholder emoji, replace with actual emoji ID if needed
+        emoji: "1201387909165613138", 
         info: {
           title: "What is Autism?",
           description:
@@ -264,9 +264,9 @@ module.exports = {
         const buttons = createOtherButtons(currentIndex);
         const updatedRow = new ActionRowBuilder().addComponents(buttons);
 
-        await selectInteraction.reply({
+        selectInteraction.reply({
           embeds: [selectedEmbed],
-          components: buttons.length > 0 ? [updatedRow] : [],
+          components: [updatedRow],
           ephemeral: true,
         });
       }

@@ -112,6 +112,74 @@ module.exports = {
               { name: "Other", value: "Other" }
             )
         )
+        .addStringOption((option) =>
+          option
+            .setName("other_sexuality")
+            .setDescription("Another sexual orientation")
+            .setRequired(false)
+            .addChoices(
+              { name: "Asexual", value: "Asexual" },
+              { name: "Bisexual", value: "Bisexual" },
+              { name: "Demisexual", value: "Demisexual" },
+              { name: "Heterosexual ", value: "Heterosexual" },
+              { name: "Homosexual/Gay", value: "Gay" },
+              { name: "Homosexual/Lesbian", value: "Lesbian" },
+              { name: "Omnisexual", value: "Omnisexual" },
+              { name: "Pansexual", value: "Pansexual" },
+              { name: "Polyamorous", value: "Polyamorous" },
+              { name: "Queer", value: "Queer" },
+              { name: "Unlabeled", value: "Unlabeled" },
+              { name: "Other", value: "Other" }
+            )
+        )
+        .addStringOption((option) =>
+          option
+            .setName("other_gender")
+            .setDescription("Another gender")
+            .setRequired(false)
+            .addChoices(
+              { name: "Agender", value: "Agender" },
+              { name: "Androgyne", value: "Androgyne" },
+              { name: "Bigender/Trigender", value: "Bigender/Trigender" },
+              { name: "Cis-male", value: "Cis-male" },
+              { name: "Cis-female", value: "Cis-female" },
+              { name: "Demi-boy", value: "Demi-boy" },
+              { name: "Demi-girl", value: "Demi-girl" },
+              { name: "Genderfaun", value: "Genderfaun" },
+              { name: "Genderfluid", value: "Genderfluid" },
+              { name: "Genderflux", value: "Genderflux" },
+              { name: "Genderqueer", value: "Genderqueer" },
+              { name: "Non-Binary", value: "Non-Binary" },
+              { name: "Pangender", value: "Pangender" },
+              { name: "Transgender", value: "Transgender" },
+              { name: "Xenogender", value: "Xenogender" },
+              { name: "Unlabeled", value: "Unlabeled" },
+              { name: "Other", value: "Other" }
+            )
+        )
+        .addStringOption((option) =>
+          option
+            .setName("other_pronouns")
+            .setDescription("add another set of pronouns")
+            .setRequired(false)
+            .addChoices(
+              { name: "He/Him/His", value: "He/Him/His" },
+              { name: "She/Her/Hers", value: "She/Her/Hers" },
+              { name: "They/Them/Their", value: "They/Them/Their" },
+              { name: "It/Its", value: "It/Its" },
+              { name: "He/They", value: "He/They" },
+              { name: "She/They", value: "She/They" },
+              { name: "It/They", value: "It/They" },
+              { name: "Any Pronouns", value: "Any Pronouns" },
+              { name: "ey/em/eir", value: "ey/em/eir" },
+              { name: "fae/faer/faer", value: "fae/faer/faer" },
+              { name: "xe/xem/xyr", value: "xe/xem/xyr" },
+              { name: "ze/zir/zir", value: "ze/zir/zir" },
+              { name: "other neopronouns", value: "other neopronouns" },
+              { name: "None", value: "None" },
+              { name: "Other", value: "Other" }
+            )
+        )
     )
     .addSubcommand((subcommand) =>
       subcommand
@@ -269,11 +337,37 @@ module.exports = {
       }
 
       const badgeStr = badges.join("");
-      const title = `${targetUser.username}'s Profile ${badgeStr}`;
+
+      const pronounsValue = profile.pronouns || "Not set";
+      const otherPronounsValue = profile.otherPronouns
+        ? `, ${profile.otherPronouns}`
+        : "";
+      const combinedPronouns =
+        pronounsValue.includes("Not set") && otherPronounsValue
+          ? otherPronounsValue.substring(2)
+          : pronounsValue + otherPronounsValue;
+
+      const sexualityValue = profile.sexuality || "Not set";
+      const otherSexualityValue = profile.otherSexuality
+        ? `, ${profile.otherSexuality}`
+        : "";
+      const combinedSexuality =
+        sexualityValue.includes("Not set") && otherSexualityValue
+          ? otherSexualityValue.substring(2)
+          : sexualityValue + otherSexualityValue;
+
+      const genderValue = profile.gender || "Not set";
+      const otherGenderValue = profile.otherGender
+        ? `, ${profile.otherGender}`
+        : "";
+      const combinedGender =
+        genderValue.includes("Not set") && otherGenderValue
+          ? otherGenderValue.substring(2)
+          : genderValue + otherGenderValue;
 
       const profileEmbed = new EmbedBuilder()
         .setColor("#FF00EA")
-        .setTitle(title)
+        .setTitle(`${targetUser.username}'s Profile ${badgeStr}`)
         .addFields(
           {
             name: "Preferred Name",
@@ -282,7 +376,7 @@ module.exports = {
           },
           {
             name: "Sexual Orientation",
-            value: profile.sexuality || "Not set",
+            value: combinedSexuality,
             inline: true,
           },
           {
@@ -290,12 +384,8 @@ module.exports = {
             value: profile.romanticOrientation || "Not set",
             inline: true,
           },
-          { name: "Gender", value: profile.gender || "Not set", inline: true },
-          {
-            name: "Pronouns",
-            value: profile.pronouns || "Not set",
-            inline: true,
-          }
+          { name: "Gender", value: combinedGender, inline: true },
+          { name: "Pronouns", value: combinedPronouns, inline: true }
         )
         .setThumbnail(targetUser.displayAvatarURL())
         .setFooter({ text: "Profile Information" })
@@ -315,8 +405,15 @@ module.exports = {
         updateData.gender = interaction.options.getString("gender");
       if (interaction.options.getString("pronouns"))
         updateData.pronouns = interaction.options.getString("pronouns");
+      if (interaction.options.getString("other_sexuality"))
+        updateData.otherSexuality =
+          interaction.options.getString("other_sexuality");
+      if (interaction.options.getString("other_gender"))
+        updateData.otherGender = interaction.options.getString("other_gender");
+      if (interaction.options.getString("other_pronouns"))
+        updateData.otherPronouns =
+          interaction.options.getString("other_pronouns");
 
-      // Ensure that we only update the fields provided by the user
       const updatedFields = {};
       for (const [key, value] of Object.entries(updateData)) {
         if (value !== null) {
@@ -340,7 +437,7 @@ module.exports = {
 
       return interaction.reply({
         content:
-          "Your profile has been updated successfully! See your new profile with </profile view:1197313708846743642>",
+          "Your profile has been updated successfully! \nSee your new profile with </profile view:1197313708846743642> \nIf you like to add extra gender, pronoun, or sexuality options, please use </profile update:1197313708846743642>",
         ephemeral: true,
       });
     } else if (subcommand === "setup") {
@@ -348,7 +445,6 @@ module.exports = {
         userId: interaction.user.id,
       });
 
-      // If the profile exists, return a message to the user
       if (existingProfile) {
         return interaction.reply({
           content:
@@ -358,7 +454,6 @@ module.exports = {
       }
       const profileData = {
         userId: interaction.user.id,
-        name: interaction.options.getString("name"),
         preferredName: interaction.options.getString("preferredname") || "",
         sexuality: interaction.options.getString("sexuality") || "",
         romanticOrientation: interaction.options.getString("romantic") || "",
@@ -368,42 +463,44 @@ module.exports = {
 
       const newProfile = await Profile.create(profileData);
 
+      const fieldsToAdd = [
+        {
+          name: "Preferred Name",
+          value: newProfile.preferredName || "Not set",
+          inline: true,
+        },
+        {
+          name: "Sexual Orientation",
+          value: newProfile.sexuality || "Not set",
+          inline: true,
+        },
+        {
+          name: "Romantic Orientation",
+          value: newProfile.romanticOrientation || "Not set",
+          inline: true,
+        },
+        {
+          name: "Gender",
+          value: newProfile.gender || "Not set",
+          inline: true,
+        },
+        {
+          name: "Pronouns",
+          value: newProfile.pronouns || "Not set",
+          inline: true,
+        },
+      ];
+
       const profileEmbed = new EmbedBuilder()
         .setColor("#FF00EA")
         .setTitle(`${interaction.user.username} Profile Setup`)
-        .addFields(
-          {
-            name: "Preferred Name",
-            value: newProfile.preferredName || "Not set",
-            inline: true,
-          },
-          {
-            name: "Sexual Orientation",
-            value: newProfile.sexuality || "Not set",
-            inline: true,
-          },
-          {
-            name: "Romantic Orientation",
-            value: newProfile.romanticOrientation || "Not set",
-            inline: true,
-          },
-          {
-            name: "Gender",
-            value: newProfile.gender || "Not set",
-            inline: true,
-          },
-          {
-            name: "Pronouns",
-            value: newProfile.pronouns || "Not set",
-            inline: true,
-          }
-        )
+        .addFields(fieldsToAdd)
         .setThumbnail(interaction.user.displayAvatarURL())
         .setFooter({ text: "Profile Setup Complete" })
         .setTimestamp();
       return interaction.reply({
         content:
-          "Your profile has been created successfully! See your new profile with </profile view:1197313708846743642> and to update anything, please use </profile update:1197313708846743642>",
+          "Your profile has been created successfully! \nSee your new profile with </profile view:1197313708846743642> \nTo update anything or add multiple pronoun, gender, or sexuality, please use </profile update:1197313708846743642>",
         embeds: [profileEmbed],
         ephemeral: true,
       });
