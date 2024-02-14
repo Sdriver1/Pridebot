@@ -129,7 +129,8 @@ module.exports = {
               { name: "Polyamorous", value: "Polyamorous" },
               { name: "Queer", value: "Queer" },
               { name: "Unlabeled", value: "Unlabeled" },
-              { name: "Other", value: "Other" }
+              { name: "Other", value: "Other" },
+              { name: "Clear", value: "clear" }
             )
         )
         .addStringOption((option) =>
@@ -154,7 +155,8 @@ module.exports = {
               { name: "Transgender", value: "Transgender" },
               { name: "Xenogender", value: "Xenogender" },
               { name: "Unlabeled", value: "Unlabeled" },
-              { name: "Other", value: "Other" }
+              { name: "Other", value: "Other" },
+              { name: "Clear", value: "clear" }
             )
         )
         .addStringOption((option) =>
@@ -177,7 +179,8 @@ module.exports = {
               { name: "ze/zir/zir", value: "ze/zir/zir" },
               { name: "other neopronouns", value: "other neopronouns" },
               { name: "None", value: "None" },
-              { name: "Other", value: "Other" }
+              { name: "Other", value: "Other" },
+              { name: "Clear", value: "clear" }
             )
         )
     )
@@ -405,15 +408,23 @@ module.exports = {
         updateData.gender = interaction.options.getString("gender");
       if (interaction.options.getString("pronouns"))
         updateData.pronouns = interaction.options.getString("pronouns");
-      if (interaction.options.getString("other_sexuality"))
+      if (interaction.options.getString("other_sexuality") === "clear") {
+        updateData.otherSexuality = "";
+      } else if (interaction.options.getString("other_sexuality")) {
         updateData.otherSexuality =
           interaction.options.getString("other_sexuality");
-      if (interaction.options.getString("other_gender"))
+      }
+      if (interaction.options.getString("other_gender") === "clear") {
+        updateData.otherGender = "";
+      } else if (interaction.options.getString("other_gender")) {
         updateData.otherGender = interaction.options.getString("other_gender");
-      if (interaction.options.getString("other_pronouns"))
+      }
+      if (interaction.options.getString("other_pronouns") === "clear") {
+        updateData.otherPronouns = "";
+      } else if (interaction.options.getString("other_pronouns")) {
         updateData.otherPronouns =
           interaction.options.getString("other_pronouns");
-
+      }
       const updatedFields = {};
       for (const [key, value] of Object.entries(updateData)) {
         if (value !== null) {
