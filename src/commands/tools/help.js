@@ -30,7 +30,7 @@ module.exports = {
         emoji: "1196254858689380474",
         info: {
           title: "Fun Commands",
-          description: `</gaydar:1196256451270811688> - How gay are you or your friend? \n</lgbtq:1196151440343838849> - Fun little command to show off the LGBTQ commands \n</pronountester:1179995184059121766> - Use this to try out new pronouns for yourself `,
+          description: `</gaydar:1196256451270811688> - How gay are you or your friend? \n</lgbtq:1196151440343838849> - Fun little command to show off the LGBTQ commands \n</pronountester:1179995184059121766> - Use this to try out new pronouns for yourself \n</transdar:1212227689008726048> -  How trans are you or your friend?`,
         },
       },
       {
@@ -103,15 +103,13 @@ module.exports = {
     const embed = new EmbedBuilder()
       .setTitle(`Pridebot Help`)
       .setDescription(
-        `Pridebot, developed by <@691506668781174824>, is an educational tool focusing on the broad spectrum of LGBTQ identities. Its primary purpose is to deliver enlightening information about various sexualities, genders, pronouns, and other identities under the LGBTQ umbrella. The bot is meticulously designed to educate users about these topics and to aid them in exploring and understanding their own feelings and identities. 
-
-        In addition to its educational role, Pridebot is equipped to offer essential resources geared toward mental health support. The bot provides gentle guidance, sharing strategies, and advice for those contemplating coming out to ease this significant step. This makes Pridebot a source of information and a supportive guide in the personal journeys of self-discovery and expression for its users. Its approach is nurturing and informative, ensuring a safe and supportive experience for those seeking knowledge and understanding of LGBTQ issues and introspection of their own identities.`
+        `Pridebot, developed by <@691506668781174824>, is a unique LGBTQIA themed bot designed to provide creditble and accurate information on LGBTQIA+ identities and terms but also to help users with discovering them through resources and interact commands. Pridebot offers a range of topics including different sexual orientations, gender identities, pronouns, and the intricate aspects of the LGBTQ community. Including the educational ascept, Pridebot also offers fun and cool commands like gaydar or profiles to help others learn about you. Thank you for using pridebot ❤️`
       )
       .setColor(0xff00ae)
       .addFields({
         name: "Useful links",
         value:
-          "[**Website**](https://pridebot.xyz/) \n[**Bot Invite**](https://discord.com/api/oauth2/authorize?client_id=1101256478632972369&permissions=415001594945&scope=bot%20applications.commands) \n[**Github Repo**](https://github.com/Sdriver1/Pridebot) \n[**Support Server**](https://discord.gg/guybqSTzdS) \n[**Top.gg**](https://top.gg/bot/1101256478632972369?s=0bed0f7e006a2)",
+          "<:Ic_Pridebot_logo:1108228682184654908> [**Website**](https://pridebot.xyz/) \n🔗 [**Bot Invite**](https://discord.com/api/oauth2/authorize?client_id=1101256478632972369&permissions=415001594945&scope=bot%20applications.commands) \n<:Ic_Pridebot_git:1110925802041774151> [**Github Repo**](https://github.com/Sdriver1/Pridebot) \n<:Ic_Pridebot_discord:1108417509624926228> [**Support Server**](https://discord.gg/guybqSTzdS) \n<:_:1198663251580440697> [**Wumpus Store**](https://wumpus.store/bot/1101256478632972369/vote) \n<:_:1195866944482590731> [**Top.gg**](https://top.gg/bot/1101256478632972369?s=0bed0f7e006a2)",
       });
 
     await interaction.reply({ embeds: [embed], components: [row] });
