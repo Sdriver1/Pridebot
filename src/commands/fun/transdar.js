@@ -9,20 +9,15 @@ const utility_functions = {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   },
 };
-const ids = {
-  austin: "288897433805651968",
-  paul: "218507234144026625",
-  bot: "1101256478632972369",
-};
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("gaydar")
-    .setDescription("How gay are you?")
+    .setName("transdar")
+    .setDescription("How trans are you?")
     .addUserOption((option) =>
       option
         .setName("target")
-        .setDescription("See how gay a user is")
+        .setDescription("See how trans a user is")
         .setRequired(false)
     ),
 
@@ -32,7 +27,7 @@ module.exports = {
     });
     console.log(
       chalk.white.bold(
-        `-------------------------- \n/gaydar \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
+        `-------------------------- \n/transdar \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
       )
     );
 
@@ -42,13 +37,7 @@ module.exports = {
     const userid = targetUser.id;
 
     let meter;
-    if (userid === ids.austin) {
-      meter = 300;
-    } else if (userid === ids.paul) {
-      meter = 0.1;
-    } else if (userid === ids.bot) {
-      meter = 101;
-    } else if (utility_functions.chance(0.0001)) {
+    if (utility_functions.chance(0.0001)) {
       meter = Math.floor(Math.random() * 2354082) + 500;
       if (utility_functions.chance(0.5)) {
         meter *= -1;
@@ -58,15 +47,15 @@ module.exports = {
     }
 
     const embed = new EmbedBuilder()
-      .setTitle(`How gay is ${userName}?`)
+      .setTitle(`How trans is ${userName}?`)
       .setDescription(
         `<@${userid}> is **${utility_functions.number_format_commas(
           meter
-        )}% gay!**`
+        )}% trans!**`
       )
       .setColor(0xff00ae)
       .setFooter({
-        text: "The bot has 99.99% accuracy rate on checking users gayness",
+        text: "The bot has 99.99% accuracy rate on checking users transness",
       });
     await interaction.reply({ embeds: [embed] });
   },
