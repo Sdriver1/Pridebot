@@ -30,7 +30,7 @@ module.exports = {
         emoji: "1196254858689380474",
         info: {
           title: "Fun Commands",
-          description: `</gaydar:1196256451270811688> - How gay are you or your friend? \n</lgbtq:1196151440343838849> - Fun little command to show off the LGBTQ commands \n</pronountester:1179995184059121766> - Use this to try out new pronouns for yourself \n</transdar:1212227689008726048> -  How trans are you or your friend?`,
+          description: `</gaydar:1196256451270811688> - How gay are you or your friend? \n</lgbtq:1196151440343838849> - Fun little command to show off the LGBTQ commands \n</pronountester:1179995184059121766> - Use this to try out new pronouns for yourself \n</transdar:1212227689008726048> -  How trans are you or your friend? \n\n*P.S. - </gaydar:1196256451270811688> and </transdar:1212227689008726048> are for fun and not based on any real diagnosis/readings of users*`,
         },
       },
       {
@@ -103,14 +103,23 @@ module.exports = {
     const embed = new EmbedBuilder()
       .setTitle(`Pridebot Help`)
       .setDescription(
-        `Pridebot, developed by <@691506668781174824>, is a unique LGBTQIA themed bot designed to provide creditble and accurate information on LGBTQIA+ identities and terms but also to help users with discovering them through resources and interact commands. Pridebot offers a range of topics including different sexual orientations, gender identities, pronouns, and the intricate aspects of the LGBTQ community. Including the educational ascept, Pridebot also offers fun and cool commands like gaydar or profiles to help others learn about you. Thank you for using pridebot ❤️`
+        `Pridebot, developed by <@691506668781174824>, is a unique LGBTQIA themed bot designed to provide creditble and accurate information on LGBTQIA+ identities and terms but also to help users with discovering them through resources and interact commands. Pridebot offers a range of topics including different sexual orientations, gender identities, pronouns, and the intricate aspects of the LGBTQ community. Including the educational ascept, Pridebot also offers fun and cool commands like gaydar or profiles to help others learn about you. Thank you for using Pridebot ❤️`
       )
       .setColor(0xff00ae)
-      .addFields({
-        name: "Useful links",
-        value:
-          "<:Ic_Pridebot_logo:1108228682184654908> [**Website**](https://pridebot.xyz/) \n🔗 [**Bot Invite**](https://discord.com/api/oauth2/authorize?client_id=1101256478632972369&permissions=415001594945&scope=bot%20applications.commands) \n<:Ic_Pridebot_git:1110925802041774151> [**Github Repo**](https://github.com/Sdriver1/Pridebot) \n<:Ic_Pridebot_discord:1108417509624926228> [**Support Server**](https://discord.gg/guybqSTzdS) \n<:_:1198663251580440697> [**Wumpus Store**](https://wumpus.store/bot/1101256478632972369/vote) \n<:_:1195866944482590731> [**Top.gg**](https://top.gg/bot/1101256478632972369?s=0bed0f7e006a2)",
-      });
+      .addFields(
+        {
+          name: "Help Categories",
+          value:
+            "**<:_:1196254858689380474> - Fun \n<:_:1108822823721521242> - Pride \n<:_:1197388214843998299> - Profile \n<:_:1197399653109473301> - Support \n<:_:1112602480128299079> - Terms \n<:_:1112234548999245834> - Tool**",
+          inline: true,
+        },
+        {
+          name: "Useful links",
+          value:
+            "<:Ic_Pridebot_logo:1108228682184654908> [**Website**](https://pridebot.xyz/) \n<:Ic_Pridebot_discord:1108417509624926228> [**Support Server**](https://discord.gg/guybqSTzdS) \n🔗 [**Bot Invite**](https://discord.com/api/oauth2/authorize?client_id=1101256478632972369&permissions=415001594945&scope=bot%20applications.commands) \n<:Ic_Pridebot_git:1110925802041774151> [**Github Repo**](https://github.com/Sdriver1/Pridebot) \n<:_:1198663251580440697> [**Wumpus Store**](https://wumpus.store/bot/1101256478632972369/vote) \n<:_:1195866944482590731> [**Top.gg**](https://top.gg/bot/1101256478632972369?s=0bed0f7e006a2)",
+          inline: true,
+        }
+      );
 
     await interaction.reply({ embeds: [embed], components: [row] });
 
