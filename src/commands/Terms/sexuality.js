@@ -55,6 +55,20 @@ module.exports = {
         },
       },
       {
+        name: "Cupiosexual/Cupioromantic",
+        description: "Click to learn about Cupiosexuality",
+        value: "cupiosexual",
+        emoji: "1212919479550353408",
+        info: {
+          title: "Cupiosexual",
+          title2: "Cupioromantic",
+          description:
+            "Cupiosexuality is a sexual orientation where an individual does not experience sexual attraction but still desires a sexual relationship. Cupiosexual individuals may seek sexual relationships for various reasons, including emotional closeness or physical pleasure, despite the lack of sexual attraction.",
+          description2:
+            "Cupioromantic refers to individuals who do not experience romantic attraction but still desire a romantic relationship. Similar to cupiosexuality, cupioromantic individuals seek romantic relationships for the emotional connection, companionship, and intimacy they provide, without necessarily feeling romantic attraction.",
+        },
+      },
+      {
         name: "Demisexual/Demiromantic",
         description: "Click to learn about Demisexuality",
         value: "demisexual",
@@ -77,6 +91,20 @@ module.exports = {
           title: "Gay",
           description:
             "Gay is a sexual orientation characterized by an attraction to individuals of the same gender. Gay individuals experience romantic and sexual attraction towards people of the same gender identity.",
+        },
+      },
+      {
+        name: "Greysexual/Greyromantic",
+        description: "Click to learn about Greysexuality",
+        value: "greysexual",
+        emoji: "1212922151099834408",
+        info: {
+          title: "Greysexual",
+          title2: "Greyromantic",
+          description:
+            "Greysexual, also known as graysexual, refers to individuals who fall on the grey area of the sexuality spectrum, between sexual and asexual. Greysexual people may experience sexual attraction infrequently, under specific circumstances, or with less intensity than is typically experienced by allosexual (non-asexual) individuals. The concept of greysexuality recognizes the diversity and fluidity of sexual attraction.",
+          description2:
+            "Greyromantic, similarly, pertains to individuals who fall on the grey area of the romantic attraction spectrum. They may experience romantic attraction infrequently, under specific circumstances, or with less intensity. Greyromantic individuals acknowledge the fluidity of romantic attraction and may have varying experiences of connection that do not always fit into conventional romantic orientations.",
         },
       },
       {
@@ -115,6 +143,17 @@ module.exports = {
           title: "Lesbian",
           description:
             "Lesbian is a sexual orientation specific to women or afab non-binary, characterized by romantic and sexual attraction to other women. Lesbian individuals are exclusively attracted to individuals of the same gender.",
+        },
+      },
+      {
+        name: "Neptunic (nomascsexual)",
+        description: "Click to learn about Neptunic",
+        value: "neptunic",
+        emoji: "1212921908484644934",
+        info: {
+          title: "Neptunic",
+          description:
+            "Neptunic is a term used to describe attraction to women, non-binary individuals, and anyone who identifies with femininity in some way. It is not limited by the gender identity of the person experiencing the attraction but focuses on the gender expression or identity of those to whom they are attracted.",
         },
       },
       {
@@ -176,6 +215,17 @@ module.exports = {
           title: "Unlabeled",
           description:
             "Unlabeled refers to individuals who choose not to label their sexual orientation. This may be due to a variety of reasons, including the feeling that no existing labels accurately represent their experiences, or a preference for not defining their sexuality in conventional terms.",
+        },
+      },
+      {
+        name: "Uranic (nofemsexual)",
+        description: "Click to learn about Uranic",
+        value: "uranic",
+        emoji: "1212919479550353408",
+        info: {
+          title: "Uranic",
+          description:
+            "Uranic, also known as nofemsexual, refers to individuals who are attracted to non-feminine genders. This orientation encompasses attraction towards masculine, non-binary, agender, and other gender identities that do not align with femininity. Uranic individuals may find themselves drawn to people for various reasons beyond gender expression, focusing more on personal connection, personality, and other non-gender-related factors.",
         },
       },
     ];
