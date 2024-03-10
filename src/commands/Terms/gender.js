@@ -109,6 +109,22 @@ module.exports = {
         },
       },
       {
+        name: "Genderfae",
+        description: "Click here to learn about Genderfae.",
+        value: "gfae",
+        emoji: "1216212830899146874",
+        info: {
+          title: "What is Genderfae",
+          title2: "What do individuals feel under identification of Genderfae",
+          title3: "What umbrella does the gender fall under",
+          description:
+            "Genderfae is a form of genderfluidity that does not encompass feeling masculine. Those who identify as Genderfae may experience a range of gender identities, excluding masculine genders, but can include feminine, neutral, or any other non-masculine genders.",
+          description2:
+            "Individuals identifying as Genderfae may feel their gender identity shift and change over time, including a spectrum of non-masculine genders such as feminine, neutral, or other non-aligned gender experiences.",
+          description3: "Falls under the Non-Binary and Genderfluid umbrellas.",
+        },
+      },
+      {
         name: "Genderfaun",
         description: "Click here to learn about Genderfaun.",
         value: "gf",

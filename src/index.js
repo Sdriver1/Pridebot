@@ -5,7 +5,7 @@ const { Client, Collection, GatewayIntentBits, Events } = require("discord.js");
 const fs = require("fs");
 const { AutoPoster } = require("topgg-autoposter");
 
-const server = require("../web/server.js");
+const server = require("../web/assets/js/server.js");
 const express = require("express");
 const app = express();
 
@@ -58,7 +58,6 @@ client.on("interactionCreate", (interaction) => {
   eventHandlers.handleReportFeedback(client, interaction);
 });
 
-// Update channel name periodically
 setInterval(() => eventHandlers.updateChannelName(client), 5 * 60 * 1000);
 client.once("ready", () => {
   eventHandlers.updateChannelName(client);

@@ -40,7 +40,7 @@ module.exports = {
         emoji: "1108822823721521242",
         info: {
           title: "Pride Commands",
-          description: `</bisexual:1183503172036206632> - Learn about term "bisexual" and some brief history \n</gay:1183468824478089246> - Learn about term "gay" and some brief history \n</lesbian:1183468824478089247> - Learn about term "lesbian" and some brief history \n</nonbinary:1183503172036206633> Learn about term "non-binary" and some brief history \n</pansexual:1183503172036206634> - Learn about term "pansexual" and some brief history \n</queer:1196149039431962644> - Learn about term "queer" and some brief history \n</transgender:1183503172036206636> - Learn about term "transgender" and some brief history `,
+          description: `</asexual:1216214492917010495> - Learn about term "asexual" and some brief history \n</bisexual:1183503172036206632> - Learn about term "bisexual" and some brief history \n</gay:1183468824478089246> - Learn about term "gay" and some brief history \n</lesbian:1183468824478089247> - Learn about term "lesbian" and some brief history \n</nonbinary:1183503172036206633> Learn about term "non-binary" and some brief history \n</pansexual:1183503172036206634> - Learn about term "pansexual" and some brief history \n</queer:1196149039431962644> - Learn about term "queer" and some brief history \n</transgender:1183503172036206636> - Learn about term "transgender" and some brief history `,
         },
       },
       {
