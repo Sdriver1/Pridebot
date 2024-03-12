@@ -13,6 +13,7 @@ const ids = {
   austin: "288897433805651968",
   paul: "218507234144026625",
   bot: "1101256478632972369",
+  idiot: "197794050823290880",
 };
 
 module.exports = {
@@ -46,6 +47,8 @@ module.exports = {
       meter = 300;
     } else if (userid === ids.paul) {
       meter = 0.1;
+    } else if (userid === ids.idiot) {
+      meter = "morbius";
     } else if (userid === ids.bot) {
       meter = 101;
     } else if (utility_functions.chance(0.0001)) {

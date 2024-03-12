@@ -9,6 +9,9 @@ const utility_functions = {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   },
 };
+const ids = {
+  idiot: "197794050823290880",
+};
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -42,6 +45,8 @@ module.exports = {
       if (utility_functions.chance(0.5)) {
         meter *= -1;
       }
+    } else if (userid === ids.idiot) {
+      meter = "morbius";
     } else {
       meter = Math.floor(Math.random() * 101);
     }
