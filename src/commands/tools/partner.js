@@ -17,8 +17,8 @@ module.exports = {
       )
     );
 
-    const pcav =
-      "https://cdn.discordapp.com/attachments/1176249436125528116/1198656891421724712/66ad976abd20711ece1cab44709cdeca.png?ex=65bfb338&is=65ad3e38&hm=b32b9fa0084862089bdb604424d77143f5045b00023ade65e3d5ea6a5a15667d&";
+    const pcav = "https://cdn.discordapp.com/emojis/1219506730451603547.png";
+    const snav = "https://cdn.discordapp.com/emojis/1193823319246524486.png";
 
     const pridecordembed = new EmbedBuilder()
       .setTitle("Pridebot Partner: Pridecord")
@@ -27,18 +27,27 @@ module.exports = {
       .addFields(
         {
           name: "Info",
-          value: `**Server Owner**: <@288897433805651968> \n**Server Invite**: https://discord.gg/lgbtqia`,
+          value: `**Server Owner**: <@288897433805651968> \n**Server Invite**: https://discord.gg/lgbtqia \n\n[**More Info**](https://pridebot.xyz/partners#pridecord)`,
           inline: false,
         },
-        {
-          name: "Pridecord",
-          value: `*text about pridecord`,
-          inline: false,
-        }
       )
       .setFooter({ text: "Pridecord", iconURL: pcav })
       .setTimestamp();
 
-    await interaction.reply({ embeds: [pridecordembed] });
+    const sneakyembed = new EmbedBuilder()
+      .setTitle("Pridebot Partner: Sneaky Nodes")
+      .setColor(0xff00ae)
+      .setThumbnail(snav)
+      .addFields(
+        {
+          name: "Info",
+          value: `**Server Owner**: <@883592856906919986> \n**Server Invite**: https://discord.gg/csp9WEWc3t \n\n[**More Info**](https://pridebot.xyz/partners#sneakynode)`,
+          inline: false,
+        },
+      )
+      .setFooter({ text: "Sneaky Nodes", iconURL: snav })
+      .setTimestamp();
+
+    await interaction.reply({ embeds: [pridecordembed, sneakyembed] });
   },
 };
