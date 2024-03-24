@@ -104,7 +104,7 @@ module.exports = {
       );
       const commitsData = commitsResponse.data;
       const commitCount = commitsData.length;
-      const devcommitCount = commitsData.length - 54;
+      const devcommitCount = commitsData.length;
 
       let commitTens = "0";
       let commitOnes = "0";
@@ -170,9 +170,9 @@ module.exports = {
         const cpuPercentage = serverStats.resources.cpu_absolute;
         const diskMB = serverStats.resources.disk_bytes / 1024 / 1024;
 
-        serviceMem = `**RAM Usage:** \`${memoryMB.toFixed(2)} MB / 700 MB\``;
+        serviceMem = `**RAM Usage:** \`${memoryMB.toFixed(2)} MiB / 700 MiB\``;
         serviceCPU = `**CPU Usage:** \`${cpuPercentage.toFixed(2)}%\``;
-        serviceDk = `**Disk Usage:** \`${diskMB.toFixed(2)} MB / 1.22 GB\``;
+        serviceDk = `**Disk Usage:** \`${diskMB.toFixed(2)} MiB / 1.22 GiB\``;
       } catch (error) {
         console.error("Error fetching server stats:", error);
       }
