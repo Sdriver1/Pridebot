@@ -5,10 +5,6 @@ const { Client, Collection, GatewayIntentBits, Events } = require("discord.js");
 const fs = require("fs");
 const { AutoPoster } = require("topgg-autoposter");
 
-const server = require("../web/assets/js/server.js");
-const express = require("express");
-const app = express();
-
 const botStartTime = Math.floor(Date.now() / 1000);
 
 const client = new Client({

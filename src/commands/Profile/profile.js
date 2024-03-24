@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const chalk = require("chalk");
 const Profile = require("../../../mongo/models/profileSchema");
+const { devUsers, supportUsers, vipUsers, partnerUsers, botUser } = require("../../ids/profileids");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -290,20 +291,6 @@ module.exports = {
         `-------------------------- \n/profile ${subcommand} \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
       )
     );
-
-    const devUsers = new Set(["691506668781174824", "897235561092378625"]);
-    const supportUsers = new Set(["691506668781174824", "897235561092378625"]);
-    const vipUsers = new Set([
-      "691506668781174824",
-      "1161438276968775681",
-      "218507234144026625",
-      "470472839766736897",
-      "897235561092378625",
-      "1101256478632972369",
-      "288897433805651968",
-    ]);
-    const partnerUsers = new Set(["897235561092378625"]);
-    const botUser = new Set(["897235561092378625", "1101256478632972369"]);
 
     if (subcommand === "view") {
       const targetUser =
