@@ -5,6 +5,7 @@ const { calculatePing } = require("../../events/client/ping");
 const axios = require("axios");
 const Nodeactyl = require("nodeactyl");
 const chalk = require("chalk");
+const CommandUsage = require("../../../mongo/models/usageSchema");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -12,8 +13,8 @@ module.exports = {
     .setDescription("Get the bot's and discord stats"),
 
   async execute(interaction, client) {
-      await interaction.deferReply();
-  const botping = await calculatePing(interaction);
+    await interaction.deferReply();
+    const botping = await calculatePing(interaction);
 
     const estDate = new Date().toLocaleString("en-US", {
       timeZone: "America/New_York",
@@ -149,7 +150,7 @@ module.exports = {
         return commands.size;
       }
 
-      const CommandsCount = await getRegisteredCommandsCount(client) + 2;
+      const CommandsCount = (await getRegisteredCommandsCount(client)) + 2;
 
       //--------------------------------------------------------------------------------
 
@@ -178,6 +179,11 @@ module.exports = {
 
       //--------------------------------------------------------------------------------
 
+      const usages = await CommandUsage.find({}).sort({ count: -1 });
+      const totalUsage = usages.reduce((acc, cmd) => acc + cmd.count, 0);
+
+      //--------------------------------------------------------------------------------
+
       const startTimeTimestamp = `<t:${client.botStartTime}:f>`;
 
       const ping = `**Ping**: \`${botping}ms\` \n**API Latency**: \`${client.ws.ping}\``;
@@ -186,7 +192,7 @@ module.exports = {
         process.uptime()
       )} \` \n**Start Time:** ${startTimeTimestamp}`;
 
-      const botstats = `**Version:** \`1.${commitTens}.${commitOnes}\` \n**Guilds:** \`${currentGuildCount}\` \n**Users:** \`${formattedTotalUserCount}\` \n**Commands:** \`${CommandsCount}\``;
+      const botstats = `**Version:** \`1.${commitTens}.${commitOnes}\` \n**Guilds:** \`${currentGuildCount}\` \n**Users:** \`${formattedTotalUserCount}\` \n**Commands:** \`${CommandsCount}\` \n**Commands Used:** \`${totalUsage}\``;
 
       const servicestats = `${serviceMem} \n${serviceCPU} \n${serviceDk}`;
 

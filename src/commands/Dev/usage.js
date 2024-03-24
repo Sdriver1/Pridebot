@@ -5,7 +5,13 @@ const { devUsers, supportUsers } = require("../../ids/profileids");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("usage")
-    .setDescription("See how many times commands are used"),
+    .setDescription("See how many times commands are used")
+    .addBooleanOption((option) =>
+      option
+        .setName("public")
+        .setDescription("Set to true to make the response visible to everyone")
+        .setRequired(false)
+    ),
 
   async execute(interaction, client) {
     if (!devUsers.has(interaction.user.id) && !supportUsers.has(interaction.user.id)) {
@@ -33,6 +39,7 @@ module.exports = {
       });
     });
 
-    await interaction.reply({ embeds: [usageEmbed] });
+    const isPublic = interaction.options.getBoolean("public", false);
+    await interaction.reply({ embeds: [usageEmbed], ephemeral: !isPublic });
   },
 };
