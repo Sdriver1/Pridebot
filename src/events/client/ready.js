@@ -21,6 +21,6 @@ module.exports = {
       });
     };
     updatePresence();
-    setInterval(updatePresence, 300000); 
+    setInterval(updatePresence, 300000);
   },
 };

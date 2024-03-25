@@ -61,9 +61,8 @@ module.exports = {
     );
     const reflexive = interaction.options.getString("reflexive");
 
-    // Create a new embed
     const embed = new EmbedBuilder()
-      .setColor(0xff00ae) // You can choose any color
+      .setColor(0xff00ae)
       .setTitle(
         `Testing Pronouns: ${
           subject.charAt(0).toUpperCase() + subject.slice(1)
@@ -98,7 +97,6 @@ module.exports = {
 
     const isPublic = interaction.options.getBoolean("public", false);
 
-    // Send the embed in the reply
     await interaction.reply({ embeds: [embed], ephemeral: !isPublic });
   },
 };

@@ -1,4 +1,4 @@
-const CommandUsage = require("../../../mongo/models/usageSchema")
+const CommandUsage = require("../../../mongo/models/usageSchema");
 
 module.exports = {
   name: "interactionCreate",
@@ -10,7 +10,6 @@ module.exports = {
       if (!command) return;
 
       try {
-        // Increment command usage count
         await CommandUsage.findOneAndUpdate(
           { commandName: interaction.commandName },
           { $inc: { count: 1 } },

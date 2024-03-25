@@ -170,9 +170,9 @@ module.exports = {
         const cpuPercentage = serverStats.resources.cpu_absolute;
         const diskMB = serverStats.resources.disk_bytes / 1024 / 1024;
 
-        serviceMem = `**RAM Usage:** \`${memoryMB.toFixed(2)} MiB / 700 MiB\``;
-        serviceCPU = `**CPU Usage:** \`${cpuPercentage.toFixed(2)}%\``;
-        serviceDk = `**Disk Usage:** \`${diskMB.toFixed(2)} MiB / 1.22 GiB\``;
+        serviceMem = `**RAM:** \`${memoryMB.toFixed(2)} MiB / 700 MiB\``;
+        serviceCPU = `**CPU:** \`${cpuPercentage.toFixed(2)}%\``;
+        serviceDk = `**Disk:** \`${diskMB.toFixed(2)} MiB / 1.22 GiB\``;
       } catch (error) {
         console.error("Error fetching server stats:", error);
       }
@@ -228,7 +228,6 @@ module.exports = {
         await interaction.editReply({ embeds: [embed] });
       } catch (error) {
         console.error("Error sending edit reply:", error);
-        // Only send a follow-up message if the original reply hasn't been sent
         if (error.code !== "InteractionAlreadyReplied") {
           await interaction.followUp({
             content: "There was an error processing your request.",

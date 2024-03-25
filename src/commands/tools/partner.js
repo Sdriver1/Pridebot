@@ -24,13 +24,11 @@ module.exports = {
       .setTitle("Pridebot Partner: Pridecord")
       .setColor(0xff00ae)
       .setThumbnail(pcav)
-      .addFields(
-        {
-          name: "Info",
-          value: `**Server Owner**: <@288897433805651968> \n**Server Invite**: https://discord.gg/lgbtqia \n\n[**More Info**](https://pridebot.xyz/partners#pridecord)`,
-          inline: false,
-        },
-      )
+      .addFields({
+        name: "Info",
+        value: `**Server Owner**: <@288897433805651968> \n**Server Invite**: https://discord.gg/lgbtqia \n\n[**More Info**](https://pridebot.xyz/partners#pridecord)`,
+        inline: false,
+      })
       .setFooter({ text: "Pridecord", iconURL: pcav })
       .setTimestamp();
 
@@ -38,13 +36,11 @@ module.exports = {
       .setTitle("Pridebot Partner: Sneaky Nodes")
       .setColor(0xff00ae)
       .setThumbnail(snav)
-      .addFields(
-        {
-          name: "Info",
-          value: `**Server Owner**: <@883592856906919986> \n**Server Invite**: https://discord.gg/csp9WEWc3t \n\n[**More Info**](https://pridebot.xyz/partners#sneakynode)`,
-          inline: false,
-        },
-      )
+      .addFields({
+        name: "Info",
+        value: `**Server Owner**: <@883592856906919986> \n**Server Invite**: https://discord.gg/csp9WEWc3t \n\n[**More Info**](https://pridebot.xyz/partners#sneakynode)`,
+        inline: false,
+      })
       .setFooter({ text: "Sneaky Nodes", iconURL: snav })
       .setTimestamp();
 

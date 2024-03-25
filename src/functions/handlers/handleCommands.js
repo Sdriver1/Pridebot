@@ -16,9 +16,7 @@ module.exports = (client) => {
         const command = require(`../../commands/${folder}/${file}`);
         if (!command.data) {
           console.log(
-            chalk.red.bold(
-              `Command: ${file} does not export a 'data' property`
-            )
+            chalk.red.bold(`Command: ${file} does not export a 'data' property`)
           );
           continue;
         }

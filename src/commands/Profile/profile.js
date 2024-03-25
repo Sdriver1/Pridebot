@@ -7,7 +7,6 @@ const { partnerUsers } = require("../../ids/partnerId");
 const { supportUsers } = require("../../ids/supportId");
 const { vipUsers } = require("../../ids/vipId");
 
-
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("profile")

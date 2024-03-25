@@ -64,7 +64,6 @@ ap.on("posted", () => {
   console.log("Posted stats to Top.gg!");
 });
 
-
 client.handleEvents();
 client.handleCommands();
 client.login(token);
