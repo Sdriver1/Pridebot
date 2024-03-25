@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const usageSchema = new mongoose.Schema({
   commandName: {
@@ -12,5 +12,5 @@ const usageSchema = new mongoose.Schema({
   },
 });
 
-const CommandUsage = mongoose.model('CommandUsage', usageSchema);
+const CommandUsage = mongoose.model("CommandUsage", usageSchema);
 module.exports = CommandUsage;
