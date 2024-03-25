@@ -10,11 +10,13 @@ module.exports = {
       if (!command) return;
 
       try {
-        await CommandUsage.findOneAndUpdate(
-          { commandName: interaction.commandName },
-          { $inc: { count: 1 } },
-          { upsert: true, new: true }
-        );
+        if (commandName !== "usage") {
+          await CommandUsage.findOneAndUpdate(
+            { commandName: commandName },
+            { $inc: { count: 1 } },
+            { upsert: true, new: true }
+          );
+        }
 
         await command.execute(interaction, client);
       } catch (error) {
