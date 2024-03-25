@@ -1,7 +1,12 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const chalk = require("chalk");
 const Profile = require("../../../mongo/models/profileSchema");
-const { devUsers, supportUsers, vipUsers, partnerUsers, botUser } = require("../../ids/profileids");
+const { botUser } = require("../../ids/botId");
+const { devUsers } = require("../../ids/devId");
+const { partnerUsers } = require("../../ids/partnerId");
+const { supportUsers } = require("../../ids/supportId");
+const { vipUsers } = require("../../ids/vipId");
+
 
 module.exports = {
   data: new SlashCommandBuilder()

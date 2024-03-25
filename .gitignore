@@ -1,7 +1,3 @@
-// Bot
 .env
 node_modules
-web
-
-// Files
 package-lock.json
