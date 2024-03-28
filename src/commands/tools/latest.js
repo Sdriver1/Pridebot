@@ -52,7 +52,7 @@ module.exports = {
       },
       {
         name: "<:_:1196239825213341768> Updates",
-        value: `1. Added </asexual:1216214492917010495> \n2. Updated </gender:1112200593310756874> and </sexuality:1111289006299283456> with new terms\n3. Updated [website](https://pridebot.xyz) with new commands and stats \n4. Updated [README.](https://github.com/Sdriver1/Pridebot#readme)`,
+        value: `1. Added **bios** to /profile (To add bios, go to </profile update:1197313708846743642> and bio)\n2. Updated [website](https://pridebot.xyz) with stats \n3. Updated [README.](https://github.com/Sdriver1/Pridebot#readme)`,
         inline: false,
       },
       {

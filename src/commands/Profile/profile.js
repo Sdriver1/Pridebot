@@ -34,6 +34,13 @@ module.exports = {
         )
         .addStringOption((option) =>
           option
+            .setName("bio")
+            .setDescription("Your bio")
+            .setMaxLength(1024)
+            .setRequired(false)
+        )
+        .addStringOption((option) =>
+          option
             .setName("sexuality")
             .setDescription("Your sexual orientation")
             .setRequired(false)
@@ -201,6 +208,13 @@ module.exports = {
         )
         .addStringOption((option) =>
           option
+            .setName("bio")
+            .setDescription("Your bio")
+            .setMaxLength(1024)
+            .setRequired(true)
+        )
+        .addStringOption((option) =>
+          option
             .setName("sexuality")
             .setDescription("Your sexual orientation")
             .setRequired(true)
@@ -359,28 +373,39 @@ module.exports = {
           ? otherGenderValue.substring(2)
           : genderValue + otherGenderValue;
 
+      const profileFields = [
+        {
+          name: "Preferred Name",
+          value: profile.preferredName || "Not set",
+          inline: true,
+        },
+      ];
+      if (profile.bio) {
+        profileFields.push({
+          name: "Bio",
+          value: profile.bio,
+          inline: false,
+        });
+      }
+      profileFields.push(
+        {
+          name: "Sexual Orientation",
+          value: combinedSexuality,
+          inline: true,
+        },
+        {
+          name: "Romantic Orientation",
+          value: profile.romanticOrientation || "Not set",
+          inline: true,
+        },
+        { name: "Gender", value: combinedGender, inline: true },
+        { name: "Pronouns", value: combinedPronouns, inline: true }
+      );
+
       const profileEmbed = new EmbedBuilder()
         .setColor("#FF00EA")
         .setTitle(`${targetUser.username}'s Profile ${badgeStr}`)
-        .addFields(
-          {
-            name: "Preferred Name",
-            value: profile.preferredName || "Not set",
-            inline: true,
-          },
-          {
-            name: "Sexual Orientation",
-            value: combinedSexuality,
-            inline: true,
-          },
-          {
-            name: "Romantic Orientation",
-            value: profile.romanticOrientation || "Not set",
-            inline: true,
-          },
-          { name: "Gender", value: combinedGender, inline: true },
-          { name: "Pronouns", value: combinedPronouns, inline: true }
-        )
+        .addFields(profileFields)
         .setThumbnail(targetUser.displayAvatarURL())
         .setFooter({ text: "Profile Information" })
         .setTimestamp();
@@ -390,6 +415,8 @@ module.exports = {
       if (interaction.options.getString("preferredname"))
         updateData.preferredName =
           interaction.options.getString("preferredname");
+      if (interaction.options.getString("bio"))
+        updateData.bio = interaction.options.getString("bio");
       if (interaction.options.getString("sexuality"))
         updateData.sexuality = interaction.options.getString("sexuality");
       if (interaction.options.getString("romantic"))
@@ -457,6 +484,7 @@ module.exports = {
       const profileData = {
         userId: interaction.user.id,
         preferredName: interaction.options.getString("preferredname") || "",
+        bio: interaction.options.getString("bio") || "",
         sexuality: interaction.options.getString("sexuality") || "",
         romanticOrientation: interaction.options.getString("romantic") || "",
         gender: interaction.options.getString("gender") || "",
@@ -469,6 +497,11 @@ module.exports = {
         {
           name: "Preferred Name",
           value: newProfile.preferredName || "Not set",
+          inline: true,
+        },
+        {
+          name: "Bio",
+          value: newProfile.bio,
           inline: true,
         },
         {
