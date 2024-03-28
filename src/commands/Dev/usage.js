@@ -12,6 +12,12 @@ module.exports = {
         .setName("public")
         .setDescription("Set to true to make the response visible to everyone")
         .setRequired(false)
+    )
+    .addStringOption((option) =>
+      option
+        .setName("amount")
+        .setDescription("Select how many commands you want to see (1-25)")
+        .setRequired(false)
     ),
 
   async execute(interaction, client) {
@@ -26,15 +32,29 @@ module.exports = {
       return;
     }
 
-    const usages = await CommandUsage.find({}).sort({ count: -1 });
-    const totalUsage = usages.reduce((acc, cmd) => acc + cmd.count, 0);
+    let amount = interaction.options.getString("amount");
+    amount = amount ? Math.min(Math.max(parseInt(amount, 10), 1), 25) : 25;
+    const allUsages = await CommandUsage.find({});
+    const totalUsage = allUsages.reduce((acc, cmd) => acc + cmd.count, 0);
+    const topUsages = await CommandUsage.find({})
+      .sort({ count: -1 })
+      .limit(amount);
+
+    const topUsageCount = topUsages.reduce((acc, cmd) => acc + cmd.count, 0);
+    const otherCommandsCount = totalUsage - topUsageCount;
+    const otherPercentage = ((otherCommandsCount / totalUsage) * 100).toFixed(
+      2
+    );
+
     const usageEmbed = new EmbedBuilder()
       .setColor("#FF00EA")
       .setTitle("Command Usage")
-      .setDescription(`Total Commands Used: ${totalUsage}`)
+      .setDescription(
+        `Total Commands Used: **${totalUsage}** \nViewing **${topUsages.length}** commands \nTracking since <t:1711310418:f> (<t:1711310418:R>) `
+      )
       .setTimestamp();
 
-    usages.slice(0, 10).forEach((cmd, index) => {
+    topUsages.forEach((cmd, index) => {
       const percentage = ((cmd.count / totalUsage) * 100).toFixed(2);
       usageEmbed.addFields({
         name: `${index + 1}. ${cmd.commandName}`,
@@ -43,7 +63,15 @@ module.exports = {
       });
     });
 
-    const isPublic = interaction.options.getBoolean("public", false);
+    if (otherCommandsCount > 0) {
+      usageEmbed.addFields({
+        name: `Other commands`,
+        value: `${otherCommandsCount} times (${otherPercentage}%)`,
+        inline: false,
+      });
+    }
+
+    const isPublic = interaction.options.getBoolean("public") || false;
     await interaction.reply({ embeds: [usageEmbed], ephemeral: !isPublic });
   },
 };
