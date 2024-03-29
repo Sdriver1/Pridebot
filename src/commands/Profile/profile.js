@@ -1,11 +1,17 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const chalk = require("chalk");
+
 const Profile = require("../../../mongo/models/profileSchema");
-const { botUser } = require("../../ids/botId");
-const { devUsers } = require("../../ids/devId");
-const { partnerUsers } = require("../../ids/partnerId");
-const { supportUsers } = require("../../ids/supportId");
-const { vipUsers } = require("../../ids/vipId");
+
+const { botUser } = require("../../config/ids/botId");
+const { devUsers } = require("../../config/ids/devId");
+const { partnerUsers } = require("../../config/ids/partnerId");
+const { supportUsers } = require("../../config/ids/supportId");
+const { vipUsers } = require("../../config/ids/vipId");
+
+const {
+  containsDisallowedContent,
+} = require("../../config/blacklist/containDisallow");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -301,6 +307,7 @@ module.exports = {
     ),
   async execute(interaction) {
     const subcommand = interaction.options.getSubcommand();
+    const username = interaction.user.username;
     const estDate = new Date().toLocaleString("en-US", {
       timeZone: "America/New_York",
     });
@@ -410,7 +417,25 @@ module.exports = {
         .setFooter({ text: "Profile Information" })
         .setTimestamp();
       return interaction.reply({ embeds: [profileEmbed] });
+
+      //------------------------ Separator ---------------------------- //
     } else if (subcommand === "update") {
+      const preferredName = interaction.options.getString("preferredname");
+      const bio = interaction.options.getString("bio");
+
+      if (preferredName && containsDisallowedContent(preferredName, username)) {
+        return interaction.reply({
+          content: "The preferred name contains disallowed content.",
+          ephemeral: true,
+        });
+      }
+      if (bio && containsDisallowedContent(bio, username)) {
+        return interaction.reply({
+          content: "The bio contains disallowed content.",
+          ephemeral: true,
+        });
+      }
+
       const updateData = {};
       if (interaction.options.getString("preferredname"))
         updateData.preferredName =
@@ -469,6 +494,8 @@ module.exports = {
           "Your profile has been updated successfully! \nSee your new profile with </profile view:1197313708846743642>",
         ephemeral: true,
       });
+
+      //------------------------ Separator ---------------------------- //
     } else if (subcommand === "setup") {
       const existingProfile = await Profile.findOne({
         userId: interaction.user.id,
@@ -490,6 +517,23 @@ module.exports = {
         gender: interaction.options.getString("gender") || "",
         pronouns: interaction.options.getString("pronouns") || "",
       };
+
+      const preferredName = interaction.options.getString("preferredname");
+      const bio = interaction.options.getString("bio");
+
+      if (preferredName && containsDisallowedContent(preferredName, username)) {
+        return interaction.reply({
+          content: "The preferred name contains disallowed content.",
+          ephemeral: true,
+        });
+      }
+
+      if (bio && containsDisallowedContent(bio, username)) {
+        return interaction.reply({
+          content: "The bio contains disallowed content.",
+          ephemeral: true,
+        });
+      }
 
       const newProfile = await Profile.create(profileData);
 

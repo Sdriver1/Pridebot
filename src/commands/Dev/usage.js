@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const CommandUsage = require("../../../mongo/models/usageSchema");
-const { devUsers } = require("../../ids/devId");
-const { supportUsers } = require("../../ids/supportId");
+const { devUsers } = require("../../config/ids/botId");
+const { supportUsers } = require("../../config/ids/supportId");
 
 module.exports = {
   data: new SlashCommandBuilder()
