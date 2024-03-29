@@ -535,7 +535,7 @@ module.exports = {
         .setTimestamp();
       return interaction.reply({
         content:
-          "Your profile has been created successfully! \nSee your new profile with </profile view:1197313708846743642> \nTo update anything or add multiple pronoun, gender, or sexuality, please use </profile update:1197313708846743642>",
+          "Your profile has been created successfully! \nSee your new profile with </profile view:1197313708846743642> \nTo update anything or add multiple pronoun, gender, sexuality or a bio, please use </profile update:1197313708846743642>",
         embeds: [profileEmbed],
         ephemeral: true,
       });
