@@ -11,7 +11,8 @@ const { vipUsers } = require("../../config/ids/vipId");
 
 const {
   containsDisallowedContent,
-} = require("../../config/blacklist/containDisallow");
+} = require("../../config/blacklist/detection/containDisallow");
+const { scanText } = require("../../config/blacklist/detection/perspective");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -422,6 +423,7 @@ module.exports = {
     } else if (subcommand === "update") {
       const preferredName = interaction.options.getString("preferredname");
       const bio = interaction.options.getString("bio");
+      const scoreupdate = await scanText(preferredName || bio);
 
       if (preferredName && containsDisallowedContent(preferredName, username)) {
         return interaction.reply({
@@ -429,9 +431,34 @@ module.exports = {
           ephemeral: true,
         });
       }
+
       if (bio && containsDisallowedContent(bio, username)) {
         return interaction.reply({
           content: "The bio contains disallowed content.",
+          ephemeral: true,
+        });
+      }
+
+      if (scoreupdate !== null) {
+        const { toxicity, insult } = scoreupdate;
+        if (toxicity > 0.75 || insult > 0.75) {
+          console.log(chalk.yellowBright.bold(
+            `⚠️  ${username} has been flagged for toxic or insulting content \nToxicity: ${(
+              toxicity * 100
+            ).toFixed(2)}% \nInsult: ${(insult * 100).toFixed(
+              2
+            )}% \nContent: "${preferredName || bio}"`
+          ));
+          return interaction.reply({
+            content:
+              "Your message has been flagged for high toxicity or insult.",
+            ephemeral: true,
+          });
+        }
+      } else {
+        return interaction.reply({
+          content:
+            "There was an error analyzing your message. Please try again.",
           ephemeral: true,
         });
       }
@@ -520,6 +547,7 @@ module.exports = {
 
       const preferredName = interaction.options.getString("preferredname");
       const bio = interaction.options.getString("bio");
+      const scoresetup = await scanText(preferredName || bio);
 
       if (preferredName && containsDisallowedContent(preferredName, username)) {
         return interaction.reply({
@@ -531,6 +559,30 @@ module.exports = {
       if (bio && containsDisallowedContent(bio, username)) {
         return interaction.reply({
           content: "The bio contains disallowed content.",
+          ephemeral: true,
+        });
+      }
+
+      if (scoresetup !== null) {
+        const { toxicity, insult } = scoresetup;
+        if (toxicity > 0.75 || insult > 0.75) {
+          console.log(chalk.yellowBright.bold(
+            `⚠️  ${username} has been flagged for toxic or insulting content \nToxicity: ${(
+              toxicity * 100
+            ).toFixed(2)}% \nInsult: ${(insult * 100).toFixed(
+              2
+            )}% \nContent: "${preferredName || bio}"`
+          ));
+          return interaction.reply({
+            content:
+              "Your message has been flagged for high toxicity or insult.",
+            ephemeral: true,
+          });
+        }
+      } else {
+        return interaction.reply({
+          content:
+            "There was an error analyzing your message. Please try again.",
           ephemeral: true,
         });
       }
