@@ -345,23 +345,29 @@ module.exports = {
 
     if (subcommand === "edit") {
       const userId = interaction.user.id;
-      const color = interaction.options.getString("color");
+      const colorInput = interaction.options.getString("color");
       const badgeToggle = interaction.options.getBoolean("badgetoggle");
 
       const updates = {};
-      if (color) {
-        const isValidHex = /^#([0-9A-F]{3}){1,2}$/i.test(color);
+
+      if (colorInput) {
+        const color = colorInput.startsWith("#")
+          ? colorInput
+          : `#${colorInput}`;
+
+        const isValidHex = /^#([0-9A-F]{3,6})$/i.test(color);
         if (!isValidHex) {
           return interaction.reply({
             content: "Please enter a valid hex code for the color.",
             ephemeral: true,
           });
         }
-        updates.color = color; 
+
+        updates.color = color;
       }
 
       if (badgeToggle !== null) {
-        updates.badgesVisible = badgeToggle; 
+        updates.badgesVisible = badgeToggle;
       }
 
       await Profile.findOneAndUpdate(
@@ -371,9 +377,9 @@ module.exports = {
       );
 
       let responseMessage = "Your profile has been updated successfully!";
-      if (color && badgeToggle !== null) {
+      if (colorInput && badgeToggle !== null) {
         responseMessage += " Color and badge visibility have been updated.";
-      } else if (color) {
+      } else if (colorInput) {
         responseMessage += " Color has been updated.";
       } else if (badgeToggle !== null) {
         responseMessage = badgeToggle
