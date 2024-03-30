@@ -11,6 +11,8 @@ const profileSchema = new mongoose.Schema({
   otherGender: { type: String, required: false },
   pronouns: { type: String, required: false },
   otherPronouns: { type: String, required: false },
+  color: { type: String, required: false },
+  badgesVisible: { type: Boolean, default: true },
 });
 
 const Profile = mongoose.model("Profile", profileSchema);

@@ -305,7 +305,27 @@ module.exports = {
               { name: "Other", value: "Other" }
             )
         )
+    )
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName("edit")
+        .setDescription("Edit part of your profile")
+        .addBooleanOption((option) =>
+          option
+            .setName("badgetoggle")
+            .setDescription("Toggle badge visibility on your profile")
+            .setRequired(false)
+        )
+        .addStringOption((option) =>
+          option
+            .setName("color")
+            .setDescription(
+              "Enter in valid hex code for custom color for your profile (#{your code}"
+            )
+            .setRequired(false)
+        )
     ),
+
   async execute(interaction) {
     const subcommand = interaction.options.getSubcommand();
     const username = interaction.user.username;
@@ -318,9 +338,57 @@ module.exports = {
       )
     );
 
-    if (subcommand === "view") {
+    async function fetchProfileColor(userId) {
+      const profile = await Profile.findOne({ userId: userId });
+      return profile?.color || "#FF00EA";
+    }
+
+    if (subcommand === "edit") {
+      const userId = interaction.user.id;
+      const color = interaction.options.getString("color");
+      const badgeToggle = interaction.options.getBoolean("badgetoggle");
+
+      const updates = {};
+      if (color) {
+        const isValidHex = /^#([0-9A-F]{3}){1,2}$/i.test(color);
+        if (!isValidHex) {
+          return interaction.reply({
+            content: "Please enter a valid hex code for the color.",
+            ephemeral: true,
+          });
+        }
+        updates.color = color; 
+      }
+
+      if (badgeToggle !== null) {
+        updates.badgesVisible = badgeToggle; 
+      }
+
+      await Profile.findOneAndUpdate(
+        { userId },
+        { $set: updates },
+        { new: true, upsert: false }
+      );
+
+      let responseMessage = "Your profile has been updated successfully!";
+      if (color && badgeToggle !== null) {
+        responseMessage += " Color and badge visibility have been updated.";
+      } else if (color) {
+        responseMessage += " Color has been updated.";
+      } else if (badgeToggle !== null) {
+        responseMessage = badgeToggle
+          ? "Badges are now visible on your profile."
+          : "Badges are now hidden from your profile.";
+      }
+
+      return interaction.reply({
+        content: responseMessage,
+        ephemeral: true,
+      });
+    } else if (subcommand === "view") {
       const targetUser =
         interaction.options.getUser("user") || interaction.user;
+      const embedColor = await fetchProfileColor(targetUser.id);
       const profile = await Profile.findOne({
         userId: targetUser.id,
       });
@@ -335,24 +403,27 @@ module.exports = {
         });
       }
 
-      const badges = [];
-      if (botUser.has(targetUser.id)) {
-        badges.push("<:Ic_Pridebot_logo:1108228682184654908> ");
-      }
-      if (devUsers.has(targetUser.id)) {
-        badges.push("<:Ic_Pridebot_dev:1195877037034983515> ");
-      }
-      if (supportUsers.has(targetUser.id)) {
-        badges.push("<:Ic_Pridebot_support:1197399653109473301> ");
-      }
-      if (vipUsers.has(targetUser.id)) {
-        badges.push("<:Ic_Pridebot_verified:1197328938788204586> ");
-      }
-      if (partnerUsers.has(targetUser.id)) {
-        badges.push("<:Ic_Pridebot_partner:1197394034310791272> ");
-      }
+      let badgeStr = "";
+      if (profile && profile.badgesVisible) {
+        const badges = [];
+        if (botUser.has(targetUser.id)) {
+          badges.push("<:Ic_Pridebot_logo:1108228682184654908> ");
+        }
+        if (devUsers.has(targetUser.id)) {
+          badges.push("<:Ic_Pridebot_dev:1195877037034983515> ");
+        }
+        if (supportUsers.has(targetUser.id)) {
+          badges.push("<:Ic_Pridebot_support:1197399653109473301> ");
+        }
+        if (vipUsers.has(targetUser.id)) {
+          badges.push("<:Ic_Pridebot_verified:1197328938788204586> ");
+        }
+        if (partnerUsers.has(targetUser.id)) {
+          badges.push("<:Ic_Pridebot_partner:1197394034310791272> ");
+        }
 
-      const badgeStr = badges.join("");
+        badgeStr = badges.join("");
+      }
 
       const pronounsValue = profile.pronouns || "Not set";
       const otherPronounsValue = profile.otherPronouns
@@ -411,7 +482,7 @@ module.exports = {
       );
 
       const profileEmbed = new EmbedBuilder()
-        .setColor("#FF00EA")
+        .setColor(`${embedColor}`)
         .setTitle(`${targetUser.username}'s Profile ${badgeStr}`)
         .addFields(profileFields)
         .setThumbnail(targetUser.displayAvatarURL())
@@ -442,13 +513,15 @@ module.exports = {
       if (scoreupdate !== null) {
         const { toxicity, insult } = scoreupdate;
         if (toxicity > 0.65 || insult > 0.65) {
-          console.log(chalk.yellowBright.bold(
-            `⚠️  ${username} has been flagged for toxic or insulting content \nToxicity: ${(
-              toxicity * 100
-            ).toFixed(2)}% \nInsult: ${(insult * 100).toFixed(
-              2
-            )}% \nContent: "${preferredName || bio}"`
-          ));
+          console.log(
+            chalk.yellowBright.bold(
+              `⚠️  ${username} has been flagged for toxic or insulting content \nToxicity: ${(
+                toxicity * 100
+              ).toFixed(2)}% \nInsult: ${(insult * 100).toFixed(
+                2
+              )}% \nContent: "${preferredName || bio}"`
+            )
+          );
           return interaction.reply({
             content:
               "Your message has been flagged for high toxicity or insult.",
@@ -566,13 +639,15 @@ module.exports = {
       if (scoresetup !== null) {
         const { toxicity, insult } = scoresetup;
         if (toxicity > 0.65 || insult > 0.65) {
-          console.log(chalk.yellowBright.bold(
-            `⚠️  ${username} has been flagged for toxic or insulting content \nToxicity: ${(
-              toxicity * 100
-            ).toFixed(2)}% \nInsult: ${(insult * 100).toFixed(
-              2
-            )}% \nContent: "${preferredName || bio}"`
-          ));
+          console.log(
+            chalk.yellowBright.bold(
+              `⚠️  ${username} has been flagged for toxic or insulting content \nToxicity: ${(
+                toxicity * 100
+              ).toFixed(2)}% \nInsult: ${(insult * 100).toFixed(
+                2
+              )}% \nContent: "${preferredName || bio}"`
+            )
+          );
           return interaction.reply({
             content:
               "Your message has been flagged for high toxicity or insult.",
