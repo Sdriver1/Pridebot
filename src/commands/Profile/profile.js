@@ -441,7 +441,7 @@ module.exports = {
 
       if (scoreupdate !== null) {
         const { toxicity, insult } = scoreupdate;
-        if (toxicity > 0.75 || insult > 0.75) {
+        if (toxicity > 0.65 || insult > 0.65) {
           console.log(chalk.yellowBright.bold(
             `⚠️  ${username} has been flagged for toxic or insulting content \nToxicity: ${(
               toxicity * 100
@@ -565,7 +565,7 @@ module.exports = {
 
       if (scoresetup !== null) {
         const { toxicity, insult } = scoresetup;
-        if (toxicity > 0.75 || insult > 0.75) {
+        if (toxicity > 0.65 || insult > 0.65) {
           console.log(chalk.yellowBright.bold(
             `⚠️  ${username} has been flagged for toxic or insulting content \nToxicity: ${(
               toxicity * 100
