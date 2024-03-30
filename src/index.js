@@ -59,13 +59,23 @@ client.once("ready", () => {
   eventHandlers.updateChannelName(client);
 });
 
+const userprofile = require('./commands/Profile/userprofile.js');
+client.on("interactionCreate", async (interaction) => {
+  if (interaction.isUserContextMenuCommand()) {
+    if (interaction.commandName === "User Profile") {
+      await userprofile.execute(interaction);
+    }
+  }
+});
 const ap = AutoPoster(topggToken, client);
 ap.on("posted", () => {
   console.log("Posted stats to Top.gg!");
 });
 
+const commandsPath = "./src/commands";
+const clientId = "1101256478632972369";
+client.handleCommands(commandsPath, clientId);
 client.handleEvents();
-client.handleCommands();
 client.login(token);
 
 connect(databaseToken)

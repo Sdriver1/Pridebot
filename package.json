@@ -29,6 +29,7 @@
     "mongodb": "^6.3.0",
     "mongoose": "^7.6.8",
     "nodeactyl": "^3.3.0",
+    "path": "^0.12.7",
     "puppeteer": "^20.9.0",
     "topgg-autoposter": "^2.0.1"
   }
