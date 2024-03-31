@@ -1,9 +1,7 @@
 # Pridebot
 
 ## Introduction
-Pridebot, developed by [Sdriver1](https://github.com/Sdriver1), is an educational tool focusing on the broad spectrum of LGBTQ identities. Its primary purpose is to deliver enlightening information about various sexualities, genders, pronouns, and other identities under the LGBTQ umbrella. The bot is meticulously designed to educate users about these topics and to aid them in exploring and understanding their feelings and identities. 
-
-In addition to its educational role, Pridebot is equipped to offer essential resources geared toward mental health support. The bot provides gentle guidance, sharing strategies, and advice for those contemplating coming out to ease this significant step. This makes Pridebot a source of information and a supportive guide in its users' personal journeys of self-discovery and expression. Its approach is nurturing and informative, ensuring a safe and supportive experience for those seeking knowledge and understanding of LGBTQ issues and introspection of their identities.
+Pridebot, developed by [Sdriver1](https://github.com/Sdriver1), is a unique LGBTQIA themed bot designed to provide creditble and accurate information on LGBTQIA+ identities and terms but also to help users with discovering them through resources and interact commands. Pridebot offers a range of topics including different sexual orientations, gender identities, pronouns, and the intricate aspects of the LGBTQ community. Including the educational ascept, Pridebot also offers fun and cool commands like gaydar or profiles to help others learn about you. Thank you for using Pridebot ❤️
 
 ## Features
 Pridebot offers a range of features to assist users in learning and discussing LGBTQ+ topics, including:
@@ -27,6 +25,8 @@ Here is a list of the commands you can use with Pridebot:
 - **Support** - `/comingout` and `/mentalhealth`
 - **Terms** - `/gender`, `/other`, `/pronouns`, and `/sexuality`
 - **Tools** - `/bugreport`, `/feedback`, `/help,`, `/latest`, and `/stats`
+
+- **User Apps** - `User Gaydar`, `User Profile`, and `User Transdar`
 
 
 ## Contribution
