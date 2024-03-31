@@ -104,7 +104,7 @@ module.exports = {
       );
       const commitsData = commitsResponse.data;
       const commitCount = commitsData.length;
-      const devcommitCount = commitsData.length;
+      const devcommitCount = commitsData.length - 72;
 
       let commitTens = "0";
       let commitOnes = "0";
@@ -192,7 +192,7 @@ module.exports = {
         process.uptime()
       )} \` \n**Start Time:** ${startTimeTimestamp}`;
 
-      const botstats = `**Version:** \`1.${commitTens}.${commitOnes}\` \n**Guilds:** \`${currentGuildCount}\` \n**Users:** \`${formattedTotalUserCount}\` \n**Commands:** \`${CommandsCount}\` \n**Commands Used:** \`${totalUsage}\``;
+      const botstats = `**Version:** \`2.${commitTens}.${commitOnes}\` \n**Guilds:** \`${currentGuildCount}\` \n**Users:** \`${formattedTotalUserCount}\` \n**Commands:** \`${CommandsCount}\` \n**Commands Used:** \`${totalUsage}\``;
 
       const servicestats = `${serviceMem} \n${serviceCPU} \n${serviceDk}`;
 

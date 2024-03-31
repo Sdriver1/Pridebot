@@ -16,7 +16,7 @@ const updateChannelName = async (client) => {
     (acc, guild) => acc + guild.memberCount,
     0
   );
-  const registeredCommandsCount = await getRegisteredCommandsCount(client);
+  const registeredCommandsCount = await getRegisteredCommandsCount(client) + 2;
 
   const usages = await CommandUsage.find({}).sort({ count: -1 });
   const totalUsage = usages.reduce((acc, cmd) => acc + cmd.count, 0);

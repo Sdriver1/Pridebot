@@ -51,13 +51,13 @@ module.exports = {
         inline: false,
       },
       {
-        name: "<:_:1196239825213341768> Updates",
-        value: `1. Added **bios** to /profile (To add bios, go to </profile update:1197313708846743642> and bio)\n2. Updated [website](https://pridebot.xyz) with stats \n3. Updated [README.](https://github.com/Sdriver1/Pridebot#readme)`,
+        name: "<:_:1196239825213341768> Updates (as of <t:1711857600:D>)",
+        value: `1. **Profile Changes** \n - Added **bios** to /profile (To add bios, go to </profile update:1197313708846743642> and bio) \n - Added </profile edit:1197313708846743642> to edit certain parts of profile \n - Add "User Profile" to app menu \n2. Added "User Gaydar" and "User Transdar" to app menu \n3. Updated [website](https://pridebot.xyz) with stats \n4. Updated [README.](https://github.com/Sdriver1/Pridebot#readme)`,
         inline: false,
       },
       {
         name: "🎉 Recent Milstones",
-        value: `<t:1708485180:f> - <@1101256478632972369> hit **150** servers!`,
+        value: `<t:1711405740:f>  - <@1101256478632972369> hit **250** servers!`,
       }
     );
 
