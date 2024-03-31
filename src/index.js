@@ -44,6 +44,10 @@ const eventHandlers = {
   handleReportFeedback: require("./events/client/modals.js"),
 };
 
+const userprofile = require('./commands/Profile/userprofile.js');
+const usergaydar = require("./commands/Fun/usergaydar.js");
+const usertransdar = require("./commands/Fun/usertransdar.js");
+
 client.on(Events.GuildCreate, (guild) =>
   eventHandlers.handleGuildCreate(client, guild)
 );
@@ -59,11 +63,16 @@ client.once("ready", () => {
   eventHandlers.updateChannelName(client);
 });
 
-const userprofile = require('./commands/Profile/userprofile.js');
 client.on("interactionCreate", async (interaction) => {
   if (interaction.isUserContextMenuCommand()) {
     if (interaction.commandName === "User Profile") {
       await userprofile.execute(interaction);
+    }
+    if (interaction.commandName === "User Gaydar") {
+      await usergaydar.execute(interaction);
+    }
+    if (interaction.commandName === "User Transdar") {
+      await usertransdar.execute(interaction);
     }
   }
 });
