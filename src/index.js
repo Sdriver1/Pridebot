@@ -90,30 +90,3 @@ client.login(token);
 connect(databaseToken)
   .then(() => console.log("Connected to MongoDB"))
   .catch(console.error);
-
-
-//Vote Webhooks API
-const express = require("express")
-const app = express()
-
-const port = 2610;
-
-app.listen(port, () => {
-  console.log(`API is running on port ${port}`)
-})
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true })); 
-
-app.post("/wumpus-votes", (req, res) => {
-
-  let userid = req.body.userId;
-  let botid = req.body.botId;
-
-  //Add whatever you want to do when there was a vote here
-  console.log(userid + " just voted for " + botid)
-
-  return res.status(200).send("Success!")
-})
-
-//http://youripadress:port/wumpus-votes
