@@ -1,7 +1,14 @@
 require("dotenv").config();
 const { token, databaseToken, topggToken } = process.env;
 const { connect } = require("mongoose");
-const { Client, Collection, GatewayIntentBits, Events } = require("discord.js");
+const {
+  Client,
+  Collection,
+  ChannelType,
+  GatewayIntentBits,
+  Events,
+  EmbedBuilder,
+} = require("discord.js");
 const fs = require("fs");
 const { AutoPoster } = require("topgg-autoposter");
 
@@ -44,7 +51,7 @@ const eventHandlers = {
   handleReportFeedback: require("./events/client/modals.js"),
 };
 
-const userprofile = require('./commands/Profile/userprofile.js');
+const userprofile = require("./commands/Profile/userprofile.js");
 const usergaydar = require("./commands/Fun/usergaydar.js");
 const usertransdar = require("./commands/Fun/usertransdar.js");
 
@@ -90,3 +97,99 @@ client.login(token);
 connect(databaseToken)
   .then(() => console.log("Connected to MongoDB"))
   .catch(console.error);
+
+const express = require("express");
+const app = express();
+
+const port = 2610;
+
+app.listen(port, () => {
+  console.log(`API is running on port ${port}`);
+});
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.post("/wumpus-votes", async (req, res) => {
+  let wumpususer = req.body.userId;
+  let wumpusbot = req.body.botId;
+  const voteCooldownHours = 12;
+  const voteCooldownSeconds = voteCooldownHours * 3600;
+  const currentTimestamp = Math.floor(Date.now() / 1000);
+  const voteAvailableTimestamp = currentTimestamp + voteCooldownSeconds;
+
+  client.users
+    .fetch(wumpususer)
+    .then(async (user) => {
+      const userAvatarURL = user.displayAvatarURL();
+
+      const embed = new EmbedBuilder()
+        .setDescription(
+          `**Thank you <@${wumpususer}> for voting for <@${wumpusbot}> on [Wumpus.Store](https://wumpus.store/bot/${wumpusbot}/vote) <:_:1198663251580440697>** \nYou can vote again <t:${voteAvailableTimestamp}:R>.`
+        )
+        .setColor(0x00ae86)
+        .setThumbnail(userAvatarURL)
+        .setTimestamp();
+
+      try {
+        const channel = await client.channels.fetch("1224815141921624186");
+        if (!channel || channel.type !== ChannelType.GuildText) {
+          return res
+            .status(400)
+            .send("Channel not found or is not a text channel");
+        }
+
+        await channel.send({ embeds: [embed] });
+        res.status(200).send("Success!");
+      } catch (error) {
+        console.error("Error sending message to Discord:", error);
+        res.status(500).send("Internal Server Error");
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching user from Discord:", error);
+      res.status(500).send("Internal Server Error");
+    });
+});
+
+app.post("/topgg-votes", async (req, res) => {
+  let topgguserid = req.body.user;
+  let topggbotid = req.body.bot;
+  const voteCooldownHours = 12;
+  const voteCooldownSeconds = voteCooldownHours * 3600;
+  const currentTimestamp = Math.floor(Date.now() / 1000);
+  const voteAvailableTimestamp = currentTimestamp + voteCooldownSeconds;
+
+  client.users
+    .fetch(topgguserid)
+    .then(async (user) => {
+      const userAvatarURL = user.displayAvatarURL();
+
+      const embed = new EmbedBuilder()
+        .setDescription(
+          `**Thank you <@${topgguserid}> for voting for <@${topggbotid}> on [Top.gg](https://top.gg/bot/${topggbotid}/vote) <:_:1195866944482590731>** \nYou can vote again in <t:${voteAvailableTimestamp}:R>`
+        )
+        .setColor("#FF00EA")
+        .setThumbnail(userAvatarURL)
+        .setTimestamp();
+
+      try {
+        const channel = await client.channels.fetch("1224815141921624186");
+        if (!channel || channel.type !== ChannelType.GuildText) {
+          return res
+            .status(400)
+            .send("Channel not found or is not a text channel");
+        }
+
+        await channel.send({ embeds: [embed] });
+        res.status(200).send("Success!");
+      } catch (error) {
+        console.error("Error sending message to Discord:", error);
+        res.status(500).send("Internal Server Error");
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching user from Discord:", error);
+      res.status(500).send("Internal Server Error");
+    });
+});
