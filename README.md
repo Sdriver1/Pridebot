@@ -21,7 +21,7 @@ Here is a list of the commands you can use with Pridebot:
 - **Pride** 
     - **Sexualities** - `/asexual`,`/bisexual`, `/gay`,`/lesbian`, `/pansexual`, and `/queer` 
     - **Genders** -  `/nonbinary`, and `/transgender`
-- **Profiles** - `profile setup`, `profile view`, and `profile update`
+- **Profiles** - `profile setup`, `profile view`,`profile edit`,and `profile update`
 - **Support** - `/comingout` and `/mentalhealth`
 - **Terms** - `/gender`, `/other`, `/pronouns`, and `/sexuality`
 - **Tools** - `/bugreport`, `/feedback`, `/help,`, `/latest`, and `/stats`
