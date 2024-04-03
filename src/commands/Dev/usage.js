@@ -33,7 +33,7 @@ module.exports = {
     }
 
     let amount = interaction.options.getString("amount");
-    amount = amount ? Math.min(Math.max(parseInt(amount, 10), 1), 25) : 25;
+    amount = amount ? Math.min(Math.max(parseInt(amount, 10), 1), 25) : 24;
     const allUsages = await CommandUsage.find({});
     const totalUsage = allUsages.reduce((acc, cmd) => acc + cmd.count, 0);
     const topUsages = await CommandUsage.find({})
