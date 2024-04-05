@@ -203,17 +203,17 @@ app.post(
     let embed = new EmbedBuilder();
 
     if (githubEvent === "push") {
-      const commits = data.commits
-        .map((commit) => `${commit.id} - [${commit.message}](${commit.url})`)
+      const commitMessages = data.commits
+        .map(
+          (commit) =>
+            `[${commit.id.slice(0, 7)}](${commit.url}) - **${commit.message}**`
+        )
         .join("\n");
       embed
         .setColor("#FF00EA")
-        .setTitle("New Commit(s)")
-        .setDescription(
-          `**[${data.pusher.name}](https://github.com/${data.pusher.name}) pushed new commit to [Pridebot](https://github.com/${data.repository.full_name})`
-        )
+        .setTitle(`New Pridebot Commit by ${data.pusher.name}`)
         .setTimestamp()
-        .addFields({ name: "Commits", value: commits });
+        .addFields({ name: "Commits", value: commitMessages });
     } else if (githubEvent === "star" && data.action === "created") {
       embed
         .setColor("#FF00EA")
