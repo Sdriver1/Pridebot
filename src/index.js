@@ -193,3 +193,51 @@ app.post("/topgg-votes", async (req, res) => {
       res.status(500).send("Internal Server Error");
     });
 });
+
+app.post(
+  "/github",
+  express.json({ type: "application/json" }),
+  async (request, response) => {
+    const githubEvent = request.headers["x-github-event"];
+    const data = request.body;
+    let embed = new EmbedBuilder();
+
+    if (githubEvent === "push") {
+      const commits = data.commits
+        .map((commit) => `${commit.id} - [${commit.message}](${commit.url})`)
+        .join("\n");
+      embed
+        .setColor("#FF00EA")
+        .setTitle("New Commit(s)")
+        .setDescription(
+          `**[${data.pusher.name}](https://github.com/${data.pusher.name}) pushed new commit to [Pridebot](https://github.com/${data.repository.full_name})`
+        )
+        .setTimestamp()
+        .addFields({ name: "Commits", value: commits });
+    } else if (githubEvent === "star" && data.action === "created") {
+      embed
+        .setColor("#FF00EA")
+        .setDescription(
+          `## :star: New Star \n**Thank you [${data.sender.login}](https://github.com/${data.sender.login}) for starring [Pridebot](https://github.com/${data.repository.full_name})**`
+        )
+        .setTimestamp();
+    } else if (githubEvent === "star" && data.action === "deleted") {
+      console.log(`${data.sender.login} removed their star ;-;`);
+    } else {
+      console.log(`Unhandled event: ${githubEvent}`);
+      return;
+    }
+
+    try {
+      const channel = await client.channels.fetch("1101742377372237906");
+      if (!channel) {
+        console.log("Could not find channel");
+        return;
+      }
+
+      await channel.send({ embeds: [embed] });
+    } catch (error) {
+      console.error("Error sending message to Discord:");
+    }
+  }
+);
