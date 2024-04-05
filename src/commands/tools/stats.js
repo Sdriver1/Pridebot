@@ -104,7 +104,7 @@ module.exports = {
       );
       const commitsData = commitsResponse.data;
       const commitCount = commitsData.length;
-      const devcommitCount = commitsData.length - 71;
+      const devcommitCount = commitsData.length - 62;
 
       let commitTens = "0";
       let commitOnes = "0";

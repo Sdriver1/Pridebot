@@ -56,8 +56,8 @@ module.exports = {
         inline: false,
       },
       {
-        name: "🎉 Recent Milstones",
-        value: `<t:1711405740:f>  - <@1101256478632972369> hit **250** servers!`,
+        name: "ðŸŽ‰ Recent Milstones",
+        value: `<t:1712265360:f>  - <@1101256478632972369> hit **300** servers!`,
       }
     );
 
