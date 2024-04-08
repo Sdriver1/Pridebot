@@ -215,7 +215,7 @@ app.post(
         .setColor("#FF00EA")
         .setAuthor({
           name: `${data.pusher.name}`,
-          iconURL: `${data.pusher.avatar_url}`,
+          iconURL: `https://cdn.discordapp.com/emojis/1226912165982638174.png}`,
           url: `https://github.com/${data.pusher.name}`,
         })
         .setTitle(`New Pridebot Commit`)
