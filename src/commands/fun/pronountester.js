@@ -1,6 +1,11 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const chalk = require("chalk");
 
+const {
+  containsDisallowedContent,
+} = require("../../config/blacklist/detection/containDisallow");
+const { scanText } = require("../../config/blacklist/detection/perspective");
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("pronountester")
@@ -60,6 +65,82 @@ module.exports = {
       "possessive_adjective"
     );
     const reflexive = interaction.options.getString("reflexive");
+
+    const username = interaction.user.username;
+    const scoreupdate = await scanText(
+        subject ||
+        object ||
+        possessiveDeterminer ||
+        possessivePronoun ||
+        reflexive
+    );
+
+    if (subject && containsDisallowedContent(subject, username)) {
+      return interaction.reply({
+        content: "The subject contains disallowed content.",
+        ephemeral: true,
+      });
+    }
+    if (object && containsDisallowedContent(object, username)) {
+      return interaction.reply({
+        content: "The object contains disallowed content.",
+        ephemeral: true,
+      });
+    }
+    if (
+      possessiveDeterminer &&
+      containsDisallowedContent(possessiveDeterminer, username)
+    ) {
+      return interaction.reply({
+        content: "The possessiveDeterminer contains disallowed content.",
+        ephemeral: true,
+      });
+    }
+    if (
+      possessivePronoun &&
+      containsDisallowedContent(possessivePronoun, username)
+    ) {
+      return interaction.reply({
+        content: "The possessivePronoun contains disallowed content.",
+        ephemeral: true,
+      });
+    }
+    if (reflexive && containsDisallowedContent(reflexive, username)) {
+      return interaction.reply({
+        content: "The reflexive contains disallowed content.",
+        ephemeral: true,
+      });
+    }
+
+    if (scoreupdate !== null) {
+      const { toxicity, insult } = scoreupdate;
+      if (toxicity > 0.65 || insult > 0.65) {
+        console.log(
+          chalk.yellowBright.bold(
+            `⚠️  ${username} has been flagged for toxic or insulting content \nToxicity: ${(
+              toxicity * 100
+            ).toFixed(2)}% \nInsult: ${(insult * 100).toFixed(
+              2
+            )}% \nContent: "${
+              subject ||
+              object ||
+              possessiveDeterminer ||
+              possessivePronoun ||
+              reflexive
+            }"`
+          )
+        );
+        return interaction.reply({
+          content: "One or more of your test have been flagged for high toxicity or insult.",
+          ephemeral: true,
+        });
+      }
+    } else {
+      return interaction.reply({
+        content: "There was an error analyzing your message. Please try again.",
+        ephemeral: true,
+      });
+    }
 
     const embed = new EmbedBuilder()
       .setColor(0xff00ae)
