@@ -206,12 +206,19 @@ app.post(
       const commitMessages = data.commits
         .map(
           (commit) =>
-            `[${commit.id.slice(0, 7)}](${commit.url}) - **${commit.message}**`
+            `[\`${commit.id.slice(0, 7)}\`](${commit.url}) - **${
+              commit.message
+            }**`
         )
         .join("\n");
       embed
         .setColor("#FF00EA")
-        .setTitle(`New Pridebot Commit by ${data.pusher.name}`)
+        .setAuthor({
+          name: `${data.pusher.name}`,
+          iconURL: `${data.pusher.avatar_url}`,
+          url: `https://github.com/${data.pusher.name}`,
+        })
+        .setTitle(`New Pridebot Commit`)
         .setTimestamp()
         .addFields({ name: "Commits", value: commitMessages });
     } else if (githubEvent === "star" && data.action === "created") {
