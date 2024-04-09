@@ -229,7 +229,7 @@ app.post(
       embed
         .setColor("#FF00EA")
         .setDescription(
-          `## :star: New Star \n**Thank you [${data.sender.login}](https://github.com/${data.sender.login}) for starring [Pridebot](https://github.com/${data.repository.full_name})**`
+          `## :star: New Star \n**Thank you [${data.sender.login}](https://github.com/${data.sender.name}) for starring [Pridebot](https://github.com/${data.repository.full_name})**`
         )
         .setTimestamp();
     } else if (githubEvent === "star" && data.action === "deleted") {
