@@ -203,6 +203,7 @@ app.post(
     let embed = new EmbedBuilder();
 
     if (githubEvent === "push") {
+      const commitCount = data.commits.length;
       const commitMessages = data.commits
         .map(
           (commit) =>
@@ -211,6 +212,8 @@ app.post(
             }**`
         )
         .join("\n");
+      const title = `${commitCount} New ${data.repository.name} ${commitCount > 1 ? 'Commits' : 'Commit'}`;
+    
       embed
         .setColor("#FF00EA")
         .setAuthor({
@@ -218,7 +221,7 @@ app.post(
           iconURL: `https://cdn.discordapp.com/emojis/1226912165982638174.png`,
           url: `https://github.com/${data.pusher.name}`,
         })
-        .setTitle(`New ${data.repository.name} Commit`)
+        .setTitle(title) 
         .setTimestamp()
         .addFields({ name: "Commits", value: commitMessages });
     } else if (githubEvent === "star" && data.action === "created") {
