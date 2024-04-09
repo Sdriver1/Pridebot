@@ -218,7 +218,7 @@ app.post(
           iconURL: `https://cdn.discordapp.com/emojis/1226912165982638174.png`,
           url: `https://github.com/${data.pusher.name}`,
         })
-        .setTitle(`New Pridebot Commit`)
+        .setTitle(`New ${data.repository.name} Commit`)
         .setTimestamp()
         .addFields({ name: "Commits", value: commitMessages });
     } else if (githubEvent === "star" && data.action === "created") {
