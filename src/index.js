@@ -213,6 +213,7 @@ app.post(
         )
         .join("\n");
       const title = `${commitCount} New ${data.repository.name} ${commitCount > 1 ? 'Commits' : 'Commit'}`;
+      const fieldname = `${commitCount > 1 ? 'Commits' : 'Commit'}`
     
       embed
         .setColor("#FF00EA")
@@ -223,7 +224,7 @@ app.post(
         })
         .setTitle(title) 
         .setTimestamp()
-        .addFields({ name: "Commits", value: commitMessages });
+        .addFields({ name: fieldname, value: commitMessages });
     } else if (githubEvent === "star" && data.action === "created") {
       embed
         .setColor("#FF00EA")
