@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { token, databaseToken, topggToken } = process.env;
+const { token, databaseToken, topggToken, botlisttoken, botlistauth } = process.env;
 const { connect } = require("mongoose");
 const {
   Client,
@@ -11,6 +11,7 @@ const {
 } = require("discord.js");
 const fs = require("fs");
 const { AutoPoster } = require("topgg-autoposter");
+const BotlistMeClient = require("botlist.me.js");
 
 const botStartTime = Math.floor(Date.now() / 1000);
 
@@ -83,10 +84,17 @@ client.on("interactionCreate", async (interaction) => {
     }
   }
 });
+
 const ap = AutoPoster(topggToken, client);
 ap.on("posted", () => {
   console.log("Posted stats to Top.gg!");
 });
+
+const botlistme = new BotlistMeClient(botlisttoken, client);
+botlistme.on('posted', () => {
+  console.log('Server count posted!');
+})
+
 
 const commandsPath = "./src/commands";
 const clientId = "1101256478632972369";
@@ -127,7 +135,7 @@ app.post("/wumpus-votes", async (req, res) => {
         .setDescription(
           `**Thank you <@${wumpususer}> for voting for <@${wumpusbot}> on [Wumpus.Store](https://wumpus.store/bot/${wumpusbot}/vote) <:_:1198663251580440697>** \nYou can vote again <t:${voteAvailableTimestamp}:R>.`
         )
-        .setColor(0x00ae86)
+        .setColor("#FF00EA")
         .setThumbnail(userAvatarURL)
         .setTimestamp();
 
@@ -194,6 +202,52 @@ app.post("/topgg-votes", async (req, res) => {
     });
 });
 
+app.post("/botlist-votes", async (req, res) => {
+  if (req.header('Authorization') != botlistauth ) {
+    return res.status("401").end(); 
+  }
+
+  let botlistuser = req.body.user;
+  let botlistbot = req.body.bot;
+  const voteCooldownHours = 12;
+  const voteCooldownSeconds = voteCooldownHours * 3600;
+  const currentTimestamp = Math.floor(Date.now() / 1000);
+  const voteAvailableTimestamp = currentTimestamp + voteCooldownSeconds;
+
+  client.users
+    .fetch(botlistuser)
+    .then(async (user) => {
+      const userAvatarURL = user.displayAvatarURL();
+
+      const embed = new EmbedBuilder()
+        .setDescription(
+          `**Thank you <@${botlistuser}> for voting for <@${botlistbot}> on [Botlist.me](https://botlist.me/bots/${botlistbot}/vote) <:_:1227425669642719282>** \nYou can vote again <t:${voteAvailableTimestamp}:R>.`
+        )
+        .setColor("#FF00EA")
+        .setThumbnail(userAvatarURL)
+        .setTimestamp();
+
+      try {
+        const channel = await client.channels.fetch("1224815141921624186");
+        if (!channel || channel.type !== ChannelType.GuildText) {
+          return res
+            .status(400)
+            .send("Channel not found or is not a text channel");
+        }
+
+        await channel.send({ embeds: [embed] });
+        res.status(200).send("Success!");
+      } catch (error) {
+        console.error("Error sending message to Discord:", error);
+        res.status(500).send("Internal Server Error");
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching user from Discord:", error);
+      res.status(500).send("Internal Server Error");
+    });
+});
+
 app.post(
   "/github",
   express.json({ type: "application/json" }),
@@ -212,9 +266,11 @@ app.post(
             }**`
         )
         .join("\n");
-      const title = `${commitCount} New ${data.repository.name} ${commitCount > 1 ? 'Commits' : 'Commit'}`;
-      const fieldname = `${commitCount > 1 ? 'Commits' : 'Commit'}`
-    
+      const title = `${commitCount} New ${data.repository.name} ${
+        commitCount > 1 ? "Commits" : "Commit"
+      }`;
+      const fieldname = `${commitCount > 1 ? "Commits" : "Commit"}`;
+
       embed
         .setColor("#FF00EA")
         .setAuthor({
@@ -222,7 +278,7 @@ app.post(
           iconURL: `https://cdn.discordapp.com/emojis/1226912165982638174.png`,
           url: `https://github.com/${data.pusher.name}`,
         })
-        .setTitle(title) 
+        .setTitle(title)
         .setTimestamp()
         .addFields({ name: fieldname, value: commitMessages });
     } else if (githubEvent === "star" && data.action === "created") {
