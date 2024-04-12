@@ -1,5 +1,6 @@
 require("dotenv").config();
-const { token, databaseToken, topggToken, botlisttoken, botlistauth } = process.env;
+const { token, databaseToken, topggToken, botlisttoken, botlistauth } =
+  process.env;
 const { connect } = require("mongoose");
 const {
   Client,
@@ -91,10 +92,9 @@ ap.on("posted", () => {
 });
 
 const botlistme = new BotlistMeClient(botlisttoken, client);
-botlistme.on('posted', () => {
-  console.log('Server count posted!');
-})
-
+botlistme.on("posted", () => {
+  console.log("Server count posted!");
+});
 
 const commandsPath = "./src/commands";
 const clientId = "1101256478632972369";
@@ -203,8 +203,8 @@ app.post("/topgg-votes", async (req, res) => {
 });
 
 app.post("/botlist-votes", async (req, res) => {
-  if (req.header('Authorization') != botlistauth ) {
-    return res.status("401").end(); 
+  if (req.header("Authorization") != botlistauth) {
+    return res.status("401").end();
   }
 
   let botlistuser = req.body.user;
@@ -290,6 +290,86 @@ app.post(
         .setTimestamp();
     } else if (githubEvent === "star" && data.action === "deleted") {
       console.log(`${data.sender.login} removed their star ;-;`);
+    } else if (githubEvent === "pull" && data.action === "opened") {
+      const title = `New Pull Requested opened for ${data.repository.name}`;
+      embed
+        .setColor("#FF00EA")
+        .setAuthor({
+          name: `${data.user.name}`,
+          iconURL: `https://cdn.discordapp.com/emojis/1226912165982638174.png`,
+          url: `https://github.com/${data.user.name}`,
+        })
+        .setTitle(title)
+        .setTimestamp();
+    } else if (githubEvent === "pull" && data.action === "edited") {
+      const title = `Pull Request Edited for ${data.repository.name}: #${data.pull_request.number}`;
+      embed
+        .setColor("#FF00EA")
+        .setAuthor({
+          name: `${data.user.login}`,
+          iconURL: `https://cdn.discordapp.com/emojis/1226912165982638174.png`,
+          url: `https://github.com/${data.user.login}`,
+        })
+        .setTitle(title)
+        .setDescription(
+          `**Title**: ${data.pull_request.title}\n**Description**: ${data.pull_request.body}`
+        )
+        .setTimestamp();
+    } else if (githubEvent === "pull" && data.action === "synchronize") {
+      const title = `New Commits Added to Pull Request for ${data.repository.name}: #${data.pull_request.number}`;
+      const commitMessages = data.commits.map(
+        (commit) =>
+          `[\`${commit.id.slice(0, 7)}\`](${commit.url}) - **${
+            commit.message
+          }**`
+      );
+      const fieldname = "Commit";
+      embed
+        .setColor("#FF00EA")
+        .setAuthor({
+          name: `${data.user.login}`,
+          iconURL: `https://cdn.discordapp.com/emojis/1226912165982638174.png`,
+          url: `https://github.com/${data.user.login}`,
+        })
+        .setTitle(title)
+        .addFields({ name: fieldname, value: commitMessages })
+        .setTimestamp();
+    } else if (
+      githubEvent === "pull" &&
+      data.action === "closed" &&
+      data.pull_request.merged
+    ) {
+      const title = `Pull Request Merged for ${data.repository.name}: #${data.pull_request.number}`;
+      embed
+        .setColor("#FF00EA")
+        .setAuthor({
+          name: `${data.user.login}`,
+          iconURL: `https://cdn.discordapp.com/emojis/1226912165982638174.png`,
+          url: `https://github.com/${data.user.login}`,
+        })
+        .setTitle(title)
+        .setDescription(
+          `**Merged by**: ${data.pull_request.merged_by.login}\n**Total Commits**: ${data.pull_request.commits}\n**Merge Commit**: ${data.pull_request.merge_commit_sha}`
+        )
+        .setTimestamp();
+    } else if (
+      githubEvent === "pull" &&
+      data.action === "closed" &&
+      !data.pull_request.merged
+    ) {
+      const title = `Pull Request Closed without Merging for ${data.repository.name}: #${data.pull_request.number}`;
+      embed
+        .setColor("#FF00EA")
+        .setAuthor({
+          name: `${data.user.login}`,
+          iconURL: `https://cdn.discordapp.com/emojis/1226912165982638174.png`,
+          url: `https://github.com/${data.user.login}`,
+        })
+        .setTitle(title)
+        .setDescription(
+          "This pull request has been closed without being merged."
+        )
+        .setTimestamp();
     } else {
       console.log(`Unhandled event: ${githubEvent}`);
       return;
