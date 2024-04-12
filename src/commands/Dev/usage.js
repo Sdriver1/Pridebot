@@ -1,3 +1,25 @@
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const CommandUsage = require("../../../mongo/models/usageSchema");
+const { devUsers } = require("../../config/ids/devId");
+const { supportUsers } = require("../../config/ids/supportId");
+
+module.exports = {
+  data: new SlashCommandBuilder()
+    .setName("usage")
+    .setDescription("See how many times commands are used")
+    .addBooleanOption((option) =>
+      option
+        .setName("public")
+        .setDescription("Set to true to make the response visible to everyone")
+        .setRequired(false)
+    )
+    .addStringOption((option) =>
+      option
+        .setName("amount")
+        .setDescription("Select how many commands you want to see (1-25)")
+        .setRequired(false)
+    ),
+  
 async execute(interaction, client) {
   if (!devUsers.has(interaction.user.id) && !supportUsers.has(interaction.user.id)) {
     await interaction.reply({
