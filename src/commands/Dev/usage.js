@@ -34,11 +34,12 @@ module.exports = {
 
     let amount = interaction.options.getString("amount");
     amount = amount ? Math.min(Math.max(parseInt(amount, 10), 1), 25) : 24;
-    const allUsages = await CommandUsage.find({});
+
+    const allUsages = await CommandUsage.find({}).sort({ count: -1 });
     const totalUsage = allUsages.reduce((acc, cmd) => acc + cmd.count, 0);
-    const topUsages = await CommandUsage.find({})
-      .sort({ count: -1 })
-      .limit(amount);
+
+    const topUsages = allUsages.slice(0, amount);
+    const otherUsages = allUsages.slice(amount);
 
     const topUsageCount = topUsages.reduce((acc, cmd) => acc + cmd.count, 0);
     const otherCommandsCount = totalUsage - topUsageCount;
@@ -64,9 +65,18 @@ module.exports = {
     });
 
     if (otherCommandsCount > 0) {
+      let otherCommandsDetail = otherUsages
+        .map(
+          (cmd) =>
+            `${cmd.commandName}: ${cmd.count} times (${(
+              (cmd.count / totalUsage) *
+              100
+            ).toFixed(2)}%)`
+        )
+        .join("\n");
       usageEmbed.addFields({
         name: `Other commands`,
-        value: `${otherCommandsCount} times (${otherPercentage}%)`,
+        value: otherCommandsDetail,
         inline: false,
       });
     }
