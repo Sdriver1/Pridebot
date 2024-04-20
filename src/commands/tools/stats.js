@@ -83,7 +83,7 @@ module.exports = {
       const botstats = `**Servers:** \`${currentGuildCount}\` \n**Users:** \`${formattedTotalUserCount}\``;
       const commandstats = `**Commands:** \`${CommandsCount}\` \n**Total Usage:** \`${totalUsage}\` \n**Profiles:** \`${profileAmount}\``;
       const botversion = `**Dev:** \`2.${commitTens}.${commitOnes}\` \n **Node.js:** \`${process.version}\` \n **Discord.js:** \`v14.14.1\``;
-      const clientstats = `**CPU:** ${cpuPercent}% / 100 \n**Memory:** ${memoryUsage} / 6 GB`;
+      const clientstats = `**CPU:** \`${cpuPercent}% / 100%\` \n**Memory:** \`${memoryUsage} / 6 GB\``;
 
       const embed = new EmbedBuilder()
         .setDescription(
