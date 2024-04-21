@@ -116,7 +116,7 @@ module.exports = {
         {
           name: "Useful links",
           value:
-            "<:Ic_Pridebot_logo:1108228682184654908> [**Website**](https://pridebot.xyz/) \n<:Ic_Pridebot_discord:1108417509624926228> [**Support Server**](https://discord.gg/guybqSTzdS) \n🔗 [**Bot Invite**](https://discord.com/api/oauth2/authorize?client_id=1101256478632972369&permissions=415001594945&scope=bot%20applications.commands) \n<:Ic_Pridebot_git:1110925802041774151> [**Github Repo**](https://github.com/Sdriver1/Pridebot) \n<:_:1198663251580440697> [**Wumpus Store**](https://wumpus.store/bot/1101256478632972369/vote) \n<:_:1195866944482590731> [**Top.gg**](https://top.gg/bot/1101256478632972369?s=0bed0f7e006a2)",
+            "<:Ic_Pridebot_logo:1108228682184654908> [**Website**](https://pridebot.xyz/) \n<:Ic_Pridebot_discord:1108417509624926228> [**Support Server**](https://pridebot.xyz/support) \n🔗 [**Bot Invite**](https://pridebot.xyz/invite) \n<:Ic_Pridebot_git:1110925802041774151> [**Github Repo**](https://github.com/Sdriver1/Pridebot) \n<:_:1198663251580440697> [**Wumpus Store**](https://wumpus.store/bot/1101256478632972369/vote) \n<:_:1195866944482590731> [**Top.gg**](https://top.gg/bot/1101256478632972369?s=0bed0f7e006a2)",
           inline: true,
         }
       );
