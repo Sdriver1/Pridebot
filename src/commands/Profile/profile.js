@@ -503,6 +503,12 @@ module.exports = {
       const scoreupdate = await scanText(preferredName || bio);
 
       if (preferredName && containsDisallowedContent(preferredName, username)) {
+        await sendFlagNotification(
+          interaction,
+          preferredName,
+          subcommand,
+          "Preferred Name"
+        );
         return interaction.reply({
           content: "The preferred name contains disallowed content.",
           ephemeral: true,
@@ -510,6 +516,7 @@ module.exports = {
       }
 
       if (bio && containsDisallowedContent(bio, username)) {
+        await sendFlagNotification(interaction, bio, subcommand, "Bio");
         return interaction.reply({
           content: "The bio contains disallowed content.",
           ephemeral: true,
@@ -527,6 +534,14 @@ module.exports = {
                 2
               )}% \nContent: "${preferredName || bio}"`
             )
+          );
+          await sendToxicNotification(
+            interaction,
+            toxicity,
+            insult,
+            preferredName,
+            bio,
+            subcommand
           );
           return interaction.reply({
             content:
@@ -629,6 +644,12 @@ module.exports = {
       const scoresetup = await scanText(preferredName || bio);
 
       if (preferredName && containsDisallowedContent(preferredName, username)) {
+        await sendFlagNotification(
+          interaction,
+          preferredName,
+          subcommand,
+          "Preferred Name"
+        );
         return interaction.reply({
           content: "The preferred name contains disallowed content.",
           ephemeral: true,
@@ -636,6 +657,7 @@ module.exports = {
       }
 
       if (bio && containsDisallowedContent(bio, username)) {
+        await sendFlagNotification(interaction, bio, subcommand, "Bio");
         return interaction.reply({
           content: "The bio contains disallowed content.",
           ephemeral: true,
@@ -653,6 +675,14 @@ module.exports = {
                 2
               )}% \nContent: "${preferredName || bio}"`
             )
+          );
+          await sendToxicNotification(
+            interaction,
+            toxicity,
+            insult,
+            preferredName,
+            bio,
+            subcommand
           );
           return interaction.reply({
             content:
@@ -724,3 +754,72 @@ module.exports = {
     }
   },
 };
+
+async function sendFlagNotification(
+  interaction,
+  flaggedContent,
+  subcommand,
+  contentType
+) {
+  const embed = new EmbedBuilder()
+    .setColor("#FF00EA")
+    .setTitle("<:_:1201388588949061642> Flagged Content Detected")
+    .addFields(
+      { name: "Username", value: interaction.user.tag, inline: true },
+      { name: "User ID", value: interaction.user.id, inline: true },
+      { name: "Command", value: subcommand, inline: true },
+      { name: "Content Type", value: contentType, inline: true },
+      { name: "Flagged Content", value: `||${flaggedContent}||`, inline: true }
+    )
+    .setTimestamp();
+
+  const alertChannel = await interaction.client.channels.fetch(
+    "1231591223337160715"
+  );
+  if (alertChannel) {
+    alertChannel.send({ embeds: [embed] });
+  }
+}
+
+async function sendToxicNotification(
+  interaction,
+  toxicity,
+  insult,
+  preferredName,
+  bio,
+  subcommand
+) {
+  const embed = new EmbedBuilder()
+    .setColor("#FF00EA")
+    .setTitle("<:_:1201388588949061642> Toxic/Insult Content Detected")
+    .addFields(
+      { name: "Username", value: interaction.user.tag, inline: true },
+      { name: "User ID", value: interaction.user.id, inline: true },
+      { name: "_ _", value: `_ _`, inline: true },
+      { name: "Command", value: subcommand, inline: true },
+      {
+        name: "Flagged Content",
+        value: `||${preferredName || bio}||`,
+        inline: true,
+      },
+      { name: "_ _", value: `_ _`, inline: true },
+      {
+        name: "Toxicity Score",
+        value: `Toxicity: ${(toxicity * 100).toFixed(2)}%`,
+        inline: true,
+      },
+      {
+        name: "Insult Score",
+        value: `Insult: ${(insult * 100).toFixed(2)}%`,
+        inline: true,
+      }
+    )
+    .setTimestamp();
+
+  const alertChannel = await interaction.client.channels.fetch(
+    "1231591223337160715"
+  );
+  if (alertChannel) {
+    alertChannel.send({ embeds: [embed] });
+  }
+}
