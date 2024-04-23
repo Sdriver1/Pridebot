@@ -40,7 +40,7 @@ module.exports = {
         emoji: "1108822823721521242",
         info: {
           title: "Pride Commands",
-          description: `</asexual:1216214492917010495> - Learn about term "asexual" and some brief history \n</bisexual:1183503172036206632> - Learn about term "bisexual" and some brief history \n</gay:1183468824478089246> - Learn about term "gay" and some brief history \n</lesbian:1183468824478089247> - Learn about term "lesbian" and some brief history \n</nonbinary:1183503172036206633> Learn about term "non-binary" and some brief history \n</pansexual:1183503172036206634> - Learn about term "pansexual" and some brief history \n</queer:1196149039431962644> - Learn about term "queer" and some brief history \n</transgender:1183503172036206636> - Learn about term "transgender" and some brief history `,
+          description: `</asexual:1216214492917010495> - Learn about term "asexual" and some brief history \n</bisexual:1183503172036206632> - Learn about term "bisexual" and some brief history \n</gay:1183468824478089246> - Learn about term "gay" and some brief history \n</genderfluid:1183503172036206632> - Learn about term "genderfluid" and some brief history \n</lesbian:1183468824478089247> - Learn about term "lesbian" and some brief history \n</nonbinary:1183503172036206633> Learn about term "non-binary" and some brief history \n</pansexual:1183503172036206634> - Learn about term "pansexual" and some brief history \n</queer:1196149039431962644> - Learn about term "queer" and some brief history \n</transgender:1183503172036206636> - Learn about term "transgender" and some brief history `,
         },
       },
       {
@@ -103,7 +103,7 @@ module.exports = {
     const embed = new EmbedBuilder()
       .setTitle(`Pridebot Help`)
       .setDescription(
-        `Pridebot, developed by <@691506668781174824>, is a unique LGBTQIA themed bot designed to provide creditble and accurate information on LGBTQIA+ identities and terms but also to help users with discovering them through resources and interact commands. Pridebot offers a range of topics including different sexual orientations, gender identities, pronouns, and the intricate aspects of the LGBTQ community. Including the educational ascept, Pridebot also offers fun and cool commands like gaydar or profiles to help others learn about you. Thank you for using Pridebot ❤️`
+        `Pridebot, developed by <@691506668781174824>, is a unique LGBTQIA themed bot designed to provide creditble and accurate information on LGBTQIA+ identities and terms but also to help users with discovering them through resources and interact commands. Pridebot offers a range of topics including different sexual orientations, gender identities, pronouns, and the intricate aspects of the LGBTQ community. Including the educational ascept, Pridebot also offers fun and cool commands like gaydar or profiles to help others learn about you. Thank you for using Pridebot :heart:`
       )
       .setColor(0xff00ae)
       .addFields(
@@ -116,7 +116,7 @@ module.exports = {
         {
           name: "Useful links",
           value:
-            "<:Ic_Pridebot_logo:1108228682184654908> [**Website**](https://pridebot.xyz/) \n<:Ic_Pridebot_discord:1108417509624926228> [**Support Server**](https://pridebot.xyz/support) \n🔗 [**Bot Invite**](https://pridebot.xyz/invite) \n<:Ic_Pridebot_git:1110925802041774151> [**Github Repo**](https://github.com/Sdriver1/Pridebot) \n<:_:1198663251580440697> [**Wumpus Store**](https://wumpus.store/bot/1101256478632972369/vote) \n<:_:1195866944482590731> [**Top.gg**](https://top.gg/bot/1101256478632972369?s=0bed0f7e006a2)",
+            "<:Ic_Pridebot_logo:1108228682184654908> [**Website**](https://pridebot.xyz/) \n<:Ic_Pridebot_discord:1108417509624926228> [**Support Server**](https://pridebot.xyz/support) \n:link: [**Bot Invite**](https://pridebot.xyz/invite) \n<:Ic_Pridebot_git:1110925802041774151> [**Github Repo**](https://github.com/Sdriver1/Pridebot) \n<:_:1198663251580440697> [**Wumpus Store**](https://wumpus.store/bot/1101256478632972369/vote) \n<:_:1195866944482590731> [**Top.gg**](https://top.gg/bot/1101256478632972369?s=0bed0f7e006a2)",
           inline: true,
         }
       );

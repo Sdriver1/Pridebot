@@ -16,7 +16,7 @@ module.exports = {
       )
     );
     const embed = new EmbedBuilder()
-      .setTitle(`Bisexual!`)
+      .setTitle(`<:_:1108823482856382474> Bisexual!`)
       .setDescription(`Here is some facts on "bisexual/biromatic"`)
       .setColor(0xff00ae)
       .setFields(
@@ -29,7 +29,7 @@ module.exports = {
           value: `Bisexuality has been acknowledged in various cultures throughout history, but the term itself gained prominence in the 20th century. The bisexual rights movement gained momentum in the late 20th century, striving for acceptance and equal rights within the broader LGBTQ+ community and society.`,
         },
         {
-          name: `<:Pridebot_flag_bi:1108823482856382474> The Flag`,
+          name: `The Flag`,
           value: `The bisexual pride flag was designed by Michael Page in 1998 to give the bisexual community its own symbol comparable to the gay pride flag. The flag features three horizontal stripes: pink at the top for same-sex attraction, blue at the bottom for different-sex attraction, and an overlapping purple stripe in the middle representing attraction to both sexes.`,
         },
         {

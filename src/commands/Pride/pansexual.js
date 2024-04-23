@@ -16,7 +16,7 @@ module.exports = {
       )
     );
     const embed = new EmbedBuilder()
-      .setTitle(`Pansexuality!`)
+      .setTitle(`<:_:1108823338949812355> Pansexual!`)
       .setDescription(`Here are some facts on "pansexual/panromantic"`)
       .setColor(0xff00ae)
       .setFields(
@@ -29,7 +29,7 @@ module.exports = {
           value: `The word “pansexual” comes from the Greek prefix “pan” meaning “all”. The concept emerged in the early 20th century and gained more recognition recently. Pansexuality is distinct from bisexuality; while bisexuality refers to attraction to two genders, pansexuality includes all gender identities, forming a part of the broader LGBTQ+ rights movement.`,
         },
         {
-          name: `<:Pridebot_flag_pan:1108823338949812355> The Flag`,
+          name: `The Flag`,
           value: `The pansexual pride flag, created around 2010, features pink, yellow, and blue stripes. It was designed to differentiate from the bisexuality flag. Pink represents attraction to those who identify as female, yellow for attraction to genderqueer, non-binary, agender, androgynous people, or those not on the male-female binary, and blue for attraction to those who identify as male.`,
         },
         {

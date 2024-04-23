@@ -16,7 +16,7 @@ module.exports = {
       )
     );
     const embed = new EmbedBuilder()
-      .setTitle(`Transgender!`)
+      .setTitle(`<:_:1112201010509795348> Transgender!`)
       .setDescription(`Here are some facts on "transgender"`)
       .setColor(0xff00ae)
       .setFields(
@@ -29,7 +29,7 @@ module.exports = {
           value: `Transgender people have been part of every culture and society throughout history. The term "transgender" itself emerged in the mid-20th century, but diverse gender expressions have existed globally for centuries. From the Hijras of India to the Two-Spirit individuals in Indigenous North American cultures, transgender and non-binary identities have always been a part of human history. Modern transgender activism began gaining momentum in the mid-20th century, with pivotal events like the Stonewall Riots of 1969 playing a significant role in the fight for transgender rights.`,
         },
         {
-          name: `<:Pridebot_flag_tg:1112201010509795348> The Flag`,
+          name: `The Flag`,
           value: `The transgender pride flag, crafted by transgender activist Monica Helms in 1999, is a powerful symbol of the community's diversity and resilience. First unveiled at a pride parade in Phoenix in 2000, it has since become an emblem of transgender visibility and pride worldwide. The flag features five horizontal stripes: two light blue representing the traditional color for boys, two pink symbolizing girls, and a white stripe in the center for those who are intersex, transitioning, or identify outside the traditional gender binary. This flag has flown in significant places, including the Castro District and the White House, especially during moments of remembrance and pride celebrations.`,
         },
         {

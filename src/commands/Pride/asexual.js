@@ -16,7 +16,7 @@ module.exports = {
       )
     );
     const embed = new EmbedBuilder()
-      .setTitle(`Asexual!`)
+      .setTitle(`<:_:1108870840709288111> Asexual!`)
       .setDescription(`Here are some facts about "asexuality/aromantic"`)
       .setColor(0x9b59b6)
       .setFields(
@@ -29,7 +29,7 @@ module.exports = {
           value: `The visibility and understanding of asexuality have grown significantly in the 21st century, though the concept has existed in various forms throughout history. The asexual community has sought to gain recognition within the broader LGBTQ+ movement, highlighting the importance of understanding and respecting different experiences of attraction. Aromanticism, similarly, has gained more recognition as conversations about the spectrum of romantic attraction have evolved.`,
         },
         {
-          name: `<:_:1108870840709288111> The Flag`,
+          name: `The Flag`,
           value: `The asexual pride flag consists of four horizontal stripes: black for asexuality, gray for the gray-ace and demisexual community, white for allies, and purple for community. The aromantic community also has a flag with green, light green, white, gray, and black stripes, symbolizing the aromantic spectrum.`,
         },
         {

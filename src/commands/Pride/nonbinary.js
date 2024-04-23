@@ -18,7 +18,7 @@ module.exports = {
       )
     );
     const embed = new EmbedBuilder()
-      .setTitle(`Non-binary`)
+      .setTitle(`<:_:1112196445064413194> Non-binary`)
       .setDescription(`Here are some facts on "non-binary"`)
       .setColor(0xff00ae)
       .setFields(
@@ -31,7 +31,7 @@ module.exports = {
           value: `The recognition of non-binary genders has a long history across different cultures, such as the "Two-Spirit" people in some Indigenous North American cultures. In recent times, the non-binary identity has gained more visibility as societies increasingly acknowledge gender diversity beyond the binary framework.`,
         },
         {
-          name: `<:Pridebot_flag_nb:1112196445064413194> The Flag`,
+          name: `The Flag`,
           value: `The non-binary pride flag, created in 2014 by activist Kye Rowan, features four horizontal stripes: yellow, white, purple, and black. Each color holds significance: yellow represents genders outside the binary, white for non-binary people who also identify as transgender, purple as a mix of traditional male and female colors, and black for those who identify as having no gender.`,
         },
         {
