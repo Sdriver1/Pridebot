@@ -36,26 +36,18 @@ module.exports = {
         info: {
           title: "Overview of Dissociative Systems",
           description:
-            "Dissociative systems refer to the presence of multiple, distinct identities or personality states, known as alters, within one individual. This complex psychological condition often develops as a protective mechanism in response to severe trauma, typically during early childhood.",
+            "Dissociative systems describe the experience of having multiple, distinct identities or personality states, known as alters, within a single individual. This is a complex psychological condition that primarily arises as a response to severe trauma, often during early childhood. It's a protective mechanism, allowing individuals to distance themselves from experiences of trauma.",
 
-          title2: "Dissociative Identity Disorder (DID)",
+          title2: "DID and OSDD-1(1a/1b)",
           description2:
-            "DID is characterized by the presence of two or more distinct personality states accompanied by an inability to recall personal information beyond normal forgetfulness. These gaps in memory are often related to traumatic events, leading to significant distress or impairment.",
+            "DID is characterized by the presence of two or more distinct personality states accompanied by an inability to recall personal information beyond normal forgetfulness. These gaps in memory are often related to traumatic events, leading to significant distress or impairment \n\nOSDD is diagnosed when symptoms do not meet the full criteria for DID or other dissociative disorders but still cause significant distress or impairment. OSDD has two main subtypes: \nOSDD-1a is characterized by alters that may not have distinct identities or complete memory segregation. OSDD-1b involves distinct alters without amnesia for personal information. However, people with OSDD-1b may experience less typical forms of amnesia, such as emotional amnesia or greyouts, where memories may be present but feel distant or detached.",
 
-          title3: "Other Specified Dissociative Disorder (OSDD)",
+          title3: "Other Dissociative Conditions",
           description3:
-            "OSDD is diagnosed when symptoms do not meet the full criteria for DID or other dissociative disorders but still cause significant distress or impairment. OSDD has two main subtypes:",
-
-          title4: "OSDD-1a and OSDD-1b",
-          description4:
-            "OSDD-1a is characterized by alters that may not have distinct identities or complete memory segregation. OSDD-1b involves distinct alters without amnesia for personal information. However, people with OSDD-1b may experience less typical forms of amnesia, such as emotional amnesia or greyouts, where memories may be present but feel distant or detached.",
-
-          title5: "Other Dissociative Experiences",
-          description5:
             "Dissociative experiences can also include symptoms such as depersonalization, derealization, and dissociative fugue, which can occur within the context of other disorders or as standalone symptoms. It's essential to approach each individual's experiences uniquely and with understanding.",
 
-          title6: "Resources and Support",
-          description6:
+          title4: "Resources and Support",
+          description4:
             "For those seeking to understand or find support for dissociative systems, a variety of resources are available:",
           resources: [
             "[ISSTD – International Society for the Study of Trauma and Dissociation](https://www.isst-d.org/)",
@@ -179,14 +171,16 @@ module.exports = {
       },
     ];
 
-    const selectOptions = other.map((o) => ({
-      label: o.name,
-      description: o.description,
-      value: o.value,
-    }));
+    const selectOptions = other.map((o) =>
+      new StringSelectMenuOptionBuilder()
+        .setLabel(o.name)
+        .setDescription(o.description)
+        .setValue(o.value)
+        .setEmoji(o.emoji)
+    );
 
     const selectMenu = new StringSelectMenuBuilder()
-      .setCustomId("select-other")
+      .setCustomId("otherSelect")
       .setPlaceholder("Choose other here")
       .addOptions(selectOptions);
 
@@ -194,14 +188,46 @@ module.exports = {
 
     const embed = new EmbedBuilder()
       .setTitle("Learn about other common lgbtq termology here")
-      .setDescription("Below are common lgbtq terms")
+      .setDescription(`Below are common lgbtq terms`)
       .addFields({
         name: "Others",
         value: other.map((o) => `<:_:${o.emoji}> **${o.name}**`).join("\n"),
         inline: true,
       })
-      .setColor(0xff00ae)
+      .setColor("#FF00AE")
       .setTimestamp();
+
+    function createOtherButtons(currentIndex) {
+      const components = [];
+
+      if (currentIndex > 0) {
+        const prevOther = other[currentIndex - 1];
+        const prevLabel = `${prevOther.name}`;
+        const prevEmoji = `${prevOther.emoji}`;
+
+        const prevButton = new ButtonBuilder()
+          .setLabel(prevLabel)
+          .setEmoji(prevEmoji)
+          .setStyle(ButtonStyle.Secondary)
+          .setCustomId(`other-${prevOther.value}`);
+        components.push(prevButton);
+      }
+
+      if (currentIndex < other.length - 1) {
+        const nextOther = other[currentIndex + 1];
+        const nextLabel = `${nextOther.name}`;
+        const nextEmoji = `${nextOther.emoji}`;
+
+        const nextButton = new ButtonBuilder()
+          .setLabel(nextLabel)
+          .setEmoji(nextEmoji)
+          .setStyle(ButtonStyle.Secondary)
+          .setCustomId(`other-${nextOther.value}`);
+        components.push(nextButton);
+      }
+
+      return components;
+    }
 
     await interaction.reply({ embeds: [embed], components: [row] });
 
@@ -210,32 +236,77 @@ module.exports = {
     });
 
     collector.on("collect", async (selectInteraction) => {
-      if (selectInteraction.customId !== "select-other") return;
+      if (selectInteraction.customId === "otherSelect") {
+        const selectedValue = selectInteraction.values[0];
+        const otherInfo = other.find((o) => o.value === selectedValue);
 
-      const selectedValue = selectInteraction.values[0];
-      const selectedOption = other.find((o) => o.value === selectedValue);
+        if (!otherInfo) {
+          console.error(`No information found for value: ${selectedValue}`);
+          await selectInteraction.reply({
+            content: "Sorry, an error occurred while fetching the information.",
+            ephemeral: true,
+          });
+          return;
+        }
 
-      if (!selectedOption) {
-        await selectInteraction.reply({
-          content: "No information found for the selected option.",
+        const currentIndex = other.indexOf(otherInfo);
+
+        const selectedEmbed = new EmbedBuilder().setColor(0xff00ae).addFields(
+          { name: otherInfo.info.title, value: otherInfo.info.description },
+          { name: otherInfo.info.title2, value: otherInfo.info.description2 },
+          { name: otherInfo.info.title3, value: otherInfo.info.description3 },
+          {
+            name: otherInfo.info.title4,
+            value: `${otherInfo.info.description4}\n${otherInfo.info.resources}`,
+          }
+        );
+
+        const buttons = createOtherButtons(currentIndex);
+        const updatedRow = new ActionRowBuilder().addComponents(buttons);
+
+        selectInteraction.reply({
+          embeds: [selectedEmbed],
+          components: [updatedRow],
           ephemeral: true,
         });
+      }
+    });
+
+    const buttonCollector = interaction.channel.createMessageComponentCollector(
+      {
+        componentType: ComponentType.BUTTON,
+        time: 60000,
+      }
+    );
+
+    buttonCollector.on("collect", (buttonInteraction) => {
+      const [, otherValue] = buttonInteraction.customId.split("-");
+      const selectedOtherIndex = other.findIndex((o) => o.value === otherValue);
+      const otherInfo = other[selectedOtherIndex];
+      if (!otherInfo) {
+        console.error(
+          `No other information found for index: ${selectedOtherIndex}`
+        );
         return;
       }
 
-      const optionEmbed = new EmbedBuilder()
-        .setTitle(selectedOption.info.title)
-        .setDescription(selectedOption.info.description)
-        .setColor(0xff00ae);
+      const updatedEmbed = new EmbedBuilder().setColor(0xff00ae).addFields(
+        { name: otherInfo.info.title, value: otherInfo.info.description },
+        { name: otherInfo.info.title2, value: otherInfo.info.description2 },
+        { name: otherInfo.info.title3, value: otherInfo.info.description3 },
+        {
+          name: otherInfo.info.title4,
+          value: `${otherInfo.info.description4}\n${otherInfo.info.resources}`,
+        }
+      );
 
-      if (selectedOption.info.resources) {
-        optionEmbed.addFields({
-          name: "Resources",
-          value: selectedOption.info.resources,
-        });
-      }
+      const updatedButtons = createOtherButtons(selectedOtherIndex);
+      const updatedRow = new ActionRowBuilder().addComponents(updatedButtons);
 
-      await selectInteraction.update({ embeds: [optionEmbed], components: [] });
+      buttonInteraction.update({
+        embeds: [updatedEmbed],
+        components: [updatedRow],
+      });
     });
   },
 };
