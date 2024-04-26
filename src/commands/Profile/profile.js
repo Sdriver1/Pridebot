@@ -419,6 +419,9 @@ module.exports = {
         if (devUsers.has(targetUser.id)) {
           badges.push("<:Ic_Pridebot_dev:1195877037034983515> ");
         }
+        if (oneYearUsers.has(targetUser.id)) {
+          badges.push("<:Ic_Pridebot_1y:1233274651153797120> ");
+        }
         if (supportUsers.has(targetUser.id)) {
           badges.push("<:Ic_Pridebot_support:1197399653109473301> ");
         }
@@ -428,9 +431,7 @@ module.exports = {
         if (partnerUsers.has(targetUser.id)) {
           badges.push("<:Ic_Pridebot_partner:1197394034310791272> ");
         }
-        if (oneYearUsers.has(targetUser.id)) {
-          badges.push("<:Ic_Pridebot_1y:1233274651153797120> ");
-        }
+
         badgeStr = badges.join("");
       }
 
