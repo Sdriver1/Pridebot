@@ -76,7 +76,7 @@ module.exports = {
       const totalUsage = usages.reduce((acc, cmd) => acc + cmd.count, 0);
       const startTimeTimestamp = `<t:${client.botStartTime}:f>`;
 
-      const ping = `**Ping**: \`${botping}ms\` \n**API Latency**: \`${client.ws.ping}\``;
+      const ping = `**Ping**: \`${botping}ms\` \n**API Latency**: \`${client.ws.ping}ms\``;
       const up = `\n**Uptime:** \`${formatUptime(
         process.uptime()
       )}\` \n**Start Time:** ${startTimeTimestamp}`;

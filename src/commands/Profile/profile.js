@@ -8,6 +8,7 @@ const { devUsers } = require("../../config/ids/devId");
 const { partnerUsers } = require("../../config/ids/partnerId");
 const { supportUsers } = require("../../config/ids/supportId");
 const { vipUsers } = require("../../config/ids/vipId");
+const { oneYearUsers } = require("../../config/ids/oneyearId");
 
 const {
   containsDisallowedContent,
@@ -427,7 +428,9 @@ module.exports = {
         if (partnerUsers.has(targetUser.id)) {
           badges.push("<:Ic_Pridebot_partner:1197394034310791272> ");
         }
-
+        if (oneYearUsers.has(targetUser.id)) {
+          badges.push("<:Ic_Pridebot_1y:1233274651153797120> ");
+        }
         badgeStr = badges.join("");
       }
 
