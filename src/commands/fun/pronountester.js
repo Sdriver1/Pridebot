@@ -68,7 +68,7 @@ module.exports = {
 
     const username = interaction.user.username;
     const scoreupdate = await scanText(
-        subject ||
+      subject ||
         object ||
         possessiveDeterminer ||
         possessivePronoun ||
@@ -131,7 +131,8 @@ module.exports = {
           )
         );
         return interaction.reply({
-          content: "One or more of your test have been flagged for high toxicity or insult.",
+          content:
+            "One or more of your test have been flagged for high toxicity or insult.",
           ephemeral: true,
         });
       }

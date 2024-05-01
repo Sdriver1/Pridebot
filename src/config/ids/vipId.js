@@ -7,6 +7,7 @@ const vipUsers = new Set([
   "1101256478632972369", // Pridebot
   "288897433805651968", // Austin
   "197794050823290880", // Cringe
+  "408529685916549120", // oppy
 ]);
 
 module.exports = { vipUsers };

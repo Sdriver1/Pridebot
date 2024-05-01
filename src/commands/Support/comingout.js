@@ -58,7 +58,7 @@ module.exports = {
           inline: true,
         },
         {
-          name: "YouTube Videos on coming",
+          name: "YouTube Videos on coming out",
           value:
             "**Advice for LGBTQ+ Teens** - [Watch Video](https://www.youtube.com/watch?v=RxK_gMk1qTk) \n**8 Coming Out Tips** - [Watch Video](https://www.youtube.com/watch?v=DbiXhMUwlJA) \n**Teen Coming Out Stories** - [Watch Video](https://www.youtube.com/watch?v=lhkuYGZyp_o)",
           inline: false,

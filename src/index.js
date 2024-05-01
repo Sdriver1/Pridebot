@@ -1,5 +1,6 @@
 require("dotenv").config();
-const { token, databaseToken, topggToken, botlisttoken, botlistauth } = process.env;
+const { token, databaseToken, topggToken, botlisttoken, botlistauth } =
+  process.env;
 const { connect } = require("mongoose");
 const {
   Client,
@@ -91,10 +92,9 @@ ap.on("posted", () => {
 });
 
 const botlistme = new BotlistMeClient(botlisttoken, client);
-botlistme.on('posted', () => {
-  console.log('Server count posted!');
-})
-
+botlistme.on("posted", () => {
+  console.log("Server count posted!");
+});
 
 const commandsPath = "./src/commands";
 const clientId = "1101256478632972369";
@@ -203,8 +203,8 @@ app.post("/topgg-votes", async (req, res) => {
 });
 
 app.post("/botlist-votes", async (req, res) => {
-  if (req.header('Authorization') != botlistauth ) {
-    return res.status("401").end(); 
+  if (req.header("Authorization") != botlistauth) {
+    return res.status("401").end();
   }
 
   let botlistuser = req.body.user;

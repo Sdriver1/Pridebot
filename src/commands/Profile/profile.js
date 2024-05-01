@@ -5,6 +5,7 @@ const Profile = require("../../../mongo/models/profileSchema");
 
 const { botUser } = require("../../config/ids/botId");
 const { devUsers } = require("../../config/ids/devId");
+const { donorUsers } = require("../../config/ids/donorId");
 const { partnerUsers } = require("../../config/ids/partnerId");
 const { supportUsers } = require("../../config/ids/supportId");
 const { vipUsers } = require("../../config/ids/vipId");
@@ -414,24 +415,26 @@ module.exports = {
       if (profile && profile.badgesVisible) {
         const badges = [];
         if (botUser.has(targetUser.id)) {
-          badges.push("<:Ic_Pridebot_logo:1108228682184654908> ");
+          badges.push("<:_:1108228682184654908> ");
         }
         if (devUsers.has(targetUser.id)) {
-          badges.push("<:Ic_Pridebot_dev:1195877037034983515> ");
+          badges.push("<:_:1195877037034983515> ");
         }
         if (oneYearUsers.has(targetUser.id)) {
-          badges.push("<:Ic_Pridebot_1y:1233274651153797120> ");
+          badges.push("<:_:1233274651153797120> ");
         }
         if (supportUsers.has(targetUser.id)) {
-          badges.push("<:Ic_Pridebot_support:1197399653109473301> ");
+          badges.push("<:_:1197399653109473301> ");
         }
         if (vipUsers.has(targetUser.id)) {
-          badges.push("<:Ic_Pridebot_verified:1197328938788204586> ");
+          badges.push("<:_:1197328938788204586> ");
         }
         if (partnerUsers.has(targetUser.id)) {
-          badges.push("<:Ic_Pridebot_partner:1197394034310791272> ");
+          badges.push("<:_:1197394034310791272> ");
         }
-
+        if (donorUsers.has(targetUser.id)) {
+          badges.push("<:_:1235074804726628465> ");
+        }
         badgeStr = badges.join("");
       }
 
