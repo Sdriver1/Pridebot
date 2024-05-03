@@ -13,6 +13,7 @@ const {
 const fs = require("fs");
 const { AutoPoster } = require("topgg-autoposter");
 const BotlistMeClient = require("botlist.me.js");
+const CommandUsage = require("../mongo/models/usageSchema.js");
 
 const botStartTime = Math.floor(Date.now() / 1000);
 
@@ -107,6 +108,7 @@ connect(databaseToken)
   .catch(console.error);
 
 const express = require("express");
+const cors = require("cors");
 const app = express();
 
 const port = 2610;
@@ -115,8 +117,39 @@ app.listen(port, () => {
   console.log(`API is running on port ${port}`);
 });
 
+async function getRegisteredCommandsCount(client) {
+  if (!client.application) {
+    console.error("Client application is not ready.");
+    return 0;
+  }
+  const commands = await client.application.commands.fetch();
+  return commands.size;
+}
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+
+app.get("/api/stats", cors(), async (req, res) => {
+  const currentGuildCount = client.guilds.cache.size;
+
+  let totalUserCount = 0;
+  client.guilds.cache.forEach((guild) => {
+      totalUserCount += guild.memberCount;
+  });
+
+  try {
+      const usages = await CommandUsage.find({}).sort({ count: -1 });
+      const totalUsage = usages.reduce((acc, cmd) => acc + cmd.count, 0);
+
+      const commandsCount = await getRegisteredCommandsCount(client) + 2;
+
+      res.json({ totalUserCount, currentGuildCount, totalUsage, commandsCount });
+  } catch (error) {
+      console.error("Failed to get API stats:", error);
+      res.status(500).send("Internal Server Error");
+  }
+});
 
 app.post("/wumpus-votes", async (req, res) => {
   let wumpususer = req.body.userId;
