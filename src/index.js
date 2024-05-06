@@ -14,6 +14,7 @@ const fs = require("fs");
 const { AutoPoster } = require("topgg-autoposter");
 const BotlistMeClient = require("botlist.me.js");
 const CommandUsage = require("../mongo/models/usageSchema.js");
+const ProfileData = require("../mongo/models/profileSchema.js");
 
 const botStartTime = Math.floor(Date.now() / 1000);
 
@@ -125,6 +126,18 @@ async function getRegisteredCommandsCount(client) {
   const commands = await client.application.commands.fetch();
   return commands.size;
 }
+/*
+const apiKeyAuth = (req, res, next) => {
+  const userApiKey = req.header('x-api-key');
+  const validApiKey = 'testing'; 
+  
+  if (userApiKey && userApiKey === validApiKey) {
+    next(); // Allow the request to proceed
+  } else {
+    res.status(401).json({ message: 'Unauthorized: Incorrect API Key' });
+  }
+};
+*/
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -135,19 +148,36 @@ app.get("/api/stats", cors(), async (req, res) => {
 
   let totalUserCount = 0;
   client.guilds.cache.forEach((guild) => {
-      totalUserCount += guild.memberCount;
+    totalUserCount += guild.memberCount;
   });
 
   try {
-      const usages = await CommandUsage.find({}).sort({ count: -1 });
-      const totalUsage = usages.reduce((acc, cmd) => acc + cmd.count, 0);
+    const usages = await CommandUsage.find({}).sort({ count: -1 });
+    const totalUsage = usages.reduce((acc, cmd) => acc + cmd.count, 0);
 
-      const commandsCount = await getRegisteredCommandsCount(client) + 2;
+    const commandsCount = (await getRegisteredCommandsCount(client)) + 2;
 
-      res.json({ totalUserCount, currentGuildCount, totalUsage, commandsCount });
+    res.json({ totalUserCount, currentGuildCount, totalUsage, commandsCount });
   } catch (error) {
-      console.error("Failed to get API stats:", error);
-      res.status(500).send("Internal Server Error");
+    console.error("Failed to get API stats:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.get("/api/profiles/:userId", cors(), async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const profile = await ProfileData.findOne({ userId: userId });
+
+    if (!profile) {
+      return res.status(404).json({ message: "Profile not found" });
+    }
+
+    res.json(profile);
+  } catch (error) {
+    console.error("Failed to retrieve profile:", error);
+    res.status(500).send("Internal Server Error");
   }
 });
 
