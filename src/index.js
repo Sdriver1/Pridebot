@@ -157,7 +157,9 @@ app.get("/api/stats", cors(), async (req, res) => {
 
     const commandsCount = (await getRegisteredCommandsCount(client)) + 2;
 
-    res.json({ totalUserCount, currentGuildCount, totalUsage, commandsCount });
+    const botuptime = botStartTime;
+
+    res.json({ totalUserCount, currentGuildCount, totalUsage, commandsCount, botuptime });
   } catch (error) {
     console.error("Failed to get API stats:", error);
     res.status(500).send("Internal Server Error");

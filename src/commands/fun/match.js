@@ -43,26 +43,19 @@ module.exports = {
       user2 = interaction.user;
     }
 
-    let compatibility;
-    if (utility_functions.chance(0.01)) {
-      compatibility = "∞";
-    } else if (utility_functions.chance(0.01)) {
-      compatibility = "0";
-    } else {
-      compatibility = Math.floor(Math.random() * 101);
-    }
-
     let description;
-    if (compatibility === "∞") {
+    if (utility_functions.chance(0.01)) {
       description = `<@${user1.id}> and <@${user2.id}> are **perfectly compatible**!`;
-    } else if (compatibility === "0") {
+    } else if (utility_functions.chance(0.01)) {
       description = `<@${user1.id}> and <@${user2.id}> are **not compatible at all**!`;
     } else {
-      description = `<@${user1.id}> and <@${user2.id}> are **${compatibility}%** compatible!`;
+      description = `<@${user1.id}> and <@${user2.id}> are **${Math.floor(
+        Math.random() * 101
+      )}%** compatible!`;
     }
 
     const user1name = user1.username;
-    const user2name = user2.username 
+    const user2name = user2.username;
 
     const embed = new EmbedBuilder()
       .setTitle(`How compatible is ${user1name} and ${user2name}?`)
