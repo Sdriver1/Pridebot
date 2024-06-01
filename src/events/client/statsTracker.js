@@ -1,5 +1,6 @@
 const { Client, ChannelType } = require("discord.js");
 const CommandUsage = require("../../../mongo/models/usageSchema");
+const Profile = require("../../../mongo/models/profileSchema");
 
 async function getRegisteredCommandsCount(client) {
   if (!client.application) {
@@ -16,23 +17,29 @@ const updateChannelName = async (client) => {
     (acc, guild) => acc + guild.memberCount,
     0
   );
-  const registeredCommandsCount = await getRegisteredCommandsCount(client) + 2;
+  const registeredCommandsCount =
+    (await getRegisteredCommandsCount(client)) + 2;
 
   const usages = await CommandUsage.find({}).sort({ count: -1 });
   const totalUsage = usages.reduce((acc, cmd) => acc + cmd.count, 0);
+
+  const profileAmount = await Profile.countDocuments();
 
   const newChannelName1 = `Guilds: ${guildsCount}`;
   const newChannelName2 = `Users: ${usersCount}`;
   const newChannelName3 = `# of Commands: ${registeredCommandsCount}`;
   const newChannelName4 = `Commands used: ${totalUsage}`;
+  const newChannelName5 = `Profiles: ${profileAmount}`;
   const channelId1 = "1152452882663227423";
   const channelId2 = "1152452919719903313";
   const channelId3 = "1152452950132805722";
   const channelID4 = "1221546215976603729";
+  const channelId5 = "1246264055388438700";
   const channel1 = client.channels.cache.get(channelId1);
   const channel2 = client.channels.cache.get(channelId2);
   const channel3 = client.channels.cache.get(channelId3);
   const channel4 = client.channels.cache.get(channelID4);
+  const channel5 = client.channels.cache.get(channelId5);
 
   if (channel1 && channel1.type === ChannelType.GuildVoice) {
     await channel1.setName(newChannelName1).catch(console.error);
@@ -45,6 +52,9 @@ const updateChannelName = async (client) => {
   }
   if (channel4 && channel4.type === ChannelType.GuildVoice) {
     await channel4.setName(newChannelName4).catch(console.error);
+  }
+  if (channel5 && channel5.type === ChannelType.GuildVoice) {
+    await channel5.setName(newChannelName5).catch(console.error);
   }
 };
 

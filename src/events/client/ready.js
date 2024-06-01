@@ -10,12 +10,23 @@ module.exports = {
         0
       );
       const formattedTotalUserCount = userCount.toLocaleString();
+      /*
       await client.user.setPresence({
         status: "online",
         activities: [
           {
             type: ActivityType.Watching,
             name: `over ${formattedTotalUserCount} LGBTQIA+ members`,
+          },
+        ],
+      });
+      */
+      await client.user.setPresence({
+        status: "online",
+        activities: [
+          {
+            type: ActivityType.Playing,
+            name: `Happy Pride Month to my ${formattedTotalUserCount} LGBTQIA+ users!`,
           },
         ],
       });
