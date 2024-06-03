@@ -15,5 +15,4 @@ const profileSchema = new mongoose.Schema({
   badgesVisible: { type: Boolean, default: true },
 });
 
-const Profile = mongoose.model("Profile", profileSchema);
-module.exports = Profile;
+module.exports = mongoose.model("Profile", profileSchema);
