@@ -249,21 +249,14 @@ app.use(cors());
 app.get("/api/stats", cors(), async (req, res) => {
   const currentGuildCount = client.guilds.cache.size;
 
-  const totalUserCount = client.guilds.cache.reduce(
-    (acc, guild) => acc + guild.memberCount,
-    0
-  );
+  let totalUserCount = 0;
+  client.guilds.cache.forEach((guild) => {
+    totalUserCount += guild.memberCount;
+  });
 
   try {
-    const usages = await CommandUsage.aggregate([
-      {
-        $group: {
-          _id: null,
-          totalUsage: { $sum: "$count" },
-        },
-      },
-    ]).exec();
-    const totalUsage = usages.length > 0 ? usages[0].totalUsage : 0;
+    const usages = await CommandUsage.find({}).sort({ count: -1 });
+    const totalUsage = usages.reduce((acc, cmd) => acc + cmd.count, 0);
 
     const commandsCount = (await getRegisteredCommandsCount(client)) + 2;
 
@@ -297,74 +290,134 @@ app.get("/api/profiles/:userId", cors(), async (req, res) => {
   }
 });
 
-async function handleVote(userId, botId, botListUrl, res) {
-  const user = await client.users.fetch(userId).catch(() => {});
-  if (!user) {
-    console.error("Error fetching user from Discord. User ID:", userId);
-    return res.status(500).send("Internal Server Error");
-  }
-
-  const channel = await client.channels
-    .fetch("1224815141921624186")
-    .catch(() => {});
-  if (!channel || channel.type !== ChannelType.GuildText) {
-    return res.status(400).send("Channel not found or is not a text channel");
-  }
-
-  await channel
-    .send({
-      embeds: [
-        new EmbedBuilder()
-          .setDescription(
-            `**Thank you <@${userId}> for voting for <@${botId}> on ${botListUrl} <:_:1198663251580440697>** \nYou can vote again <t:${
-              ~~(Date.now() / 1000) + 12 * 60 * 60
-            }:R>.`
-          )
-          .setColor("#FF00EA")
-          .setThumbnail(user.displayAvatarURL())
-          .setTimestamp(),
-      ],
-    })
-    .catch(console.error);
-
-  return res.status(200).send("Success!");
-}
-
 app.post("/wumpus-votes", async (req, res) => {
-  return handleVote(
-    req.body.userId,
-    req.body.botId,
-    "[Wumpus.Store](https://wumpus.store/bot/" +
-      req.body.botId +
-      '/vote "Opens wumpus.store in your browser.")',
-    res
-  );
+  let wumpususer = req.body.userId;
+  let wumpusbot = req.body.botId;
+  const voteCooldownHours = 12;
+  const voteCooldownSeconds = voteCooldownHours * 3600;
+  const currentTimestamp = Math.floor(Date.now() / 1000);
+  const voteAvailableTimestamp = currentTimestamp + voteCooldownSeconds;
+
+  client.users
+    .fetch(wumpususer)
+    .then(async (user) => {
+      const userAvatarURL = user.displayAvatarURL();
+
+      const embed = new EmbedBuilder()
+        .setDescription(
+          `**Thank you <@${wumpususer}> for voting for <@${wumpusbot}> on [Wumpus.Store](https://wumpus.store/bot/${wumpusbot}/vote) <:_:1198663251580440697>** \nYou can vote again <t:${voteAvailableTimestamp}:R>.`
+        )
+        .setColor("#FF00EA")
+        .setThumbnail(userAvatarURL)
+        .setTimestamp();
+
+      try {
+        const channel = await client.channels.fetch("1224815141921624186");
+        if (!channel || channel.type !== ChannelType.GuildText) {
+          return res
+            .status(400)
+            .send("Channel not found or is not a text channel");
+        }
+
+        await channel.send({ embeds: [embed] });
+        res.status(200).send("Success!");
+      } catch (error) {
+        console.error("Error sending message to Discord:", error);
+        res.status(500).send("Internal Server Error");
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching user from Discord:", error);
+      res.status(500).send("Internal Server Error");
+    });
 });
 
 app.post("/topgg-votes", async (req, res) => {
-  return handleVote(
-    req.body.user,
-    req.body.bot,
-    "[Top.gg](https://top.gg/bot/" +
-      req.body.botId +
-      '/vote "Opens top.gg in your browser.")',
-    res
-  );
+  let topgguserid = req.body.user;
+  let topggbotid = req.body.bot;
+  const voteCooldownHours = 12;
+  const voteCooldownSeconds = voteCooldownHours * 3600;
+  const currentTimestamp = Math.floor(Date.now() / 1000);
+  const voteAvailableTimestamp = currentTimestamp + voteCooldownSeconds;
+
+  client.users
+    .fetch(topgguserid)
+    .then(async (user) => {
+      const userAvatarURL = user.displayAvatarURL();
+
+      const embed = new EmbedBuilder()
+        .setDescription(
+          `**Thank you <@${topgguserid}> for voting for <@${topggbotid}> on [Top.gg](https://top.gg/bot/${topggbotid}/vote) <:_:1195866944482590731>** \nYou can vote again in <t:${voteAvailableTimestamp}:R>`
+        )
+        .setColor("#FF00EA")
+        .setThumbnail(userAvatarURL)
+        .setTimestamp();
+
+      try {
+        const channel = await client.channels.fetch("1224815141921624186");
+        if (!channel || channel.type !== ChannelType.GuildText) {
+          return res
+            .status(400)
+            .send("Channel not found or is not a text channel");
+        }
+
+        await channel.send({ embeds: [embed] });
+        res.status(200).send("Success!");
+      } catch (error) {
+        console.error("Error sending message to Discord:", error);
+        res.status(500).send("Internal Server Error");
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching user from Discord:", error);
+      res.status(500).send("Internal Server Error");
+    });
 });
 
 app.post("/botlist-votes", async (req, res) => {
-  if (req.header("Authorization") !== botlistauth) {
-    return res.status(401).send("Unauthorized");
+  if (req.header("Authorization") != botlistauth) {
+    return res.status("401").end();
   }
 
-  return handleVote(
-    req.body.user,
-    req.body.bot,
-    "[Botlist.me](https://botlist.me/bots/" +
-      req.body.botId +
-      '/vote "Opens botlist.me in your browser.")',
-    res
-  );
+  let botlistuser = req.body.user;
+  let botlistbot = req.body.bot;
+  const voteCooldownHours = 12;
+  const voteCooldownSeconds = voteCooldownHours * 3600;
+  const currentTimestamp = Math.floor(Date.now() / 1000);
+  const voteAvailableTimestamp = currentTimestamp + voteCooldownSeconds;
+
+  client.users
+    .fetch(botlistuser)
+    .then(async (user) => {
+      const userAvatarURL = user.displayAvatarURL();
+
+      const embed = new EmbedBuilder()
+        .setDescription(
+          `**Thank you <@${botlistuser}> for voting for <@${botlistbot}> on [Botlist.me](https://botlist.me/bots/${botlistbot}/vote) <:_:1227425669642719282>** \nYou can vote again <t:${voteAvailableTimestamp}:R>.`
+        )
+        .setColor("#FF00EA")
+        .setThumbnail(userAvatarURL)
+        .setTimestamp();
+
+      try {
+        const channel = await client.channels.fetch("1224815141921624186");
+        if (!channel || channel.type !== ChannelType.GuildText) {
+          return res
+            .status(400)
+            .send("Channel not found or is not a text channel");
+        }
+
+        await channel.send({ embeds: [embed] });
+        res.status(200).send("Success!");
+      } catch (error) {
+        console.error("Error sending message to Discord:", error);
+        res.status(500).send("Internal Server Error");
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching user from Discord:", error);
+      res.status(500).send("Internal Server Error");
+    });
 });
 
 app.post(
