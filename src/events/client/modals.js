@@ -29,8 +29,6 @@ module.exports = async (client, interaction) => {
 
       const webhook = new WebhookClient({ url: webhookUrl });
       await webhook.send({ embeds: [responseEmbed] });
-    } else if (interaction.customId === "suggestionModal") {
-      await handleSuggestionModal(client, interaction);
     } else {
       await interaction.editReply({
         content: "This action is not supported.",

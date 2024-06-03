@@ -1,7 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const CommandUsage = require("../../../mongo/models/usageSchema");
-const { devUsers } = require("../../config/ids/devId");
-const { supportUsers } = require("../../config/ids/supportId");
+const IDLists = require("../../../mongo/models/idSchema");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -21,10 +20,10 @@ module.exports = {
     ),
 
   async execute(interaction, client) {
-    if (
-      !devUsers.has(interaction.user.id) &&
-      !supportUsers.has(interaction.user.id)
-    ) {
+    const idLists = await IDLists.findOne();
+    const devUsers = idLists ? idLists.devs : [];
+
+    if (!devUsers.includes(interaction.user.id)) {
       await interaction.reply({
         content: "You do not have permission to use this command.",
         ephemeral: true,

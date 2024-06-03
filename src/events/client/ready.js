@@ -9,29 +9,29 @@ module.exports = {
         (acc, guild) => acc + guild.memberCount,
         0
       );
-      const formattedTotalUserCount = userCount.toLocaleString();
       /*
-      await client.user.setPresence({
-        status: "online",
-        activities: [
-          {
-            type: ActivityType.Watching,
-            name: `over ${formattedTotalUserCount} LGBTQIA+ members`,
-          },
-        ],
-      });
-      */
+            await client.user.setPresence({
+              status: "online",
+              activities: [
+                {
+                  type: ActivityType.Watching,
+                  name: `over ${formattedTotalUserCount} LGBTQIA+ members`,
+                },
+              ],
+            });
+            */
       await client.user.setPresence({
         status: "online",
         activities: [
           {
             type: ActivityType.Playing,
-            name: `Happy Pride Month to my ${formattedTotalUserCount} LGBTQIA+ users!`,
+            name: `Happy Pride Month to my ${userCount.toLocaleString()} LGBTQIA+ users!`,
           },
         ],
       });
     };
-    updatePresence();
-    setInterval(updatePresence, 300000);
+
+    await updatePresence();
+    setInterval(updatePresence, 300_000);
   },
 };

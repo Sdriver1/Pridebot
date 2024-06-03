@@ -1,12 +1,11 @@
 const { EmbedBuilder } = require("discord.js");
 
 module.exports = async (client, guild) => {
-  const channel = await client.channels.cache.get("1112590962867310602");
+  const channel = client.channels.cache.get("1112590962867310602");
   const name = guild.name;
   const serverID = guild.id;
   const memberCount = guild.memberCount;
   const ownerID = guild.ownerId;
-  const owner = await client.users.cache.get(ownerID);
 
   const currentGuildCount = client.guilds.cache.size;
   let totalUserCount = 0;

@@ -1,4 +1,4 @@
-const { Client, ChannelType } = require("discord.js");
+const { ChannelType } = require("discord.js");
 const CommandUsage = require("../../../mongo/models/usageSchema");
 const Profile = require("../../../mongo/models/profileSchema");
 
@@ -20,41 +20,46 @@ const updateChannelName = async (client) => {
   const registeredCommandsCount =
     (await getRegisteredCommandsCount(client)) + 2;
 
-  const usages = await CommandUsage.find({}).sort({ count: -1 });
-  const totalUsage = usages.reduce((acc, cmd) => acc + cmd.count, 0);
+  const usages = await CommandUsage.aggregate([
+    {
+      $group: {
+        _id: null,
+        totalUsage: { $sum: "$count" },
+      },
+    },
+  ]).exec();
+  const totalUsage = usages.length > 0 ? usages[0].totalUsage : 0;
 
   const profileAmount = await Profile.countDocuments();
 
-  const newChannelName1 = `Guilds: ${guildsCount}`;
-  const newChannelName2 = `Users: ${usersCount}`;
-  const newChannelName3 = `# of Commands: ${registeredCommandsCount}`;
-  const newChannelName4 = `Commands used: ${totalUsage}`;
-  const newChannelName5 = `Profiles: ${profileAmount}`;
-  const channelId1 = "1152452882663227423";
-  const channelId2 = "1152452919719903313";
-  const channelId3 = "1152452950132805722";
-  const channelID4 = "1221546215976603729";
-  const channelId5 = "1246264055388438700";
-  const channel1 = client.channels.cache.get(channelId1);
-  const channel2 = client.channels.cache.get(channelId2);
-  const channel3 = client.channels.cache.get(channelId3);
-  const channel4 = client.channels.cache.get(channelID4);
-  const channel5 = client.channels.cache.get(channelId5);
+  const channels = [
+    {
+      id: "1152452882663227423",
+      name: `Guilds: ${guildsCount}`,
+    },
+    {
+      id: "1152452919719903313",
+      name: `Users: ${usersCount}`,
+    },
+    {
+      id: "1152452950132805722",
+      name: `# of Commands: ${registeredCommandsCount}`,
+    },
+    {
+      id: "1221546215976603729",
+      name: `Commands used: ${totalUsage}`,
+    },
+    {
+      id: "1246264055388438700",
+      name: `Profiles: ${profileAmount}`,
+    },
+  ];
 
-  if (channel1 && channel1.type === ChannelType.GuildVoice) {
-    await channel1.setName(newChannelName1).catch(console.error);
-  }
-  if (channel2 && channel2.type === ChannelType.GuildVoice) {
-    await channel2.setName(newChannelName2).catch(console.error);
-  }
-  if (channel3 && channel3.type === ChannelType.GuildVoice) {
-    await channel3.setName(newChannelName3).catch(console.error);
-  }
-  if (channel4 && channel4.type === ChannelType.GuildVoice) {
-    await channel4.setName(newChannelName4).catch(console.error);
-  }
-  if (channel5 && channel5.type === ChannelType.GuildVoice) {
-    await channel5.setName(newChannelName5).catch(console.error);
+  for (const entry of channels) {
+    const channel = client.channels.cache.get(entry.id);
+    if (channel && channel.type === ChannelType.GuildVoice) {
+      await channel.setName(entry.name).catch(console.error);
+    }
   }
 };
 

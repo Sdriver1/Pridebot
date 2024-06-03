@@ -4,14 +4,7 @@ const {
   ApplicationCommandType,
 } = require("discord.js");
 const Profile = require("../../../mongo/models/profileSchema");
-
-const { botUser } = require("../../config/ids/botId");
-const { devUsers } = require("../../config/ids/devId");
-const { donorUsers } = require("../../config/ids/donorId");
-const { partnerUsers } = require("../../config/ids/partnerId");
-const { supportUsers } = require("../../config/ids/supportId");
-const { vipUsers } = require("../../config/ids/vipId");
-const { oneYearUsers } = require("../../config/ids/oneyearId");
+const IDLists = require("../../../mongo/models/idSchema");
 
 module.exports = {
   data: new ContextMenuCommandBuilder()
@@ -33,31 +26,23 @@ module.exports = {
       }
 
       const embedColor = profile.color || "#FF00EA";
+      const idLists = await IDLists.findOne();
       let badgeStr = "";
-      if (profile && profile.badgesVisible) {
-        const badges = [];
-        if (botUser.has(targetUserId)) {
-          badges.push("<:_:1108228682184654908> ");
+      if (profile && profile.badgesVisible && idLists) {
+        const badgesMap = {
+          bot: "<:_:1108228682184654908> ",
+          devs: "<:_:1195877037034983515> ",
+          oneyear: "<:_:1233274651153797120> ",
+          support: "<:_:1197399653109473301> ",
+          vips: "<:_:1197328938788204586> ",
+          partner: "<:_:1197394034310791272> ",
+          donor: "<:_:1235074804726628465> ",
+        };
+        for (const [key, value] of Object.entries(badgesMap)) {
+          if (idLists[key] && idLists[key].includes(targetUser.id)) {
+            badgeStr += value;
+          }
         }
-        if (devUsers.has(targetUserId)) {
-          badges.push("<:_:1195877037034983515> ");
-        }
-        if (oneYearUsers.has(targetUser.id)) {
-          badges.push("<:_:1233274651153797120> ");
-        }
-        if (supportUsers.has(targetUserId)) {
-          badges.push("<:_:1197399653109473301> ");
-        }
-        if (vipUsers.has(targetUserId)) {
-          badges.push("<:_:1197328938788204586> ");
-        }
-        if (partnerUsers.has(targetUserId)) {
-          badges.push("<:_:1197394034310791272> ");
-        }
-        if (donorUsers.has(targetUser.id)) {
-          badges.push("<:_:1235074804726628465> ");
-        }
-        badgeStr = badges.join("");
       }
 
       const pronounsValue = profile.pronouns || "Not set";

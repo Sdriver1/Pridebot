@@ -16,28 +16,18 @@ const BotlistMeClient = require("botlist.me.js");
 const CommandUsage = require("../mongo/models/usageSchema.js");
 const ProfileData = require("../mongo/models/profileSchema.js");
 
-const botStartTime = Math.floor(Date.now() / 1000);
-
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildBans,
-    GatewayIntentBits.GuildEmojisAndStickers,
-    GatewayIntentBits.GuildIntegrations,
-    GatewayIntentBits.GuildWebhooks,
-    GatewayIntentBits.GuildInvites,
-    GatewayIntentBits.GuildVoiceStates,
     GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.GuildMessageReactions,
     GatewayIntentBits.GuildMessageTyping,
     GatewayIntentBits.DirectMessages,
-    GatewayIntentBits.DirectMessageReactions,
     GatewayIntentBits.DirectMessageTyping,
   ],
 });
 client.commands = new Collection();
 client.commandArray = [];
-client.botStartTime = botStartTime;
+client.botStartTime = Math.floor(Date.now() / 1000);
 
 const functionFolders = fs.readdirSync(`./src/functions`);
 for (const folder of functionFolders) {
@@ -88,6 +78,119 @@ client.on("interactionCreate", async (interaction) => {
   }
 });
 
+client.on("messageCreate", async (message) => {
+  if (message.author.bot) return;
+
+  const mention = `<@${client.user.id}>`;
+  if (message.content.startsWith(mention)) {
+    console.log("Mentioned");
+
+    const args = message.content.slice(mention.length).trim().split(/ +/);
+    const commandName = args.shift().toLowerCase();
+    if (commandName === "id") {
+      const IDLists = require("../mongo/models/idSchema.js");
+
+      async function executeIDCommand(message, args) {
+        if (message.author.bot) return;
+
+        let idLists;
+        try {
+          idLists = await IDLists.findOne();
+        } catch (err) {
+          console.error(err);
+          message.channel.send("Error fetching ID lists.");
+          return;
+        }
+
+        if (!idLists.devs.includes(message.author.id)) {
+          message.channel.send("You do not have permission to edit the lists.");
+          return;
+        }
+
+        const subCommand = args[0];
+        const category = args[1];
+        const id = args[2];
+
+        if (
+          ![
+            "vips",
+            "devs",
+            "bot",
+            "donor",
+            "oneyear",
+            "partner",
+            "support",
+          ].includes(category)
+        ) {
+          message.channel.send(
+            "Invalid category. Please choose from vips, devs, bot, donor, oneyear, partner, or support."
+          );
+          return;
+        }
+
+        if (subCommand === "add") {
+          if (id) {
+            try {
+              if (!idLists[category].includes(id)) {
+                idLists[category].push(id);
+                await idLists.save();
+                console.log(`ID ${id} added to ${category}.`);
+                message.channel.send(`ID ${id} added to ${category}.`);
+              } else {
+                message.channel.send(`ID ${id} is already in ${category}.`);
+              }
+            } catch (err) {
+              console.error(err);
+              message.channel.send("Error adding ID.");
+            }
+          } else {
+            message.channel.send("Please provide an ID to add.");
+          }
+        }
+
+        if (subCommand === "remove") {
+          if (id) {
+            try {
+              if (idLists[category].includes(id)) {
+                idLists[category] = idLists[category].filter(
+                  (storedId) => storedId !== id
+                );
+                await idLists.save();
+                console.log(`ID ${id} removed from ${category}.`);
+                message.channel.send(`ID ${id} removed from ${category}.`);
+              } else {
+                message.channel.send(`ID ${id} is not in ${category}.`);
+              }
+            } catch (err) {
+              console.error(err);
+              message.channel.send("Error removing ID.");
+            }
+          } else {
+            message.channel.send("Please provide an ID to remove.");
+          }
+        }
+        setTimeout(() => {
+          message
+            .delete()
+            .catch((err) => console.error("Failed to delete message:", err));
+        }, 3000);
+      }
+
+      try {
+        await executeIDCommand(message, args);
+      } catch (error) {
+        console.error(error);
+        message.reply("There was an error trying to execute that command!");
+        setTimeout(() => {
+          message
+            .delete()
+            .catch((err) => console.error("Failed to delete message:", err));
+        }, 3000);
+      }
+    }
+  }
+});
+
 const ap = AutoPoster(topggToken, client);
 ap.on("posted", () => {
   console.log("Posted stats to Top.gg!");
@@ -129,8 +232,8 @@ async function getRegisteredCommandsCount(client) {
 /*
 const apiKeyAuth = (req, res, next) => {
   const userApiKey = req.header('x-api-key');
-  const validApiKey = 'testing'; 
-  
+  const validApiKey = 'testing';
+
   if (userApiKey && userApiKey === validApiKey) {
     next(); // Allow the request to proceed
   } else {
@@ -146,20 +249,33 @@ app.use(cors());
 app.get("/api/stats", cors(), async (req, res) => {
   const currentGuildCount = client.guilds.cache.size;
 
-  let totalUserCount = 0;
-  client.guilds.cache.forEach((guild) => {
-    totalUserCount += guild.memberCount;
-  });
+  const totalUserCount = client.guilds.cache.reduce(
+    (acc, guild) => acc + guild.memberCount,
+    0
+  );
 
   try {
-    const usages = await CommandUsage.find({}).sort({ count: -1 });
-    const totalUsage = usages.reduce((acc, cmd) => acc + cmd.count, 0);
+    const usages = await CommandUsage.aggregate([
+      {
+        $group: {
+          _id: null,
+          totalUsage: { $sum: "$count" },
+        },
+      },
+    ]).exec();
+    const totalUsage = usages.length > 0 ? usages[0].totalUsage : 0;
 
     const commandsCount = (await getRegisteredCommandsCount(client)) + 2;
 
-    const botuptime = botStartTime;
+    const botuptime = client.botStartTime;
 
-    res.json({ totalUserCount, currentGuildCount, totalUsage, commandsCount, botuptime });
+    res.json({
+      totalUserCount,
+      currentGuildCount,
+      totalUsage,
+      commandsCount,
+      botuptime,
+    });
   } catch (error) {
     console.error("Failed to get API stats:", error);
     res.status(500).send("Internal Server Error");
@@ -167,150 +283,88 @@ app.get("/api/stats", cors(), async (req, res) => {
 });
 
 app.get("/api/profiles/:userId", cors(), async (req, res) => {
-  const userId = req.params.userId;
-
   try {
-    const profile = await ProfileData.findOne({ userId: userId });
+    const profile = await ProfileData.findOne({ userId: req.params.userId });
 
     if (!profile) {
       return res.status(404).json({ message: "Profile not found" });
     }
 
-    res.json(profile);
+    return res.json(profile);
   } catch (error) {
     console.error("Failed to retrieve profile:", error);
-    res.status(500).send("Internal Server Error");
+    return res.status(500).send("Internal Server Error");
   }
 });
 
-app.post("/wumpus-votes", async (req, res) => {
-  let wumpususer = req.body.userId;
-  let wumpusbot = req.body.botId;
-  const voteCooldownHours = 12;
-  const voteCooldownSeconds = voteCooldownHours * 3600;
-  const currentTimestamp = Math.floor(Date.now() / 1000);
-  const voteAvailableTimestamp = currentTimestamp + voteCooldownSeconds;
+async function handleVote(userId, botId, botListUrl, res) {
+  const user = await client.users.fetch(userId).catch(() => {});
+  if (!user) {
+    console.error("Error fetching user from Discord. User ID:", userId);
+    return res.status(500).send("Internal Server Error");
+  }
 
-  client.users
-    .fetch(wumpususer)
-    .then(async (user) => {
-      const userAvatarURL = user.displayAvatarURL();
+  const channel = await client.channels
+    .fetch("1224815141921624186")
+    .catch(() => {});
+  if (!channel || channel.type !== ChannelType.GuildText) {
+    return res.status(400).send("Channel not found or is not a text channel");
+  }
 
-      const embed = new EmbedBuilder()
-        .setDescription(
-          `**Thank you <@${wumpususer}> for voting for <@${wumpusbot}> on [Wumpus.Store](https://wumpus.store/bot/${wumpusbot}/vote) <:_:1198663251580440697>** \nYou can vote again <t:${voteAvailableTimestamp}:R>.`
-        )
-        .setColor("#FF00EA")
-        .setThumbnail(userAvatarURL)
-        .setTimestamp();
-
-      try {
-        const channel = await client.channels.fetch("1224815141921624186");
-        if (!channel || channel.type !== ChannelType.GuildText) {
-          return res
-            .status(400)
-            .send("Channel not found or is not a text channel");
-        }
-
-        await channel.send({ embeds: [embed] });
-        res.status(200).send("Success!");
-      } catch (error) {
-        console.error("Error sending message to Discord:", error);
-        res.status(500).send("Internal Server Error");
-      }
+  await channel
+    .send({
+      embeds: [
+        new EmbedBuilder()
+          .setDescription(
+            `**Thank you <@${userId}> for voting for <@${botId}> on ${botListUrl} <:_:1198663251580440697>** \nYou can vote again <t:${
+              ~~(Date.now() / 1000) + 12 * 60 * 60
+            }:R>.`
+          )
+          .setColor("#FF00EA")
+          .setThumbnail(user.displayAvatarURL())
+          .setTimestamp(),
+      ],
     })
-    .catch((error) => {
-      console.error("Error fetching user from Discord:", error);
-      res.status(500).send("Internal Server Error");
-    });
+    .catch(console.error);
+
+  return res.status(200).send("Success!");
+}
+
+app.post("/wumpus-votes", async (req, res) => {
+  return handleVote(
+    req.body.userId,
+    req.body.botId,
+    "[Wumpus.Store](https://wumpus.store/bot/" +
+      req.body.botId +
+      '/vote "Opens wumpus.store in your browser.")',
+    res
+  );
 });
 
 app.post("/topgg-votes", async (req, res) => {
-  let topgguserid = req.body.user;
-  let topggbotid = req.body.bot;
-  const voteCooldownHours = 12;
-  const voteCooldownSeconds = voteCooldownHours * 3600;
-  const currentTimestamp = Math.floor(Date.now() / 1000);
-  const voteAvailableTimestamp = currentTimestamp + voteCooldownSeconds;
-
-  client.users
-    .fetch(topgguserid)
-    .then(async (user) => {
-      const userAvatarURL = user.displayAvatarURL();
-
-      const embed = new EmbedBuilder()
-        .setDescription(
-          `**Thank you <@${topgguserid}> for voting for <@${topggbotid}> on [Top.gg](https://top.gg/bot/${topggbotid}/vote) <:_:1195866944482590731>** \nYou can vote again in <t:${voteAvailableTimestamp}:R>`
-        )
-        .setColor("#FF00EA")
-        .setThumbnail(userAvatarURL)
-        .setTimestamp();
-
-      try {
-        const channel = await client.channels.fetch("1224815141921624186");
-        if (!channel || channel.type !== ChannelType.GuildText) {
-          return res
-            .status(400)
-            .send("Channel not found or is not a text channel");
-        }
-
-        await channel.send({ embeds: [embed] });
-        res.status(200).send("Success!");
-      } catch (error) {
-        console.error("Error sending message to Discord:", error);
-        res.status(500).send("Internal Server Error");
-      }
-    })
-    .catch((error) => {
-      console.error("Error fetching user from Discord:", error);
-      res.status(500).send("Internal Server Error");
-    });
+  return handleVote(
+    req.body.user,
+    req.body.bot,
+    "[Top.gg](https://top.gg/bot/" +
+      req.body.botId +
+      '/vote "Opens top.gg in your browser.")',
+    res
+  );
 });
 
 app.post("/botlist-votes", async (req, res) => {
-  if (req.header("Authorization") != botlistauth) {
-    return res.status("401").end();
+  if (req.header("Authorization") !== botlistauth) {
+    return res.status(401).send("Unauthorized");
   }
 
-  let botlistuser = req.body.user;
-  let botlistbot = req.body.bot;
-  const voteCooldownHours = 12;
-  const voteCooldownSeconds = voteCooldownHours * 3600;
-  const currentTimestamp = Math.floor(Date.now() / 1000);
-  const voteAvailableTimestamp = currentTimestamp + voteCooldownSeconds;
-
-  client.users
-    .fetch(botlistuser)
-    .then(async (user) => {
-      const userAvatarURL = user.displayAvatarURL();
-
-      const embed = new EmbedBuilder()
-        .setDescription(
-          `**Thank you <@${botlistuser}> for voting for <@${botlistbot}> on [Botlist.me](https://botlist.me/bots/${botlistbot}/vote) <:_:1227425669642719282>** \nYou can vote again <t:${voteAvailableTimestamp}:R>.`
-        )
-        .setColor("#FF00EA")
-        .setThumbnail(userAvatarURL)
-        .setTimestamp();
-
-      try {
-        const channel = await client.channels.fetch("1224815141921624186");
-        if (!channel || channel.type !== ChannelType.GuildText) {
-          return res
-            .status(400)
-            .send("Channel not found or is not a text channel");
-        }
-
-        await channel.send({ embeds: [embed] });
-        res.status(200).send("Success!");
-      } catch (error) {
-        console.error("Error sending message to Discord:", error);
-        res.status(500).send("Internal Server Error");
-      }
-    })
-    .catch((error) => {
-      console.error("Error fetching user from Discord:", error);
-      res.status(500).send("Internal Server Error");
-    });
+  return handleVote(
+    req.body.user,
+    req.body.bot,
+    "[Botlist.me](https://botlist.me/bots/" +
+      req.body.botId +
+      '/vote "Opens botlist.me in your browser.")',
+    res
+  );
 });
 
 app.post(

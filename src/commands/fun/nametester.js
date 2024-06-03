@@ -3,8 +3,8 @@ const chalk = require("chalk");
 
 const {
   containsDisallowedContent,
-} = require("../../config/blacklist/detection/containDisallow");
-const { scanText } = require("../../config/blacklist/detection/perspective");
+} = require("../../config/detection/containDisallow");
+const { scanText } = require("../../config/detection/perspective");
 const { text } = require("body-parser");
 
 module.exports = {

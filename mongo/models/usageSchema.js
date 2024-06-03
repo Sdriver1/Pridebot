@@ -12,5 +12,4 @@ const usageSchema = new mongoose.Schema({
   },
 });
 
-const CommandUsage = mongoose.model("CommandUsage", usageSchema);
-module.exports = CommandUsage;
+module.exports = mongoose.model("CommandUsage", usageSchema);
