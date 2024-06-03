@@ -1,5 +1,5 @@
 const chalk = require("chalk");
-const { blockedlist1 } = require("../blacklist/blockedterms")
+const { blockedlist } = require("../blacklist/blockedterms")
 
 function containsDisallowedContent(input, username) {
   if (typeof input !== "string" || input.trim() === "") {
@@ -9,7 +9,7 @@ function containsDisallowedContent(input, username) {
   const sanitizedInput = input.toLowerCase().trim();
   let foundDisallowed = false;
 
-  blockedlist1.forEach((term) => {
+  blockedlist.forEach((term) => {
     if (sanitizedInput.includes(term)) {
       console.log(
         chalk.yellowBright.bold(
