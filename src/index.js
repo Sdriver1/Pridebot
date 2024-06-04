@@ -21,8 +21,10 @@ const client = new Client({
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.GuildMessageTyping,
+    GatewayIntentBits.GuildMessageReactions,
     GatewayIntentBits.DirectMessages,
     GatewayIntentBits.DirectMessageTyping,
+    GatewayIntentBits.DirectMessageReactions,
   ],
 });
 client.commands = new Collection();
@@ -83,7 +85,6 @@ client.on("messageCreate", async (message) => {
 
   const mention = `<@${client.user.id}>`;
   if (message.content.startsWith(mention)) {
-    console.log("Mentioned");
 
     const args = message.content.slice(mention.length).trim().split(/ +/);
     const commandName = args.shift().toLowerCase();
@@ -98,12 +99,18 @@ client.on("messageCreate", async (message) => {
           idLists = await IDLists.findOne();
         } catch (err) {
           console.error(err);
-          message.channel.send("Error fetching ID lists.");
+          const botMessage = await message.channel.send(
+            "Error fetching ID lists."
+          );
+          await addTrashCanReaction(botMessage);
           return;
         }
 
         if (!idLists.devs.includes(message.author.id)) {
-          message.channel.send("You do not have permission to edit the lists.");
+          const botMessage = await message.channel.send(
+            "You do not have permission to edit the lists."
+          );
+          await addTrashCanReaction(botMessage);
           return;
         }
 
@@ -122,9 +129,10 @@ client.on("messageCreate", async (message) => {
             "support",
           ].includes(category)
         ) {
-          message.channel.send(
+          const botMessage = await message.channel.send(
             "Invalid category. Please choose from vips, devs, bot, donor, oneyear, partner, or support."
           );
+          await addTrashCanReaction(botMessage);
           return;
         }
 
@@ -134,17 +142,26 @@ client.on("messageCreate", async (message) => {
               if (!idLists[category].includes(id)) {
                 idLists[category].push(id);
                 await idLists.save();
-                console.log(`ID ${id} added to ${category}.`);
-                message.channel.send(`ID ${id} added to ${category}.`);
+                const botMessage = await message.channel.send(
+                  `ID ${id} added to ${category}.`
+                );
+                await addTrashCanReaction(botMessage);
               } else {
-                message.channel.send(`ID ${id} is already in ${category}.`);
+                const botMessage = await message.channel.send(
+                  `ID ${id} is already in ${category}.`
+                );
+                await addTrashCanReaction(botMessage);
               }
             } catch (err) {
               console.error(err);
-              message.channel.send("Error adding ID.");
+              const botMessage = await message.channel.send("Error adding ID.");
+              await addTrashCanReaction(botMessage);
             }
           } else {
-            message.channel.send("Please provide an ID to add.");
+            const botMessage = await message.channel.send(
+              "Please provide an ID to add."
+            );
+            await addTrashCanReaction(botMessage);
           }
         }
 
@@ -156,19 +173,31 @@ client.on("messageCreate", async (message) => {
                   (storedId) => storedId !== id
                 );
                 await idLists.save();
-                console.log(`ID ${id} removed from ${category}.`);
-                message.channel.send(`ID ${id} removed from ${category}.`);
+                const botMessage = await message.channel.send(
+                  `ID ${id} removed from ${category}.`
+                );
+                await addTrashCanReaction(botMessage);
               } else {
-                message.channel.send(`ID ${id} is not in ${category}.`);
+                const botMessage = await message.channel.send(
+                  `ID ${id} is not in ${category}.`
+                );
+                await addTrashCanReaction(botMessage);
               }
             } catch (err) {
               console.error(err);
-              message.channel.send("Error removing ID.");
+              const botMessage = await message.channel.send(
+                "Error removing ID."
+              );
+              await addTrashCanReaction(botMessage);
             }
           } else {
-            message.channel.send("Please provide an ID to remove.");
+            const botMessage = await message.channel.send(
+              "Please provide an ID to remove."
+            );
+            await addTrashCanReaction(botMessage);
           }
         }
+
         setTimeout(() => {
           message
             .delete()
@@ -180,7 +209,10 @@ client.on("messageCreate", async (message) => {
         await executeIDCommand(message, args);
       } catch (error) {
         console.error(error);
-        message.reply("There was an error trying to execute that command!");
+        const botMessage = await message.reply(
+          "There was an error trying to execute that command!"
+        );
+        await addTrashCanReaction(botMessage);
         setTimeout(() => {
           message
             .delete()
@@ -190,6 +222,31 @@ client.on("messageCreate", async (message) => {
     }
   }
 });
+
+client.on("messageReactionAdd", async (reaction, user) => {
+  if (reaction.emoji.name === "🗑️") {
+    try {
+      const IDLists = require("../mongo/models/idSchema.js");
+      const idLists = await IDLists.findOne();
+
+      if (idLists.devs.includes(user.id)) {
+        if (reaction.message.author.id === client.user.id) {
+          await reaction.message.delete();
+        }
+      }
+    } catch (error) {
+      console.error("Error handling reaction:", error);
+    }
+  }
+});
+
+async function addTrashCanReaction(message) {
+  try {
+    await message.react("🗑️");
+  } catch (error) {
+    console.error("Failed to add reaction:", error);
+  }
+}
 
 const ap = AutoPoster(topggToken, client);
 ap.on("posted", () => {
