@@ -17,7 +17,10 @@ const CommandUsage = require("../mongo/models/usageSchema.js");
 const ProfileData = require("../mongo/models/profileSchema.js");
 const { idCommand, react } = require("./commands/Dev/id.js");
 const { termCommand } = require("./commands/Dev/termlist.js");
-const { getTotalCommits } = require("./commands/tools/stats.js");
+const { getTotalCommits } = require("./config/commandfunctions/commit.js");
+const {
+  getRegisteredCommandsCount,
+} = require("./config/commandfunctions/registercommand.js");
 
 const client = new Client({
   intents: [
@@ -121,27 +124,6 @@ const port = 2610;
 app.listen(port, () => {
   console.log(`API is running on port ${port}`);
 });
-
-async function getRegisteredCommandsCount(client) {
-  if (!client.application) {
-    console.error("Client application is not ready.");
-    return 0;
-  }
-  const commands = await client.application.commands.fetch();
-  return commands.size;
-}
-/*
-const apiKeyAuth = (req, res, next) => {
-  const userApiKey = req.header('x-api-key');
-  const validApiKey = 'testing';
-
-  if (userApiKey && userApiKey === validApiKey) {
-    next(); // Allow the request to proceed
-  } else {
-    res.status(401).json({ message: 'Unauthorized: Incorrect API Key' });
-  }
-};
-*/
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
