@@ -350,7 +350,7 @@ app.post(
         .join("\n");
       const title = `${commitCount} New ${data.repository.name} ${
         commitCount > 1 ? "Commits" : "Commit"
-      } (# 2${commitTens}${commitOnes})`;
+      } (# 1${commitTens}${commitOnes})`;
       const fieldname = `${commitCount > 1 ? "Commits" : "Commit"}`;
 
       embed
