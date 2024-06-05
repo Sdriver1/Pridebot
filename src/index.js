@@ -17,6 +17,7 @@ const CommandUsage = require("../mongo/models/usageSchema.js");
 const ProfileData = require("../mongo/models/profileSchema.js");
 const { idCommand, react } = require("./commands/Dev/id.js");
 const { termCommand } = require("./commands/Dev/termlist.js");
+const { getTotalCommits } = require("./commands/tools/stats.js");
 
 const client = new Client({
   intents: [
@@ -328,6 +329,15 @@ app.post(
     const data = request.body;
     let embed = new EmbedBuilder();
 
+    let totalCommits = await getTotalCommits(
+      "Sdriver1",
+      "Pridebot",
+      process.env.githubToken
+    );
+
+    let commitTens = totalCommits.toString().slice(-2, -1) || "0";
+    let commitOnes = totalCommits.toString().slice(-1);
+
     if (githubEvent === "push") {
       const commitCount = data.commits.length;
       const commitMessages = data.commits
@@ -340,7 +350,7 @@ app.post(
         .join("\n");
       const title = `${commitCount} New ${data.repository.name} ${
         commitCount > 1 ? "Commits" : "Commit"
-      }`;
+      } (# 2${commitTens}${commitOnes})`;
       const fieldname = `${commitCount > 1 ? "Commits" : "Commit"}`;
 
       embed
