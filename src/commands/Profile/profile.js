@@ -489,27 +489,34 @@ module.exports = {
     } else if (subcommand === "update") {
       const preferredName = interaction.options.getString("preferredname");
       const bio = interaction.options.getString("bio");
+
       const scoreupdate = await scanText(preferredName || bio);
 
-      if (preferredName && containsDisallowedContent(preferredName, username)) {
-        await sendFlagNotification(
-          interaction,
-          preferredName,
-          subcommand,
-          "Preferred Name"
-        );
-        return interaction.reply({
-          content: "The preferred name contains disallowed content.",
-          ephemeral: true,
-        });
+      if (preferredName) {
+        const result = await containsDisallowedContent(preferredName, username);
+        if (result) {
+          await sendFlagNotification(
+            interaction,
+            preferredName,
+            subcommand,
+            "Preferred Name"
+          );
+          return interaction.reply({
+            content: "The preferred name contains disallowed content.",
+            ephemeral: true,
+          });
+        }
       }
 
-      if (bio && containsDisallowedContent(bio, username)) {
-        await sendFlagNotification(interaction, bio, subcommand, "Bio");
-        return interaction.reply({
-          content: "The bio contains disallowed content.",
-          ephemeral: true,
-        });
+      if (bio) {
+        const result = await containsDisallowedContent(bio, username);
+        if (result) {
+          await sendFlagNotification(interaction, bio, subcommand, "Bio");
+          return interaction.reply({
+            content: "The bio contains disallowed content.",
+            ephemeral: true,
+          });
+        }
       }
 
       if (scoreupdate !== null) {
@@ -630,27 +637,34 @@ module.exports = {
 
       const preferredName = interaction.options.getString("preferredname");
       const bio = interaction.options.getString("bio");
+
       const scoresetup = await scanText(preferredName || bio);
 
-      if (preferredName && containsDisallowedContent(preferredName, username)) {
-        await sendFlagNotification(
-          interaction,
-          preferredName,
-          subcommand,
-          "Preferred Name"
-        );
-        return interaction.reply({
-          content: "The preferred name contains disallowed content.",
-          ephemeral: true,
-        });
+      if (preferredName) {
+        const result = await containsDisallowedContent(preferredName, username);
+        if (result) {
+          await sendFlagNotification(
+            interaction,
+            preferredName,
+            subcommand,
+            "Preferred Name"
+          );
+          return interaction.reply({
+            content: "The preferred name contains disallowed content.",
+            ephemeral: true,
+          });
+        }
       }
 
-      if (bio && containsDisallowedContent(bio, username)) {
-        await sendFlagNotification(interaction, bio, subcommand, "Bio");
-        return interaction.reply({
-          content: "The bio contains disallowed content.",
-          ephemeral: true,
-        });
+      if (bio) {
+        const result = await containsDisallowedContent(bio, username);
+        if (result) {
+          await sendFlagNotification(interaction, bio, subcommand, "Bio");
+          return interaction.reply({
+            content: "The bio contains disallowed content.",
+            ephemeral: true,
+          });
+        }
       }
 
       if (scoresetup !== null) {
