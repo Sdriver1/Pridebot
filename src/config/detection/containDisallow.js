@@ -1,7 +1,7 @@
 const chalk = require("chalk");
-const { blockedlist } = require("../blacklist/blockedterms")
+const BlockedTerm = require("../../../mongo/models/blockedtermSchema.js");
 
-function containsDisallowedContent(input, username) {
+async function containsDisallowedContent(input, username) {
   if (typeof input !== "string" || input.trim() === "") {
     return false;
   }
@@ -9,16 +9,23 @@ function containsDisallowedContent(input, username) {
   const sanitizedInput = input.toLowerCase().trim();
   let foundDisallowed = false;
 
-  blockedlist.forEach((term) => {
-    if (sanitizedInput.includes(term)) {
-      console.log(
-        chalk.yellowBright.bold(
-          `⚠️  ${username} has used blacklisted term: "${term}"`
-        )
-      );
-      foundDisallowed = true;
+  try {
+    const blockedTermsDoc = await BlockedTerm.findOne();
+    if (blockedTermsDoc) {
+      blockedTermsDoc.terms.forEach((term) => {
+        if (sanitizedInput.includes(term.toLowerCase())) {
+          console.log(
+            chalk.yellowBright.bold(
+              `⚠️  ${username} has used blacklisted term: "${term}"`
+            )
+          );
+          foundDisallowed = true;
+        }
+      });
     }
-  });
+  } catch (error) {
+    console.error("Error fetching blocked terms:", error);
+  }
 
   return foundDisallowed;
 }

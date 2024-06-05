@@ -16,6 +16,7 @@ const BotlistMeClient = require("botlist.me.js");
 const CommandUsage = require("../mongo/models/usageSchema.js");
 const ProfileData = require("../mongo/models/profileSchema.js");
 const { idCommand, react } = require("./commands/Dev/id.js");
+const { termCommand } = require("./commands/Dev/termlist.js");
 
 const client = new Client({
   intents: [
@@ -83,6 +84,7 @@ client.on("interactionCreate", async (interaction) => {
 
 client.on("messageCreate", async (message) => {
   idCommand(message, client);
+  termCommand(message, client);
 });
 
 client.on("messageReactionAdd", async (reaction, user) => {
