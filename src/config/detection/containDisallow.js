@@ -32,9 +32,7 @@ async function containsDisallowedContent(input, username) {
       });
 
       if (!foundDisallowed) {
-        console.log(
-          chalk.green(`No blacklisted terms found in the input. (${term})`)
-        );
+        console.log(chalk.green("No blocked terms found in input."));
       }
     } else {
       console.log(chalk.red("Blocked terms document not found."));
