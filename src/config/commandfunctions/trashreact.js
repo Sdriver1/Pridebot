@@ -10,7 +10,13 @@ async function react(reaction, user, client) {
         }
       }
     } catch (error) {
-      console.error("Error handling reaction:", error);
+      if (error.code === 50001) {
+        console.log("Missing access to delete the message.");
+      } else if (error.code === 50013) {
+        console.log("Missing permissions to delete the message.");
+      } else {
+        console.error("Error handling reaction:", error);
+      }
     }
   }
 }
@@ -19,7 +25,13 @@ async function addTrashCanReaction(message) {
   try {
     await message.react("1248480641301872650");
   } catch (error) {
-    console.error("Failed to add reaction:", error);
+    if (error.code === 50001) {
+      console.log("Missing access to add reaction.");
+    } else if (error.code === 50013) {
+      console.log("Missing permissions to add reaction.");
+    } else {
+      console.error("Failed to add reaction:", error);
+    }
   }
 }
 
