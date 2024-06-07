@@ -13,14 +13,17 @@ const {
 const fs = require("fs");
 const { AutoPoster } = require("topgg-autoposter");
 const BotlistMeClient = require("botlist.me.js");
+
 const CommandUsage = require("../mongo/models/usageSchema.js");
 const ProfileData = require("../mongo/models/profileSchema.js");
-const { idCommand, react } = require("./commands/Dev/id.js");
+
+const { idCommand } = require("./commands/Dev/id.js");
+const { blacklistCommand } = require("./commands/Dev/blacklist.js");
 const { termCommand } = require("./commands/Dev/termlist.js");
+
 const { getTotalCommits } = require("./config/commandfunctions/commit.js");
-const {
-  getRegisteredCommandsCount,
-} = require("./config/commandfunctions/registercommand.js");
+const { getRegisteredCommandsCount } = require("./config/commandfunctions/registercommand.js");
+const { react } = require("./config/commandfunctions/trashreact.js");
 
 const client = new Client({
   intents: [
@@ -88,6 +91,7 @@ client.on("interactionCreate", async (interaction) => {
 
 client.on("messageCreate", async (message) => {
   idCommand(message, client);
+  blacklistCommand(message, client);
   termCommand(message, client);
 });
 
