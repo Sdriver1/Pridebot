@@ -1,4 +1,31 @@
 const CommandUsage = require("../../../mongo/models/usageSchema");
+const Blacklist = require("../../../mongo/models/blacklistSchema.js");
+const IDLists = require("../../../mongo/models/idSchema.js");
+
+async function isBlacklisted(userId, guildId) {
+  try {
+    const idLists = await IDLists.findOne();
+    if (idLists) {
+      if (idLists.devs.includes(userId) || idLists.vips.includes(userId)) {
+        return { blacklisted: false };
+      }
+    }
+
+    const blacklist = await Blacklist.findOne();
+    if (!blacklist) return { blacklisted: false };
+
+    if (blacklist.blacklistUserIDs.includes(userId)) {
+      return { blacklisted: true, type: "user" };
+    }
+    if (blacklist.blacklistGuildIDs.includes(guildId)) {
+      return { blacklisted: true, type: "guild" };
+    }
+    return { blacklisted: false };
+  } catch (err) {
+    console.error("Error checking blacklist:", err);
+    return { blacklisted: false };
+  }
+}
 
 module.exports = {
   name: "interactionCreate",
@@ -8,6 +35,27 @@ module.exports = {
       const { commandName } = interaction;
       const command = commands.get(commandName);
       if (!command) return;
+
+      const { blacklisted, type } = await isBlacklisted(
+        interaction.user.id,
+        interaction.guild.id
+      );
+      if (blacklisted) {
+        if (type === "user") {
+          await interaction.reply({
+            content:
+              "You are blacklisted from using the bot. If you feel like this is a mistake, please contact <@691506668781174824> or join [support server](https:/pridebot.xyz/support).",
+            ephemeral: true,
+          });
+        } else if (type === "guild") {
+          await interaction.reply({
+            content:
+              "This guild is blacklisted from using the bot. If you feel like this is a mistake, please contact <@691506668781174824> or join [support server](https:/pridebot.xyz/support).",
+            ephemeral: true,
+          });
+        }
+        return;
+      }
 
       try {
         if (commandName !== "usage") {
@@ -21,10 +69,17 @@ module.exports = {
         await command.execute(interaction, client);
       } catch (error) {
         console.error(error);
-        await interaction.reply({
-          content: `Error occurred while executing this command \nIf the error contiunes, please use </bugreport:1176639348423266457> to alert developers, Thank you!`,
-          ephemeral: true,
-        });
+        if (interaction.replied || interaction.deferred) {
+          await interaction.followUp({
+            content: `Error occurred while executing this command \nIf the error continues, please use </bugreport:1176639348423266457> to alert developers, Thank you!`,
+            ephemeral: true,
+          });
+        } else {
+          await interaction.reply({
+            content: `Error occurred while executing this command \nIf the error continues, please use </bugreport:1176639348423266457> to alert developers, Thank you!`,
+            ephemeral: true,
+          });
+        }
       }
     }
   },
