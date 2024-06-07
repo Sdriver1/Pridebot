@@ -31,6 +31,7 @@ module.exports = {
       if (profile && profile.badgesVisible && idLists) {
         const badgesMap = {
           bot: "<:_:1108228682184654908> ",
+          discord: "<:_:1108417509624926228> ",
           devs: "<:_:1195877037034983515> ",
           oneyear: "<:_:1233274651153797120> ",
           support: "<:_:1197399653109473301> ",
