@@ -5,7 +5,6 @@ const {
   containsDisallowedContent,
 } = require("../../config/detection/containDisallow");
 const { scanText } = require("../../config/detection/perspective");
-const { text } = require("body-parser");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -36,11 +35,14 @@ module.exports = {
     const username = interaction.user.username;
     const scoreupdate = await scanText(name);
 
-    if (name && containsDisallowedContent(name, username)) {
-      return interaction.reply({
-        content: "The name contains disallowed content.",
-        ephemeral: true,
-      });
+    if (name) {
+      const result = await containsDisallowedContent(name, username);
+      if (result) {
+        return interaction.reply({
+          content: "The preferred name contains disallowed content.",
+          ephemeral: true,
+        });
+      }
     }
 
     if (scoreupdate !== null) {

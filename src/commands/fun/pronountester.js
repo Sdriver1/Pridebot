@@ -75,41 +75,56 @@ module.exports = {
         reflexive
     );
 
-    if (subject && containsDisallowedContent(subject, username)) {
-      return interaction.reply({
-        content: "The subject contains disallowed content.",
-        ephemeral: true,
-      });
+    if (subject) {
+      const result = await containsDisallowedContent(subject, username);
+      if (result) {
+        return interaction.reply({
+          content: "The preferred name contains disallowed content.",
+          ephemeral: true,
+        });
+      }
     }
-    if (object && containsDisallowedContent(object, username)) {
-      return interaction.reply({
-        content: "The object contains disallowed content.",
-        ephemeral: true,
-      });
+    if (object) {
+      const result = await containsDisallowedContent(object, username);
+      if (result) {
+        return interaction.reply({
+          content: "The preferred name contains disallowed content.",
+          ephemeral: true,
+        });
+      }
     }
-    if (
-      possessiveDeterminer &&
-      containsDisallowedContent(possessiveDeterminer, username)
-    ) {
-      return interaction.reply({
-        content: "The possessiveDeterminer contains disallowed content.",
-        ephemeral: true,
-      });
+    if (possessiveDeterminer) {
+      const result = await containsDisallowedContent(
+        possessiveDeterminer,
+        username
+      );
+      if (result) {
+        return interaction.reply({
+          content: "The preferred name contains disallowed content.",
+          ephemeral: true,
+        });
+      }
     }
-    if (
-      possessivePronoun &&
-      containsDisallowedContent(possessivePronoun, username)
-    ) {
-      return interaction.reply({
-        content: "The possessivePronoun contains disallowed content.",
-        ephemeral: true,
-      });
+    if (possessivePronoun) {
+      const result = await containsDisallowedContent(
+        possessivePronoun,
+        username
+      );
+      if (result) {
+        return interaction.reply({
+          content: "The preferred name contains disallowed content.",
+          ephemeral: true,
+        });
+      }
     }
-    if (reflexive && containsDisallowedContent(reflexive, username)) {
-      return interaction.reply({
-        content: "The reflexive contains disallowed content.",
-        ephemeral: true,
-      });
+    if (reflexive) {
+      const result = await containsDisallowedContent(reflexive, username);
+      if (result) {
+        return interaction.reply({
+          content: "The preferred name contains disallowed content.",
+          ephemeral: true,
+        });
+      }
     }
 
     if (scoreupdate !== null) {
