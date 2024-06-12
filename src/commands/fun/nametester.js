@@ -38,6 +38,7 @@ module.exports = {
     if (name) {
       const result = await containsDisallowedContent(name, username);
       if (result) {
+        await sendFlagNotification(interaction, name, "Name");
         return interaction.reply({
           content: "The preferred name contains disallowed content.",
           ephemeral: true,
@@ -57,6 +58,7 @@ module.exports = {
             )}% \nContent: "${name}"`
           )
         );
+        await sendToxicNotification(interaction, toxicity, insult, name);
         return interaction.reply({
           content:
             "One of your test have been flagged for high toxicity or insult.",
@@ -96,11 +98,64 @@ module.exports = {
         }
       )
       .setColor(0xff00ae)
-      .setFooter({
-        text: "...",
-      })
       .setTimestamp();
 
     await interaction.reply({ embeds: [embed], ephemeral: !public });
   },
 };
+
+async function sendFlagNotification(interaction, flaggedContent) {
+  const embed = new EmbedBuilder()
+    .setColor("#FF00EA")
+    .setTitle("<:_:1201388588949061642> Flagged Content Detected")
+    .addFields(
+      { name: "Username", value: interaction.user.tag, inline: true },
+      { name: "User ID", value: interaction.user.id, inline: true },
+      { name: "Command", value: "Name Tester", inline: true },
+      { name: "Flagged Content", value: `||${flaggedContent}||`, inline: true }
+    )
+    .setTimestamp();
+
+  const alertChannel = await interaction.client.channels.fetch(
+    "1231591223337160715"
+  );
+  if (alertChannel) {
+    alertChannel.send({ embeds: [embed] });
+  }
+}
+
+async function sendToxicNotification(interaction, toxicity, insult, name) {
+  const embed = new EmbedBuilder()
+    .setColor("#FF00EA")
+    .setTitle("<:_:1201388588949061642> Toxic/Insult Content Detected")
+    .addFields(
+      { name: "Username", value: interaction.user.tag, inline: true },
+      { name: "User ID", value: interaction.user.id, inline: true },
+      { name: "_ _", value: `_ _`, inline: true },
+      { name: "Command", value: "NameTester", inline: true },
+      {
+        name: "Flagged Content",
+        value: `||${name}||`,
+        inline: true,
+      },
+      { name: "_ _", value: `_ _`, inline: true },
+      {
+        name: "Toxicity Score",
+        value: `Toxicity: ${(toxicity * 100).toFixed(2)}%`,
+        inline: true,
+      },
+      {
+        name: "Insult Score",
+        value: `Insult: ${(insult * 100).toFixed(2)}%`,
+        inline: true,
+      }
+    )
+    .setTimestamp();
+
+  const alertChannel = await interaction.client.channels.fetch(
+    "1231591223337160715"
+  );
+  if (alertChannel) {
+    alertChannel.send({ embeds: [embed] });
+  }
+}

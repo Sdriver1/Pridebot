@@ -6,7 +6,7 @@ async function isBlacklisted(userId, guildId) {
   try {
     const idLists = await IDLists.findOne();
     if (idLists) {
-      if (idLists.devs.includes(userId) || idLists.vips.includes(userId)) {
+      if (idLists.devs.includes(userId)) {
         return { blacklisted: false };
       }
     }

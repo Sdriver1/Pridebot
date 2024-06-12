@@ -78,6 +78,7 @@ module.exports = {
     if (subject) {
       const result = await containsDisallowedContent(subject, username);
       if (result) {
+        await sendFlagNotification(interaction, subject, "Subject Pronoun");
         return interaction.reply({
           content: "The preferred name contains disallowed content.",
           ephemeral: true,
@@ -87,6 +88,7 @@ module.exports = {
     if (object) {
       const result = await containsDisallowedContent(object, username);
       if (result) {
+        await sendFlagNotification(interaction, object, "Object Pronoun");
         return interaction.reply({
           content: "The preferred name contains disallowed content.",
           ephemeral: true,
@@ -99,6 +101,11 @@ module.exports = {
         username
       );
       if (result) {
+        await sendFlagNotification(
+          interaction,
+          possessiveDeterminer,
+          "Possessive Determiner"
+        );
         return interaction.reply({
           content: "The preferred name contains disallowed content.",
           ephemeral: true,
@@ -111,6 +118,11 @@ module.exports = {
         username
       );
       if (result) {
+        await sendFlagNotification(
+          interaction,
+          possessivePronoun,
+          "Possessive Pronoun"
+        );
         return interaction.reply({
           content: "The preferred name contains disallowed content.",
           ephemeral: true,
@@ -120,6 +132,7 @@ module.exports = {
     if (reflexive) {
       const result = await containsDisallowedContent(reflexive, username);
       if (result) {
+        await sendFlagNotification(interaction, reflexive, "Reflexive Pronoun");
         return interaction.reply({
           content: "The preferred name contains disallowed content.",
           ephemeral: true,
@@ -144,6 +157,16 @@ module.exports = {
               reflexive
             }"`
           )
+        );
+        await sendToxicNotification(
+          interaction,
+          toxicity,
+          insult,
+          subject,
+          object,
+          possessiveDeterminer,
+          possessivePronoun,
+          reflexive
         );
         return interaction.reply({
           content:
@@ -197,3 +220,69 @@ module.exports = {
     await interaction.reply({ embeds: [embed], ephemeral: !isPublic });
   },
 };
+
+async function sendFlagNotification(interaction, flaggedContent, contentType) {
+  const embed = new EmbedBuilder()
+    .setColor("#FF00EA")
+    .setTitle("<:_:1201388588949061642> Flagged Content Detected")
+    .addFields(
+      { name: "Username", value: interaction.user.tag, inline: true },
+      { name: "User ID", value: interaction.user.id, inline: true },
+      { name: "Command", value: "Pronoun Tester", inline: true },
+      { name: "Content Type", value: contentType, inline: true },
+      { name: "Flagged Content", value: `||${flaggedContent}||`, inline: true }
+    )
+    .setTimestamp();
+
+  const alertChannel = await interaction.client.channels.fetch(
+    "1231591223337160715"
+  );
+  if (alertChannel) {
+    alertChannel.send({ embeds: [embed] });
+  }
+}
+
+async function sendToxicNotification(
+  interaction,
+  toxicity,
+  insult,
+  subject,
+  object,
+  possessiveDeterminer,
+  possessivePronoun,
+  reflexive
+) {
+  const embed = new EmbedBuilder()
+    .setColor("#FF00EA")
+    .setTitle("<:_:1201388588949061642> Toxic/Insult Content Detected")
+    .addFields(
+      { name: "Username", value: interaction.user.tag, inline: true },
+      { name: "User ID", value: interaction.user.id, inline: true },
+      { name: "_ _", value: `_ _`, inline: true },
+      { name: "Command", value: "NameTester", inline: true },
+      {
+        name: "Flagged Content",
+        value: `||${subject || object || possessiveDeterminer || possessivePronoun || reflexive}||`,
+        inline: true,
+      },
+      { name: "_ _", value: `_ _`, inline: true },
+      {
+        name: "Toxicity Score",
+        value: `Toxicity: ${(toxicity * 100).toFixed(2)}%`,
+        inline: true,
+      },
+      {
+        name: "Insult Score",
+        value: `Insult: ${(insult * 100).toFixed(2)}%`,
+        inline: true,
+      }
+    )
+    .setTimestamp();
+
+  const alertChannel = await interaction.client.channels.fetch(
+    "1231591223337160715"
+  );
+  if (alertChannel) {
+    alertChannel.send({ embeds: [embed] });
+  }
+}
