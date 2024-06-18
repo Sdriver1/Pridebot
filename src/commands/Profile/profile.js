@@ -1,4 +1,11 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const {
+  SlashCommandBuilder,
+  ActionRowBuilder,
+  EmbedBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  ComponentType,
+} = require("discord.js");
 const chalk = require("chalk");
 
 const Profile = require("../../../mongo/models/profileSchema");
@@ -197,6 +204,12 @@ module.exports = {
               { name: "Clear", value: "clear" }
             )
         )
+        .addStringOption((option) =>
+          option
+            .setName("pronounpage")
+            .setDescription("A link to your pronoun page")
+            .setRequired(false)
+        )
     )
     .addSubcommand((subcommand) =>
       subcommand
@@ -300,6 +313,12 @@ module.exports = {
               { name: "Other", value: "Other" }
             )
         )
+        .addStringOption((option) =>
+          option
+            .setName("pronounpage")
+            .setDescription("A link to your pronoun page")
+            .setRequired(false)
+        )
     )
     .addSubcommand((subcommand) =>
       subcommand
@@ -336,6 +355,11 @@ module.exports = {
     async function fetchProfileColor(userId) {
       const profile = await Profile.findOne({ userId: userId });
       return profile?.color || "#FF00EA";
+    }
+
+    function isValidPronounPageLink(link) {
+      const regex = /^https:\/\/(en\.)?pronouns\.page\/@[\w-]+$/;
+      return regex.test(link);
     }
 
     if (subcommand === "edit") {
@@ -485,8 +509,19 @@ module.exports = {
         .setThumbnail(targetUser.displayAvatarURL())
         .setFooter({ text: "Profile Information" })
         .setTimestamp();
-      return interaction.reply({ embeds: [profileEmbed] });
-      //------------------------ Separator ---------------------------- //
+
+      if (profile.pronounpage) {
+        const row = new ActionRowBuilder().addComponents(
+          new ButtonBuilder()
+            .setLabel("Pronoun Page")
+            .setStyle(ButtonStyle.Link)
+            .setURL(profile.pronounpage)
+        );
+
+        return interaction.reply({ embeds: [profileEmbed], components: [row] });
+      } else {
+        return interaction.reply({ embeds: [profileEmbed] });
+      }
     } else if (subcommand === "update") {
       const preferredName = interaction.options.getString("preferredname");
       const bio = interaction.options.getString("bio");
@@ -586,6 +621,16 @@ module.exports = {
         updateData.otherPronouns =
           interaction.options.getString("other_pronouns");
       }
+      if (interaction.options.getString("pronounpage")) {
+        const pronounpageLink = interaction.options.getString("pronounpage");
+        if (!isValidPronounPageLink(pronounpageLink)) {
+          return interaction.reply({
+            content: "Please provide a valid Pronoun Page link.",
+            ephemeral: true,
+          });
+        }
+        updateData.pronounpage = pronounpageLink;
+      }
       const updatedFields = {};
       for (const [key, value] of Object.entries(updateData)) {
         if (value !== null) {
@@ -612,8 +657,6 @@ module.exports = {
           "Your profile has been updated successfully! \nSee your new profile with </profile view:1197313708846743642>",
         ephemeral: true,
       });
-
-      //------------------------ Separator ---------------------------- //
     } else if (subcommand === "setup") {
       const existingProfile = await Profile.findOne({
         userId: interaction.user.id,
@@ -634,6 +677,7 @@ module.exports = {
         romanticOrientation: interaction.options.getString("romantic") || "",
         gender: interaction.options.getString("gender") || "",
         pronouns: interaction.options.getString("pronouns") || "",
+        pronounpage: interaction.options.getString("pronounpage") || "",
       };
 
       const preferredName = interaction.options.getString("preferredname");
@@ -700,6 +744,17 @@ module.exports = {
             "There was an error analyzing your message. Please try again.",
           ephemeral: true,
         });
+      }
+
+      if (interaction.options.getString("pronounpage")) {
+        const pronounpageLink = interaction.options.getString("pronounpage");
+        if (!isValidPronounPageLink(pronounpageLink)) {
+          return interaction.reply({
+            content: "Please provide a valid Pronoun Page link.",
+            ephemeral: true,
+          });
+        }
+        profileData.pronounpage = pronounpageLink;
       }
 
       const newProfile = await Profile.create(profileData);

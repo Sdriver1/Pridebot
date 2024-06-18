@@ -13,6 +13,7 @@ const profileSchema = new mongoose.Schema({
   otherPronouns: { type: String, required: false },
   color: { type: String, required: false },
   badgesVisible: { type: Boolean, default: true },
+  pronounpage: { type: String, required: false },
 });
 
 module.exports = mongoose.model("Profile", profileSchema);

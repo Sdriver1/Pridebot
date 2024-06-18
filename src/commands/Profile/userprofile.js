@@ -103,14 +103,25 @@ module.exports = {
       );
 
       const profileEmbed = new EmbedBuilder()
-        .setColor(embedColor)
+        .setColor(`${embedColor}`)
         .setTitle(`${targetUser.username}'s Profile ${badgeStr}`)
         .addFields(profileFields)
         .setThumbnail(targetUser.displayAvatarURL())
         .setFooter({ text: "Profile Information" })
         .setTimestamp();
 
-      await interaction.reply({ embeds: [profileEmbed], ephemeral: true });
+      if (profile.pronounpage) {
+        const row = new ActionRowBuilder().addComponents(
+          new ButtonBuilder()
+            .setLabel("Pronoun Page")
+            .setStyle(ButtonStyle.Link)
+            .setURL(profile.pronounpage)
+        );
+
+        return interaction.reply({ embeds: [profileEmbed], components: [row] });
+      } else {
+        return interaction.reply({ embeds: [profileEmbed] });
+      }
     } catch (error) {
       console.error(error);
       await interaction.editReply(
