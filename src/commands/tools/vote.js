@@ -27,9 +27,17 @@ module.exports = {
           inline: false,
         },
         {
-          name: "<:_:1198663251580440697> Wumpus Store",
+          name: "<:_:1198663251580440697> Wumpus.Store",
           value: `https://wumpus.store/bot/1101256478632972369/vote`,
           inline: false,
+        },
+        {
+          name: "<:_:1227425669642719282> Botlist.me ",
+          value: "https://botlist.me/bots/1101256478632972369",
+        },
+        {
+          name: "<:_:1252815882481303662> Discordlist.gg",
+          value: "https://discordlist.gg/bot/1101256478632972369/vote",
         }
       )
       .setTimestamp();

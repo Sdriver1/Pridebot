@@ -18,6 +18,7 @@
     "body-parser": "^1.20.2",
     "bootstrap": "^5.3.3",
     "botlist.me.js": "^1.0.3",
+    "canvas": "^2.11.2",
     "chalk": "^4.1.2",
     "cheerio": "^1.0.0-rc.12",
     "cors": "^2.8.5",
@@ -37,3 +38,4 @@
     "topgg-autoposter": "^2.0.2"
   }
 }
+

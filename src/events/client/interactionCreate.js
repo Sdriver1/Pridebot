@@ -36,6 +36,16 @@ module.exports = {
       const command = commands.get(commandName);
       if (!command) return;
 
+      if (command.owner == true) {
+        if (interaction.user.id !== "691506668781174824") {
+          await interaction.reply({
+            content: "This command is only for the bot owner!",
+            ephemeral: true,
+          });
+          return;
+        }
+      }
+
       const { blacklisted, type } = await isBlacklisted(
         interaction.user.id,
         interaction.guild.id

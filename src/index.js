@@ -1,7 +1,20 @@
 require("dotenv").config();
-const { token, databaseToken, topggToken, botlisttoken, botlistauth } = process.env;
+const {
+  token,
+  databaseToken,
+  topggToken,
+  botlisttoken,
+  botlistauth,
+} = process.env;
 const { connect } = require("mongoose");
-const { Client, Collection, ChannelType, GatewayIntentBits, Events, EmbedBuilder } = require("discord.js");
+const {
+  Client,
+  Collection,
+  ChannelType,
+  GatewayIntentBits,
+  Events,
+  EmbedBuilder,
+} = require("discord.js");
 const fs = require("fs");
 const { AutoPoster } = require("topgg-autoposter");
 const BotlistMeClient = require("botlist.me.js");
@@ -14,7 +27,9 @@ const { blacklistCommand } = require("./commands/Dev/blacklist.js");
 const { termCommand } = require("./commands/Dev/termlist.js");
 
 const { getTotalCommits } = require("./config/commandfunctions/commit.js");
-const { getRegisteredCommandsCount } = require("./config/commandfunctions/registercommand.js");
+const {
+  getRegisteredCommandsCount,
+} = require("./config/commandfunctions/registercommand.js");
 const { react } = require("./config/commandfunctions/trashreact.js");
 
 const client = new Client({
