@@ -1,10 +1,19 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const chalk = require("chalk");
+const loadTranslations = require("../../config/commandfunctions/translation");
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("bisexual")
-    .setDescription("Why am I bi myself again ;-;"),
+    .setNameLocalizations({
+      "es-ES": "bisexual",
+      nl: "biseksueel",
+    })
+    .setDescription("Why am I bi myself again ;-;")
+    .setDescriptionLocalizations({
+      "es-ES": "Por qué soy bi yo mismo otra vez ;-;",
+      nl: "Waarom ben ik weer bi mezelf ;-;",
+    }),
 
   async execute(interaction, client) {
     const estDate = new Date().toLocaleString("en-US", {
@@ -15,28 +24,44 @@ module.exports = {
         `-------------------------- \n/bisexual \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
       )
     );
+
+    const interactionLocale = interaction.locale || "en-US";
+    const category = "Pride";
+    const commandName = "bisexual";
+    let translations;
+    try {
+      translations = loadTranslations(interactionLocale, category, commandName);
+    } catch (error) {
+      console.error(`Error loading translations:`, error);
+      translations = loadTranslations("en-US", category, commandName);
+      await interaction.reply(
+        `Your language (${interactionLocale}) is not set up. Defaulting to English.`
+      );
+    }
+
     const embed = new EmbedBuilder()
-      .setTitle(`<:_:1108823482856382474> Bisexual!`)
-      .setDescription(`Here is some facts on "bisexual/biromatic"`)
+      .setTitle(`<:_:1108823482856382474> ${translations.title}`)
+      .setDescription(translations.description)
       .setColor(0xff00ae)
       .setFields(
         {
-          name: `What is Bisexual`,
-          value: `Bisexuality refers to the romantic and/or sexual attraction towards both men and women. It acknowledges a spectrum of attraction that can vary in intensity and change over time. Bisexual individuals may also experience attraction beyond the binary concept of gender.`,
+          name: translations.what_is_bisexuality.name,
+          value: translations.what_is_bisexuality.value,
         },
         {
-          name: `History`,
-          value: `Bisexuality has been acknowledged in various cultures throughout history, but the term itself gained prominence in the 20th century. The bisexual rights movement gained momentum in the late 20th century, striving for acceptance and equal rights within the broader LGBTQ+ community and society.`,
+          name: translations.history.name,
+          value: translations.history.value,
         },
         {
-          name: `The Flag`,
-          value: `The bisexual pride flag was designed by Michael Page in 1998 to give the bisexual community its own symbol comparable to the gay pride flag. The flag features three horizontal stripes: pink at the top for same-sex attraction, blue at the bottom for different-sex attraction, and an overlapping purple stripe in the middle representing attraction to both sexes.`,
+          name: translations.flag.name,
+          value: translations.flag.value,
         },
         {
-          name: `Days/Honoring Times`,
-          value: `- Bisexual Health Awareness Month - **March** \n- Bisexual Awareness Week - **September 16th to 22nd** \n- Bisexuality Day - **September 23**`,
+          name: translations.days.name,
+          value: translations.days.value,
         }
       );
+
     await interaction.reply({ embeds: [embed] });
   },
 };
