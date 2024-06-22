@@ -1,0 +1,24 @@
+{
+  "title": "Asexuell!",
+  "description": "Hier sind einige Fakten über \"Asexualität/Aromantik\"",
+  "what_is_asexuality": {
+    "name": "Was ist Asexualität",
+    "value": "Asexualität ist eine sexuelle Orientierung, bei der eine Person wenig bis keine sexuelle Anziehung zu irgendjemandem empfindet, unabhängig vom Geschlecht. Asexualität variiert stark unter Individuen und ist eine normale und gültige Art, Anziehung zu erleben."
+  },
+  "history": {
+    "name": "Geschichte",
+    "value": "Die Sichtbarkeit und das Verständnis von Asexualität haben im 21. Jahrhundert erheblich zugenommen, obwohl das Konzept in verschiedenen Formen schon immer existiert hat. Die asexuelle Gemeinschaft hat versucht, innerhalb der breiteren LGBTQ+-Bewegung Anerkennung zu finden, und betont die Bedeutung des Verständnisses und Respekts verschiedener Erfahrungen von Anziehung. Aromantik hat ebenfalls mehr Anerkennung gefunden, da die Gespräche über das Spektrum der romantischen Anziehung sich weiterentwickelt haben."
+  },
+  "flag": {
+    "name": "Die Flagge",
+    "value": "Die asexuelle Pride-Flagge besteht aus vier horizontalen Streifen: Schwarz für Asexualität, Grau für die Gray-Ace- und Demisexuelle-Gemeinschaft, Weiß für Verbündete und Lila für Gemeinschaft. Die aromantische Gemeinschaft hat ebenfalls eine Flagge mit grünen, hellgrünen, weißen, grauen und schwarzen Streifen, die das aromantische Spektrum symbolisieren."
+  },
+  "aromantic_days": {
+    "name": "Aromantische Tage/Ehrungszeiten",
+    "value": "- Aromantischer Bewusstseinsmonat - **Februar** \n- Aromantische Spektrums-Bewusstseinswoche - **18. bis 24. Februar** \n- Aromantischer Sichtbarkeitstag - **5. Juni und 25. August**"
+  },
+  "asexual_days": {
+    "name": "Asexuelle Tage/Ehrungszeiten",
+    "value": "- Ace Week - **20. bis 26. Oktober** \n- Internationaler Asexualitätstag - **6. April** \n- Asexueller Sichtbarkeitstag - **8. Mai**"
+  }
+}

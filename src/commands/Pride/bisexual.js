@@ -6,13 +6,19 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("bisexual")
     .setNameLocalizations({
+      de: "bisexualität",
+      el: "aμφιφυλόφιλη",
       "es-ES": "bisexual",
       nl: "biseksueel",
+      ru: "бисексуал",
     })
     .setDescription("Why am I bi myself again ;-;")
     .setDescriptionLocalizations({
+      de: "Warum bin ich wieder bi alleine ;-;",
+      el: "Γιατί είμαι πάλι bi μόνος μου ;-;",
       "es-ES": "Por qué soy bi yo mismo otra vez ;-;",
       nl: "Waarom ben ik weer bi mezelf ;-;",
+      ru: "Почему я снова би сам по себе ;-;",
     }),
 
   async execute(interaction, client) {
