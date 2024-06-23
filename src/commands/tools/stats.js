@@ -2,11 +2,12 @@ require("dotenv").config();
 const chalk = require("chalk");
 const os = require("os");
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const { calculatePing } = require("../../events/client/ping");
 const CommandUsage = require("../../../mongo/models/usageSchema");
 const Profile = require("../../../mongo/models/profileSchema");
 const { getTotalCommits } = require("../../config/commandfunctions/commit");
-const { getRegisteredCommandsCount } = require("../../config/commandfunctions/registercommand");
+const {
+  getRegisteredCommandsCount,
+} = require("../../config/commandfunctions/registercommand");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -14,8 +15,10 @@ module.exports = {
     .setDescription("Get the bot's and discord stats"),
 
   async execute(interaction, client) {
+    const startTimestamp = Date.now();
     await interaction.deferReply();
-    const botping = await calculatePing(interaction);
+
+    const botping = Date.now() - startTimestamp;
 
     const estDate = new Date().toLocaleString("en-US", {
       timeZone: "America/New_York",
@@ -36,14 +39,14 @@ module.exports = {
           const endTime = Date.now();
           const elapsedMs = endTime - startTime;
           const elapsedUserMs = end.user / 1000;
-          const elapsedSystemMs = end.system / 1000; 
+          const elapsedSystemMs = end.system / 1000;
 
           const cpuPercent =
             ((elapsedUserMs + elapsedSystemMs) /
               (elapsedMs * os.cpus().length)) *
             100;
-          resolve(cpuPercent.toFixed(2)); 
-        }, 100); 
+          resolve(cpuPercent.toFixed(2));
+        }, 100);
       });
     }
 
@@ -127,7 +130,10 @@ module.exports = {
 
       await interaction.editReply({ embeds: [embed] });
     } catch (error) {
-      console.error("Error deferring reply:", error);
+      console.error("Error executing /stats command:", error);
+      await interaction.editReply(
+        "There was an error while executing the /stats command."
+      );
     }
   },
 };

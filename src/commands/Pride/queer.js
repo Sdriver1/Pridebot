@@ -1,10 +1,13 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const chalk = require("chalk");
+const loadTranslations = require("../../config/commandfunctions/translation");
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("queer")
-    .setDescription("OMG! QUEER!"),
+    .setNameLocalizations({})
+    .setDescription("OMG! QUEER!")
+    .setDescriptionLocalizations({}),
 
   async execute(interaction, client) {
     const estDate = new Date().toLocaleString("en-US", {
@@ -15,28 +18,44 @@ module.exports = {
         `-------------------------- \n/queer \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
       )
     );
+
+    const interactionLocale = interaction.locale || "en-US";
+    const category = "Pride";
+    const commandName = "queer";
+    let translations;
+    try {
+      translations = loadTranslations(interactionLocale, category, commandName);
+    } catch (error) {
+      console.error(`Error loading translations:`, error);
+      translations = loadTranslations("en-US", category, commandName);
+      await interaction.reply(
+        `Your language (${interactionLocale}) is not set up. Defaulting to English.`
+      );
+    }
+
     const embed = new EmbedBuilder()
-      .setTitle(`<:_:1177459443231895563> Queer!`)
-      .setDescription(`Here are some facts on "queer"`)
+      .setTitle(`<:_:1177459443231895563> ${translations.title}`)
+      .setDescription(translations.description)
       .setColor(0xff00ae)
       .setFields(
         {
-          name: `What is "Queer"`,
-          value: `The term "queer" is an umbrella term for people who are not heterosexual or not cisgender. It's a term that encompasses a wide spectrum of sexual orientations and gender identities, celebrating the diversity of the LGBTQ+ community. `,
+          name: translations.what_is_queer.name,
+          value: translations.what_is_queer.value,
         },
         {
-          name: `History`,
-          value: `Originally used as a derogatory term, "queer" has been reclaimed by the LGBTQ+ community as a symbol of pride and defiance against discrimination. Its usage as an inclusive and unifying label reflects the diversity and complexity of LGBTQ+ experiences.`,
+          name: translations.history.name,
+          value: translations.history.value,
         },
         {
-            name: `The Flag`,
-            value: `The queer pride flag, often synonymous with the LGBTQ+ pride flag, is a symbol of queer identity and community. It typically features the rainbow design, with each color representing a different aspect of the community: red for life, orange for healing, yellow for sunlight, green for nature, blue for harmony, and violet for spirit. This flag is widely recognized as a symbol of LGBTQ+ pride and diversity, celebrating the inclusion and acceptance of all sexual orientations and gender identities within the queer community.`,
-        },          
+          name: translations.flag.name,
+          value: translations.flag.value,
+        },
         {
-          name: `Important Dates`,
-          value: `- LGBTQ+ Pride Month - **June** \n- National Coming Out Day - **October 11th**`,
+          name: translations.important_dates.name,
+          value: translations.important_dates.value,
         }
       );
+
     await interaction.reply({ embeds: [embed] });
   },
 };

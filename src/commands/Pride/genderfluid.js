@@ -1,10 +1,17 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const chalk = require("chalk");
+const loadTranslations = require("../../config/commandfunctions/translation");
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("genderfluid")
-    .setDescription("Who stole my fluid!!!"),
+    .setNameLocalizations({
+      "es-ES": "genderfluid",
+    })
+    .setDescription("Who stole my fluid!!!")
+    .setDescriptionLocalizations({
+      "es-ES": "¿Quién robó mi fluido?",
+    }),
 
   async execute(interaction, client) {
     const estDate = new Date().toLocaleString("en-US", {
@@ -15,28 +22,44 @@ module.exports = {
         `-------------------------- \n/genderfluid \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
       )
     );
+
+    const interactionLocale = interaction.locale || "en-US";
+    const category = "Pride";
+    const commandName = "genderfluid";
+    let translations;
+    try {
+      translations = loadTranslations(interactionLocale, category, commandName);
+    } catch (error) {
+      console.error(`Error loading translations:`, error);
+      translations = loadTranslations("en-US", category, commandName);
+      await interaction.reply(
+        `Your language (${interactionLocale}) is not set up. Defaulting to English.`
+      );
+    }
+
     const embed = new EmbedBuilder()
-      .setTitle(`<:_:1112196520477999226> Genderfluid!`)
-      .setDescription(`Here are some facts on "genderfluid"`)
+      .setTitle(`<:_:1112196520477999226> ${translations.title}`)
+      .setDescription(translations.description)
       .setColor(0xff00ae)
       .setFields(
         {
-          name: `What is Genderfluid`,
-          value: `Genderfluid refers to a gender identity that varies over time. It can change, sometimes day-to-day or over longer periods, and may include male, female, both, or neither.`,
+          name: translations.what_is_genderfluid.name,
+          value: translations.what_is_genderfluid.value,
         },
         {
-          name: `History`,
-          value: `The concept of genderfluidity has roots that stretch back through history, though the specific term "genderfluid" is relatively modern. Various cultures globally have recognized non-binary or multiple gender roles, but the Western concept of genderfluidity gained prominence in the late 20th and early 21st centuries as part of the broader transgender rights movement. It challenges the traditional binary understanding of gender, proposing instead that gender can be dynamic and changing over time. In academic and social contexts, discussions about genderfluidity have helped illuminate the experiences of those who do not feel represented by static, binary gender definitions. `,
+          name: translations.history.name,
+          value: translations.history.value,
         },
         {
-          name: `The Flag`,
-          value: `The genderfluid pride flag consists of five horizontal stripes: pink for femininity, white for all genders, purple for a mixture of masculinity and femininity, black for the absence of gender, and blue for masculinity.`,
+          name: translations.flag.name,
+          value: translations.flag.value,
         },
         {
-          name: `Days/Honoring Times`,
-          value: `- Genderfluid Awareness Week (2024) - **October 17th to 23rd** \n- Genderfluid Visibility Day - **June 16**`,
+          name: translations.days.name,
+          value: translations.days.value,
         }
       );
+      
     await interaction.reply({ embeds: [embed] });
   },
 };

@@ -1,10 +1,17 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const chalk = require("chalk");
+const loadTranslations = require("../../config/commandfunctions/translation");
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("gay")
-    .setDescription("Imagine being gay, couldn't be me"),
+    .setNameLocalizations({
+      "es-ES": "gay",
+    })
+    .setDescription("Imagine being gay, couldn't be me")
+    .setDescriptionLocalizations({
+      "es-ES": "Imagina ser gay, no podría ser yo",
+    }),
 
   async execute(interaction, client) {
     const estDate = new Date().toLocaleString("en-US", {
@@ -15,28 +22,44 @@ module.exports = {
         `-------------------------- \n/gay \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
       )
     );
+
+    const interactionLocale = interaction.locale || "en-US";
+    const category = "Pride";
+    const commandName = "gay";
+    let translations;
+    try {
+      translations = loadTranslations(interactionLocale, category, commandName);
+    } catch (error) {
+      console.error(`Error loading translations:`, error);
+      translations = loadTranslations("en-US", category, commandName);
+      await interaction.reply(
+        `Your language (${interactionLocale}) is not set up. Defaulting to English.`
+      );
+    }
+
     const embed = new EmbedBuilder()
-      .setTitle(`<:_:1109676932251000923> Gay!`)
-      .setDescription(`Here is some facts on "gay"`)
+      .setTitle(`<:_:1109676932251000923> ${translations.title}`)
+      .setDescription(translations.description)
       .setColor(0xff00ae)
       .setFields(
         {
-          name: `What Does 'Gay' Mean?`,
-          value: `The term "gay" is commonly used to describe a person whose romantic and sexual attraction is towards people of the same gender. Historically, it has predominantly referred to men, but it can also encompass all individuals who experience same-gender attraction.`,
+          name: translations.what_is_gay.name,
+          value: translations.what_is_gay.value,
         },
         {
-          name: `History`,
-          value: `The word "gay" originally meant "joyful" or "carefree." By the mid-20th century, it evolved to refer to homosexuality. Gay rights movements have played a crucial role in LGBTQ+ history, advocating for equal rights and societal acceptance. Pioneers like Harvey Milk and organizations like Stonewall have been instrumental in advancing gay rights.`,
+          name: translations.history.name,
+          value: translations.history.value,
         },
         {
-          name: `The Flag`,
-          value: `When most people think of gay, they think of a rainbow flag (<:_:1108822823721521242>) but in reality, the rainbow flag was actually founded in 1978 when the artist Gilbert Baker, an openly gay man, designed the first rainbow flag. He was urged by Harvey Milk, one of the first openly gay elected officials in the U.S., to create a symbol of pride for the gay community. ([Source](https://www.britannica.com/story/how-did-the-rainbow-flag-become-a-symbol-of-lgbt-pride)) \n\nThe new modern gay flag name is actually called "[Trans-Inclusive Gay Men's Pride Flag](https://www.hrc.org/resources/lgbtq-pride-flags)" <:_:1109676932251000923> and is the version of the rainbow flag with more greenish/blue colors to represent different identities of males.`,
+          name: translations.flag.name,
+          value: translations.flag.value,
         },
         {
-          name: `Days/Honoring Times`,
-          value: `- LGBTQ+ Pride Month - **June** \n- National Coming Out Day - **October 11th**`,
+          name: translations.honoring_days.name,
+          value: translations.honoring_days.value,
         }
       );
+      
     await interaction.reply({ embeds: [embed] });
   },
 };

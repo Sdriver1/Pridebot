@@ -1,12 +1,15 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const chalk = require("chalk");
+const loadTranslations = require("../../config/commandfunctions/translation");
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("nonbinary")
+    .setNameLocalizations({})
     .setDescription(
       "01001110 01101111 01101110 00101101 01000010 01101001 01101110 01100001 01110010 01111001"
-    ),
+    )
+    .setDescriptionLocalizations({}),
 
   async execute(interaction, client) {
     const estDate = new Date().toLocaleString("en-US", {
@@ -14,31 +17,47 @@ module.exports = {
     });
     console.log(
       chalk.white.bold(
-        `-------------------------- \n/non-binary \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
+        `-------------------------- \n/nonbinary \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
       )
     );
+
+    const interactionLocale = interaction.locale || "en-US";
+    const category = "Pride";
+    const commandName = "nonbinary";
+    let translations;
+    try {
+      translations = loadTranslations(interactionLocale, category, commandName);
+    } catch (error) {
+      console.error(`Error loading translations:`, error);
+      translations = loadTranslations("en-US", category, commandName);
+      await interaction.reply(
+        `Your language (${interactionLocale}) is not set up. Defaulting to English.`
+      );
+    }
+
     const embed = new EmbedBuilder()
-      .setTitle(`<:_:1112196445064413194> Non-binary`)
-      .setDescription(`Here are some facts on "non-binary"`)
+      .setTitle(`<:_:1112196445064413194> ${translations.title}`)
+      .setDescription(translations.description)
       .setColor(0xff00ae)
       .setFields(
         {
-          name: `What is Non-Binary`,
-          value: `Non-binary is a term used to describe genders that don't fall strictly within the male or female categories. Non-binary individuals may experience their gender as a mix of both, neither, or something entirely different. This identity is part of the broader transgender spectrum.`,
+          name: translations.what_is_nonbinary.name,
+          value: translations.what_is_nonbinary.value,
         },
         {
-          name: `History`,
-          value: `The recognition of non-binary genders has a long history across different cultures, such as the "Two-Spirit" people in some Indigenous North American cultures. In recent times, the non-binary identity has gained more visibility as societies increasingly acknowledge gender diversity beyond the binary framework.`,
+          name: translations.history.name,
+          value: translations.history.value,
         },
         {
-          name: `The Flag`,
-          value: `The non-binary pride flag, created in 2014 by activist Kye Rowan, features four horizontal stripes: yellow, white, purple, and black. Each color holds significance: yellow represents genders outside the binary, white for non-binary people who also identify as transgender, purple as a mix of traditional male and female colors, and black for those who identify as having no gender.`,
+          name: translations.flag.name,
+          value: translations.flag.value,
         },
         {
-          name: `Days/Honoring Times`,
-          value: `- Nonbinary Awareness Week (2024) - **July 8th to 14th** \n- International Nonbinary People's Day - **July 14** \n- Nonbinary Kids' Day - **October 1**`,
+          name: translations.nonbinary_days.name,
+          value: translations.nonbinary_days.value,
         }
       );
+
     await interaction.reply({ embeds: [embed] });
   },
 };

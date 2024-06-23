@@ -1,0 +1,20 @@
+{
+  "title": "Gay!",
+  "description": "Aquí hay algunos datos sobre \"gay\"",
+  "what_is_gay": {
+    "name": "¿Qué significa 'gay'?",
+    "value": "El término \"gay\" se usa comúnmente para describir a una persona cuya atracción romántica y sexual es hacia personas del mismo género. Históricamente, se ha referido predominantemente a los hombres, pero también puede abarcar a todas las personas que experimentan atracción hacia el mismo género."
+  },
+  "history": {
+    "name": "Historia",
+    "value": "La palabra \"gay\" originalmente significaba \"alegre\" o \"despreocupado\". A mediados del siglo XX, evolucionó para referirse a la homosexualidad. Los movimientos de derechos gay han jugado un papel crucial en la historia LGBTQ+, abogando por la igualdad de derechos y la aceptación social. Pioneros como Harvey Milk y organizaciones como Stonewall han sido fundamentales en el avance de los derechos gay."
+  },
+  "flag": {
+    "name": "La Bandera",
+    "value": "Cuando la mayoría de la gente piensa en gay, piensa en una bandera arcoíris (<:_:1108822823721521242>), pero en realidad, la bandera arcoíris fue fundada en 1978 cuando el artista Gilbert Baker, un hombre abiertamente gay, diseñó la primera bandera arcoíris. Fue instado por Harvey Milk, uno de los primeros funcionarios abiertamente gay elegidos en los EE. UU., a crear un símbolo de orgullo para la comunidad gay. ([Fuente](https://www.britannica.com/story/how-did-the-rainbow-flag-become-a-symbol-of-lgbt-pride)) \n\nEl nuevo nombre moderno de la bandera gay es en realidad \"[Bandera del Orgullo de los Hombres Gay Trans-Inclusivos](https://www.hrc.org/resources/lgbtq-pride-flags)\" <:_:1109676932251000923> y es la versión de la bandera arcoíris con colores más verdosos/azules para representar diferentes identidades masculinas."
+  },
+  "days": {
+    "name": "Días/Tiempos de Honor",
+    "value": "- Mes del Orgullo LGBTQ+ - **junio** \n- Día Nacional de Salir del Armario - **11 de octubre**"
+  }
+}

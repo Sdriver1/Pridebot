@@ -1,10 +1,13 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const chalk = require("chalk");
+const loadTranslations = require("../../config/commandfunctions/translation");
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("pansexual")
-    .setDescription("You like pots or pans more?"),
+    .setNameLocalizations({})
+    .setDescription("You like pots or pans more?")
+    .setDescriptionLocalizations({}),
 
   async execute(interaction, client) {
     const estDate = new Date().toLocaleString("en-US", {
@@ -15,28 +18,44 @@ module.exports = {
         `-------------------------- \n/pansexual \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
       )
     );
+
+    const interactionLocale = interaction.locale || "en-US";
+    const category = "Pride";
+    const commandName = "pansexual";
+    let translations;
+    try {
+      translations = loadTranslations(interactionLocale, category, commandName);
+    } catch (error) {
+      console.error(`Error loading translations:`, error);
+      translations = loadTranslations("en-US", category, commandName);
+      await interaction.reply(
+        `Your language (${interactionLocale}) is not set up. Defaulting to English.`
+      );
+    }
+
     const embed = new EmbedBuilder()
-      .setTitle(`<:_:1108823338949812355> Pansexual!`)
-      .setDescription(`Here are some facts on "pansexual/panromantic"`)
+      .setTitle(`<:_:1108823338949812355> ${translations.title}`)
+      .setDescription(translations.description)
       .setColor(0xff00ae)
       .setFields(
         {
-          name: `What is Pansexual/Panromantic`,
-          value: `Pansexuality is the attraction to people regardless of their gender identity. This includes attraction to all genders and sexes, recognizing the spectrum of gender identities beyond the male-female binary. You can learn more about this in </sexuality:1111289006299283456>`,
+          name: translations.what_is_pansexual.name,
+          value: translations.what_is_pansexual.value,
         },
         {
-          name: `History`,
-          value: `The word “pansexual” comes from the Greek prefix “pan” meaning “all”. The concept emerged in the early 20th century and gained more recognition recently. Pansexuality is distinct from bisexuality; while bisexuality refers to attraction to two genders, pansexuality includes all gender identities, forming a part of the broader LGBTQ+ rights movement.`,
+          name: translations.history.name,
+          value: translations.history.value,
         },
         {
-          name: `The Flag`,
-          value: `The pansexual pride flag, created around 2010, features pink, yellow, and blue stripes. It was designed to differentiate from the bisexuality flag. Pink represents attraction to those who identify as female, yellow for attraction to genderqueer, non-binary, agender, androgynous people, or those not on the male-female binary, and blue for attraction to those who identify as male.`,
+          name: translations.flag.name,
+          value: translations.flag.value,
         },
         {
-          name: `Days/Honoring Times`,
-          value: `- Pan Week - **December 6th to 12th** \n- Pansexual and Panromantic Awareness Day - **May 24th** \n- Pansexual Pride Day - **December 8th**`,
+          name: translations.pansexual_days.name,
+          value: translations.pansexual_days.value,
         }
       );
+
     await interaction.reply({ embeds: [embed] });
   },
 };

@@ -1,0 +1,20 @@
+{
+  "title": "¡Genderfluid!",
+  "description": "Aquí hay algunos datos sobre \"genderfluid\"",
+  "what_is_genderfluid": {
+    "name": "¿Qué es Genderfluid?",
+    "value": "Genderfluid se refiere a una identidad de género que varía con el tiempo. Puede cambiar, a veces día a día o durante períodos más largos, y puede incluir masculino, femenino, ambos o ninguno."
+  },
+  "history": {
+    "name": "Historia",
+    "value": "El concepto de fluidez de género tiene raíces que se remontan a lo largo de la historia, aunque el término específico \"genderfluid\" es relativamente moderno. Varias culturas en todo el mundo han reconocido roles de género no binarios o múltiples, pero el concepto occidental de fluidez de género ganó prominencia a finales del siglo XX y principios del XXI como parte del movimiento de derechos transgénero. Desafía la comprensión binaria tradicional del género, proponiendo en su lugar que el género puede ser dinámico y cambiar con el tiempo. En contextos académicos y sociales, las discusiones sobre la fluidez de género han ayudado a iluminar las experiencias de aquellos que no se sienten representados por definiciones de género estáticas y binarias."
+  },
+  "flag": {
+    "name": "La Bandera",
+    "value": "La bandera del orgullo genderfluid consta de cinco franjas horizontales: rosa para la feminidad, blanco para todos los géneros, púrpura para una mezcla de masculinidad y feminidad, negro para la ausencia de género y azul para la masculinidad."
+  },
+  "days": {
+    "name": "Días/Tiempos de Honor",
+    "value": "- Semana de Conciencia Genderfluid (2024) - **17 a 23 de octubre** \n- Día de Visibilidad Genderfluid - **16 de junio**"
+  }
+}

@@ -1,10 +1,13 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const chalk = require("chalk");
+const loadTranslations = require("../../config/commandfunctions/translation");
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("pridemonth")
-    .setDescription("Only a month? I'm gay all year!"),
+    .setNameLocalizations({})
+    .setDescription("Only a month? I'm gay all year!")
+    .setDescriptionLocalizations({}),
 
   async execute(interaction, client) {
     const estDate = new Date().toLocaleString("en-US", {
@@ -15,24 +18,40 @@ module.exports = {
         `-------------------------- \n/pridemonth \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
       )
     );
+
+    const interactionLocale = interaction.locale || "en-US";
+    const category = "Pride";
+    const commandName = "pridemonth";
+    let translations;
+    try {
+      translations = loadTranslations(interactionLocale, category, commandName);
+    } catch (error) {
+      console.error(`Error loading translations:`, error);
+      translations = loadTranslations("en-US", category, commandName);
+      await interaction.reply(
+        `Your language (${interactionLocale}) is not set up. Defaulting to English.`
+      );
+    }
+
     const embed = new EmbedBuilder()
-      .setTitle(`<:_:1108822823721521242>  Pride Month!`)
-      .setDescription(`Here are some facts about Pride Month:`)
+      .setTitle(`<:_:1108822823721521242> ${translations.title}`)
+      .setDescription(translations.description)
       .setColor(0xff00ae)
       .setFields(
         {
-          name: `What is Pride Month`,
-          value: `Pride Month is celebrated each year in June to honor the 1969 Stonewall Uprising in New York City. It's a time when the LGBTQ+ community comes together to celebrate their identities, achievements, and ongoing struggles for equality.`,
+          name: translations.what_is_pride_month.name,
+          value: translations.what_is_pride_month.value,
         },
         {
-          name: `History`,
-          value: `The Stonewall Uprising began on June 28, 1969, and is considered a pivotal event in the fight for LGBTQ+ rights. The first official Pride Month was celebrated in June 1970, marking the one-year anniversary of the Stonewall Uprising. This event sparked the formation of various LGBTQ+ advocacy groups and led to the first Pride marches in major cities like New York, Los Angeles, and Chicago. Over the years, Pride Month has grown and spread to other countries, becoming a global celebration of diversity and inclusion.`,
+          name: translations.history.name,
+          value: translations.history.value,
         },
         {
-          name: `Days/Honoring Times`,
-          value: `- LGBTQ+ Pride Month - **June** \n- Stonewall Uprising anniversary - **June 28th**`,
+          name: translations.pride_month_days.name,
+          value: translations.pride_month_days.value,
         }
       );
+
     await interaction.reply({ embeds: [embed] });
   },
 };
