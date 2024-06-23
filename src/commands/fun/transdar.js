@@ -11,7 +11,6 @@ const utility_functions = {
 };
 const ids = {
   idiot: "197794050823290880",
-  thomas: "230778630597246983",
 };
 
 module.exports = {
