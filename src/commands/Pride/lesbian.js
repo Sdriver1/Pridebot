@@ -6,7 +6,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("lesbian")
     .setNameLocalizations({
-      fi: "Lesbo",
+      fi: "lesbo",
     })
     .setDescription("woman or 𝘸𝘰𝘮𝘢𝘯")
     .setDescriptionLocalizations({

@@ -57,8 +57,8 @@ module.exports = {
           value: translations.flag.value,
         },
         {
-          name: translations.honoring_days.name,
-          value: translations.honoring_days.value,
+          name: translations.days.name,
+          value: translations.days.value,
         }
       );
       
