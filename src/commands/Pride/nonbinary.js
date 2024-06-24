@@ -5,11 +5,15 @@ const loadTranslations = require("../../config/commandfunctions/translation");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("nonbinary")
-    .setNameLocalizations({})
+    .setNameLocalizations({
+      fi: "nonbinary"
+    })
     .setDescription(
       "01001110 01101111 01101110 00101101 01000010 01101001 01101110 01100001 01110010 01111001"
     )
-    .setDescriptionLocalizations({}),
+    .setDescriptionLocalizations({
+      fi: "01001110 01101111 01101110 00101101 01000010 01101001 01101110 01100001 01110010 01111001"
+    }),
 
   async execute(interaction, client) {
     const estDate = new Date().toLocaleString("en-US", {

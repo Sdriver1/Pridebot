@@ -7,10 +7,12 @@ module.exports = {
     .setName("genderfluid")
     .setNameLocalizations({
       "es-ES": "genderfluid",
+      fi: "genderfluid"
     })
     .setDescription("Who stole my fluid!!!")
     .setDescriptionLocalizations({
       "es-ES": "¿Quién robó mi fluido?",
+      fi: "Kuka varasti nesteeni!!!"
     }),
 
   async execute(interaction, client) {

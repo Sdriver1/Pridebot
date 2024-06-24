@@ -5,9 +5,13 @@ const loadTranslations = require("../../config/commandfunctions/translation");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("transgender")
-    .setNameLocalizations({})
+    .setNameLocalizations({
+      fi: "transsukupuolinen",
+    })
     .setDescription("Trans-formers roll out!!")
-    .setDescriptionLocalizations({}),
+    .setDescriptionLocalizations({
+      fi: "Trans-formersit, rullatkaa ulos!!",
+    }),
 
   async execute(interaction, client) {
     const estDate = new Date().toLocaleString("en-US", {

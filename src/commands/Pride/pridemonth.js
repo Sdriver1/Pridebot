@@ -5,9 +5,13 @@ const loadTranslations = require("../../config/commandfunctions/translation");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("pridemonth")
-    .setNameLocalizations({})
+    .setNameLocalizations({
+      fi: "pridekuukausi"
+    })
     .setDescription("Only a month? I'm gay all year!")
-    .setDescriptionLocalizations({}),
+    .setDescriptionLocalizations({
+      fi: "Vain kuukausi? Olen homo koko vuoden!"
+    }),
 
   async execute(interaction, client) {
     const estDate = new Date().toLocaleString("en-US", {

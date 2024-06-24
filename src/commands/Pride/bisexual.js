@@ -9,6 +9,7 @@ module.exports = {
       de: "bisexualität",
       el: "aμφιφυλόφιλη",
       "es-ES": "bisexual",
+      fi: "biseksuaali",
       nl: "biseksueel",
       ru: "бисексуал",
     })
@@ -17,6 +18,7 @@ module.exports = {
       de: "Warum bin ich wieder bi alleine ;-;",
       el: "Γιατί είμαι πάλι bi μόνος μου ;-;",
       "es-ES": "Por qué soy bi yo mismo otra vez ;-;",
+      fi: "Miksi olen taas bi yksin ;-;",
       nl: "Waarom ben ik weer bi mezelf ;-;",
       ru: "Почему я снова би сам по себе ;-;",
     }),

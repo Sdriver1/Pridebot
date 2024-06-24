@@ -1,0 +1,20 @@
+{
+  "title": "Biseksuaali!",
+  "description": "Tässä on joitain faktoja biseksuaalisuudesta/biseksuaalisesta romantiikasta",
+  "what_is_bisexuality": {
+    "name": "Mitä on biseksuaalisuus",
+    "value": "Biseksuaalisuus viittaa romanttiseen ja/tai seksuaaliseen vetovoimaan sekä miehiä että naisia kohtaan. Se tunnustaa vetovoiman spektrin, joka voi vaihdella intensiteetiltään ja muuttua ajan myötä. Biseksuaalit voivat myös kokea vetovoimaa sukupuolen binäärikäsityksen ulkopuolella."
+  },
+  "history": {
+    "name": "Historia",
+    "value": "Biseksuaalisuus on tunnustettu eri kulttuureissa läpi historian, mutta itse termi sai näkyvyyttä 1900-luvulla. Biseksuaalien oikeusliike sai vauhtia 1900-luvun loppupuolella, pyrkien hyväksyntään ja yhtäläisiin oikeuksiin laajemmassa LGBTQ+ -yhteisössä ja yhteiskunnassa."
+  },
+  "flag": {
+    "name": "Lippu",
+    "value": "Biseksuaalien ylpeyslippu suunniteltiin Michael Pagen toimesta vuonna 1998, jotta biseksuaaliyhteisöllä olisi oma symboli verrattavissa homoylpeyslippuun. Lipussa on kolme vaakasuoraa raitaa: vaaleanpunainen ylhäällä samansukupuolista vetovoimaa varten, sininen alhaalla eri sukupuolta olevaa vetovoimaa varten ja keskellä oleva violetti raita, joka edustaa vetovoimaa molempia sukupuolia kohtaan."
+  },
+  "days": {
+    "name": "Päivät/juhla-ajat",
+    "value": "- Biseksuaalisen terveyden tietoisuuskuukausi - **Maaliskuu** \n- Biseksuaalisen tietoisuuden viikko - **16. - 22. syyskuuta** \n- Biseksuaalisuuden päivä - **23. syyskuuta**"
+  }
+}

@@ -9,6 +9,7 @@ module.exports = {
       de: "asexualität",
       el: "aσεξουαλικές",
       "es-ES": "asexual",
+      fi: "asexuaali",
       nl: "aseksueel",
       ru: "асексуал",
     })
@@ -17,6 +18,7 @@ module.exports = {
       de: "asexualität, bsexualität, csexualität...",
       el: "ασεξουαλικές, βσεξουαλικές, γσεξουαλικές...",
       "es-ES": "asexual, bsexual, csexual...",
+      fi: "asexuaali, bsexuaali, csexuaali...",
       nl: "asexueel, bsexueel, csexueel...",
       ru: "асексуал, бсексуал, цсексуал...",
     }),

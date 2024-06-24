@@ -5,9 +5,13 @@ const loadTranslations = require("../../config/commandfunctions/translation");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("pansexual")
-    .setNameLocalizations({})
+    .setNameLocalizations({
+      fi: "panseksuaali",
+    })
     .setDescription("You like pots or pans more?")
-    .setDescriptionLocalizations({}),
+    .setDescriptionLocalizations({
+      fi: "Pidätkö enemmän kattiloista vai pannuista?",
+    }),
 
   async execute(interaction, client) {
     const estDate = new Date().toLocaleString("en-US", {

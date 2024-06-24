@@ -7,10 +7,12 @@ module.exports = {
     .setName("gay")
     .setNameLocalizations({
       "es-ES": "gay",
+      fi: "homo",
     })
     .setDescription("Imagine being gay, couldn't be me")
     .setDescriptionLocalizations({
       "es-ES": "Imagina ser gay, no podría ser yo",
+      fi: "Kuvittele olevasi homo, en voisi olla minä.",
     }),
 
   async execute(interaction, client) {

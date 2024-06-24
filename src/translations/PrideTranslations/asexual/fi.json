@@ -1,0 +1,24 @@
+{
+  "title": "Aseksuaali!",
+  "description": "Tässä on joitain faktoja aseksuaalisuudesta/aromanttisesta",
+  "what_is_asexuality": {
+    "name": "Mitä on aseksuaalisuus",
+    "value": "Aseksuaalisuus on seksuaalinen suuntautuminen, jossa henkilö kokee hyvin vähän tai ei ollenkaan seksuaalista vetovoimaa ketään kohtaan sukupuolesta riippumatta. Aseksuaalisuus vaihtelee suuresti yksilöiden välillä, ja se on normaali ja hyväksyttävä tapa kokea vetovoimaa."
+  },
+  "history": {
+    "name": "Historia",
+    "value": "Aseksuaalisuuden näkyvyys ja ymmärrys ovat kasvaneet merkittävästi 2000-luvulla, vaikka konsepti on ollut olemassa eri muodoissa läpi historian. Aseksuaalinen yhteisö on pyrkinyt saamaan tunnustusta laajemmassa LGBTQ+ -liikkeessä, korostaen eri vetovoiman kokemusten ymmärtämisen ja kunnioittamisen tärkeyttä. Aromanttisuus on samoin saanut enemmän tunnustusta keskusteluissa romanttisen vetovoiman spektristä."
+  },
+  "flag": {
+    "name": "Lippu",
+    "value": "Aseksuaalinen ylpeyslippu koostuu neljästä vaakasuorasta raidasta: musta aseksuaalisuudelle, harmaa harmaa-ase ja demiseksuaaliselle yhteisölle, valkoinen liittolaisille ja violetti yhteisölle. Myös aromanttinen yhteisö on saanut lipun, jossa on vihreitä, vaaleanvihreitä, valkoisia, harmaita ja mustia raitoja, symboloimassa aromanttista spektriä."
+  },
+  "aromantic_days": {
+    "name": "Aromanttiset päivät/juhlinta-ajat",
+    "value": "- Aromanttinen tietoisuuskuukausi - **Helmikuu** \n- Aromanttisen spektrin tietoisuusviikko - **18. - 24. helmikuuta** \n- Aromanttinen näkyvyyspäivä - **5. kesäkuuta ja 25. elokuuta**"
+  },
+  "asexual_days": {
+    "name": "Aseksuaaliset päivät/juhlinta-ajat",
+    "value": "- Aseksuaaliviikko - **20. - 26. lokakuuta** \n- Kansainvälinen aseksuaalisuuden päivä - **6. huhtikuuta** \n- Aseksuaalinen näkyvyyspäivä - **8. toukokuuta**"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "title": "Homo!",
+  "description": "Tässä on muutamia faktoja \"homoista\"",
+  "what_is_gay": {
+    "name": "Mitä 'homo' tarkoittaa?",
+    "value": "Termi \"homo\" on yleensä tarkoitettu kuvaamaan henkilöä, jonka romanttinen ja seksuaalinen vetovoima on saman sukupuolen ihmisiä kohtaan. Historiallisesti, sillä on pääasialisesti viitattu miehiin mutta, se voi myös kattaa kaikki yksilöt, jotka kokevat saman sukupuolen vetovoiman."
+  },
+  "history": {
+    "name": "Historia",
+    "value": "Sana \"homo\" alkuperäisesti tarkoitti \"iloisuutta\" tai \"huoletonta\". 1900-luvun puolivälissä, se kehittyi tarkoittamaan homoseksuaalisuutta. Homoseksuaalien oikeuksia ajavat liikkeet ovat ajaneet keskeistä roolia LGBTQ+ historiassa, puolustamassa tasa-arvoisten oikeuksia ja yhteiskunnallisen hyväksymistä. Edelläkävijät kuten Harvey Milk ja organisaatiot kuten Stonewall ovat olleet keskeiset tekijät homojen oikeuksien edistämisessä."
+  },
+  "flag": {
+    "name": "Lippu",
+    "value": "Kun monet ihmiset ajattelevat homoja, he ajattelevat sateenkaarilippua (<:_:1108822823721521242>), mutta todellisuudessa, sateenkaarilippu oli itseasiassa löydetty vuonna 1978 kun taiteilija Gilbert Baker, avoimesti homoseksuaali mies, suunnitteli ensimmäisen sateenkaarilipun. Häntä oli kehoittanut Harvey Milk, yksi Yhdysvaltojen ensimmäisistä avoimesti homoseksuaalien vaaleilla valituista virkamiehistä, luomaan ylpeyden symboli homoyhteisölle. ([Lähde](https://www.britannica.com/story/how-did-the-rainbow-flag-become-a-symbol-of-lgbt-pride))."
+  },
+  "days": {
+    "name": "Päivät/Kunnianosoitus ajat",
+    "value": "- LGBTQ+ Pride kuukausi- **Kesäkuu** \n- Kansallinen ulostulo päivä- **11. lokakuuta**"
+  }
+}
