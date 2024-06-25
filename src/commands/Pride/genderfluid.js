@@ -6,13 +6,17 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("genderfluid")
     .setNameLocalizations({
+      de: "genderfluid",
       "es-ES": "genderfluid",
-      fi: "genderfluid"
+      fi: "genderfluid",
+      ru: "гендерфлюиде"
     })
     .setDescription("Who stole my fluid!!!")
     .setDescriptionLocalizations({
+      de: "Wer hat meine Flüssigkeit gestohlen?",
       "es-ES": "¿Quién robó mi fluido?",
-      fi: "Kuka varasti nesteeni!!!"
+      fi: "Kuka varasti nesteeni!!!",
+      ru: "Кто украл мою жидкость!!!"
     }),
 
   async execute(interaction, client) {
@@ -61,7 +65,7 @@ module.exports = {
           value: translations.days.value,
         }
       );
-      
+
     await interaction.reply({ embeds: [embed] });
   },
 };

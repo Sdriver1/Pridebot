@@ -1,0 +1,16 @@
+{
+  "title": "Pride-Monat!",
+  "description": "Hier sind einige Fakten zum Pride Month:",
+  "what_is_pride_month": {
+    "name": "Was ist der Pride Month?",
+    "value": "Der Pride Month wird jedes Jahr im Juni zu Ehren des Stonewall-Aufstands von 1969 in New York City gefeiert. Es ist eine Zeit, in der die LGBTQ+-Community zusammenkommt, um ihre Identität, ihre Erfolge und ihren anhaltenden Kampf um Gleichberechtigung zu feiern."
+  },
+  "history": {
+    "name": "Geschichte",
+    "value": "Der Stonewall-Aufstand begann am 28. Juni 1969 und gilt als Schlüsselereignis im Kampf für LGBTQ+-Rechte. Der erste offizielle Pride Month wurde im Juni 1970 zum einjährigen Jubiläum des Stonewall-Aufstands gefeiert. Dieses Ereignis löste die Gründung verschiedener LGBTQ+-Interessengruppen aus und führte zu den ersten Pride-Märschen in Großstädten wie New York, Los Angeles und Chicago. Im Laufe der Jahre ist der Pride Month gewachsen und hat sich auf andere Länder ausgebreitet und ist zu einem globalen Fest der Vielfalt und Inklusion geworden."
+  },
+  "pride_month_days": {
+    "name": "Tage/Ehrungszeiten",
+    "value": "– LGBTQ+ Pride-Monat – **Juni** \n– Jahrestag des Stonewall-Aufstands – **28. Juni**"
+  }
+}

@@ -6,11 +6,15 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("queer")
     .setNameLocalizations({
+      de: "queer",
       fi: "queer",
+      ru: "квир"
     })
     .setDescription("OMG! QUEER!")
     .setDescriptionLocalizations({
+      de: "OMG! QUEER!",
       fi: "OMG! QUEER!",
+      ru: "OMG! КВИР!"
     }),
 
   async execute(interaction, client) {

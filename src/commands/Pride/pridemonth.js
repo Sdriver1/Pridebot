@@ -6,11 +6,15 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("pridemonth")
     .setNameLocalizations({
-      fi: "pridekuukausi"
+      de: "pridemonat",
+      fi: "pridekuukausi",
+      ru: "месяцгордости",
     })
     .setDescription("Only a month? I'm gay all year!")
     .setDescriptionLocalizations({
-      fi: "Vain kuukausi? Olen homo koko vuoden!"
+      de: "Nur einen Monat? Ich bin das ganze Jahr schwul!",
+      fi: "Vain kuukausi? Olen homo koko vuoden!",
+      ru: "Только месяц? Я гей круглый год!",
     }),
 
   async execute(interaction, client) {

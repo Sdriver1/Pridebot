@@ -1,0 +1,20 @@
+{
+  "title": "Queer!",
+  "description": "Hier sind einige Fakten zum Thema \"queer\"",
+  "what_is_queer": {
+    "name": "Was ist „Queer“",
+    "value": "Der Begriff „queer“ ist ein Sammelbegriff für Menschen, die nicht heterosexuell oder nicht cisgender sind. Es ist ein Begriff, der ein breites Spektrum an sexuellen Orientierungen und Geschlechtsidentitäten umfasst und die Vielfalt der LGBTQ+-Community feiert."
+  },
+  "history": {
+    "name": "Geschichte",
+    "value": "Ursprünglich als abwertender Begriff verwendet, wurde „queer“ von der LGBTQ+-Community als Symbol des Stolzes und des Widerstands gegen Diskriminierung wiederentdeckt. Seine Verwendung als integratives und vereinendes Label spiegelt die Vielfalt und Komplexität der LGBTQ+-Erfahrungen wider."
+  },
+  "flag": {
+    "name": "Die Flagge",
+    "value": "Die Queer-Pride-Flagge, oft synonym mit der LGBTQ+-Pride-Flagge, ist ein Symbol der queeren Identität und Gemeinschaft. Sie weist typischerweise das Regenbogendesign auf, wobei jede Farbe einen anderen Aspekt der Gemeinschaft repräsentiert: Rot für Leben, Orange für Heilung, Gelb für Sonnenlicht, Grün für Natur, Blau für Harmonie und Violett für Geist. Diese Flagge wird weithin als Symbol für LGBTQ+-Stolz und Vielfalt anerkannt und feiert die Einbeziehung und Akzeptanz aller sexuellen Orientierungen und Geschlechtsidentitäten innerhalb der queeren Gemeinschaft."
+  },
+  "important_dates": {
+    "name": "Wichtige Daten",
+    "value": "- LGBTQ+ Pride Monat - **Juni**\n- Nationaler Coming-out Tag - **11. Oktober**"
+  }
+}
