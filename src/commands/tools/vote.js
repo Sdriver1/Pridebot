@@ -1,6 +1,6 @@
 require("dotenv").config();
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const chalk = require("chalk");
+const commandLogging = require("../../config/commandfunctions/commandlog");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -8,16 +8,7 @@ module.exports = {
     .setDescription("Support Pridebot by voting for us here"),
 
   async execute(interaction, client) {
-    const estDate = new Date().toLocaleString("en-US", {
-      timeZone: "America/New_York",
-    });
-    console.log(
-      chalk.white.bold(
-        `-------------------------- \n/vote \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
-      )
-    );
-
-    const voteembed = new EmbedBuilder()
+   const voteembed = new EmbedBuilder()
       .setTitle("Thank you for voting!")
       .setColor(0xff00ae)
       .addFields(
@@ -43,5 +34,6 @@ module.exports = {
       .setTimestamp();
 
     await interaction.reply({ embeds: [voteembed] });
+    await commandLogging(client, interaction);
   },
 };

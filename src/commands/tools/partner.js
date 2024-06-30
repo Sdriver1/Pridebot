@@ -1,6 +1,6 @@
 require("dotenv").config();
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const chalk = require("chalk");
+const commandLogging = require("../../config/commandfunctions/commandlog");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -8,15 +8,6 @@ module.exports = {
     .setDescription("Check out Pridebot partners"),
 
   async execute(interaction, client) {
-    const estDate = new Date().toLocaleString("en-US", {
-      timeZone: "America/New_York",
-    });
-    console.log(
-      chalk.white.bold(
-        `-------------------------- \n/partners \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
-      )
-    );
-
     const pcav = "https://cdn.discordapp.com/emojis/1219506730451603547.png";
     const snav = "https://cdn.discordapp.com/emojis/1193823319246524486.png";
 
@@ -45,5 +36,6 @@ module.exports = {
       .setTimestamp();
 
     await interaction.reply({ embeds: [pridecordembed, sneakyembed] });
+    await commandLogging(client, interaction);
   },
 };

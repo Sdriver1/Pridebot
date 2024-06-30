@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const chalk = require("chalk");
+const commandLogging = require("../../config/commandfunctions/commandlog");
 
 const {
   containsDisallowedContent,
@@ -49,15 +49,7 @@ module.exports = {
         .setRequired(false)
     ),
 
-  async execute(interaction) {
-    const estDate = new Date().toLocaleString("en-US", {
-      timeZone: "America/New_York",
-    });
-    console.log(
-      chalk.white.bold(
-        `-------------------------- \n/tester \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
-      )
-    );
+  async execute(interaction, client) {
     const subject = interaction.options.getString("subject");
     const object = interaction.options.getString("object");
     const possessiveDeterminer = interaction.options.getString("possessive");
@@ -218,6 +210,7 @@ module.exports = {
     const isPublic = interaction.options.getBoolean("public", false);
 
     await interaction.reply({ embeds: [embed], ephemeral: !isPublic });
+    await commandLogging(client, interaction);
   },
 };
 
@@ -262,7 +255,13 @@ async function sendToxicNotification(
       { name: "Command", value: "NameTester", inline: true },
       {
         name: "Flagged Content",
-        value: `||${subject || object || possessiveDeterminer || possessivePronoun || reflexive}||`,
+        value: `||${
+          subject ||
+          object ||
+          possessiveDeterminer ||
+          possessivePronoun ||
+          reflexive
+        }||`,
         inline: true,
       },
       { name: "_ _", value: `_ _`, inline: true },

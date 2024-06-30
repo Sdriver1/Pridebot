@@ -8,23 +8,14 @@ const {
   ButtonBuilder,
   ButtonStyle,
 } = require("discord.js");
-const chalk = require("chalk");
+const commandLogging = require("../../config/commandfunctions/commandlog");
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("pronouns")
     .setDescription("Learn about any kinds or types of pronouns"),
 
-  async execute(interaction) {
-    const estDate = new Date().toLocaleString("en-US", {
-      timeZone: "America/New_York",
-    });
-    console.log(
-      chalk.white.bold(
-        `-------------------------- \n/pronoun \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
-      )
-    );
-
+  async execute(interaction, client) {
     const pronoun = [
       {
         name: "He/Him/His",
@@ -186,6 +177,7 @@ module.exports = {
       .setTimestamp();
 
     await interaction.reply({ embeds: [embed], components: [row] });
+    await commandLogging(client, interaction);
 
     function createPronounButtons(currentIndex) {
       const components = [];

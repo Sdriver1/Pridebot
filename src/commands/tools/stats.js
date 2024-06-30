@@ -1,5 +1,5 @@
 require("dotenv").config();
-const chalk = require("chalk");
+const commandLogging = require("../../config/commandfunctions/commandlog");
 const os = require("os");
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const CommandUsage = require("../../../mongo/models/usageSchema");
@@ -19,15 +19,6 @@ module.exports = {
     await interaction.deferReply();
 
     const botping = Date.now() - startTimestamp;
-
-    const estDate = new Date().toLocaleString("en-US", {
-      timeZone: "America/New_York",
-    });
-    console.log(
-      chalk.white.bold(
-        `-------------------------- \n/stats \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
-      )
-    );
 
     function getCpuUsage() {
       return new Promise((resolve) => {
@@ -86,7 +77,7 @@ module.exports = {
       )}\` \n**Start Time:** ${startTimeTimestamp}`;
       const botstats = `**Servers:** \`${currentGuildCount}\` \n**Users:** \`${formattedTotalUserCount}\``;
       const commandstats = `**Commands:** \`${CommandsCount}\` \n**Total Usage:** \`${totalUsage}\` \n**Profiles:** \`${profileAmount}\``;
-      const botversion = `**Dev:** \`3.${commitTens}.${commitOnes}\` \n **Node.js:** \`${process.version}\` \n **Discord.js:** \`v14.14.1\``;
+      const botversion = `**Dev:** \`3.${commitTens}.${commitOnes}\` \n **Node.js:** \`${process.version}\` \n **Discord.js:** \`v14.15.3\``;
       const clientstats = `**CPU:** \`${cpuPercent}% / 100%\` \n**Memory:** \`${memoryUsage} / 6 GB\``;
 
       const embed = new EmbedBuilder()
@@ -129,6 +120,7 @@ module.exports = {
         .setTimestamp();
 
       await interaction.editReply({ embeds: [embed] });
+      await commandLogging(client, interaction);
     } catch (error) {
       console.error("Error executing /stats command:", error);
       await interaction.editReply(

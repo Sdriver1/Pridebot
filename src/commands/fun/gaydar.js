@@ -1,14 +1,14 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const chalk = require("chalk");
+const commandLogging = require("../../config/commandfunctions/commandlog");
 const utility_functions = {
   chance: function (probability) {
-    if (Math.random() > probability) return false;
-    return true;
+    return Math.random() <= probability;
   },
   number_format_commas: function (number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   },
 };
+
 const ids = {
   austin: "288897433805651968",
   paul: "218507234144026625",
@@ -30,15 +30,6 @@ module.exports = {
     ),
 
   async execute(interaction, client) {
-    const estDate = new Date().toLocaleString("en-US", {
-      timeZone: "America/New_York",
-    });
-    console.log(
-      chalk.white.bold(
-        `-------------------------- \n/gaydar \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
-      )
-    );
-
     const targetUser =
       interaction.options.getUser("target") || interaction.user;
     const userName = targetUser.username;
@@ -78,5 +69,6 @@ module.exports = {
         text: "The bot has 99.99% accuracy rate on checking users gayness",
       });
     await interaction.reply({ embeds: [embed] });
+    await commandLogging(client, interaction);
   },
 };

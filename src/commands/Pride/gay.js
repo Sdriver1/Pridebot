@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const chalk = require("chalk");
+const commandLogging = require("../../config/commandfunctions/commandlog");
 const loadTranslations = require("../../config/commandfunctions/translation");
 
 module.exports = {
@@ -20,15 +20,6 @@ module.exports = {
     }),
 
   async execute(interaction, client) {
-    const estDate = new Date().toLocaleString("en-US", {
-      timeZone: "America/New_York",
-    });
-    console.log(
-      chalk.white.bold(
-        `-------------------------- \n/gay \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
-      )
-    );
-
     const interactionLocale = interaction.locale || "en-US";
     const category = "Pride";
     const commandName = "gay";
@@ -67,5 +58,6 @@ module.exports = {
       );
 
     await interaction.reply({ embeds: [embed] });
+    await commandLogging(client, interaction);
   },
 };

@@ -8,23 +8,14 @@ const {
   ButtonBuilder,
   ButtonStyle,
 } = require("discord.js");
-const chalk = require("chalk");
+const commandLogging = require("../../config/commandfunctions/commandlog");
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("sexuality")
     .setDescription("Learn about any kinds or types of sexualities"),
 
-  async execute(interaction) {
-    const estDate = new Date().toLocaleString("en-US", {
-      timeZone: "America/New_York",
-    });
-    console.log(
-      chalk.white.bold(
-        `-------------------------- \n/sexuality \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
-      )
-    );
-
+  async execute(interaction, client) {
     const sex = [
       {
         name: "Asexual/Aromantic",
@@ -293,6 +284,7 @@ module.exports = {
     }
 
     await interaction.reply({ embeds: [embed], components: [row] });
+    await commandLogging(client, interaction);
 
     const collector = interaction.channel.createMessageComponentCollector({
       componentType: ComponentType.StringSelect,

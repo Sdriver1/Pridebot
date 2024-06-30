@@ -6,7 +6,7 @@ const {
   ButtonStyle,
   ComponentType,
 } = require("discord.js");
-const chalk = require("chalk");
+const commandLogging = require("../../config/commandfunctions/commandlog");
 
 const Profile = require("../../../mongo/models/profileSchema");
 const IDLists = require("../../../mongo/models/idSchema");
@@ -340,17 +340,9 @@ module.exports = {
         )
     ),
 
-  async execute(interaction) {
+  async execute(interaction, client) {
     const subcommand = interaction.options.getSubcommand();
     const username = interaction.user.username;
-    const estDate = new Date().toLocaleString("en-US", {
-      timeZone: "America/New_York",
-    });
-    console.log(
-      chalk.white.bold(
-        `-------------------------- \n/profile ${subcommand} \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
-      )
-    );
 
     async function fetchProfileColor(userId) {
       const profile = await Profile.findOne({ userId: userId });
@@ -406,6 +398,7 @@ module.exports = {
           : "Badges are now hidden from your profile.";
       }
 
+      await commandLogging(client, interaction);
       return interaction.reply({
         content: responseMessage,
         ephemeral: true,
@@ -518,8 +511,10 @@ module.exports = {
             .setURL(profile.pronounpage)
         );
 
+        await commandLogging(client, interaction);
         return interaction.reply({ embeds: [profileEmbed], components: [row] });
       } else {
+        await commandLogging(client, interaction);
         return interaction.reply({ embeds: [profileEmbed] });
       }
     } else if (subcommand === "update") {
@@ -652,6 +647,7 @@ module.exports = {
         });
       }
 
+      await commandLogging(client, interaction);
       return interaction.reply({
         content:
           "Your profile has been updated successfully! \nSee your new profile with </profile view:1197313708846743642>",
@@ -799,6 +795,8 @@ module.exports = {
         .setThumbnail(interaction.user.displayAvatarURL())
         .setFooter({ text: "Profile Setup Complete" })
         .setTimestamp();
+
+      await commandLogging(client, interaction);
       return interaction.reply({
         content:
           "Your profile has been created successfully! \nSee your new profile with </profile view:1197313708846743642> \nTo update anything or add multiple pronoun, gender, sexuality or a bio, please use </profile update:1197313708846743642>",

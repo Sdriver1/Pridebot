@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const chalk = require("chalk");
+const commandLogging = require("../../config/commandfunctions/commandlog");
 const utility_functions = {
   chance: function (probability) {
     if (Math.random() > probability) return false;
@@ -26,15 +26,6 @@ module.exports = {
     ),
 
   async execute(interaction, client) {
-    const estDate = new Date().toLocaleString("en-US", {
-      timeZone: "America/New_York",
-    });
-    console.log(
-      chalk.white.bold(
-        `-------------------------- \n/transdar \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
-      )
-    );
-
     const targetUser =
       interaction.options.getUser("target") || interaction.user;
     const userName = targetUser.username;
@@ -66,5 +57,6 @@ module.exports = {
         text: "The bot has 99.99% accuracy rate on checking users transness",
       });
     await interaction.reply({ embeds: [embed] });
+    await commandLogging(client, interaction);
   },
 };

@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const chalk = require("chalk");
-
+const commandLogging = require("../../config/commandfunctions/commandlog");
 const {
   containsDisallowedContent,
 } = require("../../config/detection/containDisallow");
@@ -20,16 +19,7 @@ module.exports = {
         .setRequired(false)
     ),
 
-  async execute(interaction) {
-    const estDate = new Date().toLocaleString("en-US", {
-      timeZone: "America/New_York",
-    });
-    console.log(
-      chalk.white.bold(
-        `-------------------------- \n/nametester \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
-      )
-    );
-
+  async execute(interaction, client) {
     const name = interaction.options.getString("name");
     const public = interaction.options.getBoolean("public");
     const username = interaction.user.username;
@@ -101,6 +91,7 @@ module.exports = {
       .setTimestamp();
 
     await interaction.reply({ embeds: [embed], ephemeral: !public });
+    await commandLogging(client, interaction);
   },
 };
 

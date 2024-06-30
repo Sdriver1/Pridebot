@@ -6,7 +6,7 @@ const {
   StringSelectMenuOptionBuilder,
   ComponentType,
 } = require("discord.js");
-const chalk = require("chalk");
+const commandLogging = require("../../config/commandfunctions/commandlog");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -14,14 +14,6 @@ module.exports = {
     .setDescription("Shows command list and helpful links"),
 
   async execute(interaction, client) {
-    const estDate = new Date().toLocaleString("en-US", {
-      timeZone: "America/New_York",
-    });
-    console.log(
-      chalk.white.bold(
-        `-------------------------- \n/help \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
-      )
-    );
     const helpOptions = [
       {
         name: "Fun",
@@ -122,6 +114,7 @@ module.exports = {
       );
 
     await interaction.reply({ embeds: [embed], components: [row] });
+    await commandLogging(client, interaction);
 
     const collector = interaction.channel.createMessageComponentCollector({
       componentType: ComponentType.StringSelect,

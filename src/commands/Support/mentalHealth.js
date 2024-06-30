@@ -1,5 +1,5 @@
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
-const chalk = require("chalk");
+const commandLogging = require("../../config/commandfunctions/commandlog");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -12,15 +12,7 @@ module.exports = {
         .setRequired(false)
     ),
 
-  async execute(interaction) {
-    const estDate = new Date().toLocaleString("en-US", {
-      timeZone: "America/New_York",
-    });
-    console.log(
-      chalk.white.bold(
-        `-------------------------- \n/mental \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
-      )
-    );
+  async execute(interaction, client) {
     const embed = new EmbedBuilder()
       .setTitle("Crisis Help Channel Resources & Hotlines")
       .setColor(0xff00ae)
@@ -57,5 +49,6 @@ module.exports = {
     const isPublic = interaction.options.getBoolean("public", false);
 
     await interaction.reply({ embeds: [embed], ephemeral: !isPublic });
+    await commandLogging(client, interaction);
   },
 };

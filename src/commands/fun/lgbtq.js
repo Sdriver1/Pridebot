@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const chalk = require("chalk");
+const commandLogging = require("../../config/commandfunctions/commandlog");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -9,14 +9,6 @@ module.exports = {
     ),
 
   async execute(interaction, client) {
-    const estDate = new Date().toLocaleString("en-US", {
-      timeZone: "America/New_York",
-    });
-    console.log(
-      chalk.white.bold(
-        `-------------------------- \n/lgbtq \nServer: ${interaction.guild.name} (${interaction.guild.id}) \nUser: ${interaction.user.tag} (${interaction.user.id}) \nTime: ${estDate} (EST) \n--------------------------`
-      )
-    );
     const embed = new EmbedBuilder()
       .setTitle(`OMG IT IS THE`)
       .setDescription(
@@ -24,5 +16,6 @@ module.exports = {
       )
       .setColor(0xff00ae);
     await interaction.reply({ embeds: [embed] });
+    await commandLogging(client, interaction);
   },
 };
