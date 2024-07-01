@@ -77,7 +77,7 @@ client.on("interactionCreate", (interaction) => {
   eventHandlers.handleReportFeedback(client, interaction);
 });
 
-setInterval(() => eventHandlers.updateChannelName(client), 5 * 60 * 1000);
+setInterval(() => eventHandlers.updateChannelName(client), 1 * 60 * 1000);
 client.once("ready", () => {
   eventHandlers.updateChannelName(client);
 });

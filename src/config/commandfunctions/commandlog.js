@@ -18,13 +18,16 @@ const commandLogging = async (client, interaction) => {
   usageData.count += 0;
   await usageData.save();
 
+  const allUsages = await CommandUsage.find({}).sort({ count: -1 });
+  const totalUsage = allUsages.reduce((acc, cmd) => acc + cmd.count, 0);
+
   const logChannel = client.channels.cache.get("1256810888694861914");
 
   if (logChannel) {
     const logEmbed = new EmbedBuilder()
       .setTitle("Command Used")
       .setDescription(
-        `**Command:** /${interaction.commandName}\n**Server:** ${interaction.guild.name} (${interaction.guild.id})\n**User:** <@${interaction.user.id}> (${interaction.user.id})\n**Time:** ${estDate} (EST)\n**Usage Count:** ${usageData.count}`
+        `**Command:** /${interaction.commandName}\n**Server:** ${interaction.guild.name} (${interaction.guild.id})\n**User:** <@${interaction.user.id}> (${interaction.user.id})\n**Time:** ${estDate} (EST)\n**Command Count:** ${usageData.count}\n **Total Usage:** ${totalUsage}`
       )
       .setColor(0xff00ea)
       .setFooter({ text: `${interaction.user.id}` })

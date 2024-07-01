@@ -9,23 +9,13 @@ module.exports = {
         (acc, guild) => acc + guild.memberCount,
         0
       );
-      /*
-            await client.user.setPresence({
-              status: "online",
-              activities: [
-                {
-                  type: ActivityType.Watching,
-                  name: `over ${formattedTotalUserCount} LGBTQIA+ members`,
-                },
-              ],
-            });
-            */
+
       await client.user.setPresence({
         status: "online",
         activities: [
           {
-            type: ActivityType.Playing,
-            name: `Happy Pride Month to my ${userCount.toLocaleString()} LGBTQIA+ users!`,
+            type: ActivityType.Watching,
+            name: `over ${userCount} LGBTQIA+ members`,
           },
         ],
       });
