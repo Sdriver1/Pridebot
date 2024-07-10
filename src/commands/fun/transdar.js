@@ -12,6 +12,7 @@ const utility_functions = {
 const ids = {
   idiot: "197794050823290880",
   thomas: "369518015320162318",
+  tree: "950951110829551658",
 };
 
 module.exports = {
@@ -40,6 +41,8 @@ module.exports = {
     } else if (userid === ids.idiot) {
       meter = "morbius";
     } else if (userid === ids.thomas) {
+      meter = 100;
+    } else if (userid === ids.tree) {
       meter = 100;
     } else {
       meter = Math.floor(Math.random() * 101);

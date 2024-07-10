@@ -16,6 +16,7 @@ const ids = {
   idiot: "197794050823290880",
   dan: "1176313325689258058",
   elijah: "894380069932396544",
+  tree: "950951110829551658",
 };
 
 module.exports = {
@@ -40,6 +41,8 @@ module.exports = {
       meter = 300;
     } else if (userid === ids.paul) {
       meter = 0.1;
+    } else if (userid === ids.tree) {
+      meter = 100;
     } else if (userid === ids.elijah) {
       meter = 69420;
     } else if (userid === ids.dan) {

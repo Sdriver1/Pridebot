@@ -11,6 +11,7 @@ const utility_functions = {
 
 const ids = {
   bot: "1101256478632972369",
+  tree: "950951110829551658",
 };
 
 module.exports = {
@@ -33,6 +34,8 @@ module.exports = {
     let meter;
     if (userid === ids.bot) {
       meter = 101;
+    } else if (userid === ids.tree) {
+      meter = 100;
     } else if (utility_functions.chance(0.0001)) {
       meter = Math.floor(Math.random() * 2354082) + 500;
       if (utility_functions.chance(0.5)) {
