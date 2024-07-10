@@ -3,6 +3,8 @@ const cors = require("cors");
 const { EmbedBuilder, ChannelType } = require("discord.js");
 const CommandUsage = require("../mongo/models/usageSchema.js");
 const ProfileData = require("../mongo/models/profileSchema.js");
+const { botlistauth } = process.env;
+require("dotenv").config();
 
 const { getTotalCommits } = require("./config/commandfunctions/commit.js");
 const {
