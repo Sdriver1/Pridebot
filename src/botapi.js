@@ -220,6 +220,7 @@ module.exports = (client) => {
         totalCommits = 0;
       }
 
+      let commitPrefix = data.repository.name === "Pridebot" ? "2" : "";
       let commitTens = totalCommits.toString().slice(-2, -1) || "0";
       let commitOnes = totalCommits.toString().slice(-1);
 
@@ -235,7 +236,7 @@ module.exports = (client) => {
           .join("\n");
         const title = `${commitCount} New ${data.repository.name} ${
           commitCount > 1 ? "Commits" : "Commit"
-        } (# 2${commitTens}${commitOnes})`;
+        } (# ${commitPrefix}${commitTens}${commitOnes})`;
         const fieldname = `${commitCount > 1 ? "Commits" : "Commit"}`;
 
         embed
