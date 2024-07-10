@@ -7,7 +7,7 @@ const ProfileData = require("../mongo/models/profileSchema.js");
 const { getTotalCommits } = require("./config/commandfunctions/commit.js");
 const {
   getRegisteredCommandsCount,
-} = require("./config/commandfunctions/registercommand.js")
+} = require("./config/commandfunctions/registercommand.js");
 
 module.exports = (client) => {
   const app = express();
@@ -203,11 +203,22 @@ module.exports = (client) => {
       const data = request.body;
       let embed = new EmbedBuilder();
 
-      let totalCommits = await getTotalCommits(
-        "Sdriver1",
-        "Pridebot",
-        process.env.githubToken
-      );
+      async function getTotalCommitsFromRepo(repoName) {
+        return await getTotalCommits(
+          "Sdriver1",
+          repoName,
+          process.env.githubToken
+        );
+      }
+
+      let totalCommits;
+      if (data.repository.name === "Pridebot") {
+        totalCommits = await getTotalCommitsFromRepo("Pridebot");
+      } else if (data.repository.name === "Pridebot-Website") {
+        totalCommits = await getTotalCommitsFromRepo("Pridebot-Website");
+      } else {
+        totalCommits = 0;
+      }
 
       let commitTens = totalCommits.toString().slice(-2, -1) || "0";
       let commitOnes = totalCommits.toString().slice(-1);
