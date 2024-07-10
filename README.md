@@ -12,34 +12,36 @@ Pridebot offers a range of features to assist users in learning and discussing L
 
 ## Getting Started
 To add Pridebot to your Discord server, follow these two simple steps:
-1. **Invite Pridebot**: Use this [invitation link](https://discord.com/api/oauth2/authorize?client_id=1101256478632972369&permissions=415001594945&scope=bot%20applications.commands) to add Pridebot to your Discord server.
+1. **Invite Pridebot**: Use this [invitation link](https://pridebot.xyz/invite) to add Pridebot to your Discord server.
 2. **Explore Commands**: Use `/help` to explore the various commands and features offered by Pridebot.
 
 ## Commands
 Here is a list of the commands you can use with Pridebot:
-- **Fun** - `/gaydar`, `/lgbtq`, `/pronountester`, and `/transdar`
+- **Fun** - `/gaydar`, `/lgbtq`, `/match`, `/pronountester`, `/queerdar`, and `/transdar`
 - **Pride** 
-    - **Sexualities** - `/asexual`,`/bisexual`, `/gay`,`/lesbian`, `/pansexual`, and `/queer` 
-    - **Genders** -  `/nonbinary`, and `/transgender`
+    - **Sexualities** - `/asexual`, `/bisexual`, `/gay`, `/lesbian`, `/pansexual`, and `/queer`
+    - **Genders** -  `/genderfluid`, `/nonbinary`, and `/trans`
+    - **Months** - `/pridemonth`
 - **Profiles** - `profile setup`, `profile view`,`profile edit`, and `profile update`
-- **Support** - `/comingout` and `/mentalhealth`
+- **Support** - `/comingout`, `/mentalhealth`, and `/transresources`
 - **Terms** - `/gender`, `/other`, `/pronouns`, and `/sexuality`
-- **Tools** - `/bugreport`, `/feedback`, `/help,`, `/latest`, , `/partner`, `/stats`, and `/vote`
+- **Tools** - `/help,`, `/partner`, `/stats`, and `/vote`
 
-- **User Apps** - `User Gaydar`, `User Profile`, and `User Transdar`
+- **User Apps** - `User Gaydar`, `User Profile`, `User Queersdar`, and `User Transdar`
 
 
 ## Contribution
 Contributions to Pridebot are welcome! If you're interested in contributing, please:
-- **Report Bugs**: Submit bug reports with `/bugreport` to help improve Pridebot.
-- **Suggest Features**: Have an idea? Please share it with us using `/feedback`!
-- **Voting**: Vote for Pridebot on [Top.gg](https://top.gg/bot/1101256478632972369?s=0bed0f7e006a2) and [Wumpus Store](https://wumpus.store/bot/1101256478632972369)
+- **Bugs / Features**: Join the Support Server below to report any bugs or suggest any features!
+- **Pull Request**: I go through pull request alot so if you want to code anything into the bot, you are free too!
+- **Voting**: Vote for Pridebot on [Botlist.me](https://botlist.me/bots/1101256478632972369/vote), [Top.gg](https://top.gg/bot/1101256478632972369/vote), and [Wumpus Store](https://wumpus.store/bot/1101256478632972369/vote)
 
 ## Support
 For support, questions, or feedback about Pridebot, please join our Discord community [here](https://discord.gg/guybqSTzdS).
 
-## License
-[MIT License](LICENSE)
+## Legal
+[Pridebot Term of Service](https://pridebot.xyz/tos)
+[Pridebot Privacy Policy](https://pridebot.xyz/privacy)
 
 ---
 
