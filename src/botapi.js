@@ -10,6 +10,7 @@ const { getTotalCommits } = require("./config/commandfunctions/commit.js");
 const {
   getRegisteredCommandsCount,
 } = require("./config/commandfunctions/registercommand.js");
+const { updateVotingStats } = require("./config/botfunctions/voting.js");
 
 module.exports = (client) => {
   const app = express();
@@ -97,6 +98,7 @@ module.exports = (client) => {
           }
 
           await channel.send({ embeds: [embed] });
+          await updateVotingStats(wumpususer, "Wumpus");
           res.status(200).send("Success!");
         } catch (error) {
           console.error("Error sending message to Discord:", error);
@@ -139,6 +141,7 @@ module.exports = (client) => {
           }
 
           await channel.send({ embeds: [embed] });
+          await updateVotingStats(topgguserid, "TopGG");
           res.status(200).send("Success!");
         } catch (error) {
           console.error("Error sending message to Discord:", error);
@@ -185,6 +188,7 @@ module.exports = (client) => {
           }
 
           await channel.send({ embeds: [embed] });
+          await updateVotingStats(botlistuser, "BotList");
           res.status(200).send("Success!");
         } catch (error) {
           console.error("Error sending message to Discord:", error);
