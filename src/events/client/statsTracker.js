@@ -1,6 +1,7 @@
 const { ChannelType } = require("discord.js");
 const CommandUsage = require("../../../mongo/models/usageSchema");
 const Profile = require("../../../mongo/models/profileSchema");
+const Voting = require("../../../mongo/models/votingSchema");
 
 async function getRegisteredCommandsCount(client) {
   if (!client.application) {
@@ -32,6 +33,9 @@ const updateChannelName = async (client) => {
 
   const profileAmount = await Profile.countDocuments();
 
+  const voting = await Voting.findOne();
+  const votingtotal = voting.votingAmount.OverallTotal;
+
   const channels = [
     {
       id: "1152452882663227423",
@@ -52,6 +56,10 @@ const updateChannelName = async (client) => {
     {
       id: "1246264055388438700",
       name: `Profiles: ${profileAmount}`,
+    },
+    {
+      id: "1261162314267230248",
+      name: `Bot Votes: ${votingtotal}`,
     },
   ];
 
