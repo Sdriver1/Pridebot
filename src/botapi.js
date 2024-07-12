@@ -41,12 +41,24 @@ module.exports = (client) => {
 
       const botuptime = client.botStartTime;
 
+      const voting = await Voting.findOne();
+      const votingtotal = voting.votingAmount.OverallTotal;
+      const topggtoal = voting.votingAmount.TopGGTotal;
+      const wumpustotal = voting.votingAmount.WumpusTotal;
+      const botlisttotal = voting.votingAmount.BotListTotal;
+
       res.json({
         totalUserCount,
         currentGuildCount,
         totalUsage,
         commandsCount,
         botuptime,
+        vote: {
+          votingtotal,
+          topggtoal,
+          wumpustotal,
+          botlisttotal,
+        },
       });
     } catch (error) {
       console.error("Failed to get API stats:", error);
