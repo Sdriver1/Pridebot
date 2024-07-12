@@ -81,6 +81,24 @@ module.exports = (client) => {
     }
   });
 
+  app.get("/api/votes/:userId", cors(), async (req, res) => {
+    try {
+      const votes = await Voting.findOne(
+        { "votingUsers.userId": req.params.userId },
+        { "votingUsers.$": 1 }
+      );
+
+      if (!votes || votes.votingUsers.length === 0) {
+        return res.status(404).json({ message: "User has not voted yet!" });
+      }
+
+      return res.json(votes.votingUsers[0]);
+    } catch (error) {
+      console.error("Failed to retrieve voting stats:", error);
+      return res.status(500).send("Internal Server Error");
+    }
+  });
+
   app.post("/wumpus-votes", async (req, res) => {
     let wumpususer = req.body.userId;
     let wumpusbot = req.body.botId;
