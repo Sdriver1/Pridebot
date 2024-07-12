@@ -3,6 +3,7 @@ const cors = require("cors");
 const { EmbedBuilder, ChannelType } = require("discord.js");
 const CommandUsage = require("../mongo/models/usageSchema.js");
 const ProfileData = require("../mongo/models/profileSchema.js");
+const Voting = require("../mongo/models/votingSchema");
 const { botlistauth } = process.env;
 require("dotenv").config();
 
@@ -81,9 +82,16 @@ module.exports = (client) => {
       .then(async (user) => {
         const userAvatarURL = user.displayAvatarURL();
 
+        await updateVotingStats(wumpususer, "Wumpus");
+
+        const voting = await Voting.findOne();
+        const userVoting = voting.votingUsers.find(
+          (u) => u.userId === wumpususer
+        );
+
         const embed = new EmbedBuilder()
           .setDescription(
-            `**Thank you <@${wumpususer}> for voting for <@${wumpusbot}> on [Wumpus.Store](https://wumpus.store/bot/${wumpusbot}/vote) <:_:1198663251580440697>** \nYou can vote again <t:${voteAvailableTimestamp}:R>.`
+            `**Thank you <@${wumpususer}> for voting for <@${wumpusbot}> on [Wumpus.Store](https://wumpus.store/bot/${wumpusbot}/vote) <:_:1198663251580440697>** \nYou can vote again <t:${voteAvailableTimestamp}:R>.\n\n<@${wumpususer}> **Wumpus.Store Votes: ${userVoting.votingWumpus}** \n**Total Wumpus.Store Votes: ${voting.votingAmount.WumpusTotal}**`
           )
           .setColor("#FF00EA")
           .setThumbnail(userAvatarURL)
@@ -98,7 +106,6 @@ module.exports = (client) => {
           }
 
           await channel.send({ embeds: [embed] });
-          await updateVotingStats(wumpususer, "Wumpus");
           res.status(200).send("Success!");
         } catch (error) {
           console.error("Error sending message to Discord:", error);
@@ -124,9 +131,16 @@ module.exports = (client) => {
       .then(async (user) => {
         const userAvatarURL = user.displayAvatarURL();
 
+        await updateVotingStats(topgguserid, "TopGG");
+
+        const voting = await Voting.findOne();
+        const userVoting = voting.votingUsers.find(
+          (u) => u.userId === topgguserid
+        );
+
         const embed = new EmbedBuilder()
           .setDescription(
-            `**Thank you <@${topgguserid}> for voting for <@${topggbotid}> on [Top.gg](https://top.gg/bot/${topggbotid}/vote) <:_:1195866944482590731>** \nYou can vote again in <t:${voteAvailableTimestamp}:R>`
+            `**Thank you <@${topgguserid}> for voting for <@${topggbotid}> on [Top.gg](https://top.gg/bot/${topggbotid}/vote) <:_:1195866944482590731>** \nYou can vote again <t:${voteAvailableTimestamp}:R> \n\n**<@${topgguserid}> Top.gg Votes: ${userVoting.votingTopGG}** \n**Total Top.gg Votes: ${voting.votingAmount.TopGGTotal}**`
           )
           .setColor("#FF00EA")
           .setThumbnail(userAvatarURL)
@@ -141,7 +155,6 @@ module.exports = (client) => {
           }
 
           await channel.send({ embeds: [embed] });
-          await updateVotingStats(topgguserid, "TopGG");
           res.status(200).send("Success!");
         } catch (error) {
           console.error("Error sending message to Discord:", error);
@@ -171,9 +184,16 @@ module.exports = (client) => {
       .then(async (user) => {
         const userAvatarURL = user.displayAvatarURL();
 
+        await updateVotingStats(botlistuser, "BotList");
+
+        const voting = await Voting.findOne();
+        const userVoting = voting.votingUsers.find(
+          (u) => u.userId === botlistuser
+        );
+
         const embed = new EmbedBuilder()
           .setDescription(
-            `**Thank you <@${botlistuser}> for voting for <@${botlistbot}> on [Botlist.me](https://botlist.me/bots/${botlistbot}/vote) <:_:1227425669642719282>** \nYou can vote again <t:${voteAvailableTimestamp}:R>.`
+            `**Thank you <@${botlistuser}> for voting for <@${botlistbot}> on [Botlist.me](https://botlist.me/bots/${botlistbot}/vote) <:_:1227425669642719282>** \nYou can vote again <t:${voteAvailableTimestamp}:R>. \n\n**<@${botlistuser}> Botlist Votes: ${userVoting.votingBotList} \n**Total Botlist Votes: ${voting.votingAmount.BotListTotal}**`
           )
           .setColor("#FF00EA")
           .setThumbnail(userAvatarURL)
@@ -188,7 +208,6 @@ module.exports = (client) => {
           }
 
           await channel.send({ embeds: [embed] });
-          await updateVotingStats(botlistuser, "BotList");
           res.status(200).send("Success!");
         } catch (error) {
           console.error("Error sending message to Discord:", error);

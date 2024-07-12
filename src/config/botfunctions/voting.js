@@ -12,6 +12,7 @@ async function updateVotingStats(userId, platform) {
   if (!userVoting) {
     userVoting = {
       userId: userId,
+      overallUserVotes: 1,
       votingTopGG: 0,
       votingWumpus: 0,
       votingBotList: 0,
@@ -28,6 +29,7 @@ async function updateVotingStats(userId, platform) {
     }
     voting.votingUsers.push(userVoting);
   } else {
+    userVoting.overallUserVotes += 1;
     if (platform === "TopGG") {
       userVoting.votingTopGG += 1;
       voting.votingAmount.TopGGTotal += 1;

@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const userVotingSchema = new mongoose.Schema({
   userId: { type: String, required: true, unique: true },
+  overallUserVotes: { type: Number, default: 0 },
   votingTopGG: { type: Number, default: 0 },
   votingWumpus: { type: Number, default: 0 },
   votingBotList: { type: Number, default: 0 },
