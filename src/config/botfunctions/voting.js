@@ -16,18 +16,28 @@ async function updateVotingStats(userId, platform) {
       votingWumpus: 0,
       votingBotList: 0,
     };
+    if (platform === "TopGG") {
+      userVoting.votingTopGG = 1;
+      voting.votingAmount.TopGGTotal += 1;
+    } else if (platform === "Wumpus") {
+      userVoting.votingWumpus = 1;
+      voting.votingAmount.WumpusTotal += 1;
+    } else if (platform === "BotList") {
+      userVoting.votingBotList = 1;
+      voting.votingAmount.BotListTotal += 1;
+    }
     voting.votingUsers.push(userVoting);
-  }
-
-  if (platform === "TopGG") {
-    userVoting.votingTopGG += 1;
-    voting.votingAmount.TopGGTotal += 1;
-  } else if (platform === "Wumpus") {
-    userVoting.votingWumpus += 1;
-    voting.votingAmount.WumpusTotal += 1;
-  } else if (platform === "BotList") {
-    userVoting.votingBotList += 1;
-    voting.votingAmount.BotListTotal += 1;
+  } else {
+    if (platform === "TopGG") {
+      userVoting.votingTopGG += 1;
+      voting.votingAmount.TopGGTotal += 1;
+    } else if (platform === "Wumpus") {
+      userVoting.votingWumpus += 1;
+      voting.votingAmount.WumpusTotal += 1;
+    } else if (platform === "BotList") {
+      userVoting.votingBotList += 1;
+      voting.votingAmount.BotListTotal += 1;
+    }
   }
 
   voting.votingAmount.OverallTotal += 1;
