@@ -7,6 +7,7 @@ const {
   ComponentType,
 } = require("discord.js");
 const commandLogging = require("../../config/commandfunctions/commandlog");
+const chalk = require("chalk");
 
 const Profile = require("../../../mongo/models/profileSchema");
 const IDLists = require("../../../mongo/models/idSchema");

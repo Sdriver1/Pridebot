@@ -22,7 +22,7 @@ module.exports = {
         emoji: "1196254858689380474",
         info: {
           title: "Fun Commands",
-          description: `</gaydar:1196256451270811688> - How gay are you or your friend? \n</lgbtq:1196151440343838849> - Fun little command to show off the LGBTQ command \n</nametester:1179995184059121766> - Use this to try out new names for yourselfs \n</pronountester:1179995184059121766> - Use this to try out new pronouns for yourself \n</transdar:1212227689008726048> -  How trans are you or your friend? \n\n*P.S. - </gaydar:1196256451270811688> and </transdar:1212227689008726048> are for fun and not based on any real diagnosis/readings of users*`,
+          description: `</gaydar:1196256451270811688> - How gay are you or your friend? \n</lgbtq:1196151440343838849> - Fun little command to show off the LGBTQ command \n</nametester:1179995184059121766> - Use this to try out new names for yourselfs \n</pronountester:1179995184059121766> - Use this to try out new pronouns for yourself \n</transdar:1212227689008726048> -  How trans are you or your friend? \n\n-# - </gaydar:1196256451270811688> and </transdar:1212227689008726048> are for fun and not based on any real diagnosis/readings of users*`,
         },
       },
       {
