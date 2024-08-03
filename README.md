@@ -40,8 +40,8 @@ Contributions to Pridebot are welcome! If you're interested in contributing, ple
 For support, questions, or feedback about Pridebot, please join our Discord community [here](https://discord.gg/guybqSTzdS).
 
 ## Legal
-[Pridebot Term of Service](https://pridebot.xyz/tos)
-[Pridebot Privacy Policy](https://pridebot.xyz/privacy)
+- [Pridebot Term of Service](https://pridebot.xyz/tos)
+- [Pridebot Privacy Policy](https://pridebot.xyz/privacy)
 
 ---
 
