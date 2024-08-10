@@ -7,6 +7,7 @@ const BotlistMeClient = require("botlist.me.js");
 
 const initializeBot = require("./bot");
 const initializeApi = require("./botapi");
+const initializeAvatarApi = require("./avatarapi");
 
 const client = new Client({
   intents: [
@@ -25,6 +26,7 @@ client.botStartTime = Math.floor(Date.now() / 1000);
 
 initializeBot(client);
 initializeApi(client);
+initializeAvatarApi(client)
 
 client.login(token);
 

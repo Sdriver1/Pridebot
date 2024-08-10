@@ -18,7 +18,7 @@ module.exports = (client) => {
   const port = 2610;
 
   app.listen(port, () => {
-    console.log(`API is running on port ${port}`);
+    console.log(`Bot api is running on port ${port}`);
   });
 
   app.use(express.json());

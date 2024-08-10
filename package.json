@@ -27,6 +27,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "googleapis": "^134.0.0",
+    "jimp": "^0.22.12",
     "jquery": "^3.7.1",
     "moment": "^2.30.1",
     "mongodb": "^6.7.0",
@@ -35,7 +36,7 @@
     "os": "^0.1.2",
     "path": "^0.12.7",
     "puppeteer": "^20.9.0",
+    "sharp": "^0.33.4",
     "topgg-autoposter": "^2.0.2"
   }
 }
-
