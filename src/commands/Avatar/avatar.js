@@ -80,19 +80,39 @@ module.exports = {
     .addStringOption((option) =>
       option
         .setName("flag")
-        .setDescription("The pride flag to overlay (type the flag name)")
+        .setDescription(
+          "The pride flag to overlay (For a list of flags, do /avatar-list)"
+        )
         .setRequired(true)
+    )
+    .addStringOption((option) =>
+      option
+        .setName("flag2")
+        .setDescription(
+          "Add a second flag (For a list of flags, do /avatar-list)"
+        )
+        .setRequired(false)
+    )
+    .addUserOption((option) =>
+      option
+        .setName("user")
+        .setDescription("Change another user's avatar")
+        .setRequired(false)
     ),
 
   async execute(interaction, client) {
     try {
       await interaction.deferReply();
 
-      const user = interaction.user;
+      const user = interaction.options.getUser("user") || interaction.user;
       const avatarURL = user.displayAvatarURL({ format: "webp", size: 512 });
       const flagName = interaction.options.getString("flag").toLowerCase();
+      const flagName2 = interaction.options.getString("flag2")?.toLowerCase();
 
-      if (!validFlags.includes(flagName)) {
+      if (
+        !validFlags.includes(flagName) ||
+        (flagName2 && !validFlags.includes(flagName2))
+      ) {
         await interaction.editReply(
           `Invalid flag name. Please choose from: ${validFlags.join(", ")}`
         );
@@ -127,7 +147,7 @@ module.exports = {
       let flagBuffer;
       try {
         const flagPath = path.join(__dirname, "../../flags", `${flagName}.png`);
-        flagBuffer = await sharp(flagPath).resize(512, 512).png().toBuffer();
+        flagBuffer = await sharp(flagPath).resize(256, 512).png().toBuffer(); // Resize to half the width
       } catch (error) {
         console.error(`Error loading flag image for flag ${flagName}:`, error);
         await interaction.editReply(
@@ -138,10 +158,39 @@ module.exports = {
 
       let compositedBuffer;
       try {
-        compositedBuffer = await sharp(flagBuffer)
-          .composite([{ input: avatarBuffer, top: 50, left: 50 }])
-          .png()
-          .toBuffer();
+        if (flagName2) {
+          let flagBuffer2;
+          const flagPath2 = path.join(
+            __dirname,
+            "../../flags",
+            `${flagName2}.png`
+          );
+          flagBuffer2 = await sharp(flagPath2)
+            .resize(256, 512) // Resize to half the width
+            .png()
+            .toBuffer();
+
+          compositedBuffer = await sharp({
+            create: {
+              width: 512,
+              height: 512,
+              channels: 4,
+              background: { r: 0, g: 0, b: 0, alpha: 0 },
+            },
+          })
+            .composite([
+              { input: flagBuffer, left: 0, top: 0 },
+              { input: flagBuffer2, left: 256, top: 0 },
+              { input: avatarBuffer, top: 50, left: 50 },
+            ])
+            .png()
+            .toBuffer();
+        } else {
+          compositedBuffer = await sharp(flagBuffer)
+            .composite([{ input: avatarBuffer, top: 50, left: 128 }]) // Center the avatar
+            .png()
+            .toBuffer();
+        }
       } catch (error) {
         console.error(`Error compositing images for user ${user.id}:`, error);
         await interaction.editReply(
@@ -183,7 +232,10 @@ module.exports = {
       }
 
       const userDirectory = path.join(__dirname, "../../pfps", user.id);
-      const outputName = path.join(userDirectory, `${flagName}.png`);
+      const outputName = path.join(
+        userDirectory,
+        `${flagName}${flagName2 ? flagName2 : ""}.png`
+      );
 
       try {
         fs.mkdirSync(userDirectory, { recursive: true });
@@ -200,7 +252,9 @@ module.exports = {
         return;
       }
 
-      const imageURL = `https://pfp.pridebot.xyz/${user.id}/${flagName}.png`;
+      const imageURL = `https://pfp.pridebot.xyz/${user.id}/${flagName}${
+        flagName2 ? flagName2 : ""
+      }.png`;
 
       try {
         const response = await axios.get(imageURL);
@@ -216,10 +270,14 @@ module.exports = {
       }
 
       const embed = new EmbedBuilder()
-        .setTitle("Your Pride Avatar")
-        .setDescription("Here is your customized pride avatar!")
+        .setTitle(
+          `Your ${flagName}${flagName2 ? " & " + flagName2 : ""} Avatar`
+        )
         .setImage(imageURL + `?time=${new Date().getTime()}`)
-        .setColor("#FF69B4");
+        .setFooter({
+          text: "For more flags, do /avatar-list",
+        })
+        .setColor("#FF00EA");
 
       const row = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
