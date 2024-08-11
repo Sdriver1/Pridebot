@@ -23,7 +23,6 @@ const validFlags = [
   "spacilian", "stellarian", "transfeminine", "transgender", "transmasculine"
 ];
 
-
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("prideavatar")
@@ -55,8 +54,9 @@ module.exports = {
     try {
       await interaction.deferReply();
 
-      const user = interaction.options.getUser("user") || interaction.user;
-      const avatarURL = user.displayAvatarURL({ format: "webp", size: 512 });
+      const pfpuser = interaction.options.getUser("user") || interaction.user;
+      const username = pfpuser.username;
+      const avatarURL = pfpuser.displayAvatarURL({ format: "webp", size: 512 });
       const flagName = interaction.options.getString("flag").toLowerCase();
       const flagName2 = interaction.options.getString("flag2")?.toLowerCase();
 
@@ -88,7 +88,7 @@ module.exports = {
           .png()
           .toBuffer();
       } catch (error) {
-        console.error(`Error loading avatar for user ${user.id}:`, error);
+        console.error(`Error loading avatar for user ${pfpuser.id}:`, error);
         await interaction.editReply(
           "There was an error loading your avatar. Please try again."
         );
@@ -117,7 +117,7 @@ module.exports = {
             `${flagName2}.png`
           );
           flagBuffer2 = await sharp(flagPath2)
-            .resize(256, 512) 
+            .resize(256, 512)
             .png()
             .toBuffer();
 
@@ -143,7 +143,7 @@ module.exports = {
             .toBuffer();
         }
       } catch (error) {
-        console.error(`Error compositing images for user ${user.id}:`, error);
+        console.error(`Error compositing images for user ${pfpuser.id}:`, error);
         await interaction.editReply(
           "There was an error processing the images. Please try again."
         );
@@ -173,7 +173,7 @@ module.exports = {
           .toBuffer();
       } catch (error) {
         console.error(
-          `Error applying final circular mask to the image for user ${user.id}:`,
+          `Error applying final circular mask to the image for user ${pfpuser.id}:`,
           error
         );
         await interaction.editReply(
@@ -182,7 +182,7 @@ module.exports = {
         return;
       }
 
-      const userDirectory = path.join(__dirname, "../../pfps", user.id);
+      const userDirectory = path.join(__dirname, "../../pfps", pfpuser.id);
       const outputName = path.join(
         userDirectory,
         `${flagName}${flagName2 ? flagName2 : ""}.png`
@@ -194,7 +194,7 @@ module.exports = {
         fs.writeFileSync(outputName, finalImageBuffer);
       } catch (error) {
         console.error(
-          `Error saving final avatar image for user ${user.id}:`,
+          `Error saving final avatar image for user ${pfpuser.id}:`,
           error
         );
         await interaction.editReply(
@@ -203,7 +203,7 @@ module.exports = {
         return;
       }
 
-      const imageURL = `https://pfp.pridebot.xyz/${user.id}/${flagName}${
+      const imageURL = `https://pfp.pridebot.xyz/${pfpuser.id}/${flagName}${
         flagName2 ? flagName2 : ""
       }.png`;
 
@@ -222,7 +222,9 @@ module.exports = {
 
       const embed = new EmbedBuilder()
         .setTitle(
-          `Your ${flagName}${flagName2 ? " & " + flagName2 : ""} Avatar`
+          `${username}'s ${flagName}${
+            flagName2 ? " & " + flagName2 : ""
+          } Avatar`
         )
         .setImage(imageURL + `?time=${new Date().getTime()}`)
         .setFooter({
