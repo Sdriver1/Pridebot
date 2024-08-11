@@ -12,66 +12,17 @@ const path = require("path");
 const commandLogging = require("../../config/commandfunctions/commandlog");
 
 const validFlags = [
-  "abrosexual",
-  "aceflux",
-  "agender",
-  "ally",
-  "androgyne",
-  "aroace",
-  "aroace2",
-  "aroflux",
-  "aromantic",
-  "asexual",
-  "aurorian",
-  "bigender",
-  "bisexual",
-  "boyflux",
-  "butch",
-  "butchlesbian",
-  "butchlesbian2",
-  "butchlesbian3",
-  "catgender",
-  "cupioromantic",
-  "demibisexual",
-  "demiboy",
-  "demigirl",
-  "deminonbinary",
-  "demiroflux",
-  "demiromantic",
-  "demisexual",
-  "gay",
-  "genderfae",
-  "genderfaun",
-  "genderfluid",
-  "genderflux",
-  "genderqueer",
-  "girlflux",
-  "graygender",
-  "grayromantic",
-  "graysexual",
-  "lesbian",
-  "lgbt",
-  "lunarian",
-  "neptunic",
-  "nonbinary",
-  "omnisexual",
-  "pangender",
-  "pansexual",
-  "polyamorous",
-  "polysexual",
-  "queer",
-  "queerplatonic",
-  "queerplatonic2",
-  "sapphic",
-  "selenosexual",
-  "singularian",
-  "solarian",
-  "spacilian",
-  "stellarian",
-  "transfeminine",
-  "transgender",
-  "transmasculine",
+  "abrosexual", "aceflux", "agender", "ally", "androgyne", "aroace", "aroace2",
+  "aroflux", "aromantic", "asexual", "aurorian", "bigender", "bisexual", "boyflux",
+  "butch", "butchlesbian", "butchlesbian2", "butchlesbian3", "catgender", "cupioromantic",
+  "demibisexual", "demiboy", "demigirl", "deminonbinary", "demiroflux", "demiromantic",
+  "demisexual", "gay", "genderfae", "genderfaun", "genderfluid", "genderflux", "genderqueer",
+  "girlflux", "graygender", "grayromantic", "graysexual", "lesbian", "lgbt", "lunarian",
+  "neptunic", "nonbinary", "omnisexual", "pangender", "pansexual", "polyamorous", "polysexual",
+  "queer", "queerplatonic", "queerplatonic2", "sapphic", "selenosexual", "singularian", "solarian",
+  "spacilian", "stellarian", "transfeminine", "transgender", "transmasculine"
 ];
+
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -147,7 +98,7 @@ module.exports = {
       let flagBuffer;
       try {
         const flagPath = path.join(__dirname, "../../flags", `${flagName}.png`);
-        flagBuffer = await sharp(flagPath).resize(256, 512).png().toBuffer(); // Resize to half the width
+        flagBuffer = await sharp(flagPath).resize(512, 512).png().toBuffer(); // Resize to full width
       } catch (error) {
         console.error(`Error loading flag image for flag ${flagName}:`, error);
         await interaction.editReply(
@@ -166,7 +117,7 @@ module.exports = {
             `${flagName2}.png`
           );
           flagBuffer2 = await sharp(flagPath2)
-            .resize(256, 512) // Resize to half the width
+            .resize(256, 512) 
             .png()
             .toBuffer();
 
@@ -187,7 +138,7 @@ module.exports = {
             .toBuffer();
         } else {
           compositedBuffer = await sharp(flagBuffer)
-            .composite([{ input: avatarBuffer, top: 50, left: 128 }]) // Center the avatar
+            .composite([{ input: avatarBuffer, top: 50, left: 50 }])
             .png()
             .toBuffer();
         }
