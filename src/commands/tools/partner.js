@@ -9,7 +9,7 @@ module.exports = {
 
   async execute(interaction, client) {
     const pcav = "https://pridebot.xyz/pridecord.png";
-    const snav = "https://pridebot.xyz/prismatic.png";
+    const prav = "https://pridebot.xyz/prismatic.png";
 
     const pridecordembed = new EmbedBuilder()
       .setTitle("Pridebot Partner: Pridecord")
@@ -23,19 +23,19 @@ module.exports = {
       .setFooter({ text: "Pridecord", iconURL: pcav })
       .setTimestamp();
 
-    const sneakyembed = new EmbedBuilder()
+    const prismaticembed = new EmbedBuilder()
       .setTitle("Pridebot Partner: Prism")
       .setColor(0xff00ae)
-      .setThumbnail(snav)
+      .setThumbnail(prav)
       .addFields({
         name: "Info",
         value: `**Server Owner**: <@197794050823290880> \n**Server Invite**: https://discord.gg/friendships \n\n[**More Info**](https://pridebot.xyz/partners)`,
         inline: false,
       })
-      .setFooter({ text: "Sneaky Nodes", iconURL: snav })
+      .setFooter({ text: "Sneaky Nodes", iconURL: prav })
       .setTimestamp();
 
-    await interaction.reply({ embeds: [pridecordembed, sneakyembed] });
+    await interaction.reply({ embeds: [pridecordembed, prismaticembed] });
     await commandLogging(client, interaction);
   },
 };
