@@ -15,6 +15,15 @@ module.exports = (client) => {
   app.use(express.urlencoded({ extended: true }));
   app.use(cors());
 
+  app.get("/", (req, res) => {
+    res.status(404).json({
+      message: "These are the API requests you can make:",
+      endpoints: {
+        avatar: "/avatar/:userId/:flag|flags.png",
+      },
+    });
+  });
+
   app.get("/:userId/:flag.png", (req, res) => {
     const { userId, flag } = req.params;
     const imagePath = path.join(

@@ -27,6 +27,18 @@ module.exports = (client) => {
   app.use(express.urlencoded({ extended: true }));
   app.use(cors());
 
+  app.get("/", (req, res) => {
+    res.status(404).json({
+      message: "These are the API requests you can make:",
+      endpoints: {
+        stats: "/api/stats",
+        profiles: "/api/profiles/:userId",
+        votes: "/api/votes/:userId",
+        commands: "/api/commands/:command_type?/:command_name?",
+      },
+    });
+  });
+
   app.get("/api/stats", cors(), async (req, res) => {
     const currentGuildCount = client.guilds.cache.size;
 
