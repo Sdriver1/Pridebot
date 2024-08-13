@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const fs = require("fs");
+const path = require("path");
 const { EmbedBuilder, ChannelType } = require("discord.js");
 const CommandUsage = require("../mongo/models/usageSchema.js");
 const ProfileData = require("../mongo/models/profileSchema.js");
@@ -98,6 +100,68 @@ module.exports = (client) => {
       return res.status(500).send("Internal Server Error");
     }
   });
+
+  const commandsDirectory = path.join(__dirname, "commands");
+
+  app.get(
+    "/api/commands/:command_type?/:command_name?",
+    cors(),
+    async (req, res) => {
+      const { command_type, command_name } = req.params;
+
+      try {
+        if (!command_type) {
+          const allCommandTypes = fs
+            .readdirSync(commandsDirectory)
+            .reduce((acc, type) => {
+              const commands = fs
+                .readdirSync(path.join(commandsDirectory, type))
+                .map((file) => file.replace(".js", ""));
+              acc[type] = {
+                commands,
+                count: commands.length,
+              };
+              return acc;
+            }, {});
+
+          return res.json(allCommandTypes);
+        }
+
+        const commandTypeDir = path.join(commandsDirectory, command_type);
+        if (!command_name) {
+          if (!fs.existsSync(commandTypeDir)) {
+            return res.status(404).send("Command type not found");
+          }
+
+          const commands = fs
+            .readdirSync(commandTypeDir)
+            .map((file) => file.replace(".js", ""));
+          return res.json({
+            [command_type]: {
+              commands,
+            },
+          });
+        }
+
+        const commandFile = path.join(commandTypeDir, `${command_name}.js`);
+        if (!fs.existsSync(commandFile)) {
+          return res.status(404).send("Command not found");
+        }
+
+        const commandUsage = await CommandUsage.findOne({
+          commandName: command_name,
+        });
+
+        return res.json({
+          command_name: commandUsage ? commandUsage.commandName : command_name,
+          command_usage: commandUsage ? commandUsage.count : 0,
+        });
+      } catch (error) {
+        console.error("Failed to retrieve bot commands:", error);
+        return res.status(500).send("Internal Server Error");
+      }
+    }
+  );
 
   app.post("/wumpus-votes", async (req, res) => {
     let wumpususer = req.body.userId;
