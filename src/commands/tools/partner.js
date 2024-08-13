@@ -24,7 +24,7 @@ module.exports = {
       .setTimestamp();
 
     const prismaticembed = new EmbedBuilder()
-      .setTitle("Pridebot Partner: Prism")
+      .setTitle("Pridebot Partner: Prismatic")
       .setColor(0xff00ae)
       .setThumbnail(prav)
       .addFields({
@@ -32,7 +32,7 @@ module.exports = {
         value: `**Server Owner**: <@197794050823290880> \n**Server Invite**: https://discord.gg/friendships \n\n[**More Info**](https://pridebot.xyz/partners)`,
         inline: false,
       })
-      .setFooter({ text: "Sneaky Nodes", iconURL: prav })
+      .setFooter({ text: "Prismatic", iconURL: prav })
       .setTimestamp();
 
     await interaction.reply({ embeds: [pridecordembed, prismaticembed] });
