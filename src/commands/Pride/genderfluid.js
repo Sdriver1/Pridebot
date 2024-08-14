@@ -7,6 +7,7 @@ module.exports = {
     .setName("genderfluid")
     .setNameLocalizations({
       de: "genderfluid",
+      "en-GB": "genderfluid",
       "es-ES": "genderfluid",
       fi: "genderfluid",
       ru: "гендерфлюиде"
@@ -14,6 +15,7 @@ module.exports = {
     .setDescription("Who stole my fluid!!!")
     .setDescriptionLocalizations({
       de: "Wer hat meine Flüssigkeit gestohlen?",
+      "en-GB": "Who stole my fluid?",
       "es-ES": "¿Quién robó mi fluido?",
       fi: "Kuka varasti nesteeni!!!",
       ru: "Кто украл мою жидкость!!!"

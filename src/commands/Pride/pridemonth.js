@@ -7,12 +7,14 @@ module.exports = {
     .setName("pridemonth")
     .setNameLocalizations({
       de: "pridemonat",
+      "en-GB": "pridemonth",
       fi: "pridekuukausi",
       ru: "месяцгордости",
     })
     .setDescription("Only a month? I'm gay all year!")
     .setDescriptionLocalizations({
       de: "Nur einen Monat? Ich bin das ganze Jahr schwul!",
+      "en-Gb": "Only a month? I'm gay all year!",
       fi: "Vain kuukausi? Olen homo koko vuoden!",
       ru: "Только месяц? Я гей круглый год!",
     }),

@@ -8,6 +8,7 @@ module.exports = {
     .setNameLocalizations({
       de: "asexualität",
       el: "aσεξουαλικές",
+      "en-GB": "asexual",
       "es-ES": "asexual",
       fi: "asexuaali",
       nl: "aseksueel",
@@ -17,6 +18,7 @@ module.exports = {
     .setDescriptionLocalizations({
       de: "asexualität, bsexualität, csexualität...",
       el: "ασεξουαλικές, βσεξουαλικές, γσεξουαλικές...",
+      "en-GB": "asexual, bsexual, csexual...",
       "es-ES": "asexual, bsexual, csexual...",
       fi: "asexuaali, bsexuaali, csexuaali...",
       nl: "asexueel, bsexueel, csexueel...",

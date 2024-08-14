@@ -7,14 +7,16 @@ module.exports = {
     .setName("transgender")
     .setNameLocalizations({
       de: "transgender",
+      "en-GB": "transgender",
       fi: "transsukupuolinen",
-      ru: "трансгендеры"
+      ru: "трансгендеры",
     })
     .setDescription("Trans-formers roll out!!")
     .setDescriptionLocalizations({
       de: "Trans-formers, rollt aus!!",
+      "en-GB": "Trans-formers roll out!!",
       fi: "Trans-formersit, rullatkaa ulos!!",
-      ru: "Тран-сформеры, выходите!!"
+      ru: "Тран-сформеры, выходите!!",
     }),
 
   async execute(interaction, client) {

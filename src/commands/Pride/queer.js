@@ -7,12 +7,14 @@ module.exports = {
     .setName("queer")
     .setNameLocalizations({
       de: "queer",
+      "en-GB": "queer",
       fi: "queer",
       ru: "квир"
     })
     .setDescription("OMG! QUEER!")
     .setDescriptionLocalizations({
       de: "OMG! QUEER!",
+      "en-GB": "OMG! QUEER!",
       fi: "OMG! QUEER!",
       ru: "OMG! КВИР!"
     }),

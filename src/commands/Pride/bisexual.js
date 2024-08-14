@@ -8,6 +8,7 @@ module.exports = {
     .setNameLocalizations({
       de: "bisexualität",
       el: "aμφιφυλόφιλη",
+      "en-GB": "bisexual",
       "es-ES": "bisexual",
       fi: "biseksuaali",
       nl: "biseksueel",
@@ -17,6 +18,7 @@ module.exports = {
     .setDescriptionLocalizations({
       de: "Warum bin ich wieder bi alleine ;-;",
       el: "Γιατί είμαι πάλι bi μόνος μου ;-;",
+      "en-GB": "Why am I bi myself again ;-;",
       "es-ES": "Por qué soy bi yo mismo otra vez ;-;",
       fi: "Miksi olen taas bi yksin ;-;",
       nl: "Waarom ben ik weer bi mezelf ;-;",

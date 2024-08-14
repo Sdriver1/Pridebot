@@ -7,12 +7,14 @@ module.exports = {
     .setName("lesbian")
     .setNameLocalizations({
       de: "lesbisch",
+      "en-GB": "lesbian",
       fi: "lesbo",
       ru: "лесбиянки",
     })
     .setDescription("woman or 𝘸𝘰𝘮𝘢𝘯")
     .setDescriptionLocalizations({
       de: "frau oder 𝘧𝘳𝘢𝘶",
+      "en-GB": "woman or 𝘸𝘰𝘮𝘢𝘯",
       fi: "nainen tai 𝘯𝘢𝘪𝘯𝘦𝘯",
       ru: "женщина или женщина",
     }),

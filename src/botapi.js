@@ -39,6 +39,34 @@ module.exports = (client) => {
     });
   });
 
+  app.get("/githubapi", (req, res) => {
+    const currentGuildCount = client.guilds.cache.size;
+    let totalUserCount = 0;
+
+    client.guilds.cache.forEach((guild) => {
+      totalUserCount += guild.memberCount;
+    });
+
+    const prismaGuild = client.guilds.cache.get("921403338069770280");
+    let prismatotal = 0;
+    if (prismaGuild) {
+      prismatotal = prismaGuild.memberCount;
+    } else {
+      console.error("Guild with ID 921403338069770280 not found.");
+    }
+
+    try {
+      res.json({
+        totalUserCount,
+        currentGuildCount,
+        prismatotal,
+      });
+    } catch (error) {
+      console.error("Failed to get GitHub stats:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  });
+
   app.get("/api/stats", cors(), async (req, res) => {
     const currentGuildCount = client.guilds.cache.size;
 
@@ -114,7 +142,6 @@ module.exports = (client) => {
   });
 
   const commandsDirectory = path.join(__dirname, "commands");
-
   app.get(
     "/api/commands/:command_type?/:command_name?",
     cors(),

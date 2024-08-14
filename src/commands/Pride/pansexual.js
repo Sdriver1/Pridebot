@@ -7,12 +7,14 @@ module.exports = {
     .setName("pansexual")
     .setNameLocalizations({
       de: "pansexuell",
+      "en-GB": "pansexual",
       fi: "panseksuaali",
       ru: "пансексуал"
     })
     .setDescription("You like pots or pans more?")
     .setDescriptionLocalizations({
       de: "Magst du Töpfe oder Pfannen mehr?",
+      "en-GB": "You like pots or pans more?",
       fi: "Pidätkö enemmän kattiloista vai pannuista?",
       ru: "Ты больше любишь горшки или сковородки?"
     }),

@@ -7,6 +7,7 @@ module.exports = {
     .setName("gay")
     .setNameLocalizations({
       de: "schwul",
+      "en-GB": "gay",
       "es-ES": "gay",
       fi: "homo",
       ru: "гей",
@@ -14,6 +15,7 @@ module.exports = {
     .setDescription("Imagine being gay, couldn't be me")
     .setDescriptionLocalizations({
       de: "Stell dir vor, du bist schwul, könnte ich nicht sein.",
+      "en-GB": "Imagine being gay, couldn't be me",
       "es-ES": "Imagina ser gay, no podría ser yo",
       fi: "Kuvittele olevasi homo, en voisi olla minä.",
       ru: "Представь себе, что ты гей, это не про меня",
