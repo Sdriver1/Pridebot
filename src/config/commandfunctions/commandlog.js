@@ -24,9 +24,14 @@ const commandLogging = async (client, interaction) => {
   const logChannel = client.channels.cache.get("1256810888694861914");
 
   if (logChannel) {
-    const location = interaction.guild
-      ? `${interaction.guild.name} (${interaction.guild.id})`
-      : "DM";
+    let location;
+    if (interaction.guild) {
+      location = `${interaction.guild.name} (${interaction.guild.id})`;
+    } else if (interaction.channel && interaction.channel.isDMBased()) {
+      location = "DM";
+    } else {
+      location = "User Install Context (External Server)";
+    }
 
     const logEmbed = new EmbedBuilder()
       .setTitle("Command Used")
