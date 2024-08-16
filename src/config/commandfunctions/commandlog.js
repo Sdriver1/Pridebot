@@ -24,10 +24,14 @@ const commandLogging = async (client, interaction) => {
   const logChannel = client.channels.cache.get("1256810888694861914");
 
   if (logChannel) {
+    const location = interaction.guild
+      ? `${interaction.guild.name} (${interaction.guild.id})`
+      : "DM";
+
     const logEmbed = new EmbedBuilder()
       .setTitle("Command Used")
       .setDescription(
-        `**Command:** /${interaction.commandName}\n**Server:** ${interaction.guild.name} (${interaction.guild.id})\n**User:** <@${interaction.user.id}> (${interaction.user.id})\n**Time:** ${estDate} (EST)\n**Command Count:** ${usageData.count}\n **Total Usage:** ${totalUsage}`
+        `**Command:** /${interaction.commandName}\n**Location:** ${location}\n**User:** <@${interaction.user.id}> (${interaction.user.id})\n**Time:** ${estDate} (EST)\n**Command Count:** ${usageData.count}\n **Total Usage:** ${totalUsage}`
       )
       .setColor(0xff00ea)
       .setFooter({ text: `${interaction.user.id}` })

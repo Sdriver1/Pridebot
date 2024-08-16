@@ -46,10 +46,9 @@ module.exports = {
         }
       }
 
-      const { blacklisted, type } = await isBlacklisted(
-        interaction.user.id,
-        interaction.guild.id
-      );
+      const userId = interaction.user.id;
+      const guildId = interaction.guild ? interaction.guild.id : null;
+      const { blacklisted, type } = await isBlacklisted(userId, guildId);
       if (blacklisted) {
         if (type === "user") {
           await interaction.reply({
@@ -76,7 +75,7 @@ module.exports = {
           );
         }
 
-        await command.execute(interaction, client);
+        await command.execute(interaction, client, { userId, guildId });
       } catch (error) {
         console.error(error);
         if (interaction.replied || interaction.deferred) {

@@ -30,12 +30,6 @@ async function containsDisallowedContent(input, username) {
           }
         });
       });
-
-      if (!foundDisallowed) {
-        console.log(chalk.green(`No blocked terms found in input. ${term}`));
-      }
-    } else {
-      console.log(chalk.red("Blocked terms document not found."));
     }
   } catch (error) {
     console.error("Error fetching blocked terms:", error);
