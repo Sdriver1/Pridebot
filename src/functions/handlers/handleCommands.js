@@ -22,10 +22,23 @@ module.exports = (client) => {
           );
           continue;
         }
-        if (
-          command.data instanceof SlashCommandBuilder ||
-          command.data instanceof ContextMenuCommandBuilder
-        ) {
+
+        if (command.data instanceof SlashCommandBuilder) {
+          command.data.setDMPermission(true);
+
+          const commandJSON = command.data.toJSON();
+          commandJSON.integration_types = [0, 1]; 
+          commandJSON.contexts = [0, 1, 2]; 
+
+          client.commands.set(command.data.name, command);
+          client.commandArray.push(commandJSON);
+
+          console.log(
+            chalk.green.bold.underline(
+              `Command: ${command.data.name} is ready to deploy ✅`
+            )
+          );
+        } else if (command.data instanceof ContextMenuCommandBuilder) {
           client.commands.set(command.data.name, command);
           client.commandArray.push(command.data.toJSON());
           console.log(
