@@ -1,5 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const commandLogging = require("../../config/commandfunctions/commandlog");
+const DarList = require("../../../mongo/models/idDarSchema");
+
 const utility_functions = {
   chance: function (probability) {
     return Math.random() <= probability;
@@ -7,11 +9,6 @@ const utility_functions = {
   number_format_commas: function (number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   },
-};
-
-const ids = {
-  bot: "1101256478632972369",
-  tree: "950951110829551658",
 };
 
 module.exports = {
@@ -32,16 +29,34 @@ module.exports = {
     const userid = targetUser.id;
 
     let meter;
-    if (userid === ids.bot) {
-      meter = 101;
-    } else if (userid === ids.tree) {
-      meter = 100;
-    } else if (utility_functions.chance(0.0001)) {
-      meter = Math.floor(Math.random() * 2354082) + 500;
-      if (utility_functions.chance(0.5)) {
-        meter *= -1;
+    try {
+      const darList = await DarList.findOne();
+
+      if (darList) {
+        const queerdarEntry = darList.queerdar.find(entry => entry.userid === userid);
+
+        if (queerdarEntry) {
+          meter = queerdarEntry.meter;
+        } else {
+          meter = Math.floor(Math.random() * 101);
+          if (utility_functions.chance(0.0001)) {
+            meter = Math.floor(Math.random() * 2354082) + 500;
+            if (utility_functions.chance(0.5)) {
+              meter *= -1;
+            }
+          }
+        }
+      } else {
+        meter = Math.floor(Math.random() * 101);
+        if (utility_functions.chance(0.0001)) {
+          meter = Math.floor(Math.random() * 2354082) + 500;
+          if (utility_functions.chance(0.5)) {
+            meter *= -1;
+          }
+        }
       }
-    } else {
+    } catch (err) {
+      console.error(err);
       meter = Math.floor(Math.random() * 101);
     }
 

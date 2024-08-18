@@ -5,6 +5,7 @@ const { Events } = require("discord.js");
 const { idCommand } = require("./commands/Dev/id.js");
 const { blacklistCommand } = require("./commands/Dev/blacklist.js");
 const { termCommand } = require("./commands/Dev/termlist.js");
+const { darCommand } = require("./commands/Dev/darID.js");
 const { react } = require("./config/commandfunctions/trashreact.js");
 
 const eventHandlers = {
@@ -18,6 +19,7 @@ const eventHandlers = {
 const userprofile = require("./commands/Profile/userprofile.js");
 const usergaydar = require("./commands/Fun/usergaydar.js");
 const usertransdar = require("./commands/Fun/usertransdar.js");
+const userqueerdar = require("./commands/Fun/userqueerdar.js");
 
 module.exports = (client) => {
   const functionFolders = fs.readdirSync(`./src/functions`);
@@ -57,6 +59,9 @@ module.exports = (client) => {
       if (interaction.commandName === "User Transdar") {
         await usertransdar.execute(interaction);
       }
+      if (interaction.commandName === "User Queerdar") {
+        await userqueerdar.execute(interaction);
+      }
     }
   });
 
@@ -64,6 +69,7 @@ module.exports = (client) => {
     idCommand(message, client);
     blacklistCommand(message, client);
     termCommand(message, client);
+    darCommand(message, client);
   });
 
   client.on("messageReactionAdd", async (reaction, user) => {
