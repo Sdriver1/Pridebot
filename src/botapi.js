@@ -14,6 +14,9 @@ const {
   getRegisteredCommandsCount,
 } = require("./config/commandfunctions/registercommand.js");
 const { updateVotingStats } = require("./config/botfunctions/voting.js");
+const {
+  getApproximateUserInstallCount,
+} = require("./config/botfunctions/user_install.js");
 
 module.exports = (client) => {
   const app = express();
@@ -76,6 +79,9 @@ module.exports = (client) => {
     });
 
     try {
+      const UserInstallCount = await getApproximateUserInstallCount(
+        client
+      );
       const usages = await CommandUsage.find({}).sort({ count: -1 });
       const totalUsage = usages.reduce((acc, cmd) => acc + cmd.count, 0);
 
@@ -92,6 +98,7 @@ module.exports = (client) => {
       res.json({
         totalUserCount,
         currentGuildCount,
+        UserInstallCount,
         totalUsage,
         commandsCount,
         botuptime,

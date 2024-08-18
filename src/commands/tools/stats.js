@@ -1,5 +1,4 @@
 require("dotenv").config();
-const commandLogging = require("../../config/commandfunctions/commandlog");
 const os = require("os");
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const CommandUsage = require("../../../mongo/models/usageSchema");
@@ -8,6 +7,10 @@ const { getTotalCommits } = require("../../config/commandfunctions/commit");
 const {
   getRegisteredCommandsCount,
 } = require("../../config/commandfunctions/registercommand");
+const commandLogging = require("../../config/commandfunctions/commandlog");
+const {
+  getApproximateUserInstallCount,
+} = require("../../config/botfunctions/user_install");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -42,6 +45,10 @@ module.exports = {
     }
 
     try {
+      const approximateUserInstallCount = await getApproximateUserInstallCount(
+        client
+      );
+
       let totalCommits = await getTotalCommits(
         "Sdriver1",
         "Pridebot",
@@ -75,7 +82,7 @@ module.exports = {
       const up = `\n**Uptime:** \`${formatUptime(
         process.uptime()
       )}\` \n**Start Time:** ${startTimeTimestamp}`;
-      const botstats = `**Servers:** \`${currentGuildCount}\` \n**Users:** \`${formattedTotalUserCount}\``;
+      const botstats = `**Servers:** \`${currentGuildCount}\` \n**Users:** \`${formattedTotalUserCount}\`\n**User Installs:** \`${approximateUserInstallCount}\``;
       const commandstats = `**Commands:** \`${CommandsCount}\` \n**Total Usage:** \`${totalUsage}\` \n**Profiles:** \`${profileAmount}\``;
       const botversion = `**Dev:** \`3.${commitTens}.${commitOnes}\` \n **Node.js:** \`${process.version}\` \n **Discord.js:** \`v14.15.3\``;
       const clientstats = `**CPU:** \`${cpuPercent}% / 100%\` \n**Memory:** \`${memoryUsage} / 6 GB\``;
