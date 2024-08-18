@@ -34,7 +34,6 @@ module.exports = (client) => {
       userId,
       `${flag}.png`
     );
-    console.log(imagePath);
     if (fs.existsSync(imagePath)) {
       res.sendFile(imagePath);
     } else {

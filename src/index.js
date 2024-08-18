@@ -4,10 +4,33 @@ const { connect } = require("mongoose");
 const { Client, GatewayIntentBits } = require("discord.js");
 const { AutoPoster } = require("topgg-autoposter");
 const BotlistMeClient = require("botlist.me.js");
+const fs = require("fs");
+const path = require("path");
 
 const initializeBot = require("./bot");
 const initializeApi = require("./botapi");
 const initializeAvatarApi = require("./avatarapi");
+
+function logShutdownTime() {
+  const shutdownFilePath = path.join(__dirname, 'shutdown-time.txt');
+  const shutdownTime = Date.now().toString();
+  try {
+    fs.writeFileSync(shutdownFilePath, shutdownTime);
+    console.log("Shutdown time logged.");
+  } catch (error) {
+    console.error("Failed to write shutdown time:", error);
+  }
+}
+
+process.on('SIGINT', () => {
+  logShutdownTime();
+  process.exit();
+});
+
+process.on('SIGTERM', () => {
+  logShutdownTime();
+  process.exit();
+});
 
 const client = new Client({
   intents: [
@@ -26,7 +49,7 @@ client.botStartTime = Math.floor(Date.now() / 1000);
 
 initializeBot(client);
 initializeApi(client);
-initializeAvatarApi(client)
+initializeAvatarApi(client);
 
 client.login(token);
 
