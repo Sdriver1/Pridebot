@@ -14,7 +14,7 @@ module.exports = async (client, guild) => {
   });
 
   const embed = new EmbedBuilder()
-    .setColor(0xff00ae)
+    .setColor("FF00EA")
     .setTitle(`👋 New Server Joined`)
     .setFields(
       {

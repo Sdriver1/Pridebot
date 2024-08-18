@@ -36,12 +36,12 @@ module.exports = async (client) => {
   const restartDurationMs = restartTime - shutdownTime;
 
   const formatDuration = (ms) => {
-    const seconds = Math.floor((ms / 1000) % 60);
+    const seconds = (ms / 1000) % 60;
     const minutes = Math.floor((ms / (1000 * 60)) % 60);
     const hours = Math.floor((ms / (1000 * 60 * 60)) % 24);
     const days = Math.floor(ms / (1000 * 60 * 60 * 24));
 
-    let formatted = `${seconds}s`;
+    let formatted = `${seconds.toFixed(1)}s`;
     if (minutes > 0) formatted = `${minutes}m ${formatted}`;
     if (hours > 0) formatted = `${hours}h ${formatted}`;
     if (days > 0) formatted = `${days}d ${formatted}`;
@@ -51,13 +51,14 @@ module.exports = async (client) => {
   const downtimeString = formatDuration(downtimeMs);
   const restartDurationString = formatDuration(restartDurationMs);
   const timestamp = `<t:${Math.floor(Date.now() / 1000)}:F>`;
+  const timestamp1 = `<t:${Math.floor(Date.now() / 1000)}:R>`;
 
   const embed = new EmbedBuilder()
     .setColor("FF00EA")
     .setTitle("🔄 Bot Restarted")
     .addFields({
       name: "<:_:1112602480128299079> Restart Info",
-      value: `**Restarted:** ${timestamp} \n**Downtime:** ${downtimeString} (${downtimeMs}) \n**Restart Duration:** ${restartDurationString} (${restartDurationMs})`,
+      value: `**Restarted:** ${timestamp} (${timestamp1})\n**Downtime:** **${downtimeString}** (\`${downtimeMs}ms\`) \n**Restart Duration:** **${restartDurationString}** (\`${restartDurationMs}ms\`)`,
       inline: true,
     })
     .setTimestamp();

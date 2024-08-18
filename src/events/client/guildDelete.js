@@ -18,12 +18,12 @@ module.exports = async (client, guild) => {
   });
 
   const embed = new EmbedBuilder()
-    .setColor(0xff00ae)
+    .setColor("FF00EA")
     .setTitle(`❌ Left Server`)
     .addFields(
       {
         name: "<:_:1112602480128299079> Server Info",
-        value: `**Server Name:** \`${name}\` (\`${serverID}\`)\n**Server Owner:** <@${ownerID}> (\`${ownerID}\`) \n**Member Count:** \`${memberCount}\` \n**Server Creation:** <t:${parseInt(
+        value: `**Server Name:** **${name}** (\`${serverID}\`)\n**Server Owner:** <@${ownerID}> (\`${ownerID}\`) \n**Member Count:** \`${memberCount}\` \n**Server Creation:** <t:${parseInt(
           guild.createdTimestamp / 1000
         )}:R> \n**Joined:** <t:${parseInt(
           guild.joinedTimestamp / 1000
