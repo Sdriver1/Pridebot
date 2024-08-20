@@ -21,16 +21,9 @@ const updateChannelName = async (client) => {
   const registeredCommandsCount =
     (await getRegisteredCommandsCount(client)) + 2;
 
-  const usages = await CommandUsage.aggregate([
-    {
-      $group: {
-        _id: null,
-        totalUsage: { $sum: "$count" },
-      },
-    },
-  ]).exec();
-  const totalUsage = usages.length > 0 ? usages[0].totalUsage : 0;
-
+  const allUsages = await CommandUsage.find({}).sort({ count: -1 });
+  const totalUsage = allUsages.reduce((acc, cmd) => acc + cmd.count, 0);
+  
   const profileAmount = await Profile.countDocuments();
 
   const voting = await Voting.findOne();

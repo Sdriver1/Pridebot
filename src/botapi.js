@@ -4,6 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const { EmbedBuilder, ChannelType } = require("discord.js");
 const CommandUsage = require("../mongo/models/usageSchema.js");
+const UsageType = require("../mongo/models/usageTypeSchema");
 const ProfileData = require("../mongo/models/profileSchema.js");
 const Voting = require("../mongo/models/votingSchema");
 const { botlistauth } = process.env;
@@ -79,11 +80,13 @@ module.exports = (client) => {
     });
 
     try {
-      const UserInstallCount = await getApproximateUserInstallCount(
-        client
-      );
+      const UserInstallCount = await getApproximateUserInstallCount(client);
       const usages = await CommandUsage.find({}).sort({ count: -1 });
       const totalUsage = usages.reduce((acc, cmd) => acc + cmd.count, 0);
+
+      const typeUsage = await UsageType.findOne();
+      const guildCount = typeUsage.guildCount;
+      const userContextCount = typeUsage.userContextCount;
 
       const commandsCount = (await getRegisteredCommandsCount(client)) + 2;
 
@@ -101,6 +104,8 @@ module.exports = (client) => {
         UserInstallCount,
         totalUsage,
         commandsCount,
+        guildCount,
+        userContextCount,
         botuptime,
         vote: {
           votingtotal,

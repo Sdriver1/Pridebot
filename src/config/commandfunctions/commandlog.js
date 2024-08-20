@@ -1,5 +1,6 @@
 const { EmbedBuilder } = require("discord.js");
 const CommandUsage = require("../../../mongo/models/usageSchema");
+const UsageType = require("../../../mongo/models/usageTypeSchema");
 
 const commandLogging = async (client, interaction) => {
   const estDate = new Date().toLocaleString("en-US", {
@@ -18,7 +19,22 @@ const commandLogging = async (client, interaction) => {
   usageData.count += 0;
   await usageData.save();
 
-  const allUsages = await CommandUsage.find({}).sort({ count: -1 });
+  let usageTypeData = await UsageType.findOne({});
+  if (!usageTypeData) {
+    usageTypeData = new UsageType({
+      guildCount: 0,
+      userContextCount: 0,
+    });
+  }
+
+  if (interaction.guild) {
+    usageTypeData.guildCount += 1;
+  } else {
+    usageTypeData.userContextCount += 1;
+  }
+  await usageTypeData.save();
+
+  const allUsages = await CommandUsage.find({});
   const totalUsage = allUsages.reduce((acc, cmd) => acc + cmd.count, 0);
 
   const logChannel = client.channels.cache.get("1256810888694861914");
@@ -27,8 +43,6 @@ const commandLogging = async (client, interaction) => {
     let location;
     if (interaction.guild) {
       location = `${interaction.guild.name} (${interaction.guild.id})`;
-    } else if (interaction.channel && interaction.channel.isDMBased()) {
-      location = "DM";
     } else {
       location = "User Install Context (External Server)";
     }
@@ -36,7 +50,7 @@ const commandLogging = async (client, interaction) => {
     const logEmbed = new EmbedBuilder()
       .setTitle("Command Used")
       .setDescription(
-        `**Command:** /${interaction.commandName}\n**Location:** ${location}\n**User:** <@${interaction.user.id}> (${interaction.user.id})\n**Time:** ${estDate} (EST)\n**Command Count:** ${usageData.count}\n **Total Usage:** ${totalUsage}`
+        `**Command:** /${interaction.commandName}\n**Command Count:** ${usageData.count}\n\n**Location:** ${location}\n**User:** <@${interaction.user.id}> (${interaction.user.id})\n**Time:** ${estDate} (EST)\n\n**Guild Usage:** ${usageTypeData.guildCount}\n**User Install Usage:** ${usageTypeData.userContextCount}\n**Total Usage:** ${totalUsage}`
       )
       .setColor(0xff00ea)
       .setFooter({ text: `${interaction.user.id}` })
