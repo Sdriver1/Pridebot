@@ -143,7 +143,10 @@ module.exports = {
             .toBuffer();
         }
       } catch (error) {
-        console.error(`Error compositing images for user ${pfpuser.id}:`, error);
+        console.error(
+          `Error compositing images for user ${pfpuser.id}:`,
+          error
+        );
         await interaction.editReply(
           "There was an error processing the images. Please try again."
         );
@@ -236,7 +239,11 @@ module.exports = {
         new ButtonBuilder()
           .setLabel("Download Avatar")
           .setStyle(ButtonStyle.Link)
-          .setURL(imageURL + `?time=${new Date().getTime()}`)
+          .setURL(imageURL + `?time=${new Date().getTime()}`),
+        new ButtonBuilder()
+          .setLabel("Access all avatars")
+          .setStyle(ButtonStyle.Link)
+          .setURL(`https://pfp.pridebot.xyz/${pfpuser.id}`)
       );
 
       await commandLogging(client, interaction);
