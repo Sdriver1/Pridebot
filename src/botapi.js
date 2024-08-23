@@ -88,6 +88,8 @@ module.exports = (client) => {
       const guildCount = typeUsage.guildCount;
       const userContextCount = typeUsage.userContextCount;
 
+      const profileAmount = await ProfileData.countDocuments();
+
       const commandsCount = (await getRegisteredCommandsCount(client)) + 2;
 
       const botuptime = client.botStartTime;
@@ -102,6 +104,7 @@ module.exports = (client) => {
         totalUserCount,
         currentGuildCount,
         UserInstallCount,
+        profileAmount,
         totalUsage,
         commandsCount,
         guildCount,
