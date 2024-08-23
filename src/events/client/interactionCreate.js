@@ -1,14 +1,13 @@
 const CommandUsage = require("../../../mongo/models/usageSchema");
 const Blacklist = require("../../../mongo/models/blacklistSchema.js");
 const IDLists = require("../../../mongo/models/idSchema.js");
+const UsageType = require("../../../mongo/models/usageTypeSchema");
 
 async function isBlacklisted(userId, guildId) {
   try {
     const idLists = await IDLists.findOne();
-    if (idLists) {
-      if (idLists.devs.includes(userId)) {
-        return { blacklisted: false };
-      }
+    if (idLists && idLists.devs.includes(userId)) {
+      return { blacklisted: false };
     }
 
     const blacklist = await Blacklist.findOne();
@@ -36,7 +35,7 @@ module.exports = {
       const command = commands.get(commandName);
       if (!command) return;
 
-      if (command.owner == true) {
+      if (command.owner === true) {
         if (interaction.user.id !== "691506668781174824") {
           await interaction.reply({
             content: "This command is only for the bot owner!",
@@ -73,6 +72,22 @@ module.exports = {
             { $inc: { count: 1 } },
             { upsert: true, new: true }
           );
+
+          let usageTypeData = await UsageType.findOne({});
+          if (!usageTypeData) {
+            usageTypeData = new UsageType({
+              guildCount: 0,
+              userContextCount: 0,
+            });
+          }
+
+          if (interaction.guild) {
+            usageTypeData.guildCount += 1;
+          } else {
+            usageTypeData.userContextCount += 1;
+          }
+
+          await usageTypeData.save();
         }
 
         await command.execute(interaction, client, { userId, guildId });

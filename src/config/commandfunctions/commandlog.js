@@ -7,32 +7,11 @@ const commandLogging = async (client, interaction) => {
     timeZone: "America/New_York",
   });
 
-  let usageData = await CommandUsage.findOne({
+  const usageData = await CommandUsage.findOne({
     commandName: interaction.commandName,
   });
-  if (!usageData) {
-    usageData = new CommandUsage({
-      commandName: interaction.commandName,
-      count: 0,
-    });
-  }
-  usageData.count += 0;
-  await usageData.save();
 
-  let usageTypeData = await UsageType.findOne({});
-  if (!usageTypeData) {
-    usageTypeData = new UsageType({
-      guildCount: 0,
-      userContextCount: 0,
-    });
-  }
-
-  if (interaction.guild) {
-    usageTypeData.guildCount += 1;
-  } else {
-    usageTypeData.userContextCount += 1;
-  }
-  await usageTypeData.save();
+  const usageTypeData = await UsageType.findOne({});
 
   const allUsages = await CommandUsage.find({});
   const totalUsage = allUsages.reduce((acc, cmd) => acc + cmd.count, 0);
@@ -50,7 +29,15 @@ const commandLogging = async (client, interaction) => {
     const logEmbed = new EmbedBuilder()
       .setTitle("Command Used")
       .setDescription(
-        `**Command:** /${interaction.commandName}\n**Command Count:** ${usageData.count}\n\n**Location:** ${location}\n**User:** <@${interaction.user.id}> (${interaction.user.id})\n**Time:** ${estDate} (EST)\n\n**Guild Usage:** ${usageTypeData.guildCount}\n**User Install Usage:** ${usageTypeData.userContextCount}\n**Total Usage:** ${totalUsage}`
+        `**Command:** /${interaction.commandName}\n**Command Count:** ${
+          usageData ? usageData.count : 0
+        }\n\n**Location:** ${location}\n**User:** <@${interaction.user.id}> (${
+          interaction.user.id
+        })\n**Time:** ${estDate} (EST)\n\n**Guild Usage:** ${
+          usageTypeData ? usageTypeData.guildCount : 0
+        }\n**User Install Usage:** ${
+          usageTypeData ? usageTypeData.userContextCount : 0
+        }\n**Total Usage:** ${totalUsage}`
       )
       .setColor(0xff00ea)
       .setFooter({ text: `${interaction.user.id}` })
