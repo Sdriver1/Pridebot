@@ -3,21 +3,21 @@ const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
 const { EmbedBuilder, ChannelType } = require("discord.js");
-const CommandUsage = require("../mongo/models/usageSchema.js");
-const UsageType = require("../mongo/models/usageTypeSchema");
-const ProfileData = require("../mongo/models/profileSchema.js");
-const Voting = require("../mongo/models/votingSchema");
+const CommandUsage = require("../../mongo/models/usageSchema.js");
+const UsageType = require("../../mongo/models/usageTypeSchema");
+const ProfileData = require("../../mongo/models/profileSchema.js");
+const Voting = require("../../mongo/models/votingSchema");
 const { botlistauth } = process.env;
 require("dotenv").config();
 
-const { getTotalCommits } = require("./config/commandfunctions/commit.js");
+const { getTotalCommits } = require("../config/commandfunctions/commit.js");
 const {
   getRegisteredCommandsCount,
-} = require("./config/commandfunctions/registercommand.js");
-const { updateVotingStats } = require("./config/botfunctions/voting.js");
+} = require("../config/commandfunctions/registercommand.js");
+const { updateVotingStats } = require("../config/botfunctions/voting.js");
 const {
   getApproximateUserInstallCount,
-} = require("./config/botfunctions/user_install.js");
+} = require("../config/botfunctions/user_install.js");
 
 module.exports = (client) => {
   const app = express();
@@ -35,10 +35,10 @@ module.exports = (client) => {
     res.status(404).json({
       message: "These are the API requests you can make:",
       endpoints: {
-        stats: "/api/stats",
-        profiles: "/api/profiles/:userId",
-        votes: "/api/votes/:userId",
-        commands: "/api/commands/:command_type?/:command_name?",
+        stats: "/stats",
+        profiles: "/profiles/:userId",
+        votes: "/votes/:userId",
+        commands: "/commands/:command_type?/:command_name?",
       },
     });
   });
@@ -71,7 +71,7 @@ module.exports = (client) => {
     }
   });
 
-  app.get("/api/stats", cors(), async (req, res) => {
+  app.get("/stats", cors(), async (req, res) => {
     const currentGuildCount = client.guilds.cache.size;
 
     let totalUserCount = 0;
@@ -123,7 +123,7 @@ module.exports = (client) => {
     }
   });
 
-  app.get("/api/profiles/:userId", cors(), async (req, res) => {
+  app.get("/profiles/:userId", cors(), async (req, res) => {
     try {
       const profile = await ProfileData.findOne({ userId: req.params.userId });
 
@@ -138,7 +138,7 @@ module.exports = (client) => {
     }
   });
 
-  app.get("/api/votes/:userId", cors(), async (req, res) => {
+  app.get("/votes/:userId", cors(), async (req, res) => {
     try {
       const votes = await Voting.findOne(
         { "votingUsers.userId": req.params.userId },
@@ -156,9 +156,9 @@ module.exports = (client) => {
     }
   });
 
-  const commandsDirectory = path.join(__dirname, "commands");
+  const commandsDirectory = path.join(__dirname, "..", "commands");
   app.get(
-    "/api/commands/:command_type?/:command_name?",
+    "/commands/:command_type?/:command_name?",
     cors(),
     async (req, res) => {
       const { command_type, command_name } = req.params;

@@ -8,8 +8,8 @@ const fs = require("fs");
 const path = require("path");
 
 const initializeBot = require("./bot");
-const initializeApi = require("./botapi");
-const initializeAvatarApi = require("./avatarapi");
+const initializeApi = require("./apis/botapi");
+const initializeAvatarApi = require("./apis/avatarapi");
 
 function logShutdownTime() {
   const shutdownFilePath = path.join(__dirname, 'shutdown-time.txt');

@@ -16,16 +16,17 @@ module.exports = (client) => {
   app.use(cors());
   app.use(
     "/assets",
-    express.static(path.join(__dirname, "..", "web", "assets"))
+    express.static(path.join(__dirname, "..", "..", "web", "assets"))
   );
 
   app.get("/", (req, res) => {
-    res.status(404).sendFile(path.join(__dirname, "..", "web", "404.html"));
+    res
+      .status(404)
+      .sendFile(path.join(__dirname, "..", "..", "web", "404.html"));
   });
 
   app.get("/:userId", async (req, res) => {
     const { userId } = req.params;
-    const imagePath = path.join(__dirname, "..", "src", "pfps", userId);
 
     try {
       const user = await client.users.fetch(userId);
@@ -59,7 +60,9 @@ module.exports = (client) => {
 
       res.send(htmlContent);
     } catch (error) {
-      res.status(404).sendFile(path.join(__dirname, "..", "web", "404.html"));
+      res
+        .status(404)
+        .sendFile(path.join(__dirname, "..", "..", "web", "404.html"));
     }
   });
 

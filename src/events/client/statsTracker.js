@@ -3,7 +3,7 @@ const axios = require("axios");
 
 const updateChannelName = async (client) => {
   try {
-    const response = await axios.get("https://api.pridebot.xyz/api/stats");
+    const response = await axios.get("https://api.pridebot.xyz/stats");
     const stats = response.data;
 
     const guildsCount = stats.currentGuildCount;
