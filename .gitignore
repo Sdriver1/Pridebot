@@ -1,18 +1,17 @@
-.env
+# Bot Directories
+Dev
 node_modules
-package-lock.json
-blacklist
 pfps
+
+# Bot Files
+.env
+package-lock.json
 shutdown-time.txt 
 
-namefinder.js
-id.js
-termlist.js
-blacklist.js
-darID.js
+# Web Directories
+bootstrap
+fonts
 
-gendergame.js
-memorygame.js
-sexualitygame.js
-wordgame.js
-web
+# Web Files
+jquery.min.js
+untitled.js
