@@ -12,7 +12,7 @@ const initializeApi = require("./apis/botapi");
 const initializeAvatarApi = require("./apis/avatarapi");
 
 function logShutdownTime() {
-  const shutdownFilePath = path.join(__dirname, 'shutdown-time.txt');
+  const shutdownFilePath = path.join(__dirname, "shutdown-time.txt");
   const shutdownTime = Date.now().toString();
   try {
     fs.writeFileSync(shutdownFilePath, shutdownTime);
@@ -22,15 +22,27 @@ function logShutdownTime() {
   }
 }
 
-process.on('SIGINT', () => {
+function logRestartTime() {
+  const restartFilePath = path.join(__dirname, "restart-time.txt");
+  const restartTime = Date.now().toString();
+  try {
+    fs.writeFileSync(restartFilePath, restartTime);
+    console.log("Restart time logged.");
+  } catch (error) {
+    console.error("Failed to write restart time:", error);
+  }
+}
+
+process.on("SIGINT", () => {
+  logShutdownTime();
+  process.exit();
+});
+process.on("SIGTERM", () => {
   logShutdownTime();
   process.exit();
 });
 
-process.on('SIGTERM', () => {
-  logShutdownTime();
-  process.exit();
-});
+logRestartTime();
 
 const client = new Client({
   intents: [

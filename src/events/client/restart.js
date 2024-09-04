@@ -1,5 +1,4 @@
 const { EmbedBuilder } = require("discord.js");
-const axios = require("axios");
 const fs = require("fs");
 const path = require("path");
 
@@ -8,10 +7,17 @@ module.exports = async (client) => {
   const channel = client.channels.cache.get(channelId);
   let restartTime, shutdownTime;
 
-  try {
-    const response = await axios.get("https://api.pridebot.xyz/api/stats");
-    restartTime = response.data.botuptime * 1000;
-  } catch (error) {
+  const restartFilePath = path.join(__dirname, "..", "..", "restart-time.txt");
+
+  if (fs.existsSync(restartFilePath)) {
+    try {
+      const restartTimeString = fs.readFileSync(restartFilePath, "utf8");
+      restartTime = parseInt(restartTimeString, 10);
+    } catch (error) {
+      console.error("Error reading restart time:", error);
+      restartTime = Date.now();
+    }
+  } else {
     restartTime = Date.now();
   }
 
