@@ -30,7 +30,13 @@ module.exports = (client) => {
 
     try {
       const user = await client.users.fetch(userId);
-      const htmlFilePath = path.join(__dirname, "..", "web", "webavatar.html");
+      const htmlFilePath = path.join(
+        __dirname,
+        "..",
+        "..",
+        "web",
+        "webavatar.html"
+      );
       let htmlContent = fs.readFileSync(htmlFilePath, "utf8");
 
       const username = user.username;
@@ -78,7 +84,7 @@ module.exports = (client) => {
 
   app.get("/files/:userId", (req, res) => {
     const { userId } = req.params;
-    const imagePath = path.join(__dirname, "..", "src", "pfps", userId);
+    const imagePath = path.join(__dirname, "..", "..", "src", "pfps", userId);
 
     if (fs.existsSync(imagePath)) {
       const files = fs.readdirSync(imagePath);
@@ -92,6 +98,7 @@ module.exports = (client) => {
     const { userId, flag } = req.params;
     const imagePath = path.join(
       __dirname,
+      "..",
       "..",
       "src",
       "pfps",
