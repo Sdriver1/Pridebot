@@ -5,7 +5,7 @@ const { token } = process.env;
 async function getApplicationStats(client) {
   try {
     const response = await axios.get(
-      `https://discord.com/api/v10/applications/${client.user.id}`,
+      `https://discord.com/api/v10/applications/1101256478632972369`,
       {
         headers: {
           Authorization: `Bot ${token}`,

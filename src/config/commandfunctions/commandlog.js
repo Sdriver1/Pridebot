@@ -1,6 +1,5 @@
 const { EmbedBuilder } = require("discord.js");
 const CommandUsage = require("../../../mongo/models/usageSchema");
-const UsageType = require("../../../mongo/models/usageTypeSchema");
 
 const commandLogging = async (client, interaction) => {
   const estDate = new Date().toLocaleString("en-US", {
@@ -10,8 +9,6 @@ const commandLogging = async (client, interaction) => {
   const usageData = await CommandUsage.findOne({
     commandName: interaction.commandName,
   });
-
-  const usageTypeData = await UsageType.findOne({});
 
   const allUsages = await CommandUsage.find({});
   const totalUsage = allUsages.reduce((acc, cmd) => acc + cmd.count, 0);
@@ -31,13 +28,10 @@ const commandLogging = async (client, interaction) => {
       .setDescription(
         `**Command:** /${interaction.commandName}\n**Command Count:** ${
           usageData ? usageData.count : 0
-        }\n\n**Location:** ${location}\n**User:** <@${interaction.user.id}> (${
+        }
+        \n**Total Usage:** ${totalUsage}\n\n**Location:** ${location}\n**User:** <@${
           interaction.user.id
-        })\n**Time:** ${estDate} (EST)\n\n**Guild Usage:** ${
-          usageTypeData ? usageTypeData.guildCount : 0
-        }\n**User Install Usage:** ${
-          usageTypeData ? usageTypeData.userContextCount : 0
-        }\n**Total Usage:** ${totalUsage}`
+        }> (${interaction.user.id})\n**Time:** ${estDate} (EST)`
       )
       .setColor(0xff00ea)
       .setFooter({ text: `${interaction.user.id}` })

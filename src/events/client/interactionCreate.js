@@ -1,7 +1,6 @@
 const CommandUsage = require("../../../mongo/models/usageSchema");
 const Blacklist = require("../../../mongo/models/blacklistSchema.js");
 const IDLists = require("../../../mongo/models/idSchema.js");
-const UsageType = require("../../../mongo/models/usageTypeSchema");
 
 async function isBlacklisted(userId, guildId) {
   try {
@@ -67,27 +66,19 @@ module.exports = {
 
       try {
         if (commandName !== "usage") {
-          await CommandUsage.findOneAndUpdate(
+          const usageData = await CommandUsage.findOneAndUpdate(
             { commandName: commandName },
             { $inc: { count: 1 } },
             { upsert: true, new: true }
           );
 
-          let usageTypeData = await UsageType.findOne({});
-          if (!usageTypeData) {
-            usageTypeData = new UsageType({
-              guildCount: 0,
-              userContextCount: 0,
-            });
-          }
-
           if (interaction.guild) {
-            usageTypeData.guildCount += 1;
+            usageData.guildCount += 1;
           } else {
-            usageTypeData.userContextCount += 1;
+            usageData.userContextCount += 1;
           }
 
-          await usageTypeData.save();
+          await usageData.save();
         }
 
         await command.execute(interaction, client, { userId, guildId });

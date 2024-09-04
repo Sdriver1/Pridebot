@@ -47,7 +47,7 @@ const updateChannelName = async (client) => {
       }
     }
   } catch (error) {
-    console.error("Error fetching stats or updating channel names:", error);
+    console.error("Error fetching stats or updating channel names");
   }
 };
 

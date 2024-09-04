@@ -1,27 +1,43 @@
 const { ActivityType } = require("discord.js");
+const axios = require("axios");
 
 module.exports = {
   name: "ready",
   once: true,
   async execute(client) {
+    let presenceIndex = 0;
+
     const updatePresence = async () => {
-      const userCount = client.guilds.cache.reduce(
-        (acc, guild) => acc + guild.memberCount,
-        0
-      );
+      const response = await axios.get("https://api.pridebot.xyz/stats");
+      const stats = response.data;
+      const guildsCount = stats.currentGuildCount;
+      const usersCount = stats.totalUserCount;
+      const totalUsage = stats.totalUsage;
+
+      const presences = [
+        {
+          type: ActivityType.Watching,
+          name: `over ${usersCount} LGBTQIA+ members`,
+        },
+        {
+          type: ActivityType.Listening,
+          name: `${guildsCount} servers`,
+        },
+        {
+          type: ActivityType.Playing,
+          name: `with ${totalUsage} commands`,
+        },
+      ];
 
       await client.user.setPresence({
         status: "online",
-        activities: [
-          {
-            type: ActivityType.Watching,
-            name: `over ${userCount} LGBTQIA+ members`,
-          },
-        ],
+        activities: [presences[presenceIndex]],
       });
+
+      presenceIndex = (presenceIndex + 1) % presences.length;
     };
 
     await updatePresence();
-    setInterval(updatePresence, 300_000);
+    setInterval(updatePresence, 30_000);
   },
 };
