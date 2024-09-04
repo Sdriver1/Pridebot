@@ -4,7 +4,6 @@ const fs = require("fs");
 const path = require("path");
 const { EmbedBuilder, ChannelType } = require("discord.js");
 const CommandUsage = require("../../mongo/models/usageSchema.js");
-const UsageType = require("../../mongo/models/usageTypeSchema");
 const ProfileData = require("../../mongo/models/profileSchema.js");
 const Voting = require("../../mongo/models/votingSchema");
 const { botlistauth } = process.env;
@@ -36,6 +35,7 @@ module.exports = (client) => {
       message: "These are the API requests you can make:",
       endpoints: {
         stats: "/stats",
+        serverstats: "/serverstats",
         profiles: "/profiles/:userId",
         votes: "/votes/:userId",
         commands: "/commands/:command_type?/:command_name?",
@@ -83,10 +83,14 @@ module.exports = (client) => {
       const UserInstallCount = await getApproximateUserInstallCount(client);
       const usages = await CommandUsage.find({}).sort({ count: -1 });
       const totalUsage = usages.reduce((acc, cmd) => acc + cmd.count, 0);
-
-      const typeUsage = await UsageType.findOne();
-      const guildCount = typeUsage.guildCount;
-      const userContextCount = typeUsage.userContextCount;
+      const totalGuildCount = usages.reduce(
+        (acc, cmd) => acc + cmd.guildCount,
+        0
+      );
+      const totalUserContextCount = usages.reduce(
+        (acc, cmd) => acc + cmd.userContextCount,
+        0
+      );
 
       const profileAmount = await ProfileData.countDocuments();
 
@@ -107,8 +111,8 @@ module.exports = (client) => {
         profileAmount,
         totalUsage,
         commandsCount,
-        guildCount,
-        userContextCount,
+        totalGuildCount,
+        totalUserContextCount,
         botuptime,
         vote: {
           votingtotal,
@@ -119,6 +123,34 @@ module.exports = (client) => {
       });
     } catch (error) {
       console.error("Failed to get API stats:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  });
+
+  app.get("/serverstats", cors(), async (req, res) => {
+    const prismaGuild = client.guilds.cache.get("921403338069770280");
+    let prismatotal = 0;
+    if (prismaGuild) {
+      prismatotal = prismaGuild.memberCount;
+    } else {
+      console.error("Guild with ID 921403338069770280 not found.");
+    }
+
+    const pridecordGuild = client.guilds.cache.get("1077258761443483708");
+    let pridecordtotal = 0;
+    if (pridecordGuild) {
+      pridecordtotal = pridecordGuild.memberCount;
+    } else {
+      console.error("Guild with ID 1077258761443483708 not found.");
+    }
+
+    try {
+      res.json({
+        prismatotal,
+        pridecordtotal,
+      });
+    } catch (error) {
+      console.error("Failed to get server stats:", error);
       res.status(500).send("Internal Server Error");
     }
   });
