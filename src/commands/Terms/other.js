@@ -8,7 +8,7 @@ const {
   ButtonBuilder,
   ButtonStyle,
 } = require("discord.js");
-const commandLogging = require("../../config/commandfunctions/commandlog");
+const commandLogging = require("../../config/logging/commandlog");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -18,6 +18,15 @@ module.exports = {
     ),
 
   async execute(interaction, client) {
+    const channel = interaction.channel;
+
+    if (!channel) {
+      await interaction.reply(
+        "The type of command you are trying to send can't be sent in User Install format. Please use this command again in a server where Pridebot is added. \nInvite link: https://pridebot.xyz/invite"
+      );
+      return;
+    }
+
     const other = [
       {
         name: "Dissociative Systems",

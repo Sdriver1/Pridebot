@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const commandLogging = require("../../config/commandfunctions/commandlog");
+const commandLogging = require("../../config/logging/commandlog");
 const {
   containsDisallowedContent,
 } = require("../../config/detection/containDisallow");

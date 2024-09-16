@@ -9,7 +9,7 @@ const sharp = require("sharp");
 const axios = require("axios");
 const fs = require("fs");
 const path = require("path");
-const commandLogging = require("../../config/commandfunctions/commandlog");
+const commandLogging = require("../../config/logging/commandlog");
 
 const validFlags = [
   "abrosexual", "aceflux", "agender", "ally", "androgyne", "aroace", "aroace2",

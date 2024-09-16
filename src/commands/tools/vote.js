@@ -1,6 +1,6 @@
 require("dotenv").config();
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const commandLogging = require("../../config/commandfunctions/commandlog");
+const commandLogging = require("../../config/logging/commandlog");
 
 module.exports = {
   data: new SlashCommandBuilder()

@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const commandLogging = require("../../config/commandfunctions/commandlog");
+const commandLogging = require("../../config/logging/commandlog");
 const utility_functions = {
   chance: function (probability) {
     return Math.random() < probability;

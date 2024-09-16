@@ -7,7 +7,7 @@ const { getTotalCommits } = require("../../config/commandfunctions/commit");
 const {
   getRegisteredCommandsCount,
 } = require("../../config/commandfunctions/registercommand");
-const commandLogging = require("../../config/commandfunctions/commandlog");
+const commandLogging = require("../../config/logging/commandlog");
 const {
   getApproximateUserInstallCount,
 } = require("../../config/botfunctions/user_install");
