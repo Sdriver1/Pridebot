@@ -6,7 +6,8 @@ const {
   ButtonStyle,
   ComponentType,
 } = require("discord.js");
-const commandLogging = require("../../config/commandfunctions/commandlog");
+const commandLogging = require("../../config/logging/commandlog");
+const profileLogging = require("../../config/logging/profilelogging");
 const chalk = require("chalk");
 
 const Profile = require("../../../mongo/models/profileSchema");
@@ -359,6 +360,9 @@ module.exports = {
       const userId = interaction.user.id;
       const colorInput = interaction.options.getString("color");
       const badgeToggle = interaction.options.getBoolean("badgetoggle");
+      const originalProfile = await Profile.findOne({
+        userId: interaction.user.id,
+      });
 
       const updates = {};
 
@@ -399,7 +403,18 @@ module.exports = {
           : "Badges are now hidden from your profile.";
       }
 
+      const updatedProfile = await Profile.findOne({
+        userId: interaction.user.id,
+      });
+
       await commandLogging(client, interaction);
+      await profileLogging(
+        client,
+        interaction,
+        "edited",
+        originalProfile,
+        updatedProfile
+      );
       return interaction.reply({
         content: responseMessage,
         ephemeral: true,
@@ -634,6 +649,9 @@ module.exports = {
         }
       }
 
+      const originalProfile = await Profile.findOne({
+        userId: interaction.user.id,
+      });
       const profile = await Profile.findOneAndUpdate(
         { userId: interaction.user.id },
         { $set: updatedFields },
@@ -648,7 +666,17 @@ module.exports = {
         });
       }
 
+      const updatedProfile = await Profile.findOne({
+        userId: interaction.user.id,
+      });
       await commandLogging(client, interaction);
+      await profileLogging(
+        client,
+        interaction,
+        "edited",
+        originalProfile,
+        updatedProfile
+      );
       return interaction.reply({
         content:
           "Your profile has been updated successfully! \nSee your new profile with </profile view:1197313708846743642>",
@@ -798,6 +826,16 @@ module.exports = {
         .setTimestamp();
 
       await commandLogging(client, interaction);
+      const updatedProfile = await Profile.findOne({
+        userId: interaction.user.id,
+      });
+      await profileLogging(
+        client,
+        interaction,
+        "created",
+        null,
+        updatedProfile
+      );
       return interaction.reply({
         content:
           "Your profile has been created successfully! \nSee your new profile with </profile view:1197313708846743642> \nTo update anything or add multiple pronoun, gender, sexuality or a bio, please use </profile update:1197313708846743642>",

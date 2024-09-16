@@ -14,7 +14,7 @@ async function getApplicationStats(client) {
     );
     return response.data;
   } catch (error) {
-    console.error("Error fetching application stats:", error);
+    console.error("Error fetching application stats:");
     return null;
   }
 }
