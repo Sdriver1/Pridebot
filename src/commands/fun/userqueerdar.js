@@ -4,6 +4,7 @@ const {
   ApplicationCommandType,
 } = require("discord.js");
 const DarList = require("../../../mongo/models/idDarSchema");
+const darlogging = require("../../config/logging/darlog");
 
 const utility_functions = {
   chance: function (probability) {
@@ -71,5 +72,6 @@ module.exports = {
         text: "The bot has 99.99% accuracy rate on checking users queerness",
       });
     await interaction.reply({ embeds: [embed] });
+    await darlogging(client, "User Queerdar", userName, meter, userid);
   },
 };

@@ -4,6 +4,7 @@ const {
   ApplicationCommandType,
 } = require("discord.js");
 const DarList = require("../../../mongo/models/idDarSchema"); 
+const darlogging = require("../../config/logging/darlog")
 
 const utility_functions = {
   chance: function (probability) {
@@ -71,5 +72,6 @@ module.exports = {
       });
 
     await interaction.reply({ embeds: [embed] });
+    await darlogging(client, "User Gaydar", userName, meter, userid);
   },
 };

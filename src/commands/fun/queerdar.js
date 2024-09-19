@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const commandLogging = require("../../config/logging/commandlog");
 const DarList = require("../../../mongo/models/idDarSchema");
+const darlogging = require("../../config/logging/darlog")
 
 const utility_functions = {
   chance: function (probability) {
@@ -73,5 +74,6 @@ module.exports = {
       });
     await interaction.reply({ embeds: [embed] });
     await commandLogging(client, interaction);
+    await darlogging(client, "Queerdar", userName, meter, userid);
   },
 };
