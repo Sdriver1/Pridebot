@@ -22,27 +22,18 @@ function logShutdownTime() {
   }
 }
 
-function logRestartTime() {
-  const restartFilePath = path.join(__dirname, "restart-time.txt");
-  const restartTime = Date.now().toString();
-  try {
-    fs.writeFileSync(restartFilePath, restartTime);
-    console.log("Restart time logged.");
-  } catch (error) {
-    console.error("Failed to write restart time:", error);
-  }
-}
-
 process.on("SIGINT", () => {
   logShutdownTime();
   process.exit();
 });
-process.on("SIGTERM", () => {
-  logShutdownTime();
-  process.exit();
+
+process.on('unhandledRejection', (error) => {
+  console.error('Unhandled promise rejection:', error);
 });
 
-logRestartTime();
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught exception:', error);
+});
 
 const client = new Client({
   intents: [

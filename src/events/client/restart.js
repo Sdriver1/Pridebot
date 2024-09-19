@@ -5,21 +5,7 @@ const path = require("path");
 module.exports = async (client) => {
   const channelId = "1112590962867310602";
   const channel = client.channels.cache.get(channelId);
-  let restartTime, shutdownTime;
-
-  const restartFilePath = path.join(__dirname, "..", "..", "restart-time.txt");
-
-  if (fs.existsSync(restartFilePath)) {
-    try {
-      const restartTimeString = fs.readFileSync(restartFilePath, "utf8");
-      restartTime = parseInt(restartTimeString, 10);
-    } catch (error) {
-      console.error("Error reading restart time:", error);
-      restartTime = Date.now();
-    }
-  } else {
-    restartTime = Date.now();
-  }
+  let shutdownTime;
 
   const shutdownFilePath = path.join(
     __dirname,
@@ -27,19 +13,20 @@ module.exports = async (client) => {
     "..",
     "shutdown-time.txt"
   );
+
   if (fs.existsSync(shutdownFilePath)) {
     try {
       const shutdownTimeString = fs.readFileSync(shutdownFilePath, "utf8");
       shutdownTime = parseInt(shutdownTimeString, 10);
     } catch (error) {
-      shutdownTime = restartTime;
+      console.error("Error reading shutdown time:", error);
+      shutdownTime = Date.now();
     }
   } else {
-    shutdownTime = restartTime;
+    shutdownTime = Date.now();
   }
 
-  const downtimeMs = Date.now() - restartTime;
-  const restartDurationMs = restartTime - shutdownTime;
+  const downtimeMs = Date.now() - shutdownTime;
 
   const formatDuration = (ms) => {
     const seconds = (ms / 1000) % 60;
@@ -55,7 +42,6 @@ module.exports = async (client) => {
   };
 
   const downtimeString = formatDuration(downtimeMs);
-  const restartDurationString = formatDuration(restartDurationMs);
   const timestamp = `<t:${Math.floor(Date.now() / 1000)}:F>`;
   const timestamp1 = `<t:${Math.floor(Date.now() / 1000)}:R>`;
 
@@ -63,8 +49,8 @@ module.exports = async (client) => {
     .setColor("FF00EA")
     .setTitle("🔄 Bot Restarted")
     .addFields({
-      name: "<:_:1112602480128299079> Restart Info",
-      value: `**Restarted:** ${timestamp} (${timestamp1})\n**Downtime:** **${downtimeString}** (\`${downtimeMs}ms\`) \n**Restart Duration:** **${restartDurationString}** (\`${restartDurationMs}ms\`)`,
+      name: "<:_:1112602480128299079> Downtime Info",
+      value: `**Restarted:** ${timestamp} (${timestamp1})\n**Downtime:** **${downtimeString}** (\`${downtimeMs}ms\`)`,
       inline: true,
     })
     .setTimestamp();
