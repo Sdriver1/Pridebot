@@ -20,7 +20,7 @@ module.exports = {
     .setName("User Queerdar")
     .setType(ApplicationCommandType.User),
 
-  async execute(interaction) {
+  async execute(interaction, client) {
     const targetUser = interaction.targetUser;
     const userName = targetUser.username;
     const userid = targetUser.id;

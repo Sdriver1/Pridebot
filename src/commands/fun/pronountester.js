@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const commandLogging = require("../../config/logging/commandlog");
+const chalk = require("chalk");
 
 const {
   containsDisallowedContent,

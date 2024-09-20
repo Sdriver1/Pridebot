@@ -3,8 +3,8 @@ const {
   ContextMenuCommandBuilder,
   ApplicationCommandType,
 } = require("discord.js");
-const DarList = require("../../../mongo/models/idDarSchema"); 
-const darlogging = require("../../config/logging/darlog")
+const DarList = require("../../../mongo/models/idDarSchema");
+const darlogging = require("../../config/logging/darlog");
 
 const utility_functions = {
   chance: function (probability) {
@@ -20,7 +20,7 @@ module.exports = {
     .setName("User Gaydar")
     .setType(ApplicationCommandType.User),
 
-  async execute(interaction) {
+  async execute(interaction, client) {
     const targetUser = interaction.targetUser;
     const userName = targetUser.username;
     const userid = targetUser.id;

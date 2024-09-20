@@ -4,6 +4,7 @@ const {
   containsDisallowedContent,
 } = require("../../config/detection/containDisallow");
 const { scanText } = require("../../config/detection/perspective");
+const chalk = require("chalk");
 
 module.exports = {
   data: new SlashCommandBuilder()

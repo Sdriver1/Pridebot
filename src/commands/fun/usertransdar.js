@@ -20,7 +20,7 @@ module.exports = {
     .setName("User Transdar")
     .setType(ApplicationCommandType.User),
 
-  async execute(interaction) {
+  async execute(interaction, client) {
     const targetUser = interaction.targetUser;
     const userName = targetUser.username;
     const userid = targetUser.id;
@@ -73,6 +73,5 @@ module.exports = {
 
     await interaction.reply({ embeds: [embed] });
     await darlogging(client, "User Transdar", userName, meter, userid);
-
   },
 };
