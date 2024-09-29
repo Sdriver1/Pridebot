@@ -92,9 +92,17 @@ const profileLogging = async (
             }\`\`\``,
           }
         );
+      } else if (oldValue === newValue) {
+        embed.addFields({
+          name: `${item.name}`,
+          value: `\`\`\`${
+            newValue !== undefined ? newValue.toString() : "Not set"
+          }\`\`\``,
+        });
       }
     });
   }
+
   const logChannel = client.channels.cache.get("1284916147702988882");
 
   if (logChannel) {
