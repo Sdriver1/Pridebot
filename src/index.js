@@ -10,6 +10,7 @@ const path = require("path");
 const initializeBot = require("./bot");
 const initializeApi = require("./apis/botapi");
 const initializeAvatarApi = require("./apis/avatarapi");
+const initializeGoogleApi = require('./apis/googleapi');
 
 function logShutdownTime() {
   const shutdownFilePath = path.join(__dirname, "shutdown-time.txt");
@@ -53,6 +54,7 @@ client.botStartTime = Math.floor(Date.now() / 1000);
 initializeBot(client);
 initializeApi(client);
 initializeAvatarApi(client);
+initializeGoogleApi();
 
 client.login(token);
 

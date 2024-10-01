@@ -8,6 +8,8 @@ pfps
 package-lock.json
 shutdown-time.txt 
 restart-time.txt
+googleapi.js
+google-credentials.json
 
 # Web Directories
 bootstrap
