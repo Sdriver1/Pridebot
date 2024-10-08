@@ -429,7 +429,7 @@ module.exports = {
         return interaction.reply({
           content:
             targetUser.id === interaction.user.id
-              ? "You have not set up a profile yet. Use </profile setup:1197313708846743642> to create one."
+              ? "You have not set up a profile yet. Use </profile setup:1273988656839004283> to create one."
               : "This user doesn't have a profile set up yet.",
           ephemeral: true,
         });
@@ -661,7 +661,7 @@ module.exports = {
       if (!profile) {
         return interaction.reply({
           content:
-            "You have not set up a profile yet. Use </profile setup:1197313708846743642> to create one.",
+            "You have not set up a profile yet. Use </profile setup:1273988656839004283> to create one.",
           ephemeral: true,
         });
       }
@@ -690,7 +690,7 @@ module.exports = {
       if (existingProfile) {
         return interaction.reply({
           content:
-            "Account already made, use </profile view:1197313708846743642> to see your profile",
+            "Account already made, use </profile view:1273988656839004283> to see your profile",
           ephemeral: true,
         });
       }
@@ -838,7 +838,7 @@ module.exports = {
       );
       return interaction.reply({
         content:
-          "Your profile has been created successfully! \nSee your new profile with </profile view:1197313708846743642> \nTo update anything or add multiple pronoun, gender, sexuality or a bio, please use </profile update:1197313708846743642>",
+          "Your profile has been created successfully! \nSee your new profile with </profile view:1273988656839004283> \nTo update anything or add multiple pronoun, gender, sexuality or a bio, please use </profile update:1273988656839004283>",
         embeds: [profileEmbed],
         ephemeral: true,
       });

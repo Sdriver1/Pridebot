@@ -14,7 +14,26 @@ module.exports = {
     .setDescription("Shows command list and helpful links"),
 
   async execute(interaction, client) {
+    const channel = interaction.channel;
+
+    if (!channel) {
+      await interaction.reply(
+        "The type of command you are trying to send can't be sent in User Install format. Please use this command again in a server where Pridebot is added. \nInvite link: https://pridebot.xyz/invite"
+      );
+      return;
+    }
+
     const helpOptions = [
+      {
+        name: "Avatar",
+        description: "Click to learn about avatar commands",
+        value: "avatar",
+        emoji: "1113295174701940776",
+        info: {
+          title: "Avatar Commands",
+          description: `</avatar-list:1273988656561913906> - Get list of available flags to add \n</prideavatar:1273988656561913907> - Add a pride flag to your avatar \n\nYou can access any of your avatars by going to **https://pfp.pridebot.xyz/your_user_id**`,
+        },
+      },
       {
         name: "Fun",
         description: "Click to learn about fun commands",
@@ -22,7 +41,7 @@ module.exports = {
         emoji: "1196254858689380474",
         info: {
           title: "Fun Commands",
-          description: `</gaydar:1196256451270811688> - How gay are you or your friend? \n</lgbtq:1196151440343838849> - Fun little command to show off the LGBTQ command \n</nametester:1179995184059121766> - Use this to try out new names for yourselfs \n</pronountester:1179995184059121766> - Use this to try out new pronouns for yourself \n</transdar:1212227689008726048> -  How trans are you or your friend? \n\n-# - </gaydar:1196256451270811688> and </transdar:1212227689008726048> are for fun and not based on any real diagnosis/readings of users*`,
+          description: `</gaydar:1273988656561913909> - How gay are you or your friend? \n</lgbtq:1273988656561913910> - Fun little command to show off the LGBTQ command \n</match:1273988656561913911> - Determine the compatibility between two users. \n</nametester:1273988656561913912> - Use this to try out new names for yourselfs \n</pronountester:1273988656561913913> - Use this to try out new pronouns for yourself \n</queerdar:1273988656561913914> -  How queer are you or your friend? \n</transdar:1273988656561913915> -  How trans are you or your friend? \n\n-# - </gaydar:1273988656561913909>, </queerdar:1273988656561913914>, and </transdar:1273988656561913915> are for fun and not based on any real diagnosis/readings of users*`,
         },
       },
       {
@@ -32,7 +51,7 @@ module.exports = {
         emoji: "1108822823721521242",
         info: {
           title: "Pride Commands",
-          description: `</asexual:1216214492917010495> - Learn about term "asexual" and some brief history \n</bisexual:1183503172036206632> - Learn about term "bisexual" and some brief history \n</gay:1183468824478089246> - Learn about term "gay" and some brief history \n</genderfluid:1183503172036206632> - Learn about term "genderfluid" and some brief history \n</lesbian:1183468824478089247> - Learn about term "lesbian" and some brief history \n</nonbinary:1183503172036206633> Learn about term "non-binary" and some brief history \n</pansexual:1183503172036206634> - Learn about term "pansexual" and some brief history \n</pridemonth:1196149039431962644> - Learn about pride month and some brief history \n</queer:1196149039431962644> - Learn about term "queer" and some brief history \n</transgender:1183503172036206636> - Learn about term "transgender" and some brief history `,
+          description: `</asexual:1273988656696135805> - Learn about term "asexual" and some brief history \n</bisexual:1273988656696135806> - Learn about term "bisexual" and some brief history \n</gay:1273988656696135807> - Learn about term "gay" and some brief history \n</genderfluid:1273988656696135808> - Learn about term "genderfluid" and some brief history \n</lesbian:1273988656696135809> - Learn about term "lesbian" and some brief history \n</nonbinary:1273988656696135810> Learn about term "non-binary" and some brief history \n</pansexual:1273988656696135811> - Learn about term "pansexual" and some brief history \n</pridemonth:1273988656839004280> - Learn about pride month and some brief history \n</queer:1273988656839004281> - Learn about term "queer" and some brief history \n</transgender:1273988656839004282> - Learn about term "transgender" and some brief history`,
         },
       },
       {
@@ -42,7 +61,7 @@ module.exports = {
         emoji: "1197388214843998299",
         info: {
           title: "Profile Commands",
-          description: `</profile edit:1197313708846743642> - Edit your profile \n</profile setup:1197313708846743642> - Setup your profile \n</profile view:1197313708846743642> - View your or another users profile \n</profile update:1197313708846743642> - Update the information in your profile`,
+          description: `</profile edit:1273988656839004283> - Edit your profile appearence \n</profile setup:1273988656839004283> - Setup your profile \n</profile view:1273988656839004283> - View your or another users profile \n</profile update:1273988656839004283> - Update the information in your profile`,
         },
       },
       {
@@ -52,7 +71,7 @@ module.exports = {
         emoji: "1197399653109473301",
         info: {
           title: "Support Commands",
-          description: `</comingout:1176020092581060678> - Access tips and guides on how to come out to anyone \n</mentalhealth:1176262554071334994> - Access helplines and any mental health resources provided`,
+          description: `</comingout:1273988656839004285> - Access tips and guides on how to come out to anyone \n</mentalhealth:1273988656839004287> - Access helplines and any mental health resources provided \n</transresources:1273988656839004288> - Provides resources and advice for users of transgender identities.`,
         },
       },
       {
@@ -62,7 +81,7 @@ module.exports = {
         emoji: "1112602480128299079",
         info: {
           title: "Term Commands",
-          description: `</gender:1112200593310756874> - Learn about any kinds or types of genders \n </other:1201381458607099954> - Learn about other common terms associated with or normally found in LGBTQIA+ environments\n</pronouns:1111772157538730116> - Learn about any kinds or types of pronouns \n</sexuality:1111289006299283456> - Learn about any kinds or types of sexualities`,
+          description: `</gender:1273988656839004289> - Learn about any kinds or types of genders \n </other:1273988656956309647> - Learn about other common terms associated with or normally found in LGBTQIA+ environments\n</pronouns:1273988656956309648> - Learn about any kinds or types of pronouns \n</sexuality:1273988656956309649> - Learn about any kinds or types of sexualities`,
         },
       },
       {
@@ -72,7 +91,7 @@ module.exports = {
         emoji: "1112234548999245834",
         info: {
           title: "Tool Commands",
-          description: `</bugreport:1176639348423266457> - Submit any bugs you find with Pridebot \n</feedback:1176639348423266456> - Submit any feedback you have on Pridebot \n</help:1112238192784048208> - Shows command list and helpful links \n</latest:1150993734180278353> - Get the bot's latest updates \n</partner:1198658480148586560> - Check out Pridebot partners \n</stats:1111290488897683579> - Get the bot's and discord stats \n</vote:1198664099752587375> - Support Pridebot by voting for us here`,
+          description: `</help:1273988656956309650> - Shows command list and helpful links \n</partner:1273988656956309651> - Check out Pridebot partners \n</stats:1273988656956309652> - Get the bot's and discord stats \n</vote:1273988656956309653> - Support Pridebot by voting for us here`,
         },
       },
     ];
@@ -102,7 +121,7 @@ module.exports = {
         {
           name: "Help Categories",
           value:
-            "**<:_:1196254858689380474> - Fun \n<:_:1108822823721521242> - Pride \n<:_:1197388214843998299> - Profile \n<:_:1197399653109473301> - Support \n<:_:1112602480128299079> - Terms \n<:_:1112234548999245834> - Tool**",
+            "**<:_:1113295174701940776> - Avatar \n<:_:1196254858689380474> - Fun \n<:_:1108822823721521242> - Pride \n<:_:1197388214843998299> - Profile \n<:_:1197399653109473301> - Support \n<:_:1112602480128299079> - Terms \n<:_:1112234548999245834> - Tool**",
           inline: true,
         },
         {

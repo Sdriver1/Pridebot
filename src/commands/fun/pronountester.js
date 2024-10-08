@@ -185,7 +185,7 @@ module.exports = {
         }`
       )
       .setDescription(
-        "Explore new pronouns! If you want to learn more about specific pronouns, use </pronouns:1111772157538730116>."
+        "Explore new pronouns! If you want to learn more about specific pronouns, use </pronouns:1273988656956309648>."
       )
       .addFields(
         {
