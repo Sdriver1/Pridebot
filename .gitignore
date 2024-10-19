@@ -10,6 +10,7 @@ shutdown-time.txt
 restart-time.txt
 googleapi.js
 google-credentials.json
+reviewSchema.js
 
 # Web Directories
 bootstrap
