@@ -93,7 +93,7 @@ module.exports = {
 
         reviewData.commandCount += 1;
 
-        if (reviewData.commandCount >= 5 && !reviewData.receivedSurvey) {
+        if (reviewData.commandCount >= 25 && !reviewData.receivedSurvey) {
           try {
             // Attempt to send the survey via DM
             await interaction.user.send({
