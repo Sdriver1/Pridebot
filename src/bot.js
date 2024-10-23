@@ -49,6 +49,17 @@ module.exports = (client) => {
   });
 
   client.on("interactionCreate", async (interaction) => {
+    if (interaction.isAutocomplete()) {
+      const command = client.commands.get(interaction.commandName);
+      if (!command) return;
+  
+      try {
+        await command.autocomplete(interaction);
+      } catch (error) {
+        console.error(`Error handling autocomplete: ${error}`);
+      }
+    }
+
     if (interaction.isUserContextMenuCommand()) {
       if (interaction.commandName === "User Profile") {
         await userprofile.execute(interaction);

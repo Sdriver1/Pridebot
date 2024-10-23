@@ -31,17 +31,19 @@ module.exports = {
       option
         .setName("flag")
         .setDescription(
-          "The pride flag to overlay (For a list of flags, do /avatar-list)"
+          "The pride flag to overlay (For a full list of flags, do /avatar-list)"
         )
         .setRequired(true)
+        .setAutocomplete(true)
     )
     .addStringOption((option) =>
       option
         .setName("flag2")
         .setDescription(
-          "Add a second flag (For a list of flags, do /avatar-list)"
+          "Add a second flag (For a full list of flags, do /avatar-list)"
         )
         .setRequired(false)
+        .setAutocomplete(true)
     )
     .addUserOption((option) =>
       option
@@ -49,6 +51,23 @@ module.exports = {
         .setDescription("Change another user's avatar")
         .setRequired(false)
     ),
+
+    async autocomplete(interaction) {
+      const focusedOption = interaction.options.getFocused(true);
+      const substring = focusedOption.value.toLowerCase();
+      let choices = validFlags.filter((flag) => 
+        flag.toLowerCase().includes(substring)
+      );
+      
+      choices = choices.slice(0, 25);
+
+      await interaction.respond(
+        choices.map((choice) => ({
+          name: choice,
+          value: choice,
+        }))
+      );
+    },
 
   async execute(interaction, client) {
     try {
