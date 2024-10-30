@@ -17,6 +17,7 @@ To add Pridebot to your Discord server, follow these two simple steps:
 
 ## Commands
 Here is a list of the commands you can use with Pridebot:
+- **Avatar** - `/avatar-list`, `/avatar-view`, and `/prideavatar`
 - **Fun** - `/gaydar`, `/lgbtq`, `/match`, `/pronountester`, `/queerdar`, and `/transdar`
 - **Pride** 
     - **Sexualities** - `/asexual`, `/bisexual`, `/gay`, `/lesbian`, `/pansexual`, and `/queer`
@@ -27,14 +28,14 @@ Here is a list of the commands you can use with Pridebot:
 - **Terms** - `/gender`, `/other`, `/pronouns`, and `/sexuality`
 - **Tools** - `/help,`, `/partner`, `/stats`, and `/vote`
 
-- **User Apps** - `User Gaydar`, `User Profile`, `User Queersdar`, and `User Transdar`
+- **User Apps** - `User Avatar-view`, `User Gaydar`, `User Profile`, `User Queersdar`, and `User Transdar`
 
 
 ## Contribution
 Contributions to Pridebot are welcome! If you're interested in contributing, please:
 - **Bugs / Features**: Join the Support Server below to report any bugs or suggest any features!
 - **Pull Request**: I go through pull request alot so if you want to code anything into the bot, you are free too!
-- **Voting**: Vote for Pridebot on [Botlist.me](https://botlist.me/bots/1101256478632972369/vote), [Top.gg](https://top.gg/bot/1101256478632972369/vote), and [Wumpus Store](https://wumpus.store/bot/1101256478632972369/vote)
+- **Voting**: Vote for Pridebot on [Botlist.me](https://botlist.me/bots/1101256478632972369/vote) and [Top.gg](https://top.gg/bot/1101256478632972369/vote)
 
 ## Support
 For support, questions, or feedback about Pridebot, please join our Discord community [here](https://discord.gg/guybqSTzdS).

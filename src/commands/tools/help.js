@@ -31,7 +31,7 @@ module.exports = {
         emoji: "1113295174701940776",
         info: {
           title: "Avatar Commands",
-          description: `</avatar-list:1273988656561913906> - Get list of available flags to add \n</prideavatar:1273988656561913907> - Add a pride flag to your avatar \n\nYou can access any of your avatars by going to **https://pfp.pridebot.xyz/your_user_id**`,
+          description: `</avatar-list:1273988656561913906> - Get list of available flags to add \n</avatar-view:1301025323009441886> - View full list of your pride avatars \n</prideavatar:1273988656561913907> - Add a pride flag to your avatar \n\nYou can access any of your avatars by going to **https://pfp.pridebot.xyz/your_user_id**`,
         },
       },
       {
