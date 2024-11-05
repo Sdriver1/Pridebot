@@ -38,9 +38,6 @@ module.exports = (client) => {
   client.on(Events.GuildDelete, (guild) =>
     eventHandlers.handleGuildDelete(client, guild)
   );
-  client.on("interactionCreate", (interaction) =>
-    eventHandlers.handleReportFeedback(client, interaction)
-  );
 
   setInterval(() => eventHandlers.updateChannelName(client), 1 * 60 * 1000);
 
