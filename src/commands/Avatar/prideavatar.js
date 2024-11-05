@@ -15,7 +15,7 @@ const validFlags = [
   "abrosexual", "aceflux", "agender", "ally", "androgyne", "aroace", "aroace2",
   "aroflux", "aromantic", "asexual", "aurorian", "bigender", "bisexual", "boyflux",
   "butch", "butchlesbian", "butchlesbian2", "butchlesbian3", "catgender", "cupioromantic",
-  "demibisexual", "demiboy", "demigirl", "deminonbinary", "demiroflux", "demiromantic",
+  "demibisexual", "demiboy", "demigirl", "deminonbinary", "demiromantic",
   "demisexual", "gay", "genderfae", "genderfaun", "genderfluid", "genderflux", "genderqueer",
   "girlflux", "graygender", "grayromantic", "graysexual", "lesbian", "lgbt", "lunarian",
   "neptunic", "nonbinary", "omnisexual", "pangender", "pansexual", "polyamorous", "polysexual",

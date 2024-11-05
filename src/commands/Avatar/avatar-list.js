@@ -32,7 +32,6 @@ module.exports = {
       "demiboy",
       "demigirl",
       "deminonbinary",
-      "demiroflux",
       "demiromantic",
       "demisexual",
       "gay",
