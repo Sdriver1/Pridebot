@@ -35,7 +35,7 @@ module.exports = {
         ];
       } catch (error) {
         console.error(
-          "Failed to fetch stats from the API, falling back to manual calculation.",
+          "Ready.js - Failed to fetch stats from the API, falling back to manual calculation.",
           error.message
         );
 
