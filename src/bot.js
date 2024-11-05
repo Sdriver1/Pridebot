@@ -13,7 +13,6 @@ const eventHandlers = {
   updateChannelName: require("./events/client/statsTracker.js"),
   handleGuildCreate: require("./events/client/guildCreate.js"),
   handleGuildDelete: require("./events/client/guildDelete.js"),
-  handleReportFeedback: require("./events/client/modals.js"),
   sendRestartMessage: require("./events/client/restart.js"),
 };
 
