@@ -22,6 +22,8 @@ const usertransdar = require("./commands/Fun/usertransdar.js");
 const userqueerdar = require("./commands/Fun/userqueerdar.js");
 const useravatar = require("./commands/Avatar/useravatar-view.js");
 
+const errorlogging = require("./config/logging/errorlogs");
+
 module.exports = (client) => {
   const functionFolders = fs.readdirSync(`./src/functions`);
   for (const folder of functionFolders) {
@@ -50,43 +52,56 @@ module.exports = (client) => {
     if (interaction.isAutocomplete()) {
       const command = client.commands.get(interaction.commandName);
       if (!command) return;
-  
+
       try {
         await command.autocomplete(interaction);
       } catch (error) {
-        console.error(`Error handling autocomplete: ${error}`);
+        await errorlogging(client, error);
       }
     }
 
     if (interaction.isUserContextMenuCommand()) {
-      if (interaction.commandName === "User Profile") {
-        await userprofile.execute(interaction);
-      }
-      if (interaction.commandName === "User Gaydar") {
-        await usergaydar.execute(interaction);
-      }
-      if (interaction.commandName === "User Transdar") {
-        await usertransdar.execute(interaction);
-      }
-      if (interaction.commandName === "User Queerdar") {
-        await userqueerdar.execute(interaction);
-      }
-      if (interaction.commandName === "User Avatar-view") {
-        await useravatar.execute(interaction);
+      try {
+        if (interaction.commandName === "User Profile") {
+          await userprofile.execute(interaction, client);
+        } else if (interaction.commandName === "User Gaydar") {
+          await usergaydar.execute(interaction, client);
+        } else if (interaction.commandName === "User Transdar") {
+          await usertransdar.execute(interaction, client);
+        } else if (interaction.commandName === "User Queerdar") {
+          await userqueerdar.execute(interaction, client);
+        } else if (interaction.commandName === "User Avatar-view") {
+          await useravatar.execute(interaction, client);
+        }
+      } catch (error) {
+        await errorlogging(client, error);
       }
     }
   });
 
   client.on("messageCreate", async (message) => {
-    idCommand(message, client);
-    blacklistCommand(message, client);
-    termCommand(message, client);
-    darCommand(message, client);
-    topServerCommand(message, client);
+    try {
+      idCommand(message, client);
+      blacklistCommand(message, client);
+      termCommand(message, client);
+      darCommand(message, client);
+      topServerCommand(message, client);
+    } catch (error) {
+      await errorlogging(client, error);
+    }
   });
 
   client.on("messageReactionAdd", async (reaction, user) => {
-    react(reaction, user, client);
+    try {
+      await react(reaction, user, client);
+    } catch (error) {
+      await errorlogging(client, error);
+    }
+  });
+
+  client.on("error", async (error) => {
+    console.error("Client error:", error);
+    await errorlogging(client, error);
   });
 
   const commandsPath = "./src/commands";

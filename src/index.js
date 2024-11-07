@@ -10,7 +10,9 @@ const path = require("path");
 const initializeBot = require("./bot");
 const initializeApi = require("./apis/botapi");
 const initializeAvatarApi = require("./apis/avatarapi");
-const initializeGoogleApi = require('./apis/googleapi');
+const initializeGoogleApi = require("./apis/googleapi");
+
+const errorlogging = require("./config/logging/errorlogs");
 
 function logShutdownTime() {
   const shutdownFilePath = path.join(__dirname, "shutdown-time.txt");
@@ -28,12 +30,13 @@ process.on("SIGINT", () => {
   process.exit();
 });
 
-process.on('unhandledRejection', (error) => {
-  console.error('Unhandled promise rejection:', error);
+process.on("unhandledRejection", async (reason) => {
+  const error = reason instanceof Error ? reason : new Error(reason);
+  await errorlogging(client, error);
 });
 
-process.on('uncaughtException', (error) => {
-  console.error('Uncaught exception:', error);
+process.on("uncaughtException", async (error) => {
+  await errorlogging(client, error);
 });
 
 const client = new Client({
