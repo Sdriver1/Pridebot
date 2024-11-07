@@ -93,7 +93,7 @@ module.exports = {
 
         reviewData.commandCount += 1;
 
-        if (reviewData.commandCount >= 25 && !reviewData.receivedSurvey) {
+        if (reviewData.commandCount >= 100 && !reviewData.receivedSurvey) {
           try {
             // Attempt to send the survey via DM
             await interaction.user.send({
@@ -108,7 +108,7 @@ module.exports = {
             try {
               await interaction.channel.send({
                 content:
-                "We have noticed you have been using Pridebot for abit and wondered if you like to do a quick survey! [Click here to take a survey on Pridebot to help improve the bot!](https://pridebot.xyz/survey)",
+                  "We have noticed you have been using Pridebot for abit and wondered if you like to do a quick survey! [Click here to take a survey on Pridebot to help improve the bot!](https://pridebot.xyz/survey)",
               });
 
               // Mark survey as sent
@@ -125,12 +125,12 @@ module.exports = {
         console.error(error);
         if (interaction.replied || interaction.deferred) {
           await interaction.followUp({
-            content: `Error occurred while executing this command \nIf the error continues, please use </bugreport:1176639348423266457> to alert developers, Thank you!`,
+            content: `Error occurred while executing this command \nIf the error continues, please join our [support server](https://pridebot.xyz/support) for help, Thank you!`,
             ephemeral: true,
           });
         } else {
           await interaction.reply({
-            content: `Error occurred while executing this command \nIf the error continues, please use </bugreport:1176639348423266457> to alert developers, Thank you!`,
+            content: `Error occurred while executing this command \nIf the error continues, please join our [support server](https://pridebot.xyz/support) for help, Thank you!`,
             ephemeral: true,
           });
         }
