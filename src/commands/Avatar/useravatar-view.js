@@ -5,7 +5,6 @@ const {
 } = require("discord.js");
 const fs = require("fs");
 const path = require("path");
-const commandLogging = require("../../config/logging/commandlog");
 
 module.exports = {
   data: new ContextMenuCommandBuilder()
@@ -53,6 +52,5 @@ module.exports = {
     });
 
     await interaction.reply({ embeds: [embed], ephemeral: true });
-    await commandLogging(interaction.client, interaction);
   },
 };
