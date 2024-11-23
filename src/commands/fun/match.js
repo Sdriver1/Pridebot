@@ -27,6 +27,7 @@ module.exports = {
     ),
 
   async execute(interaction, client) {
+    await interaction.deferReply(); 
     const user1 = interaction.options.getUser("user1");
     let user2 = interaction.options.getUser("user2");
 
@@ -56,7 +57,11 @@ module.exports = {
         text: "The bot has 99.99% accuracy rate on checking users compatibility",
       });
 
-    await interaction.reply({ embeds: [embed] });
+      try {
+        await interaction.editReply({ embeds: [embed] }); // Edit the deferred reply
+      } catch (error) {
+        console.error("Error sending response:", error);
+      }
     await commandLogging(client, interaction);
   },
 };

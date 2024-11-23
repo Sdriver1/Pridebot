@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const commandLogging = require("../../config/logging/commandlog");
-const DarList = require("../../../mongo/models/idDarSchema"); 
-const darlogging = require("../../config/logging/darlog")
+const DarList = require("../../../mongo/models/idDarSchema");
+const darlogging = require("../../config/logging/darlog");
 
 const utility_functions = {
   chance: function (probability) {
@@ -24,6 +24,7 @@ module.exports = {
     ),
 
   async execute(interaction, client) {
+    await interaction.deferReply();
     const targetUser =
       interaction.options.getUser("target") || interaction.user;
     const userName = targetUser.username;
@@ -74,8 +75,12 @@ module.exports = {
       .setFooter({
         text: "The bot has 99.99% accuracy rate on checking users transness",
       });
-    await interaction.reply({ embeds: [embed] });
+    try {
+      await interaction.editReply({ embeds: [embed] }); // Edit the deferred reply
+    } catch (error) {
+      console.error("Error sending response:", error);
+    }
     await commandLogging(client, interaction);
-    await darlogging(client, "Transdar", userName, meter, userid)
+    await darlogging(client, "Transdar", userName, meter, userid);
   },
 };

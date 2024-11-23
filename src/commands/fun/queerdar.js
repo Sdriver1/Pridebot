@@ -24,6 +24,7 @@ module.exports = {
     ),
 
   async execute(interaction, client) {
+    await interaction.deferReply(); 
     const targetUser =
       interaction.options.getUser("target") || interaction.user;
     const userName = targetUser.username;
@@ -72,7 +73,11 @@ module.exports = {
       .setFooter({
         text: "The bot has 99.99% accuracy rate on checking users queerness",
       });
-    await interaction.reply({ embeds: [embed] });
+      try {
+        await interaction.editReply({ embeds: [embed] }); // Edit the deferred reply
+      } catch (error) {
+        console.error("Error sending response:", error);
+      }
     await commandLogging(client, interaction);
     await darlogging(client, "Queerdar", userName, meter, userid);
   },

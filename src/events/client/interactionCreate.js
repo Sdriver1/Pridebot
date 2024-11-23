@@ -124,10 +124,7 @@ module.exports = {
       } catch (error) {
         console.error(error);
         if (interaction.replied || interaction.deferred) {
-          await interaction.followUp({
-            content: `Error occurred while executing this command \nIf the error continues, please join our [support server](https://pridebot.xyz/support) for help, Thank you!`,
-            ephemeral: true,
-          });
+          return;
         } else {
           await interaction.reply({
             content: `Error occurred while executing this command \nIf the error continues, please join our [support server](https://pridebot.xyz/support) for help, Thank you!`,
