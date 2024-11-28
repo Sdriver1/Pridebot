@@ -2,6 +2,7 @@ require("dotenv").config();
 const { token, databaseToken, topggToken, botlisttoken } = process.env;
 const { connect } = require("mongoose");
 const { Client, GatewayIntentBits } = require("discord.js");
+const { ClusterClient, getInfo } = require("discord-hybrid-sharding");
 const { AutoPoster } = require("topgg-autoposter");
 const BotlistMeClient = require("botlist.me.js");
 const fs = require("fs");
@@ -30,16 +31,9 @@ process.on("SIGINT", () => {
   process.exit();
 });
 
-process.on("unhandledRejection", async (reason) => {
-  const error = reason instanceof Error ? reason : new Error(reason);
-  await errorlogging(client, error);
-});
-
-process.on("uncaughtException", async (error) => {
-  await errorlogging(client, error);
-});
-
 const client = new Client({
+  shards: getInfo().SHARD_LIST,
+  shardCount: getInfo().SHARD_LIST.length,
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
@@ -59,6 +53,17 @@ initializeApi(client);
 initializeAvatarApi(client);
 initializeGoogleApi();
 
+process.on("unhandledRejection", async (reason) => {
+  const error = reason instanceof Error ? reason : new Error(reason);
+  await errorlogging(client, error);
+});
+
+process.on("uncaughtException", async (error) => {
+  await errorlogging(client, error);
+});
+
+console.log(getInfo());
+client.cluster = new ClusterClient(client);
 client.login(token);
 
 connect(databaseToken)
