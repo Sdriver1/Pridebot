@@ -458,11 +458,16 @@ module.exports = (client) => {
         embed
           .setColor("#FF00EA")
           .setDescription(
-            `## :star: New Star \n**Thank you [${data.sender.login}](https://github.com/${data.sender.name}) for starring [${data.repository.name}](https://github.com/${data.repository.full_name})**`
+            `## :star: New Star \n**Thank you [${data.sender.login}](https://github.com/${data.sender.login}) for starring [${data.repository.name}](https://github.com/${data.repository.full_name})**`
           )
           .setTimestamp();
       } else if (githubEvent === "star" && data.action === "deleted") {
-        console.log(`${data.sender.login} removed their star ;-;`);
+        embed
+          .setColor("#FF00EA")
+          .setDescription(
+            `## :star: Star Removed \n**[${data.sender.login}](https://github.com/${data.sender.login}) removed their star from [${data.repository.name}](https://github.com/${data.repository.full_name}) ;-;**`
+          )
+          .setTimestamp();
       } else {
         console.log(`Unhandled event: ${githubEvent}`);
         return;
