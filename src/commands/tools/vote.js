@@ -18,8 +18,8 @@ module.exports = {
           inline: false,
         },
         {
-          name: "<:_:1198663251580440697> Wumpus.Store",
-          value: `https://wumpus.store/bot/1101256478632972369/vote`,
+          name: "<:_:1317259330961018930> Discords.com",
+          value: `https://discords.com/bots/bot/1101256478632972369/vote`,
           inline: false,
         },
         {

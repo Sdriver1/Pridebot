@@ -6,7 +6,7 @@ const { EmbedBuilder, ChannelType } = require("discord.js");
 const CommandUsage = require("../../mongo/models/usageSchema.js");
 const ProfileData = require("../../mongo/models/profileSchema.js");
 const Voting = require("../../mongo/models/votingSchema");
-const { botlistauth } = process.env;
+const { botlistauth, discordsauth } = process.env;
 require("dotenv").config();
 const { getInfo } = require("discord-hybrid-sharding");
 
@@ -380,6 +380,59 @@ module.exports = (client) => {
         const embed = new EmbedBuilder()
           .setDescription(
             `**Thank you <@${botlistuser}> for voting for <@${botlistbot}> on [Botlist.me](https://botlist.me/bots/${botlistbot}/vote) <:_:1227425669642719282>** \nYou can vote again <t:${voteAvailableTimestamp}:R>. \n\n**<@${botlistuser}> Botlist Votes: ${userVoting.votingBotList}** \n**Total Botlist Votes: ${voting.votingAmount.BotListTotal}**`
+          )
+          .setColor("#FF00EA")
+          .setThumbnail(userAvatarURL)
+          .setTimestamp();
+
+        try {
+          const channel = await client.channels.fetch("1224815141921624186");
+          if (!channel || channel.type !== ChannelType.GuildText) {
+            return res
+              .status(400)
+              .send("Channel not found or is not a text channel");
+          }
+
+          await channel.send({ embeds: [embed] });
+          res.status(200).send("Success!");
+        } catch (error) {
+          console.error("Error sending message to Discord:", error);
+          res.status(500).send("Internal Server Error");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching user from Discord:", error);
+        res.status(500).send("Internal Server Error");
+      });
+  });
+
+  app.post("/discords-votes", async (req, res) => {
+    if (req.header("Authorization") != discordsauth) {
+      return res.status("401").end();
+    }
+
+    let discordsuser = req.body.user;
+    let discordsbot = req.body.bot;
+    const voteCooldownHours = 12;
+    const voteCooldownSeconds = voteCooldownHours * 3600;
+    const currentTimestamp = Math.floor(Date.now() / 1000);
+    const voteAvailableTimestamp = currentTimestamp + voteCooldownSeconds;
+
+    client.users
+      .fetch(discordsuser)
+      .then(async (user) => {
+        const userAvatarURL = user.displayAvatarURL();
+
+        await updateVotingStats(discordsuser, "Discords");
+
+        const voting = await Voting.findOne();
+        const userVoting = voting.votingUsers.find(
+          (u) => u.userId === discordsuser
+        );
+
+        const embed = new EmbedBuilder()
+          .setDescription(
+            `**Thank you <@${discordsuser}> for voting for <@${discordsbot}> on [discords.com](https://discords.com/bots/bot/${discordsbot}/vote) <:_:1317259330961018930>** \nYou can vote again <t:${voteAvailableTimestamp}:R>. \n\n**<@${discordsuser}> Discords.com Votes: ${userVoting.votingDiscords}** \n**Total Discords.com Votes: ${voting.votingAmount.DiscordsTotal}**`
           )
           .setColor("#FF00EA")
           .setThumbnail(userAvatarURL)

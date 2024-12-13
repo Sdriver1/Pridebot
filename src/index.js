@@ -11,6 +11,7 @@ const path = require("path");
 const initializeBot = require("./bot");
 
 const errorlogging = require("./config/logging/errorlogs");
+const { updateDiscordsCount } = require("./config/botfunctions/discordsguild");
 
 function logShutdownTime() {
   const shutdownFilePath = path.join(__dirname, "shutdown-time.txt");
@@ -69,3 +70,7 @@ ap.on("posted", () => {});
 
 const botlistme = new BotlistMeClient(botlisttoken, client);
 botlistme.on("posted", () => {});
+
+setInterval(async () => {
+  await updateDiscordsCount(client);
+}, 15 * 60 * 1000);

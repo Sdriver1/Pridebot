@@ -6,6 +6,7 @@ const userVotingSchema = new mongoose.Schema({
   votingTopGG: { type: Number, default: 0 },
   votingWumpus: { type: Number, default: 0 },
   votingBotList: { type: Number, default: 0 },
+  votingDiscords: { type: Number, default: 0 },
 });
 
 const votingSchema = new mongoose.Schema({
@@ -15,6 +16,7 @@ const votingSchema = new mongoose.Schema({
     TopGGTotal: { type: Number, default: 0 },
     WumpusTotal: { type: Number, default: 0 },
     BotListTotal: { type: Number, default: 0 },
+    DiscordsTotal: { type: Number, default: 0 }
   },
 });
 
