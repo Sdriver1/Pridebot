@@ -8,6 +8,7 @@ const ProfileData = require("../../mongo/models/profileSchema.js");
 const Voting = require("../../mongo/models/votingSchema");
 const { botlistauth } = process.env;
 require("dotenv").config();
+const { getInfo } = require("discord-hybrid-sharding");
 
 const { getTotalCommits } = require("../config/commandfunctions/commit.js");
 const {
@@ -19,12 +20,17 @@ const {
 } = require("../config/botfunctions/user_install.js");
 
 module.exports = (client) => {
+  console.log(`Bot API initialization started by Cluster ${getInfo().CLUSTER}.`);
   const app = express();
   const port = 2610;
 
-  app.listen(port, () => {
-    console.log(`Bot api is running on port ${port}`);
-  });
+  try {
+    app.listen(port, () => {
+      console.log(`Bot API is running on port ${port}`);
+    });
+  } catch (error) {
+    console.error("Failed to start Bot API:", error);
+  }
 
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));

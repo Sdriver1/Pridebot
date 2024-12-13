@@ -2,6 +2,11 @@ const fs = require("fs");
 const path = require("path");
 const { Events } = require("discord.js");
 
+const initializeApi = require("./apis/botapi");
+const initializeAvatarApi = require("./apis/avatarapi");
+const initializeGoogleApi = require("./apis/googleapi");
+const { getInfo } = require("discord-hybrid-sharding");
+
 const { idCommand } = require("./commands/Dev/id.js");
 const { blacklistCommand } = require("./commands/Dev/blacklist.js");
 const { termCommand } = require("./commands/Dev/termlist.js");
@@ -44,6 +49,21 @@ module.exports = (client) => {
   setInterval(() => eventHandlers.updateChannelName(client), 1 * 60 * 1000);
 
   client.once("ready", () => {
+    const clusterId = getInfo().CLUSTER;
+    console.log(`Cluster ${clusterId} is ready.`);
+
+    if (clusterId === 0) {
+      try {
+        initializeAvatarApi(client);
+        initializeApi(client);
+        initializeGoogleApi(client);
+      } catch (error) {
+        console.error("Error during API initialization:", error);
+      }
+    } else {
+      console.log(`Cluster ${clusterId} skipped API initialization.`);
+    }
+  
     eventHandlers.sendRestartMessage(client);
     eventHandlers.updateChannelName(client);
   });

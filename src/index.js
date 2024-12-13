@@ -9,9 +9,6 @@ const fs = require("fs");
 const path = require("path");
 
 const initializeBot = require("./bot");
-const initializeApi = require("./apis/botapi");
-const initializeAvatarApi = require("./apis/avatarapi");
-const initializeGoogleApi = require("./apis/googleapi");
 
 const errorlogging = require("./config/logging/errorlogs");
 
@@ -49,9 +46,6 @@ client.commandArray = [];
 client.botStartTime = Math.floor(Date.now() / 1000);
 
 initializeBot(client);
-initializeApi(client);
-initializeAvatarApi(client);
-initializeGoogleApi();
 
 process.on("unhandledRejection", async (reason) => {
   const error = reason instanceof Error ? reason : new Error(reason);

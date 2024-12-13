@@ -2,14 +2,20 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const fs = require("fs");
+const { getInfo } = require("discord-hybrid-sharding");
 
 module.exports = (client) => {
+  console.log(`Avatar API initialization started by Cluster ${getInfo().CLUSTER}.`);
   const app = express();
   const port = 2611;
 
-  app.listen(port, () => {
-    console.log(`Avatar API is running on port ${port}`);
-  });
+  try {
+    app.listen(port, () => {
+      console.log(`Avatar API is running on port ${port}`);
+    });
+  } catch (error) {
+    console.error("Failed to start Avatar API:", error);
+  }
 
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
