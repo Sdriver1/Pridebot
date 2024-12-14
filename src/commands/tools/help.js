@@ -91,7 +91,7 @@ module.exports = {
         emoji: "1112234548999245834",
         info: {
           title: "Tool Commands",
-          description: `</help:1273988656956309650> - Shows command list and helpful links \n</partner:1273988656956309651> - Check out Pridebot partners \n</stats:1273988656956309652> - Get the bot's and discord stats \n</vote:1273988656956309653> - Support Pridebot by voting for us here`,
+          description: `</donate:1317291535985016882> - Donate to help support Pridebot \n</help:1273988656956309650> - Shows command list and helpful links \n</partner:1273988656956309651> - Check out Pridebot partners \n</stats:1273988656956309652> - Get the bot's and discord stats \n</vote:1273988656956309653> - Support Pridebot by voting for us here`,
         },
       },
     ];
@@ -127,7 +127,7 @@ module.exports = {
         {
           name: "Useful links",
           value:
-            "<:Ic_Pridebot_logo:1108228682184654908> [**Website**](https://pridebot.xyz/) \n<:Ic_Pridebot_discord:1108417509624926228> [**Support Server**](https://pridebot.xyz/support) \n<:_:1176002361580331029> [**TOS**](https://pridebot.xyz/tos) \n<:_:1255012892206567476> [**Privacy Policy**](https://pridebot.xyz/privacy) \n:link: [**Bot Invite**](https://pridebot.xyz/invite) \n<:Ic_Pridebot_git:1110925802041774151> [**Github Repo**](https://github.com/Sdriver1/Pridebot)",
+            "<:Ic_Pridebot_logo:1108228682184654908> [**Website**](https://pridebot.xyz/) \n<:Ic_Pridebot_discord:1108417509624926228> [**Support Server**](https://pridebot.xyz/support) \n<:_:1176002361580331029> [**TOS**](https://pridebot.xyz/tos) \n<:_:1255012892206567476> [**Privacy Policy**](https://pridebot.xyz/privacy) \n:link: [**Bot Invite**](https://pridebot.xyz/invite) \n<:Ic_Pridebot_git:1110925802041774151> [**Github Repo**](https://github.com/Sdriver1/Pridebot) \n<:Ic_Pridebot_donor:1235074804726628465> [**Patreon**](https://pridebot.xyz/premium)",
           inline: true,
         }
       );

@@ -26,7 +26,7 @@ Here is a list of the commands you can use with Pridebot:
 - **Profiles** - `profile setup`, `profile view`,`profile edit`, and `profile update`
 - **Support** - `/comingout`, `/mentalhealth`, and `/transresources`
 - **Terms** - `/gender`, `/other`, `/pronouns`, and `/sexuality`
-- **Tools** - `/help,`, `/partner`, `/stats`, and `/vote`
+- **Tools** - `/donate`, `/help,`, `/partner`, `/stats`, and `/vote`
 
 - **User Apps** - `User Avatar-view`, `User Gaydar`, `User Profile`, `User Queersdar`, and `User Transdar`
 
@@ -38,7 +38,8 @@ Contributions to Pridebot are welcome! If you're interested in contributing, ple
 - **Voting**: Vote for Pridebot on [Botlist.me](https://botlist.me/bots/1101256478632972369/vote) and [Top.gg](https://top.gg/bot/1101256478632972369/vote)
 
 ## Support
-For support, questions, or feedback about Pridebot, please join our Discord community [here](https://discord.gg/guybqSTzdS).
+For support, questions, or feedback about Pridebot, please join our Discord community [here](https://pridebot.xyz/support).
+For anyone who wants to donate/support the development of Pridebot, you can do that [here](https://pridebot.xyz/premium)
 
 ## Legal
 - [Pridebot Term of Service](https://pridebot.xyz/tos)
