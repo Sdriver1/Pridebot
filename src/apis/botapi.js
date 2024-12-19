@@ -20,7 +20,9 @@ const {
 } = require("../config/botfunctions/user_install.js");
 
 module.exports = (client) => {
-  console.log(`Bot API initialization started by Cluster ${getInfo().CLUSTER}.`);
+  console.log(
+    `Bot API initialization started by Cluster ${getInfo().CLUSTER}.`
+  );
   const app = express();
   const port = 2610;
 
@@ -240,12 +242,17 @@ module.exports = (client) => {
           return res.status(404).send("Command not found");
         }
 
+        const commandModule = require(commandFile);
+        const commandDescription =
+          commandModule.data?.description || "";
+
         const commandUsage = await CommandUsage.findOne({
           commandName: command_name,
         });
 
         return res.json({
           command_name: commandUsage ? commandUsage.commandName : command_name,
+          command_description: commandDescription,
           command_usage: commandUsage ? commandUsage.count : 0,
         });
       } catch (error) {
