@@ -29,6 +29,14 @@ const useravatar = require("./commands/Avatar/useravatar-view.js");
 
 const errorlogging = require("./config/logging/errorlogs");
 
+const cron = require("node-cron");
+const cleanup = require("../src/config/botfunctions/cleanup.js");
+
+cron.schedule("0 0 * * *", () => {
+  console.log("Running daily cleanup...");
+  cleanup.deleteOldFiles();
+});
+
 module.exports = (client) => {
   const functionFolders = fs.readdirSync(`./src/functions`);
   for (const folder of functionFolders) {
@@ -63,7 +71,7 @@ module.exports = (client) => {
     } else {
       console.log(`Cluster ${clusterId} skipped API initialization.`);
     }
-  
+
     eventHandlers.sendRestartMessage(client);
     eventHandlers.updateChannelName(client);
   });

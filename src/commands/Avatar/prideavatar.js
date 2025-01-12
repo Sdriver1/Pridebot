@@ -52,22 +52,22 @@ module.exports = {
         .setRequired(false)
     ),
 
-    async autocomplete(interaction) {
-      const focusedOption = interaction.options.getFocused(true);
-      const substring = focusedOption.value.toLowerCase();
-      let choices = validFlags.filter((flag) => 
-        flag.toLowerCase().includes(substring)
-      );
-      
-      choices = choices.slice(0, 25);
+  async autocomplete(interaction) {
+    const focusedOption = interaction.options.getFocused(true);
+    const substring = focusedOption.value.toLowerCase();
+    let choices = validFlags.filter((flag) =>
+      flag.toLowerCase().includes(substring)
+    );
 
-      await interaction.respond(
-        choices.map((choice) => ({
-          name: choice,
-          value: choice,
-        }))
-      );
-    },
+    choices = choices.slice(0, 25);
+
+    await interaction.respond(
+      choices.map((choice) => ({
+        name: choice,
+        value: choice,
+      }))
+    );
+  },
 
   async execute(interaction, client) {
     try {
@@ -248,9 +248,10 @@ module.exports = {
             flagName2 ? " & " + flagName2 : ""
           } Avatar`
         )
+
         .setImage(imageURL + `?time=${new Date().getTime()}`)
         .setFooter({
-          text: "For more flags, do /avatar-list",
+          text: "For more flags, do /avatar-list | Image will be deleted in 30 days",
         })
         .setColor("#FF00EA");
 
