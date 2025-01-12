@@ -33,7 +33,7 @@ const updateChannelName = async (client) => {
     },
     {
       id: "1152452950132805722",
-      name: `# of Commands: ${getRegisteredCommandsCount}`,
+      name: `# of Commands: ${await getRegisteredCommandsCount(client)}`,
     },
     {
       id: "1221546215976603729",
