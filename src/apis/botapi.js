@@ -60,11 +60,18 @@ module.exports = (client) => {
     });
 
     const prismaGuild = client.guilds.cache.get("921403338069770280");
+    const obbyGuild = client.guilds.cache.get("1125796993688666203");
     let prismatotal = 0;
+    let obbytotal = 0;
     if (prismaGuild) {
       prismatotal = prismaGuild.memberCount;
     } else {
       console.error("Guild with ID 921403338069770280 not found.");
+    }
+    if (obbyGuild) {
+      obbytotal = obbyGuild.memberCount;
+    } else {
+      console.error("Guild with ID 1125796993688666203not found.");
     }
 
     try {
@@ -72,6 +79,7 @@ module.exports = (client) => {
         totalUserCount,
         currentGuildCount,
         prismatotal,
+        obbytotal,
       });
     } catch (error) {
       console.error("Failed to get GitHub stats:", error);
@@ -243,8 +251,7 @@ module.exports = (client) => {
         }
 
         const commandModule = require(commandFile);
-        const commandDescription =
-          commandModule.data?.description || "";
+        const commandDescription = commandModule.data?.description || "";
 
         const commandUsage = await CommandUsage.findOne({
           commandName: command_name,
@@ -491,7 +498,7 @@ module.exports = (client) => {
         totalCommits = 0;
       }
 
-      let commitPrefix = data.repository.name === "Pridebot" ? "2" : "";
+      let commitHundreds = totalCommits.toString().slice(-3, -2) || "0";
       let commitTens = totalCommits.toString().slice(-2, -1) || "0";
       let commitOnes = totalCommits.toString().slice(-1);
 
@@ -507,7 +514,7 @@ module.exports = (client) => {
           .join("\n");
         const title = `${commitCount} New ${data.repository.name} ${
           commitCount > 1 ? "Commits" : "Commit"
-        } (# ${commitPrefix}${commitTens}${commitOnes})`;
+        } (# ${commitHundreds}${commitTens}${commitOnes})`;
         const fieldname = `${commitCount > 1 ? "Commits" : "Commit"}`;
 
         embed

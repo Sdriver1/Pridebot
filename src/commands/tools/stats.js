@@ -61,7 +61,7 @@ module.exports = {
             if (botProcess) {
               resolve({
                 memory: (botProcess.monit.memory / 1024 / 1024).toFixed(2),
-                cpu: botProcess.monit.cpu.toFixed(2), 
+                cpu: botProcess.monit.cpu.toFixed(2),
               });
             } else {
               resolve({ memory: "N/A", cpu: "N/A" });
@@ -77,7 +77,7 @@ module.exports = {
       );
 
       const pm2Stats = await getPm2Stats();
-      const memoryUsage = `${pm2Stats.memory} MB / 16 GB`; // Reflect total RAM
+      const memoryUsage = `${pm2Stats.memory} MB / 16 GB`;
       const cpuUsage = `${pm2Stats.cpu}%`;
 
       let totalCommits = await getTotalCommits(
@@ -85,6 +85,10 @@ module.exports = {
         "Pridebot",
         process.env.githubToken
       );
+
+      let commitHundreds = totalCommits.toString().slice(-3, -2) || "0";
+      let commitTens = totalCommits.toString().slice(-2, -1) || "0";
+      let commitOnes = totalCommits.toString().slice(-1);
 
       const currentGuildCount = client.guilds.cache.size;
       let totalUserCount = 0;
@@ -104,11 +108,7 @@ module.exports = {
       )}\` \n**Start Time:** ${startTimeTimestamp}`;
       const botstats = `**Servers:** \`${currentGuildCount}\` \n**Users:** \`${totalUserCount.toLocaleString()}\`\n**User Installs:** \`${approximateUserInstallCount}\``;
       const commandstats = `**Commands:** \`${CommandsCount}\` \n**Total Usage:** \`${totalUsage}\` \n**Profiles:** \`${profileAmount}\``;
-      const botversion = `**Dev:** \`3.${Math.floor(totalCommits / 10)}.${
-        totalCommits % 10
-      }\` \n **Node.js:** \`${
-        process.version
-      }\` \n **Discord.js:** \`v14.16.1\``;
+      const botversion = `**Dev:** \`${commitHundreds}.${commitTens}.${commitOnes}\` \n **Node.js:** \`${process.version}\` \n **Discord.js:** \`v14.16.1\``;
       const clientstats = `**CPU:** \`${cpuUsage}\` \n**Memory:** \`${memoryUsage}\``;
 
       const embed = new EmbedBuilder()
