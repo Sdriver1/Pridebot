@@ -1,4 +1,5 @@
 require("dotenv").config();
+const pm2 = require("pm2");
 const os = require("os");
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const CommandUsage = require("../../../mongo/models/usageSchema");
@@ -23,24 +24,50 @@ module.exports = {
 
     const botping = Date.now() - startTimestamp;
 
-    function getCpuUsage() {
-      return new Promise((resolve) => {
-        const start = process.cpuUsage();
-        const startTime = Date.now();
+    function formatUptime(seconds) {
+      const timeUnits = {
+        day: 3600 * 24,
+        hour: 3600,
+        minute: 60,
+        second: 1,
+      };
+      let result = [];
+      for (const [unit, amountInSeconds] of Object.entries(timeUnits)) {
+        const quantity = Math.floor(seconds / amountInSeconds);
+        seconds %= amountInSeconds;
+        if (quantity > 0) {
+          result.push(`${quantity} ${unit}${quantity > 1 ? "s" : ""}`);
+        }
+      }
+      return result.join(", ");
+    }
 
-        setTimeout(() => {
-          const end = process.cpuUsage(start);
-          const endTime = Date.now();
-          const elapsedMs = endTime - startTime;
-          const elapsedUserMs = end.user / 1000;
-          const elapsedSystemMs = end.system / 1000;
-
-          const cpuPercent =
-            ((elapsedUserMs + elapsedSystemMs) /
-              (elapsedMs * os.cpus().length)) *
-            100;
-          resolve(cpuPercent.toFixed(2));
-        }, 100);
+    async function getPm2Stats() {
+      return new Promise((resolve, reject) => {
+        pm2.connect((err) => {
+          if (err) {
+            reject(err);
+            return;
+          }
+          pm2.list((err, processList) => {
+            if (err) {
+              reject(err);
+              return;
+            }
+            pm2.disconnect();
+            const botProcess = processList.find(
+              (proc) => proc.name === "Pridebot"
+            );
+            if (botProcess) {
+              resolve({
+                memory: (botProcess.monit.memory / 1024 / 1024).toFixed(2),
+                cpu: botProcess.monit.cpu.toFixed(2), 
+              });
+            } else {
+              resolve({ memory: "N/A", cpu: "N/A" });
+            }
+          });
+        });
       });
     }
 
@@ -49,14 +76,15 @@ module.exports = {
         client
       );
 
+      const pm2Stats = await getPm2Stats();
+      const memoryUsage = `${pm2Stats.memory} MB / 16 GB`; // Reflect total RAM
+      const cpuUsage = `${pm2Stats.cpu}%`;
+
       let totalCommits = await getTotalCommits(
         "Sdriver1",
         "Pridebot",
         process.env.githubToken
       );
-
-      let commitTens = totalCommits.toString().slice(-2, -1) || "0";
-      let commitOnes = totalCommits.toString().slice(-1);
 
       const currentGuildCount = client.guilds.cache.size;
       let totalUserCount = 0;
@@ -64,14 +92,6 @@ module.exports = {
         totalUserCount += guild.memberCount;
       });
 
-      const cpuPercent = await getCpuUsage();
-      const memoryUsage = `${(
-        process.memoryUsage().heapUsed /
-        1024 /
-        1024
-      ).toFixed(2)} MB`;
-
-      const formattedTotalUserCount = totalUserCount.toLocaleString();
       const CommandsCount = (await getRegisteredCommandsCount(client)) + 2;
       const profileAmount = await Profile.countDocuments();
       const usages = await CommandUsage.find({}).sort({ count: -1 });
@@ -82,10 +102,14 @@ module.exports = {
       const up = `\n**Uptime:** \`${formatUptime(
         process.uptime()
       )}\` \n**Start Time:** ${startTimeTimestamp}`;
-      const botstats = `**Servers:** \`${currentGuildCount}\` \n**Users:** \`${formattedTotalUserCount}\`\n**User Installs:** \`${approximateUserInstallCount}\``;
+      const botstats = `**Servers:** \`${currentGuildCount}\` \n**Users:** \`${totalUserCount.toLocaleString()}\`\n**User Installs:** \`${approximateUserInstallCount}\``;
       const commandstats = `**Commands:** \`${CommandsCount}\` \n**Total Usage:** \`${totalUsage}\` \n**Profiles:** \`${profileAmount}\``;
-      const botversion = `**Dev:** \`3.${commitTens}.${commitOnes}\` \n **Node.js:** \`${process.version}\` \n **Discord.js:** \`v14.16.1\``;
-      const clientstats = `**CPU:** \`${cpuPercent}% / 100%\` \n**Memory:** \`${memoryUsage} / 6 GB\``;
+      const botversion = `**Dev:** \`3.${Math.floor(totalCommits / 10)}.${
+        totalCommits % 10
+      }\` \n **Node.js:** \`${
+        process.version
+      }\` \n **Discord.js:** \`v14.16.1\``;
+      const clientstats = `**CPU:** \`${cpuUsage}\` \n**Memory:** \`${memoryUsage}\``;
 
       const embed = new EmbedBuilder()
         .setDescription(
@@ -136,21 +160,3 @@ module.exports = {
     }
   },
 };
-
-function formatUptime(seconds) {
-  const timeUnits = {
-    day: 3600 * 24,
-    hour: 3600,
-    minute: 60,
-    second: 1,
-  };
-  let result = [];
-  for (const [unit, amountInSeconds] of Object.entries(timeUnits)) {
-    const quantity = Math.floor(seconds / amountInSeconds);
-    seconds %= amountInSeconds;
-    if (quantity > 0) {
-      result.push(`${quantity} ${unit}${quantity > 1 ? "s" : ""}`);
-    }
-  }
-  return result.join(", ");
-}

@@ -38,6 +38,7 @@
     "nodeactyl": "^3.3.0",
     "os": "^0.1.2",
     "path": "^0.12.7",
+    "pm2": "^5.4.3",
     "puppeteer": "^20.9.0",
     "sharp": "^0.33.5",
     "topgg-autoposter": "^2.0.2"
