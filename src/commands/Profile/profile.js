@@ -953,10 +953,10 @@ async function sendToxicNotification(
 }
 
 async function ageCheck(interaction, age, subcommand) {
-  if (age !== null && age < 13) {
+  if (age !== null && (age < 13 || age > 99)) {
     const embed = new EmbedBuilder()
       .setColor("#FF0000")
-      .setTitle("🚨 Underage Age Detected")
+      .setTitle("🚨 Illegal Age Detected")
       .addFields(
         { name: "Username", value: interaction.user.tag, inline: true },
         { name: "User ID", value: interaction.user.id, inline: true },
@@ -974,7 +974,7 @@ async function ageCheck(interaction, age, subcommand) {
 
     await interaction.reply({
       content:
-        "Age Warning** You must be 13 years or older to use the discord platform under guidance of Discord TOS and Community Guidelines. The developers of this bot are not responsible for any misuse of this bot and have been alerted with age provided for moderation purposes.",
+        "**🚨 Age Warning** You must be 13 years or older to use the discord platform under guidance of Discord TOS and Community Guidelines. The developers of this bot are not responsible for any misuse of this bot and have been alerted with age provided for moderation purposes.",
       ephemeral: true,
     });
 
