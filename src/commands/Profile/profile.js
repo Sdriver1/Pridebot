@@ -46,9 +46,12 @@ module.exports = {
         .addStringOption((option) =>
           option
             .setName("bio")
-            .setDescription("Your bio")
+            .setDescription("Your bio | Add a new line with \\n")
             .setMaxLength(1024)
             .setRequired(false)
+        )
+        .addIntegerOption((option) =>
+          option.setName("age").setDescription("Your age").setRequired(false)
         )
         .addStringOption((option) =>
           option
@@ -226,9 +229,12 @@ module.exports = {
         .addStringOption((option) =>
           option
             .setName("bio")
-            .setDescription("Your bio")
+            .setDescription("Your bio | Add a new line with \\n")
             .setMaxLength(1024)
             .setRequired(true)
+        )
+        .addIntegerOption((option) =>
+          option.setName("age").setDescription("Your age").setRequired(true)
         )
         .addStringOption((option) =>
           option
@@ -489,10 +495,17 @@ module.exports = {
           inline: true,
         },
       ];
+      if (profile.age) {
+        profileFields.push({
+          name: "Age",
+          value: profile.age ? profile.age.toString() : "Not set",
+          inline: true,
+        });
+      }
       if (profile.bio) {
         profileFields.push({
           name: "Bio",
-          value: profile.bio,
+          value: profile.bio ? profile.bio.replace(/\\n/g, "\n") : "Not set",
           inline: false,
         });
       }
@@ -536,6 +549,10 @@ module.exports = {
     } else if (subcommand === "update") {
       const preferredName = interaction.options.getString("preferredname");
       const bio = interaction.options.getString("bio");
+      const age = interaction.options.getInteger("age");
+
+      const isValidAge = await ageCheck(interaction, age, subcommand);
+      if (!isValidAge) return;
 
       const scoreupdate = await scanText(preferredName || bio);
 
@@ -604,6 +621,8 @@ module.exports = {
       if (interaction.options.getString("preferredname"))
         updateData.preferredName =
           interaction.options.getString("preferredname");
+      if (interaction.options.getInteger("age"))
+        updateData.age = interaction.options.getInteger("age");
       if (interaction.options.getString("bio"))
         updateData.bio = interaction.options.getString("bio");
       if (interaction.options.getString("sexuality"))
@@ -686,6 +705,10 @@ module.exports = {
       const existingProfile = await Profile.findOne({
         userId: interaction.user.id,
       });
+      const age = interaction.options.getInteger("age");
+
+      const isValidAge = await ageCheck(interaction, age, subcommand);
+      if (!isValidAge) return;
 
       if (existingProfile) {
         return interaction.reply({
@@ -694,9 +717,11 @@ module.exports = {
           ephemeral: true,
         });
       }
+
       const profileData = {
         userId: interaction.user.id,
         preferredName: interaction.options.getString("preferredname") || "",
+        age: age,
         bio: interaction.options.getString("bio") || "",
         sexuality: interaction.options.getString("sexuality") || "",
         romanticOrientation: interaction.options.getString("romantic") || "",
@@ -791,8 +816,15 @@ module.exports = {
           inline: true,
         },
         {
+          name: "Age",
+          value: newProfile.age ? newProfile.age.toString() : "Not set",
+          inline: true,
+        },
+        {
           name: "Bio",
-          value: newProfile.bio,
+          value: newProfile.bio
+            ? newProfile.bio.replace(/\\n/g, "\n")
+            : "Not set",
           inline: true,
         },
         {
@@ -918,4 +950,35 @@ async function sendToxicNotification(
   if (alertChannel) {
     alertChannel.send({ embeds: [embed] });
   }
+}
+
+async function ageCheck(interaction, age, subcommand) {
+  if (age !== null && age < 13) {
+    const embed = new EmbedBuilder()
+      .setColor("#FF0000")
+      .setTitle("🚨 Underage Age Detected")
+      .addFields(
+        { name: "Username", value: interaction.user.tag, inline: true },
+        { name: "User ID", value: interaction.user.id, inline: true },
+        { name: "Command", value: subcommand, inline: true },
+        { name: "Age Provided", value: age.toString(), inline: true }
+      )
+      .setTimestamp();
+
+    const alertChannel = await interaction.client.channels.fetch(
+      "1231591223337160715"
+    );
+    if (alertChannel) {
+      await alertChannel.send({ embeds: [embed] });
+    }
+
+    await interaction.reply({
+      content:
+        "Age Warning** You must be 13 years or older to use the discord platform under guidance of Discord TOS and Community Guidelines. The developers of this bot are not responsible for any misuse of this bot and have been alerted with age provided for moderation purposes.",
+      ephemeral: true,
+    });
+
+    return false;
+  }
+  return true;
 }

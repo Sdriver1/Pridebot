@@ -22,6 +22,10 @@ const profileLogging = async (
         value: `\`\`\`${updatedProfile.preferredName || "Not set"}\`\`\``,
       },
       {
+        name: "Age",
+        value: `\`\`\`${updatedProfile.age || "Not set"}\`\`\``,
+      },
+      {
         name: "Bio",
         value: `\`\`\`${updatedProfile.bio || "Not set"}\`\`\``,
       },
@@ -63,6 +67,7 @@ const profileLogging = async (
   } else if (actionType === "edited") {
     const fieldsToShow = [
       { field: "preferredName", name: "Preferred Name" },
+      { field: "age", name: "Age" },
       { field: "bio", name: "Bio" },
       { field: "sexuality", name: "Sexual Orientation" },
       { field: "romanticOrientation", name: "Romantic Orientation" },

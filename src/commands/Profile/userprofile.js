@@ -80,10 +80,17 @@ module.exports = {
           inline: true,
         },
       ];
+      if (profile.age) {
+        profileFields.push({
+          name: "Age",
+          value: profile.age ? profile.age.toString() : "Not set",
+          inline: true,
+        });
+      }
       if (profile.bio) {
         profileFields.push({
           name: "Bio",
-          value: profile.bio,
+          value: profile.bio ? profile.bio.replace(/\\n/g, "\n") : "Not set",
           inline: false,
         });
       }
