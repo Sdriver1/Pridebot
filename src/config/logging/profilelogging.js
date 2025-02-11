@@ -15,23 +15,25 @@ const profileLogging = async (
     .setDescription(`User: <@${interaction.user.id}> (${interaction.user.id})`)
     .setTimestamp(estDate);
 
+  const combineFields = (main, other) => {
+    if (!main && !other) return "Not set";
+    return [main, other].filter(Boolean).join(", ");
+  };
+
   if (actionType === "created") {
     embed.addFields(
       {
         name: "Preferred Name",
         value: `\`\`\`${updatedProfile.preferredName || "Not set"}\`\`\``,
       },
-      {
-        name: "Age",
-        value: `\`\`\`${updatedProfile.age || "Not set"}\`\`\``,
-      },
-      {
-        name: "Bio",
-        value: `\`\`\`${updatedProfile.bio || "Not set"}\`\`\``,
-      },
+      { name: "Age", value: `\`\`\`${updatedProfile.age || "Not set"}\`\`\`` },
+      { name: "Bio", value: `\`\`\`${updatedProfile.bio || "Not set"}\`\`\`` },
       {
         name: "Sexual Orientation",
-        value: `\`\`\`${updatedProfile.sexuality || "Not set"}\`\`\``,
+        value: `\`\`\`${combineFields(
+          updatedProfile.sexuality,
+          updatedProfile.otherSexuality
+        )}\`\`\``,
       },
       {
         name: "Romantic Orientation",
@@ -39,11 +41,17 @@ const profileLogging = async (
       },
       {
         name: "Gender",
-        value: `\`\`\`${updatedProfile.gender || "Not set"}\`\`\``,
+        value: `\`\`\`${combineFields(
+          updatedProfile.gender,
+          updatedProfile.otherGender
+        )}\`\`\``,
       },
       {
         name: "Pronouns",
-        value: `\`\`\`${updatedProfile.pronouns || "Not set"}\`\`\``,
+        value: `\`\`\`${combineFields(
+          updatedProfile.pronouns,
+          updatedProfile.otherPronouns
+        )}\`\`\``,
       },
       {
         name: "Color",
@@ -69,41 +77,39 @@ const profileLogging = async (
       { field: "preferredName", name: "Preferred Name" },
       { field: "age", name: "Age" },
       { field: "bio", name: "Bio" },
-      { field: "sexuality", name: "Sexual Orientation" },
+      {
+        field: "sexuality",
+        name: "Sexual Orientation",
+        mergeWith: "otherSexuality",
+      },
       { field: "romanticOrientation", name: "Romantic Orientation" },
-      { field: "gender", name: "Gender" },
-      { field: "pronouns", name: "Pronouns" },
+      { field: "gender", name: "Gender", mergeWith: "otherGender" },
+      { field: "pronouns", name: "Pronouns", mergeWith: "otherPronouns" },
       { field: "color", name: "Color" },
       { field: "badgesVisible", name: "Badges Visible" },
       { field: "pronounpage", name: "Pronoun Page" },
     ];
 
-    fieldsToShow.forEach((item) => {
-      const oldValue = originalProfile[item.field];
-      const newValue = updatedProfile[item.field];
+    fieldsToShow.forEach(({ field, name, mergeWith }) => {
+      const oldValue = mergeWith
+        ? combineFields(originalProfile[field], originalProfile[mergeWith])
+        : originalProfile[field];
+
+      const newValue = mergeWith
+        ? combineFields(updatedProfile[field], updatedProfile[mergeWith])
+        : updatedProfile[field];
 
       if (oldValue !== newValue) {
         embed.addFields(
           {
-            name: `${item.name} (Original)`,
-            value: `\`\`\`${
-              oldValue !== undefined ? oldValue.toString() : "Not set"
-            }\`\`\``,
+            name: `${name} (Original)`,
+            value: `\`\`\`${oldValue || "Not set"}\`\`\``,
           },
           {
-            name: `${item.name} (New)`,
-            value: `\`\`\`${
-              newValue !== undefined ? newValue.toString() : "Not set"
-            }\`\`\``,
+            name: `${name} (New)`,
+            value: `\`\`\`${newValue || "Not set"}\`\`\``,
           }
         );
-      } else if (oldValue === newValue) {
-        embed.addFields({
-          name: `${item.name}`,
-          value: `\`\`\`${
-            newValue !== undefined ? newValue.toString() : "Not set"
-          }\`\`\``,
-        });
       }
     });
   }
