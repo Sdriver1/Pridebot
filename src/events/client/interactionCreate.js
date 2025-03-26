@@ -1,4 +1,3 @@
-const Review = require("../../../mongo/models/reviewSchema");
 const CommandUsage = require("../../../mongo/models/usageSchema");
 const Blacklist = require("../../../mongo/models/blacklistSchema.js");
 const IDLists = require("../../../mongo/models/idSchema.js");
@@ -82,45 +81,7 @@ module.exports = {
           await usageData.save();
         }
 
-        // Proceed to execute the command itself
         await command.execute(interaction, client, { userId, guildId });
-
-        let reviewData = await Review.findOne({ userId });
-
-        if (!reviewData) {
-          reviewData = new Review({ userId });
-        }
-
-        reviewData.commandCount += 1;
-
-        if (reviewData.commandCount >= 100 && !reviewData.receivedSurvey) {
-          try {
-            // Attempt to send the survey via DM
-            await interaction.user.send({
-              content:
-                "We have noticed you have been using Pridebot for abit and wondered if you like to do a quick survey! [Click here to take a survey on Pridebot to help improve the bot!](https://pridebot.xyz/survey)",
-            });
-
-            // Mark survey as sent
-            reviewData.receivedSurvey = true;
-          } catch (err) {
-            // If DM fails, try sending in the channel
-            try {
-              await interaction.channel.send({
-                content:
-                  "We have noticed you have been using Pridebot for abit and wondered if you like to do a quick survey! [Click here to take a survey on Pridebot to help improve the bot!](https://pridebot.xyz/survey)",
-              });
-
-              // Mark survey as sent
-              reviewData.receivedSurvey = true;
-            } catch (err) {
-              // If neither DM nor channel is available, just mark the survey as received
-              reviewData.receivedSurvey = true;
-            }
-          }
-        }
-
-        await reviewData.save();
       } catch (error) {
         console.error(error);
         if (interaction.replied || interaction.deferred) {
