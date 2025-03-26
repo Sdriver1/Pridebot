@@ -5,7 +5,9 @@ const fs = require("fs");
 const { getInfo } = require("discord-hybrid-sharding");
 
 module.exports = (client) => {
-  console.log(`Avatar API initialization started by Cluster ${getInfo().CLUSTER}.`);
+  console.log(
+    `Avatar API initialization started by Cluster ${getInfo().CLUSTER}.`
+  );
   const app = express();
   const port = 2611;
 
@@ -26,16 +28,82 @@ module.exports = (client) => {
   );
 
   app.get("/", (req, res) => {
-    res
+    res.sendFile(path.join(__dirname, "..", "..", "web", "index.html"));
+  });
+
+  app.get("/files/:identifier", (req, res) => {
+    const identifier = req.params.identifier.toLowerCase();
+    const imagePath = path.join(
+      __dirname,
+      "..",
+      "..",
+      "src",
+      "pfps",
+      identifier
+    );
+
+    if (fs.existsSync(imagePath)) {
+      const files = fs.readdirSync(imagePath);
+      if (files.some((file) => file.endsWith(".png"))) {
+        return res.json({ files });
+      }
+    }
+    return res
       .status(404)
       .sendFile(path.join(__dirname, "..", "..", "web", "404.html"));
   });
 
-  app.get("/:userId", async (req, res) => {
-    const { userId } = req.params;
+  app.get("/:identifier", async (req, res) => {
+    const { identifier } = req.params;
+    if (/^\d+$/.test(identifier)) {
+      try {
+        const user = await client.users.fetch(identifier);
+        const htmlFilePath = path.join(
+          __dirname,
+          "..",
+          "..",
+          "web",
+          "webavatar.html"
+        );
+        let htmlContent = fs.readFileSync(htmlFilePath, "utf8");
 
-    try {
-      const user = await client.users.fetch(userId);
+        const username = user.username;
+        const capitalizedUsername =
+          username.charAt(0).toUpperCase() + username.slice(1);
+
+        htmlContent = htmlContent.replace(/{user.tag}/g, capitalizedUsername);
+        htmlContent = htmlContent.replace(
+          /<meta name="og:title" content=".*" \/>/,
+          `<meta name="og:title" content="${capitalizedUsername}'s Pride Avatars" />`
+        );
+        htmlContent = htmlContent.replace(
+          /<meta name="og:description" content=".*" \/>/,
+          `<meta name="og:description" content="Pridebot Pride Avatars for ${capitalizedUsername}" />`
+        );
+        htmlContent = htmlContent.replace(
+          /<meta name="description" content=".*" \/>/,
+          `<meta name="description" content="Pridebot Pride Avatars for ${capitalizedUsername}" />`
+        );
+        htmlContent = htmlContent.replace(
+          /<title>.*<\/title>/,
+          `<title>${capitalizedUsername}'s Pride Avatars | Pridebot</title>`
+        );
+
+        return res.send(htmlContent);
+      } catch (error) {
+      }
+    }
+
+    const folderIdentifier = identifier.toLowerCase();
+    const imagePath = path.join(
+      __dirname,
+      "..",
+      "..",
+      "src",
+      "pfps",
+      folderIdentifier
+    );
+    if (fs.existsSync(imagePath)) {
       const htmlFilePath = path.join(
         __dirname,
         "..",
@@ -45,14 +113,10 @@ module.exports = (client) => {
       );
       let htmlContent = fs.readFileSync(htmlFilePath, "utf8");
 
-      const username = user.username;
       const capitalizedUsername =
-        username.charAt(0).toUpperCase() + username.slice(1);
+        folderIdentifier.charAt(0).toUpperCase() + folderIdentifier.slice(1);
 
-      htmlContent = htmlContent.replace(
-        /{user.tag}/g,
-        `${capitalizedUsername}`
-      );
+      htmlContent = htmlContent.replace(/{user.tag}/g, capitalizedUsername);
       htmlContent = htmlContent.replace(
         /<meta name="og:title" content=".*" \/>/,
         `<meta name="og:title" content="${capitalizedUsername}'s Pride Avatars" />`
@@ -70,51 +134,30 @@ module.exports = (client) => {
         `<title>${capitalizedUsername}'s Pride Avatars | Pridebot</title>`
       );
 
-      res.send(htmlContent);
-    } catch (error) {
-      res
-        .status(404)
-        .sendFile(path.join(__dirname, "..", "..", "web", "404.html"));
+      return res.send(htmlContent);
     }
+
+    return res
+      .status(404)
+      .sendFile(path.join(__dirname, "..", "..", "web", "404.html"));
   });
 
-  app.get("/getUser/:userId", async (req, res) => {
-    const { userId } = req.params;
-    try {
-      const user = await client.users.fetch(userId);
-      res.json({ username: user.username });
-    } catch (error) {
-      res.status(500).json({ error: "Failed to fetch user" });
-    }
-  });
-
-  app.get("/files/:userId", (req, res) => {
-    const { userId } = req.params;
-    const imagePath = path.join(__dirname, "..", "..", "src", "pfps", userId);
-
-    if (fs.existsSync(imagePath)) {
-      const files = fs.readdirSync(imagePath);
-      res.json({ files });
-    } else {
-      res.status(404).json({ error: "User profile pictures not found" });
-    }
-  });
-
-  app.get("/:userId/:flag.png", (req, res) => {
-    const { userId, flag } = req.params;
+  app.get("/:identifier/:flag.png", (req, res) => {
+    const { identifier, flag } = req.params;
+    const folderIdentifier = identifier.toLowerCase();
     const imagePath = path.join(
       __dirname,
       "..",
       "..",
       "src",
       "pfps",
-      userId,
+      folderIdentifier,
       `${flag}.png`
     );
     if (fs.existsSync(imagePath)) {
-      res.sendFile(imagePath);
+      return res.sendFile(imagePath);
     } else {
-      res.status(404).send("Image not found");
+      return res.status(404).send("Image not found");
     }
   });
 };

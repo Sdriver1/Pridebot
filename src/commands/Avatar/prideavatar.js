@@ -117,7 +117,7 @@ module.exports = {
       let flagBuffer;
       try {
         const flagPath = path.join(__dirname, "../../flags", `${flagName}.png`);
-        flagBuffer = await sharp(flagPath).resize(512, 512).png().toBuffer(); // Resize to full width
+        flagBuffer = await sharp(flagPath).resize(512, 512).png().toBuffer(); 
       } catch (error) {
         console.error(`Error loading flag image for flag ${flagName}:`, error);
         await interaction.editReply(
@@ -203,17 +203,31 @@ module.exports = {
         );
         return;
       }
-
-      const userDirectory = path.join(__dirname, "../../pfps", pfpuser.id);
-      const outputName = path.join(
-        userDirectory,
-        `${flagName}${flagName2 ? flagName2 : ""}.png`
+      
+      const fileName = `${flagName}${flagName2 ? flagName2 : ""}.png`;
+      const userDirectoryID = path.join(
+        __dirname,
+        "../../pfps",
+        pfpuser.id.toString()
+      );
+      const userDirectoryUsername = path.join(
+        __dirname,
+        "../../pfps",
+        username
       );
 
       try {
-        fs.mkdirSync(userDirectory, { recursive: true });
-        if (fs.existsSync(outputName)) fs.unlinkSync(outputName);
-        fs.writeFileSync(outputName, finalImageBuffer);
+        fs.mkdirSync(userDirectoryID, { recursive: true });
+        fs.mkdirSync(userDirectoryUsername, { recursive: true });
+        const outputNameID = path.join(userDirectoryID, fileName);
+        const outputNameUsername = path.join(userDirectoryUsername, fileName);
+
+        if (fs.existsSync(outputNameID)) fs.unlinkSync(outputNameID);
+        if (fs.existsSync(outputNameUsername))
+          fs.unlinkSync(outputNameUsername);
+
+        fs.writeFileSync(outputNameID, finalImageBuffer);
+        fs.writeFileSync(outputNameUsername, finalImageBuffer);
       } catch (error) {
         console.error(
           `Error saving final avatar image for user ${pfpuser.id}:`,
@@ -225,9 +239,7 @@ module.exports = {
         return;
       }
 
-      const imageURL = `https://pfp.pridebot.xyz/${pfpuser.id}/${flagName}${
-        flagName2 ? flagName2 : ""
-      }.png`;
+      const imageURL = `https://pfp.pridebot.xyz/${pfpuser.id}/${fileName}`;
 
       try {
         const response = await axios.get(imageURL);
@@ -248,7 +260,6 @@ module.exports = {
             flagName2 ? " & " + flagName2 : ""
           } Avatar`
         )
-
         .setImage(imageURL + `?time=${new Date().getTime()}`)
         .setFooter({
           text: "For more flags, do /avatar-list | Image will be deleted in 30 days",
