@@ -4,114 +4,87 @@
     <meta charset="utf-8" />
     <link
       rel="preload"
-      href="https://cdn.discordapp.com/attachments/1101742240944107601/1219500201765507102/pridebotlogo.webp?ex=660b8711&is=65f91211&hm=e9df14c42a2b0852490db1dcce4af100eeb9253d8a72825d85d6deb9b498086b&"
+      href="https://cdn.discordapp.com/attachments/1101742240944107601/1219500201765507102/pridebotlogo.webp"
       as="image"
       fetchpriority="high"
     />
-    <title>404 Error - No User Found | Pridebot</title>
+    <title>Pridebot Avatar Search</title>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     />
-    <meta http-equiv="Content-Language" content="en" />
-    <meta name="description" content="404 Error - No User Found" />
-    <meta name="og:description" content="404 Error - No User Found" />
-    <meta name="og:title" content="404 Error - No User Found | Pridebot" />
     <meta
-      name="og:image"
-      content="https://cdn.discordapp.com/attachments/1101742240944107601/1219500201765507102/pridebotlogo.webp?ex=660b8711&is=65f91211&hm=e9df14c42a2b0852490db1dcce4af100eeb9253d8a72825d85d6deb9b498086b&"
+      name="description"
+      content="Search for Pridebot avatars by entering a username or user ID."
     />
-    <meta property="og:site_name" content="Pridebot" />
     <meta name="theme-color" content="#FF00ea" />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="300x250"
-      href="https://cdn.discordapp.com/emojis/1108228682184654908.png"
-    />
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Alfa+Slab+One"
     />
-    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css" />
-    <link rel="stylesheet" href="assets/fonts/ionicons.min.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
-    />
     <link rel="stylesheet" href="assets/css/webavatar.css" />
+    <script src="assets/js/search.js" defer></script>
   </head>
   <body style="background-color: var(--background)">
-    <div id="top" style="height: 12px">
-      <nav
-        class="navbar navbar-light navbar-expand fixed-top"
-        style="
-          color: var(--main-color);
-          border-top-width: 6px;
-          border-top-style: solid;
-          background: var(--background);
-        "
-      >
-        <div class="container-fluid">
-          <a
-            class="navbar-brand"
-            href="https://pridebot.xyz"
-            style="
-              color: var(--main-color);
-              font-family: 'Alfa Slab One', cursive;
-            "
-          >
-            Pridebot </a
-          ><button
-            data-toggle="collapse"
-            class="navbar-toggler"
-            data-target="#navcol-1"
-          >
-            <span class="sr-only">Toggle navigation</span
-            ><span class="navbar-toggler-icon"></span>
-          </button>
-        </div>
-      </nav>
-    </div>
-    <header
-      class="d-xl-flex flex-column justify-content-xl-center align-items-xl-center"
-      style="height: 418px; text-align: center; margin: 55px"
+    <nav
+      class="navbar navbar-light navbar-expand fixed-top"
+      style="background: var(--background)"
     >
+      <div class="container-fluid">
+        <a
+          class="navbar-brand"
+          href="https://pridebot.xyz"
+          style="
+            color: var(--main-color);
+            font-family: 'Alfa Slab One', cursive;
+          "
+          >Pridebot</a
+        >
+      </div>
+    </nav>
+
+    <header class="text-center" style="margin-top: 80px">
       <img
-        class="rounded"
         src="https://cdn.discordapp.com/emojis/1108228682184654908.png?size=1024"
         width="200"
         height="200"
-        style="margin-top: 15px"
       />
-      <h1
-        class="d-xl-flex justify-content-xl-start"
-        style="
-          color: var(--text-color);
-          font-size: 50px;
-          margin-top: 30px;
-          margin-bottom: -40px;
-        "
-      >
-        404 Error - No User Found
+      <h1 style="font-size: 50px; color: var(--text-color)">
+        Search for Pride Avatars
       </h1>
-      <div>
-        <p
+      <p style="font-size: 20px; color: var(--secondary-text-color)">
+        Find Pridebot avatars by entering a **username or user ID**.
+      </p>
+    </header>
+
+    <!-- Search Section -->
+    <section class="text-center" style="margin-top: 20px">
+      <form id="search-form" style="max-width: 500px; margin: auto">
+        <input
+          type="text"
+          id="search-input"
+          class="form-control"
+          placeholder="Enter Username or User ID"
+          style="text-align: center; margin-bottom: 10px"
+        />
+        <button
+          type="submit"
+          class="btn btn-primary"
           style="
-            color: var(--text-color);
-            font-size: 20px;
-            text-align: center;
-            margin-top: 100px;
-            margin-bottom: 20px;
+            background-color: var(--main-color);
+            border-color: var(--main-color);
           "
         >
-          Please make sure you have entered the correct user ID. The url should
-          look like this:
-          <a href="https://pfp.pridebot.xyz/1101256478632972369">https://pfp.pridebot.xyz/1101256478632972369</a> or <a href="https://pfp.pridebot.xyz/pridebot">https://pfp.pridebot.xyz/pridebot</a>
-        </p>
-      </div>
-    </header>
+          Search
+        </button>
+      </form>
+      <div
+        id="result"
+        class="text-center"
+        style="margin-top: 20px; color: var(--text-color)"
+      ></div>
+    </section>
 
     <div class="footer-dark">
       <div class="row"></div>
@@ -257,8 +230,5 @@
         </div>
       </div>
     </div>
-    <!-- Scripts -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
   </body>
 </html>
