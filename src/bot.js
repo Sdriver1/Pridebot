@@ -54,7 +54,9 @@ module.exports = (client) => {
     eventHandlers.handleGuildDelete(client, guild)
   );
 
-  setInterval(() => eventHandlers.updateChannelName(client), 1 * 60 * 1000);
+  cron.schedule("*/15 * * * *", () => {
+    eventHandlers.updateChannelName(client);
+  });
 
   client.once("ready", () => {
     const clusterId = getInfo().CLUSTER;
