@@ -2,6 +2,9 @@ const {
   EmbedBuilder,
   ContextMenuCommandBuilder,
   ApplicationCommandType,
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle
 } = require("discord.js");
 const Profile = require("../../../mongo/models/profileSchema");
 const IDLists = require("../../../mongo/models/idSchema");
