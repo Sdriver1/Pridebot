@@ -481,21 +481,20 @@ module.exports = (client) => {
       const data = request.body;
       let embed = new EmbedBuilder();
 
-      async function getTotalCommitsFromRepo(repoName) {
+      const repoName = data.repository?.name;
+      const ownerName = data.repository?.owner?.login;
+
+      async function getTotalCommitsFromRepo(repoName, ownerName) {
         return await getTotalCommits(
-          "Sdriver1",
+          ownerName,
           repoName,
           process.env.githubToken
         );
       }
 
-      let totalCommits;
-      if (data.repository.name === "Pridebot") {
-        totalCommits = await getTotalCommitsFromRepo("Pridebot");
-      } else if (data.repository.name === "Pridebot-Website") {
-        totalCommits = await getTotalCommitsFromRepo("Pridebot-Website");
-      } else {
-        totalCommits = 0;
+      let totalCommits = 0;
+      if (repoName && ownerName) {
+        totalCommits = await getTotalCommitsFromRepo(repoName, ownerName);
       }
 
       let commitHundreds = totalCommits.toString().slice(-3, -2) || "0";
@@ -512,7 +511,7 @@ module.exports = (client) => {
               }**`
           )
           .join("\n");
-        const title = `${commitCount} New ${data.repository.name} ${
+        const title = `${commitCount} New ${repoName} ${
           commitCount > 1 ? "Commits" : "Commit"
         } (# ${commitHundreds}${commitTens}${commitOnes})`;
         const fieldname = `${commitCount > 1 ? "Commits" : "Commit"}`;
@@ -520,9 +519,9 @@ module.exports = (client) => {
         embed
           .setColor("#FF00EA")
           .setAuthor({
-            name: `${data.pusher.name}`,
-            iconURL: `https://cdn.discordapp.com/emojis/1226912165982638174.png`,
-            url: `https://github.com/${data.pusher.name}`,
+            name: `${data.sender.login}`,
+            iconURL: `${data.sender.avatar_url}`,
+            url: `${data.sender.html_url}`,
           })
           .setTitle(title)
           .setTimestamp()
@@ -531,14 +530,14 @@ module.exports = (client) => {
         embed
           .setColor("#FF00EA")
           .setDescription(
-            `## :star: New Star \n**Thank you [${data.sender.login}](https://github.com/${data.sender.login}) for starring [${data.repository.name}](https://github.com/${data.repository.full_name})**`
+            `## :star: New Star \n**Thank you [${data.sender.login}](https://github.com/${data.sender.login}) for starring [${repoName}](https://github.com/${ownerName}/${repoName})**`
           )
           .setTimestamp();
       } else if (githubEvent === "star" && data.action === "deleted") {
         embed
           .setColor("#FF00EA")
           .setDescription(
-            `## :star: Star Removed \n**[${data.sender.login}](https://github.com/${data.sender.login}) removed their star from [${data.repository.name}](https://github.com/${data.repository.full_name}) ;-;**`
+            `## :star: Star Removed \n**[${data.sender.login}](https://github.com/${data.sender.login}) removed their star from [${repoName}](https://github.com/${ownerName}/${repoName}) ;-;**`
           )
           .setTimestamp();
       } else {
@@ -555,8 +554,9 @@ module.exports = (client) => {
 
         await channel.send({ embeds: [embed] });
       } catch (error) {
-        console.error("Error sending message to Discord:");
+        console.error("Error sending message to Discord:", error);
       }
+      response.sendStatus(200);
     }
   );
 };
