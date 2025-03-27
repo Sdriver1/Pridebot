@@ -501,7 +501,14 @@ module.exports = (client) => {
       let commitTens = totalCommits.toString().slice(-2, -1) || "0";
       let commitOnes = totalCommits.toString().slice(-1);
 
-      if (githubEvent === "push") {
+      if (
+        githubEvent === "push" &&
+        Array.isArray(data.commits) &&
+        data.commits.some((c) => c.message === "Update README [skip ci]")
+      ) {
+        console.log("Skipping README update");
+        return;
+      } else if (githubEvent === "push") {
         const commitCount = data.commits.length;
         const commitMessages = data.commits
           .map(
@@ -541,7 +548,6 @@ module.exports = (client) => {
           )
           .setTimestamp();
       } else {
-        console.log(`Unhandled event: ${githubEvent}`);
         return;
       }
 
