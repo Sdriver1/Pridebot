@@ -17,7 +17,7 @@ const specialDays = [
   },
   /*
   For help in setting up future ones.
-  If you like to contribute a special day, please open a PR with the following format:
+  If you like to contribute a special day, please open a issue/PR with the following format:
   {
     month: 0-11, // January is 0, December is 11
     day: 1-31,
