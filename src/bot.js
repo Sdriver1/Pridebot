@@ -15,10 +15,10 @@ const { topServerCommand } = require("./commands/Dev/topserver.js");
 const { react } = require("./config/commandfunctions/trashreact.js");
 
 const eventHandlers = {
-  updateChannelName: require("./events/client/statsTracker.js"),
+  updateChannelName: require("./events/server/statsTracker.js"),
   handleGuildCreate: require("./events/client/guildCreate.js"),
   handleGuildDelete: require("./events/client/guildDelete.js"),
-  sendRestartMessage: require("./events/client/restart.js"),
+  sendRestartMessage: require("./events/server/restart.js"),
 };
 
 const userprofile = require("./commands/Profile/userprofile.js");
