@@ -5,6 +5,7 @@ const { Events } = require("discord.js");
 const initializeApi = require("./apis/botapi");
 const initializeAvatarApi = require("./apis/avatarapi");
 const initializeGoogleApi = require("./apis/googleapi");
+const initializeProfileApi = require("./apis/profileapi");
 const { getInfo } = require("discord-hybrid-sharding");
 
 const { idCommand } = require("./commands/Dev/id.js");
@@ -67,6 +68,8 @@ module.exports = (client) => {
         initializeAvatarApi(client);
         initializeApi(client);
         initializeGoogleApi(client);
+        initializeProfileApi(client);
+        console.log("API initialization complete.");
       } catch (error) {
         console.error("Error during API initialization:", error);
       }

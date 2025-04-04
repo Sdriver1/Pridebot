@@ -171,21 +171,6 @@ module.exports = (client) => {
     }
   });
 
-  app.get("/profiles/:userId", cors(), async (req, res) => {
-    try {
-      const profile = await ProfileData.findOne({ userId: req.params.userId });
-
-      if (!profile) {
-        return res.status(404).json({ message: "Profile not found" });
-      }
-
-      return res.json(profile);
-    } catch (error) {
-      console.error("Failed to retrieve profile:", error);
-      return res.status(500).send("Internal Server Error");
-    }
-  });
-
   app.get("/votes/:userId", cors(), async (req, res) => {
     try {
       const votes = await Voting.findOne(
