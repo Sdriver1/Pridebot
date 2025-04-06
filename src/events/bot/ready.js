@@ -40,7 +40,8 @@ module.exports = {
       return specialDays.find((sd) => sd.month === month && sd.day === day);
     }
 
-    const updatePresence = async () => {
+    client.presenceIndex = 0;
+    client.updatePresence = async () => {
       const specialDay = getTodaySpecialDay();
       if (specialDay) {
         await client.user.setPresence({
@@ -81,13 +82,13 @@ module.exports = {
 
       await client.user.setPresence({
         status: "online",
-        activities: [presences[presenceIndex]],
+        activities: [presences[client.presenceIndex]],
       });
 
-      presenceIndex = (presenceIndex + 1) % presences.length;
+      client.presenceIndex = (client.presenceIndex + 1) % presences.length;
     };
 
-    await updatePresence();
-    setInterval(updatePresence, 15_000);
+    await client.updatePresence();
+    client.presenceInterval = setInterval(client.updatePresence, 15_000);
   },
 };

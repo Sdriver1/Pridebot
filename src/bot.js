@@ -13,6 +13,7 @@ const { blacklistCommand } = require("./commands/Dev/blacklist.js");
 const { termCommand } = require("./commands/Dev/termlist.js");
 const { darCommand } = require("./commands/Dev/darID.js");
 const { topServerCommand } = require("./commands/Dev/topserver.js");
+const { handleErrorModeCommand } = require("./commands/Dev/errormode.js");
 const { react } = require("./config/commandfunctions/trashreact.js");
 
 const eventHandlers = {
@@ -118,6 +119,7 @@ module.exports = (client) => {
       blacklistCommand(message, client);
       termCommand(message, client);
       darCommand(message, client);
+      handleErrorModeCommand(message, client);
       topServerCommand(message, client);
     } catch (error) {
       await errorlogging(client, error);
