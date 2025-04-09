@@ -4,7 +4,7 @@ const {
   ApplicationCommandType,
   ActionRowBuilder,
   ButtonBuilder,
-  ButtonStyle
+  ButtonStyle,
 } = require("discord.js");
 const Profile = require("../../../mongo/models/profileSchema");
 const IDLists = require("../../../mongo/models/idSchema");
@@ -83,10 +83,10 @@ module.exports = {
           inline: true,
         },
       ];
-      if (profile.age) {
+      if (profile.age !== undefined && profile.age !== null) {
         profileFields.push({
           name: "Age",
-          value: profile.age ? profile.age.toString() : "Not set",
+          value: profile.age === 0 ? "N/A" : profile.age.toString(),
           inline: true,
         });
       }

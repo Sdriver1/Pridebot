@@ -51,7 +51,12 @@ module.exports = {
             .setRequired(false)
         )
         .addIntegerOption((option) =>
-          option.setName("age").setDescription("Your age").setRequired(false)
+          option
+            .setName("age")
+            .setDescription(
+              "Your age (Ages: 13-99 | 0 for N/A | any other numbers will not be allowed)"
+            )
+            .setRequired(false)
         )
         .addStringOption((option) =>
           option
@@ -234,7 +239,12 @@ module.exports = {
             .setRequired(true)
         )
         .addIntegerOption((option) =>
-          option.setName("age").setDescription("Your age").setRequired(true)
+          option
+            .setName("age")
+            .setDescription(
+              "Your age (Ages: 13-99 | 0 for N/A | any other numbers will not be allowed)"
+            )
+            .setRequired(true)
         )
         .addStringOption((option) =>
           option
@@ -495,10 +505,10 @@ module.exports = {
           inline: true,
         },
       ];
-      if (profile.age) {
+      if (profile.age !== undefined && profile.age !== null) {
         profileFields.push({
           name: "Age",
-          value: profile.age ? profile.age.toString() : "Not set",
+          value: profile.age === 0 ? "N/A" : profile.age.toString(),
           inline: true,
         });
       }
@@ -621,7 +631,7 @@ module.exports = {
       if (interaction.options.getString("preferredname"))
         updateData.preferredName =
           interaction.options.getString("preferredname");
-      if (interaction.options.getInteger("age"))
+      if (interaction.options.getInteger("age") !== null)
         updateData.age = interaction.options.getInteger("age");
       if (interaction.options.getString("bio"))
         updateData.bio = interaction.options.getString("bio");
@@ -817,7 +827,12 @@ module.exports = {
         },
         {
           name: "Age",
-          value: newProfile.age ? newProfile.age.toString() : "Not set",
+          value:
+            newProfile.age === 0
+              ? "N/A"
+              : newProfile.age
+              ? newProfile.age.toString()
+              : "Not set",
           inline: true,
         },
         {
@@ -953,6 +968,10 @@ async function sendToxicNotification(
 }
 
 async function ageCheck(interaction, age, subcommand) {
+  if (age === 0) {
+    return true;
+  }
+
   if (age !== null && (age < 13 || age > 99)) {
     const embed = new EmbedBuilder()
       .setColor("#FF0000")
