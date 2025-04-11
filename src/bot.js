@@ -36,7 +36,7 @@ const { deleteOldFiles } = require("./config/botfunctions/cleanup");
 
 cron.schedule("0 0 * * *", () => {
   console.log("Running daily cleanup...");
-  deleteOldFiles(client, "1112590962867310602");
+  deleteOldFiles(client, "1360270874933989386");
 });
 
 module.exports = (client) => {

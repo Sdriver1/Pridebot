@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 
 module.exports = async (client) => {
-  const channelId = "1112590962867310602";
+  const channelId = "1360270874933989386";
   const channel = client.channels.cache.get(channelId);
   let shutdownTime;
 
