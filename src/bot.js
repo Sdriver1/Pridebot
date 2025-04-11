@@ -32,11 +32,11 @@ const useravatar = require("./commands/Avatar/useravatar-view.js");
 const errorlogging = require("./config/logging/errorlogs");
 
 const cron = require("node-cron");
-const cleanup = require("../src/config/botfunctions/cleanup.js");
+const { deleteOldFiles } = require("./config/botfunctions/cleanup");
 
 cron.schedule("0 0 * * *", () => {
   console.log("Running daily cleanup...");
-  cleanup.deleteOldFiles();
+  deleteOldFiles(client, "1112590962867310602");
 });
 
 module.exports = (client) => {
